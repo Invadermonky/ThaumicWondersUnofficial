@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -48,7 +47,7 @@ public class PacketTileToServer implements IMessage {
             BlockPos bp = BlockPos.fromLong(message.pos);
             if (world != null && bp != null) {
                 TileEntity tile = world.getTileEntity(bp);
-                if (tile != null && tile instanceof TileTW) {
+                if (tile instanceof TileTW) {
                     ((TileTW)tile).messageFromClient(message.nbt == null ? new NBTTagCompound() : message.nbt, ctx.getServerHandler().player);
                 }
             }

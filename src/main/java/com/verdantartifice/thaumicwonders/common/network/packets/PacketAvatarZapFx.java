@@ -1,7 +1,5 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
-import java.awt.Color;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
@@ -14,6 +12,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.client.fx.FXDispatcher;
+
+import java.awt.*;
 
 public class PacketAvatarZapFx implements IMessage {
     protected int source;

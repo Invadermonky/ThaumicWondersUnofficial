@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.entities;
 
 import com.verdantartifice.thaumicwonders.common.misc.FluxExplosion;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.projectile.EntityFireball;

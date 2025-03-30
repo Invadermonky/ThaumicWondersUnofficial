@@ -1,12 +1,11 @@
 package com.verdantartifice.thaumicwonders.common.misc;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OreHelper {
     public static boolean isOreNamed(@Nonnull ItemStack stack, @Nonnull String name) {
@@ -16,7 +15,7 @@ public class OreHelper {
     
     @Nonnull
     public static List<String> getOreNames(@Nonnull ItemStack stack) {
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
         if (stack.isEmpty()) {
             return names;
         }
@@ -40,6 +39,6 @@ public class OreHelper {
         List<String> names1 = OreHelper.getOreNames(stack1);
         List<String> names2 = OreHelper.getOreNames(stack2);
         names1.retainAll(names2);
-        return names1.size() > 0;
+        return !names1.isEmpty();
     }
 }

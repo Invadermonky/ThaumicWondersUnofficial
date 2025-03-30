@@ -1,10 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.common.items.misc.ItemStructureDiviner;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -14,6 +11,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
+import javax.annotation.Nullable;
 
 public class PacketStructureDivinerAction implements IMessage {
     private int targetType;

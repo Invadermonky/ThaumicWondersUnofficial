@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -52,7 +51,7 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
                 continue;
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
-            if (te != null && te instanceof IEssentiaTransport) {
+            if (te instanceof IEssentiaTransport) {
                 IEssentiaTransport otherTile = (IEssentiaTransport)te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;

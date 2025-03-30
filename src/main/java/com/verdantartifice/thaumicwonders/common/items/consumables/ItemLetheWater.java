@@ -1,15 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.items.consumables;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +22,11 @@ import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchCategory;
 import thaumcraft.common.lib.utils.RandomItemChooser;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemLetheWater extends ItemTW {
     protected static class CategoryEntry implements RandomItemChooser.Item {
@@ -116,7 +114,7 @@ public class ItemLetheWater extends ItemTW {
     
     @Nullable
     protected ResearchCategory selectCategory(EntityPlayer player, IPlayerKnowledge knowledge) {
-        List<RandomItemChooser.Item> selectionList = new ArrayList<RandomItemChooser.Item>();
+        List<RandomItemChooser.Item> selectionList = new ArrayList<>();
         for (ResearchCategory category : ResearchCategories.researchCategories.values()) {
             int count = knowledge.getKnowledge(IPlayerKnowledge.EnumKnowledgeType.THEORY, category);
             if (count > 0) {

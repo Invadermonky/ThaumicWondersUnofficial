@@ -1,61 +1,19 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockTW;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockAlkahestVat;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockCatalyzationChamber;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockCoalescenceMatrix;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockDimensionalRipper;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockEverburningUrn;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockFluxCapacitor;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockFluxDistiller;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockInspirationEngine;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockMadnessEngine;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockMeatyOrb;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockMeteorb;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockOreDiviner;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockPortalAnchor;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockPortalGenerator;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockPrimordialAccelerator;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockPrimordialAccretionChamber;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockVoidBeacon;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.ItemBlockFluxCapacitor;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.ItemBlockFluxDistiller;
-import com.verdantartifice.thaumicwonders.common.blocks.devices.ItemBlockPortalGenerator;
+import com.verdantartifice.thaumicwonders.common.blocks.devices.*;
 import com.verdantartifice.thaumicwonders.common.blocks.essentia.BlockCreativeEssentiaJar;
 import com.verdantartifice.thaumicwonders.common.blocks.essentia.ItemBlockCreativeEssentiaJar;
 import com.verdantartifice.thaumicwonders.common.blocks.fluids.BlockFluidQuicksilver;
-import com.verdantartifice.thaumicwonders.common.blocks.misc.BlockHexamite;
-import com.verdantartifice.thaumicwonders.common.blocks.misc.BlockPrimordialAcceleratorTerminus;
-import com.verdantartifice.thaumicwonders.common.blocks.misc.BlockPrimordialAcceleratorTunnel;
-import com.verdantartifice.thaumicwonders.common.blocks.misc.BlockPrimordialAccretionChamberPlaceholder;
-import com.verdantartifice.thaumicwonders.common.blocks.misc.BlockTWPlaceholder;
+import com.verdantartifice.thaumicwonders.common.blocks.misc.*;
 import com.verdantartifice.thaumicwonders.common.blocks.plants.BlockCinderpearlCrop;
 import com.verdantartifice.thaumicwonders.common.blocks.plants.BlockShimmerleafCrop;
 import com.verdantartifice.thaumicwonders.common.blocks.plants.BlockVishroomCrop;
 import com.verdantartifice.thaumicwonders.common.fluids.FluidQuicksilver;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileAlkahestVat;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCatalyzationChamber;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCoalescenceMatrix;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileDimensionalRipper;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileEverburningUrn;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileFluxDistiller;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileInspirationEngine;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileMadnessEngine;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileMeatyOrb;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileMeteorb;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileOreDiviner;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalAnchor;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalGenerator;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePrimordialAccelerator;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePrimordialAccretionChamber;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TileVoidBeacon;
+import com.verdantartifice.thaumicwonders.common.tiles.devices.*;
 import com.verdantartifice.thaumicwonders.common.tiles.essentia.TileCreativeEssentiaJar;
 import com.verdantartifice.thaumicwonders.common.tiles.misc.TilePrimordialAccretionChamberPlaceholder;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -65,8 +23,12 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@SuppressWarnings("ConstantConditions")
 public class InitBlocks {
-    public static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<ItemBlock>();
+    public static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<>();
     
     public static void initBlocks(IForgeRegistry<Block> forgeRegistry) {
         registerBlock(forgeRegistry, new BlockEverburningUrn());

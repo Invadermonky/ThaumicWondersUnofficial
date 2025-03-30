@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.research.theorycraft;
 
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
-
 import thaumcraft.api.research.theorycraft.ITheorycraftAid;
 import thaumcraft.api.research.theorycraft.TheorycraftCard;
 

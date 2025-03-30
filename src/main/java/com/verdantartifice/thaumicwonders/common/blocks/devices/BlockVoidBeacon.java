@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockDeviceTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileVoidBeacon;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,17 +33,17 @@ public class BlockVoidBeacon extends BlockDeviceTW<TileVoidBeacon> implements IB
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
-    
-    @Override
+
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    @Override
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
-    
+
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te != null && te instanceof TileVoidBeacon) {
+        if (te instanceof TileVoidBeacon) {
             TileVoidBeacon tileEntity = (TileVoidBeacon)te;
             if (playerIn.isSneaking() && playerIn.getHeldItem(hand).isEmpty()) {
                 // Dump the beacon's contents

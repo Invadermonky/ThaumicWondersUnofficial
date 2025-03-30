@@ -1,17 +1,11 @@
 package com.verdantartifice.thaumicwonders.proxy;
 
-import com.verdantartifice.thaumicwonders.client.gui.GuiCatalyzationChamber;
-import com.verdantartifice.thaumicwonders.client.gui.GuiMeatyOrb;
-import com.verdantartifice.thaumicwonders.client.gui.GuiMeteorb;
-import com.verdantartifice.thaumicwonders.client.gui.GuiPrimordialAccelerator;
-import com.verdantartifice.thaumicwonders.client.gui.GuiStructureDiviner;
-import com.verdantartifice.thaumicwonders.client.gui.GuiTimewinder;
+import com.verdantartifice.thaumicwonders.client.gui.*;
 import com.verdantartifice.thaumicwonders.common.containers.ContainerCatalyzationChamber;
 import com.verdantartifice.thaumicwonders.common.containers.ContainerPrimordialAccelerator;
 import com.verdantartifice.thaumicwonders.common.misc.GuiIds;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCatalyzationChamber;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePrimordialAccelerator;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

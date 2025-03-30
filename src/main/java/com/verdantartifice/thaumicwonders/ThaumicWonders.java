@@ -1,10 +1,7 @@
 package com.verdantartifice.thaumicwonders;
 
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.thaumicwonders.common.misc.CreativeTabTW;
 import com.verdantartifice.thaumicwonders.proxy.IProxyTW;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -13,6 +10,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.Logger;
 
 @Mod(modid = ThaumicWonders.MODID, name = ThaumicWonders.NAME, version = ThaumicWonders.VERSION, dependencies = ThaumicWonders.DEPENDENCIES, updateJSON = ThaumicWonders.UPDATE_URL)
 public class ThaumicWonders {

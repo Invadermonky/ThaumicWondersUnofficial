@@ -1,11 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.items.entities;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
-
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,16 +14,14 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.items.IRechargable;
 import thaumcraft.api.items.RechargeHelper;
+
+import javax.annotation.Nullable;
 
 public class ItemFlyingCarpet extends ItemTW implements IRechargable {
     public static final int CAPACITY = 240;
@@ -54,7 +49,7 @@ public class ItemFlyingCarpet extends ItemTW implements IRechargable {
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         IBlockState state = world.getBlockState(pos);
         if (!world.isRemote && state.getBlock() == Blocks.CAULDRON) {
-            int level = state.getValue(BlockCauldron.LEVEL).intValue();
+            int level = state.getValue(BlockCauldron.LEVEL);
             if (level > 0) {
                 this.removeDyeColor(player.getHeldItem(hand));
                 Blocks.CAULDRON.setWaterLevel(world, pos, state, level - 1);

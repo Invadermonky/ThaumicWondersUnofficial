@@ -2,10 +2,8 @@ package com.verdantartifice.thaumicwonders.common.blocks.misc;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockTW;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -76,6 +74,6 @@ public class BlockPrimordialAcceleratorTunnel extends BlockTW implements IBlockF
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] { IBlockFacingHorizontal.FACING });
+        return new BlockStateContainer(this, IBlockFacingHorizontal.FACING);
     }
 }

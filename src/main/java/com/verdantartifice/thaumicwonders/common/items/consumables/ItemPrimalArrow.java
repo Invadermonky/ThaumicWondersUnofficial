@@ -3,7 +3,6 @@ package com.verdantartifice.thaumicwonders.common.items.consumables;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.entities.EntityPrimalArrow;
 import com.verdantartifice.thaumicwonders.common.items.base.IVariantItem;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,9 +23,9 @@ public class ItemPrimalArrow extends ItemArrow implements IVariantItem {
     
     public ItemPrimalArrow() {
         this.baseName = "primal_arrow";
-        setRegistryName(ThaumicWonders.MODID, this.baseName);
-        setUnlocalizedName(ThaumicWonders.MODID + "." + this.getRegistryName().getResourcePath());
-        setCreativeTab(ThaumicWonders.CREATIVE_TAB);
+        this.setRegistryName(ThaumicWonders.MODID, this.baseName);
+        this.setTranslationKey(this.getRegistryName().toString());
+        this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
         
         this.variants = new String[] { "air", "earth", "fire", "water", "order", "entropy" };
         this.setHasSubtypes(true);
@@ -35,16 +34,16 @@ public class ItemPrimalArrow extends ItemArrow implements IVariantItem {
             this.variantsMeta[index] = index;
         }
     }
-    
+
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        if (this.getHasSubtypes() && stack.getMetadata() < this.variants.length && this.variants[stack.getMetadata()] != this.baseName) {
-            return String.format(super.getUnlocalizedName() + ".%s", this.variants[stack.getMetadata()]);
+    public String getTranslationKey(ItemStack stack) {
+        if (this.getHasSubtypes() && stack.getMetadata() < this.variants.length && !this.variants[stack.getMetadata()].equals(this.baseName)) {
+            return String.format(super.getTranslationKey() + ".%s", this.variants[stack.getMetadata()]);
         } else {
-            return super.getUnlocalizedName(stack);
+            return super.getTranslationKey(stack);
         }
     }
-    
+
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (tab == ThaumicWonders.CREATIVE_TAB || tab == CreativeTabs.SEARCH) {

@@ -1,16 +1,10 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
-import java.awt.Color;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.entities.EntityVoidPortal;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLiving;
@@ -22,6 +16,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,11 +35,16 @@ import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.RandomItemChooser;
 import thaumcraft.common.tiles.devices.TileStabilizer;
 
+import java.awt.*;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDisplayExtended {
-    public static enum Stability {
+    public enum Stability {
         VERY_STABLE, STABLE, UNSTABLE, VERY_UNSTABLE;
         
-        private Stability() {}
+        Stability() {}
     }
     
     protected static class InstabilityEventEntry implements RandomItemChooser.Item {
@@ -127,13 +127,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
     }
     
     public void setStability(float stability) {
-        if (stability > 100.0F) {
-            this.stability = 100.0F;
-        } else if (stability < -100.0F) {
-            this.stability = -100.0F;
-        } else {
-            this.stability = stability;
-        }
+        this.stability = MathHelper.clamp(stability, -100.0f, 100.0f);
     }
     
     public float getStability() {
@@ -182,7 +176,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
     protected EntityVoidPortal getActivePortal() {
         AxisAlignedBB bb = new AxisAlignedBB(this.pos.up());
         List<EntityVoidPortal> portalList = this.world.getEntitiesWithinAABB(EntityVoidPortal.class, bb);
-        return (portalList.size() > 0) ? portalList.get(0) : null;
+        return (!portalList.isEmpty()) ? portalList.get(0) : null;
     }
     
     protected boolean isPortalActive() {
@@ -253,7 +247,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
                     }
 
                     List<EntityVoidPortal> portals = this.world.getEntitiesWithinAABB(EntityVoidPortal.class, new AxisAlignedBB(this.pos.up()).grow(16.0D));
-                    if (portals.size() > 0) {
+                    if (!portals.isEmpty()) {
                         this.lastStabilityDecrease = 0.04F * portals.size() * portals.size();
                         this.setStability(this.stability - this.lastStabilityDecrease);
                     }
@@ -299,7 +293,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
     }
     
     protected void fluxBurst() {
-        float amount = (float)Math.sqrt((double)Math.abs(this.stability));
+        float amount = (float)Math.sqrt(Math.abs(this.stability));
         AuraHelper.polluteAura(this.world, this.pos, amount, true);
     }
     
@@ -329,12 +323,10 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
             count = 1 + (int)Math.floor(Math.abs(this.getStability()) / 40.0F);
             break;
         case 3:
-            count = 1;
+            case 4:
+                count = 1;
             break;
-        case 4:
-            count = 1;
-            break;
-        default:
+            default:
             ThaumicWonders.LOGGER.warn("Unexpected spawn event ID {}", event.eventId);
             return;
         }
@@ -417,7 +409,6 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
             break;
         default:
             ThaumicWonders.LOGGER.warn("Unexpected subversion event ID {}", event.eventId);
-            return;
         }
     }
     

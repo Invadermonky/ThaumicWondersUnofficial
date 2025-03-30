@@ -6,7 +6,6 @@ import com.verdantartifice.thaumicwonders.common.init.InitResearch;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.misc.BehaviorDispensePrimalArrow;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
-
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

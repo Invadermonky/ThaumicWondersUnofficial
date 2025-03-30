@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.util.ITickable;
 import thaumcraft.client.fx.FXDispatcher;
 

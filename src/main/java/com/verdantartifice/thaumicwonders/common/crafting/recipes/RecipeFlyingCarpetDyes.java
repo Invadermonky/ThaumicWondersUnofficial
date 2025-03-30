@@ -1,11 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.crafting.recipes;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.items.entities.ItemFlyingCarpet;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -14,6 +11,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.DyeUtils;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+
+import javax.annotation.Nonnull;
 
 public class RecipeFlyingCarpetDyes extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
     public RecipeFlyingCarpetDyes() {

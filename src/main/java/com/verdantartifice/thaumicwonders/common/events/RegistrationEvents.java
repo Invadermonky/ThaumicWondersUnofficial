@@ -6,7 +6,6 @@ import com.verdantartifice.thaumicwonders.common.init.InitEntities;
 import com.verdantartifice.thaumicwonders.common.init.InitItems;
 import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import com.verdantartifice.thaumicwonders.proxy.ProxyBlock;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;

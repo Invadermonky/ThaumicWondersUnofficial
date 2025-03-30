@@ -1,9 +1,6 @@
 package com.verdantartifice.thaumicwonders.client.renderers.tile;
 
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileVoidBeacon;
-
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -14,13 +11,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
+
 @SideOnly(Side.CLIENT)
 public class TesrVoidBeacon extends TileEntitySpecialRenderer<TileVoidBeacon> {
     public static final ResourceLocation TEXTURE_BEACON_BEAM = new ResourceLocation("textures/entity/beacon_beam.png");
 
     @Override
     public void render(TileVoidBeacon te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        this.renderBeacon(x, y + 0.19D, z, (double)partialTicks, (double)te.shouldBeamRender(), te.getBeamSegments(), (double)te.getWorld().getTotalWorldTime());
+        this.renderBeacon(x, y + 0.19D, z, partialTicks, te.shouldBeamRender(), te.getBeamSegments(), (double)te.getWorld().getTotalWorldTime());
     }
 
     protected void renderBeacon(double x, double y, double z, double partialTicks, double textureScale, List<TileVoidBeacon.BeamSegment> beamSegments, double totalWorldTime) {
@@ -30,8 +29,7 @@ public class TesrVoidBeacon extends TileEntitySpecialRenderer<TileVoidBeacon> {
         if (textureScale > 0.0D) {
             GlStateManager.disableFog();
             int yOffset = 0;
-            for (int j = 0; j < beamSegments.size(); j++) {
-                TileVoidBeacon.BeamSegment segment = beamSegments.get(j);
+            for (TileVoidBeacon.BeamSegment segment : beamSegments) {
                 this.renderBeamSegment(x, y, z, partialTicks, textureScale, totalWorldTime, yOffset, segment.getHeight(), segment.getColors());
                 yOffset += segment.getHeight();
             }

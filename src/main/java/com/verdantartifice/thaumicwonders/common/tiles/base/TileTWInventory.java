@@ -1,9 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.tiles.base;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ISidedInventory;
@@ -18,6 +15,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+
+import javax.annotation.Nullable;
 
 public class TileTWInventory extends TileTW implements ISidedInventory {
     private NonNullList<ItemStack> stacks = NonNullList.withSize(1, ItemStack.EMPTY);
@@ -222,7 +221,7 @@ public class TileTWInventory extends TileTW implements ISidedInventory {
 
     @Override
     public boolean hasCustomName() {
-        return this.customName != null && this.customName.length() > 0;
+        return this.customName != null && !this.customName.isEmpty();
     }
     
     @Nullable

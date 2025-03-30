@@ -1,11 +1,10 @@
 package com.verdantartifice.thaumicwonders.common.fluids;
 
-import java.awt.Color;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
+
+import java.awt.*;
 
 public class FluidQuicksilver extends Fluid {
     public static final FluidQuicksilver INSTANCE = new FluidQuicksilver();

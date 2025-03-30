@@ -1,14 +1,9 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockCoalescenceMatrix;
 import com.verdantartifice.thaumicwonders.common.entities.monsters.EntityCorruptionAvatar;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -29,6 +24,10 @@ import thaumcraft.common.blocks.basic.BlockPillar;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.EntityUtils;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileCoalescenceMatrix extends TileTW implements ITickable, IInteractWithCaster {
     protected static final int PROGRESS_PER_CHARGE = 50;
@@ -149,7 +148,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
     }
     
     protected boolean canMakeProgress() {
-        return this.isValidPlacement() && !this.isProgressFull() && this.getValidRifts().size() > 0;
+        return this.isValidPlacement() && !this.isProgressFull() && !this.getValidRifts().isEmpty();
     }
     
     protected boolean isValidPlacement() {

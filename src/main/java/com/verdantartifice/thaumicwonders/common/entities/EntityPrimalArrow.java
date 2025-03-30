@@ -1,13 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.entities;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,18 +24,13 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketChangeGameState;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.*;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class EntityPrimalArrow extends EntityArrow {
     @SuppressWarnings("unchecked")
@@ -50,7 +40,7 @@ public class EntityPrimalArrow extends EntityArrow {
         }
     });
 
-    private static final DataParameter<Integer> ARROW_TYPE = EntityDataManager.<Integer>createKey(EntityPrimalArrow.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> ARROW_TYPE = EntityDataManager.createKey(EntityPrimalArrow.class, DataSerializers.VARINT);
     
     private int knockbackStrength;
     private int ticksInAir = 0;
@@ -79,15 +69,15 @@ public class EntityPrimalArrow extends EntityArrow {
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(ARROW_TYPE, Integer.valueOf(0));
+        this.dataManager.register(ARROW_TYPE, 0);
     }
     
     public int getArrowType() {
-        return this.dataManager.get(ARROW_TYPE).intValue();
+        return this.dataManager.get(ARROW_TYPE);
     }
     
     public void setArrowType(int type) {
-        this.dataManager.set(ARROW_TYPE, Integer.valueOf(type));
+        this.dataManager.set(ARROW_TYPE, type);
     }
     
     @Override
@@ -111,7 +101,7 @@ public class EntityPrimalArrow extends EntityArrow {
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
             float hVelocity = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
             this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
-            this.rotationPitch = (float)(MathHelper.atan2(this.motionY, (double)hVelocity) * (180D / Math.PI));
+            this.rotationPitch = (float)(MathHelper.atan2(this.motionY, hVelocity) * (180D / Math.PI));
             this.prevRotationYaw = this.rotationYaw;
             this.prevRotationPitch = this.rotationPitch;
         }
@@ -134,9 +124,9 @@ public class EntityPrimalArrow extends EntityArrow {
         if (this.inGround) {
             if ((block != this.inTile || block.getMetaFromState(iblockstate) != this.inData) && !this.world.collidesWithAnyBlock(this.getEntityBoundingBox().grow(0.05D))) {
                 this.inGround = false;
-                this.motionX *= (double)(this.rand.nextFloat() * 0.2F);
-                this.motionY *= (double)(this.rand.nextFloat() * 0.2F);
-                this.motionZ *= (double)(this.rand.nextFloat() * 0.2F);
+                this.motionX *= (this.rand.nextFloat() * 0.2F);
+                this.motionY *= (this.rand.nextFloat() * 0.2F);
+                this.motionZ *= (this.rand.nextFloat() * 0.2F);
                 this.ticksInGround = 0;
                 this.ticksInAir = 0;
             } else {
@@ -188,7 +178,7 @@ public class EntityPrimalArrow extends EntityArrow {
             float hVelocity = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
             this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
 
-            for (this.rotationPitch = (float)(MathHelper.atan2(this.motionY, (double)hVelocity) * (180D / Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+            for (this.rotationPitch = (float)(MathHelper.atan2(this.motionY, hVelocity) * (180D / Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
                 ;
             }
 
@@ -220,9 +210,9 @@ public class EntityPrimalArrow extends EntityArrow {
                 this.extinguish();
             }
 
-            this.motionX *= (double)motionMultiplier;
-            this.motionY *= (double)motionMultiplier;
-            this.motionZ *= (double)motionMultiplier;
+            this.motionX *= motionMultiplier;
+            this.motionY *= motionMultiplier;
+            this.motionZ *= motionMultiplier;
 
             if (!this.hasNoGravity()) {
                 this.motionY -= 0.05D;
@@ -239,7 +229,7 @@ public class EntityPrimalArrow extends EntityArrow {
         if (this.getIsCritical()) {
             baseDamage += this.rand.nextInt(baseDamage / 2 + 2);
         }
-        double retVal = (double)baseDamage;
+        double retVal = baseDamage;
         switch (this.getArrowType()) {
         case 1:
             // Earth arrows do more damage than normal
@@ -352,9 +342,9 @@ public class EntityPrimalArrow extends EntityArrow {
             IBlockState iblockstate = this.world.getBlockState(blockpos);
             this.inTile = iblockstate.getBlock();
             this.inData = this.inTile.getMetaFromState(iblockstate);
-            this.motionX = (double)((float)(raytraceResultIn.hitVec.x - this.posX));
-            this.motionY = (double)((float)(raytraceResultIn.hitVec.y - this.posY));
-            this.motionZ = (double)((float)(raytraceResultIn.hitVec.z - this.posZ));
+            this.motionX = ((float)(raytraceResultIn.hitVec.x - this.posX));
+            this.motionY = ((float)(raytraceResultIn.hitVec.y - this.posY));
+            this.motionZ = ((float)(raytraceResultIn.hitVec.z - this.posZ));
             float f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
             this.posX -= this.motionX / (double)f2 * 0.05D;
             this.posY -= this.motionY / (double)f2 * 0.05D;
@@ -365,7 +355,7 @@ public class EntityPrimalArrow extends EntityArrow {
             this.setIsCritical(false);
 
             if (iblockstate.getMaterial() != Material.AIR) {
-                this.inTile.onEntityCollidedWithBlock(this.world, blockpos, iblockstate, this);
+                this.inTile.onEntityCollision(this.world, blockpos, iblockstate, this);
             }
         }
     }

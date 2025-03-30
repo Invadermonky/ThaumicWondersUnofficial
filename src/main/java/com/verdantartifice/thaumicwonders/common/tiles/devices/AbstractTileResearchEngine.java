@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -58,7 +57,7 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
                 continue;
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
-            if (te != null && te instanceof IEssentiaTransport) {
+            if (te instanceof IEssentiaTransport) {
                 IEssentiaTransport otherTile = (IEssentiaTransport)te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
@@ -70,7 +69,7 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
                     int taken = otherTile.takeEssentia(this.getAspect(), 1, face.getOpposite());
                     int leftover = this.addToContainer(this.getAspect(), taken);
                     if (leftover > 0) {
-                        ThaumicWonders.LOGGER.info("{} spilling {} essentia on fill", this.blockType.getRegistryName().getResourcePath(), leftover);
+                        ThaumicWonders.LOGGER.info("{} spilling {} essentia on fill", this.blockType.getRegistryName().getPath(), leftover);
                         AuraHelper.polluteAura(this.world, this.pos, leftover, true);
                     }
                     this.syncTile(false);

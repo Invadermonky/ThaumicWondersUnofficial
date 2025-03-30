@@ -6,7 +6,6 @@ import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketOreDivinerSearch;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketOreDivinerStop;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileOreDiviner;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -39,10 +38,10 @@ public class BlockOreDiviner extends BlockDeviceTW<TileOreDiviner> {
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
-    
-    @Override
+
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    @Override
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 

@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.items;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBow;

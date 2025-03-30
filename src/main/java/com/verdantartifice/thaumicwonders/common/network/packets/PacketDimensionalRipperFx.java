@@ -1,7 +1,5 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
-import java.awt.Color;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
@@ -16,6 +14,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.blocks.IBlockFacing;
+
+import java.awt.*;
 
 public class PacketDimensionalRipperFx implements IMessage {
     protected BlockPos source;
@@ -57,9 +57,9 @@ public class PacketDimensionalRipperFx implements IMessage {
             if (state.getBlock() instanceof IBlockFacing) {
                 EnumFacing blockFacing = state.getValue(IBlockFacing.FACING);
                 FXDispatcher.INSTANCE.beamBore(
-                    message.source.getX() + 0.5D + (blockFacing.getFrontOffsetX() / 2.0D), 
-                    message.source.getY() + 0.5D + (blockFacing.getFrontOffsetY() / 2.0D), 
-                    message.source.getZ() + 0.5D + (blockFacing.getFrontOffsetZ() / 2.0D), 
+                    message.source.getX() + 0.5D + (blockFacing.getXOffset() / 2.0D),
+                    message.source.getY() + 0.5D + (blockFacing.getYOffset() / 2.0D),
+                    message.source.getZ() + 0.5D + (blockFacing.getZOffset() / 2.0D),
                     message.target.getX() + 0.5D, 
                     message.target.getY() + 0.5D, 
                     message.target.getZ() + 0.5D, 

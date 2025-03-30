@@ -1,11 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockDeviceTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePrimordialAccretionChamber;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -27,6 +24,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
 import thaumcraft.common.lib.utils.BlockStateUtils;
+
+import java.util.Random;
 
 public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordialAccretionChamber> implements IBlockFacingHorizontal {
     public static boolean ignoreDestroy = false;
@@ -50,13 +49,13 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
     
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {}
-    
-    @Override
+
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    @Override
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
-    
+
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         IBlockState bs = getDefaultState();
@@ -105,7 +104,7 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if (entityIn.posX < pos.getX() + 0.3F) {
             entityIn.motionX += 0.0001D;
         }
@@ -129,6 +128,6 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
                 ((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
             }
         }
-        super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
+        super.onEntityCollision(worldIn, pos, state, entityIn);
     }
 }

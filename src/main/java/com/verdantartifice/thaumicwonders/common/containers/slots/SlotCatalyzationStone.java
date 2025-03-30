@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.containers.slots;
 
 import com.verdantartifice.thaumicwonders.common.items.catalysts.ICatalystStone;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCatalyzationChamber;
-
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 

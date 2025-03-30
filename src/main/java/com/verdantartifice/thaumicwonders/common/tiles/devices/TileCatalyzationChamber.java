@@ -3,7 +3,6 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.items.catalysts.ICatalystStone;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
-
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -200,10 +199,9 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
             if (dir != EnumFacing.UP) {
                 BlockPos tilePos = this.pos.offset(dir, 2);
                 TileEntity tile = this.world.getTileEntity(tilePos);
-                if ( tile != null &&
-                     tile instanceof TileBellows &&
-                     BlockStateUtils.getFacing(this.world.getBlockState(tilePos)) == dir.getOpposite() &&
-                     this.world.isBlockIndirectlyGettingPowered(tilePos) == 0 ) {
+                if (tile instanceof TileBellows &&
+                        BlockStateUtils.getFacing(this.world.getBlockState(tilePos)) == dir.getOpposite() &&
+                        this.world.getRedstonePowerFromNeighbors(tilePos) == 0) {
                     count++;
                 }
             }
@@ -213,8 +211,8 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
 
     private void setFacing() {
         EnumFacing face = this.getFacing().getOpposite();
-        this.facingX = face.getFrontOffsetX();
-        this.facingZ = face.getFrontOffsetZ();
+        this.facingX = face.getXOffset();
+        this.facingZ = face.getZOffset();
     }
     
     @Override

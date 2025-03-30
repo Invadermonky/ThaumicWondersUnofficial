@@ -1,9 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.blocks.base;
 
-import java.util.ArrayList;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -19,6 +16,8 @@ import thaumcraft.common.blocks.IBlockFacing;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 
+import java.util.ArrayList;
+
 public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
     public BlockDeviceTW(Material mat, Class<T> tileClass, String name) {
         super(mat, tileClass, name);
@@ -30,7 +29,7 @@ public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
             blockState.withProperty(IBlockFacing.FACING, EnumFacing.UP);
         }
         if (this instanceof IBlockEnabled) {
-            blockState.withProperty(IBlockEnabled.ENABLED, Boolean.valueOf(true));
+            blockState.withProperty(IBlockEnabled.ENABLED, Boolean.TRUE);
         }
         this.setDefaultState(blockState);
     }
@@ -68,7 +67,7 @@ public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
             state = state.withProperty(IBlockFacing.FACING, placer.isSneaking() ? direction.getOpposite() : direction);
         }
         if (this instanceof IBlockEnabled) {
-            state = state.withProperty(IBlockEnabled.ENABLED, Boolean.valueOf(true));
+            state = state.withProperty(IBlockEnabled.ENABLED, Boolean.TRUE);
         }
         return state;
     }
@@ -120,8 +119,8 @@ public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
         if (this instanceof IBlockEnabled) {
             properties.add(IBlockEnabled.ENABLED);
         }
-        return properties.size() == 0 ?
+        return properties.isEmpty() ?
             super.createBlockState() :
-            new BlockStateContainer(this, properties.toArray(new IProperty<?>[properties.size()]));
+            new BlockStateContainer(this, properties.toArray(new IProperty<?>[0]));
     }
 }

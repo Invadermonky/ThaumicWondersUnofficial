@@ -1,17 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -29,11 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import thaumcraft.api.ThaumcraftApiHelper;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectHelper;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.aspects.IAspectContainer;
-import thaumcraft.api.aspects.IEssentiaTransport;
+import thaumcraft.api.aspects.*;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.client.fx.FXDispatcher;
@@ -41,6 +27,14 @@ import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.lib.utils.EntityUtils;
 import thaumcraft.common.lib.utils.RandomItemChooser;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TileVoidBeacon extends TileTW implements ITickable, IAspectContainer, IEssentiaTransport {
     private static final int CAPACITY = 100;
@@ -316,7 +310,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
                 continue;
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
-            if (te != null && te instanceof IEssentiaTransport) {
+            if (te instanceof IEssentiaTransport) {
                 IEssentiaTransport otherTile = (IEssentiaTransport)te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
@@ -619,7 +613,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         
         @Override
         public boolean equals(Object obj) {
-            if (obj == null || !(obj instanceof RegistryEntry)) {
+            if (!(obj instanceof RegistryEntry)) {
                 return false;
             }
             return ItemStack.areItemStacksEqual(stack, ((RegistryEntry)obj).stack);

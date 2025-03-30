@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.containers;
 
 import com.verdantartifice.thaumicwonders.common.containers.slots.SlotCatalyzationStone;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCatalyzationChamber;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -36,7 +35,7 @@ public class ContainerCatalyzationChamber extends Container {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slotObject = (Slot)this.inventorySlots.get(index);
+        Slot slotObject = this.inventorySlots.get(index);
         if (slotObject != null && slotObject.getHasStack()) {
             ItemStack stackInSlot = slotObject.getStack();
             stack = stackInSlot.copy();

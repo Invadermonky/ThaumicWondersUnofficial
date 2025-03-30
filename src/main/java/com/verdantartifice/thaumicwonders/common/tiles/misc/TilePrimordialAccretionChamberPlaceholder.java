@@ -1,11 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.tiles.misc;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePrimordialAccretionChamber;
-
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -16,6 +13,8 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.aura.AuraHelper;
+
+import javax.annotation.Nullable;
 
 public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable {
     protected int tickCounter = 0;
@@ -40,7 +39,7 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
                 continue;
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
-            if (te != null && te instanceof IEssentiaTransport) {
+            if (te instanceof IEssentiaTransport) {
                 IEssentiaTransport otherTile = (IEssentiaTransport)te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
@@ -120,19 +119,19 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
     @Override
     public boolean doesContainerAccept(Aspect aspect) {
         TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile == null ? false : tile.doesContainerAccept(aspect);
+        return tile != null && tile.doesContainerAccept(aspect);
     }
 
     @Override
     public boolean doesContainerContain(AspectList aspectList) {
         TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile == null ? false : tile.doesContainerContain(aspectList);
+        return tile != null && tile.doesContainerContain(aspectList);
     }
 
     @Override
     public boolean doesContainerContainAmount(Aspect aspect, int amt) {
         TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile == null ? false : tile.doesContainerContainAmount(aspect, amt);
+        return tile != null && tile.doesContainerContainAmount(aspect, amt);
     }
 
     @Override
@@ -152,13 +151,13 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
     @Override
     public boolean takeFromContainer(AspectList aspectList) {
         TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile == null ? false : tile.takeFromContainer(aspectList);
+        return tile != null && tile.takeFromContainer(aspectList);
     }
 
     @Override
     public boolean takeFromContainer(Aspect aspect, int amt) {
         TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile == null ? false : tile.takeFromContainer(aspect, amt);
+        return tile != null && tile.takeFromContainer(aspect, amt);
     }
 
     @Override

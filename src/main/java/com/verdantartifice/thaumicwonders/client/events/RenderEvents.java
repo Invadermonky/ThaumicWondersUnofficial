@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.client.events;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.client.gui.HudManager;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +21,7 @@ public class RenderEvents {
     public static void renderTick(TickEvent.RenderTickEvent event) {
         if (event.phase != TickEvent.Phase.START) {
             Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
-            if (entity != null && entity instanceof EntityPlayer) {
+            if (entity instanceof EntityPlayer) {
                 hudManager.renderHuds(FMLClientHandler.instance().getClient(), event.renderTickTime, (EntityPlayer)entity, System.currentTimeMillis());
             }
         }

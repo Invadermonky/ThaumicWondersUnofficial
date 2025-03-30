@@ -1,10 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.items.armor;
 
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.client.renderers.models.gear.ModelVoidFortressArmor;
-
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -29,6 +26,8 @@ import thaumcraft.api.items.IGoggles;
 import thaumcraft.api.items.IWarpingGear;
 import thaumcraft.api.items.ItemsTC;
 
+import java.util.List;
+
 public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, IWarpingGear, IGoggles {
     public static ItemArmor.ArmorMaterial MATERIAL = EnumHelper.addArmorMaterial("VOID_FORTRESS", "VOID_FORTRESS", 50, new int[] { 4, 7, 9, 4 }, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.0F);
     ModelBiped model1 = null;
@@ -37,7 +36,7 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
     public ItemVoidFortressArmor(String name, ArmorMaterial materialIn, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
         super(materialIn, renderIndexIn, equipmentSlotIn);
         this.setRegistryName(ThaumicWonders.MODID, name);
-        this.setUnlocalizedName(ThaumicWonders.MODID + "." + this.getRegistryName().getResourcePath());
+        this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
     }
 
@@ -62,7 +61,7 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
     
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return repair.isItemEqual(new ItemStack(ItemsTC.ingots, 1, 1)) ? true : super.getIsRepairable(toRepair, repair);
+        return repair.isItemEqual(new ItemStack(ItemsTC.ingots, 1, 1)) || super.getIsRepairable(toRepair, repair);
     }
     
     @Override

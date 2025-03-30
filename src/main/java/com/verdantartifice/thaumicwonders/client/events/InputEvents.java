@@ -3,7 +3,6 @@ package com.verdantartifice.thaumicwonders.client.events;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.client.config.KeyBindings;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +20,7 @@ public class InputEvents {
         EntityPlayer player = Minecraft.getMinecraft().player;
         if (player != null) {
             Entity ridingEntity = player.getRidingEntity();
-            if (ridingEntity != null && ridingEntity instanceof EntityFlyingCarpet) {
+            if (ridingEntity instanceof EntityFlyingCarpet) {
                 ((EntityFlyingCarpet)ridingEntity).updateInputs(
                     KeyBindings.carpetForwardKey.isKeyDown(), 
                     KeyBindings.carpetBackwardKey.isKeyDown()

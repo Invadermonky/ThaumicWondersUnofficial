@@ -1,15 +1,13 @@
 package com.verdantartifice.thaumicwonders.client.renderers.tile;
 
-import org.lwjgl.opengl.ARBShaderObjects;
-import org.lwjgl.opengl.GL11;
-
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileDimensionalRipper;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.ARBShaderObjects;
+import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.client.lib.ender.ShaderCallback;
 import thaumcraft.client.lib.ender.ShaderHelper;
@@ -72,8 +70,8 @@ public class TesrDimensionalRipper extends TileEntitySpecialRenderer<TileDimensi
             GlStateManager.depthMask(false);
             for (EnumFacing face : EnumFacing.values()) {
                 GL11.glPushMatrix();
-                GL11.glRotatef(90.0F, -face.getFrontOffsetY(), face.getFrontOffsetX(), -face.getFrontOffsetZ());
-                if (face.getFrontOffsetZ() < 0) {
+                GL11.glRotatef(90.0F, -face.getYOffset(), face.getXOffset(), -face.getZOffset());
+                if (face.getZOffset() < 0) {
                     GL11.glTranslated(0.0D, 0.0D, 0.126D);
                     GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
                 } else {

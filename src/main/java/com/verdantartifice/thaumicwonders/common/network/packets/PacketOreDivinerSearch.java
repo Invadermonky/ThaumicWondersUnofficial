@@ -1,14 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.common.misc.OreHelper;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileOreDiviner;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -32,6 +25,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.common.lib.utils.Utils;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PacketOreDivinerSearch implements IMessage {
     protected BlockPos origin;
@@ -72,7 +70,7 @@ public class PacketOreDivinerSearch implements IMessage {
             EntityPlayer entityPlayer = Minecraft.getMinecraft().player;
             if (message.origin != null && message.searchStack != null) {
                 TileEntity tile = world.getTileEntity(message.origin);
-                if (tile != null && tile instanceof TileOreDiviner && OreHelper.isOreBlock(message.searchStack)) {
+                if (tile instanceof TileOreDiviner && OreHelper.isOreBlock(message.searchStack)) {
                     BlockPos target = this.search(world, message.origin, message.searchStack, TileOreDiviner.SCAN_RANGE);
                     if (target == null) {
                         entityPlayer.sendStatusMessage(new TextComponentString(TextFormatting.DARK_PURPLE + I18n.format("event.ore_diviner.not_found")), true);
@@ -114,7 +112,7 @@ public class PacketOreDivinerSearch implements IMessage {
         
         @SideOnly(Side.CLIENT)
         private Set<BlockPos> generateShell(BlockPos origin, int radius) {
-            Set<BlockPos> posSet = new HashSet<BlockPos>();
+            Set<BlockPos> posSet = new HashSet<>();
             this.generateXPlanes(origin, radius, posSet);
             this.generateYPlanes(origin, radius, posSet);
             this.generateZPlanes(origin, radius, posSet);

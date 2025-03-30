@@ -1,9 +1,5 @@
 package com.verdantartifice.thaumicwonders.common.misc;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -12,6 +8,9 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import thaumcraft.api.aura.AuraHelper;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class FluxExplosion extends Explosion {
     protected World world;

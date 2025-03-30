@@ -1,19 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.network;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketAvatarZapFx;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketDimensionalRipperFx;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketMeatyOrbAction;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketMeteorbAction;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketMeteorbFx;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketOreDivinerSearch;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketOreDivinerStop;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketStructureDivinerAction;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketTileToClient;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketTileToServer;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketTimewinderAction;
-
+import com.verdantartifice.thaumicwonders.common.network.packets.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;

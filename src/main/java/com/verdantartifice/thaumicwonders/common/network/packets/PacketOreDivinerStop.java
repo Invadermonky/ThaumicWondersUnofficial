@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileOreDiviner;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +45,7 @@ public class PacketOreDivinerStop implements IMessage {
         private void handle(PacketOreDivinerStop message, MessageContext ctx) {
             World world = FMLClientHandler.instance().getClient().world;
             TileEntity tile = world.getTileEntity(message.origin);
-            if (tile != null && tile instanceof TileOreDiviner) {
+            if (tile instanceof TileOreDiviner) {
                 ((TileOreDiviner)tile).setTarget(null);
             }
         }

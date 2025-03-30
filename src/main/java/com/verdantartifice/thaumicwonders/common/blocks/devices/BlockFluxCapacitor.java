@@ -1,13 +1,9 @@
 package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockTW;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -22,13 +18,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aura.AuraHelper;
 
+import java.util.Random;
+
 public class BlockFluxCapacitor extends BlockTW {
     public static final PropertyInteger CHARGE = PropertyInteger.create("charge", 0, 10);
     
     public BlockFluxCapacitor() {
         super(Material.ROCK, "flux_capacitor");
         this.setTickRandomly(true);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHARGE, Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHARGE, 0));
     }
     
     @Override
@@ -38,14 +36,14 @@ public class BlockFluxCapacitor extends BlockTW {
             if (worldIn.isBlockPowered(pos)) {
                 if (charge > 0) {
                     AuraHelper.polluteAura(worldIn, pos, 1.0F, true);
-                    worldIn.setBlockState(pos, state.withProperty(CHARGE, Integer.valueOf(charge - 1)));
+                    worldIn.setBlockState(pos, state.withProperty(CHARGE, charge - 1));
                     worldIn.scheduleUpdate(pos, state.getBlock(), 5);
                 }
             } else {
                 float flux = AuraHelper.getFlux(worldIn, pos);
                 if (charge < 10 && flux >= 1.0F) {
                     AuraHelper.drainFlux(worldIn, pos, 1.0F, false);
-                    worldIn.setBlockState(pos, state.withProperty(CHARGE, Integer.valueOf(charge + 1)));
+                    worldIn.setBlockState(pos, state.withProperty(CHARGE, charge + 1));
                     worldIn.scheduleUpdate(pos, state.getBlock(), 100 + rand.nextInt(100));
                 }
             }
@@ -83,22 +81,22 @@ public class BlockFluxCapacitor extends BlockTW {
         int l = j & 0xFF;
         int i1 = i >> 16 & 0xFF;
         int j1 = j >> 16 & 0xFF;
-        return (k > l ? k : l) | (i1 > j1 ? i1 : j1) << 16;
+        return (Math.max(k, l)) | (Math.max(i1, j1)) << 16;
     }
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] { CHARGE });
+        return new BlockStateContainer(this, CHARGE);
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(CHARGE, Integer.valueOf(meta));
+        return this.getDefaultState().withProperty(CHARGE, meta);
     }
     
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(CHARGE).intValue();
+        return state.getValue(CHARGE);
     }
     
     @Override
@@ -125,7 +123,7 @@ public class BlockFluxCapacitor extends BlockTW {
         if (state.getBlock() == BlocksTW.FLUX_CAPACITOR) {
             int charge = this.getMetaFromState(state);
             int newCharge = Math.max(0, charge - amount);
-            worldIn.setBlockState(pos, state.withProperty(CHARGE, Integer.valueOf(newCharge)));
+            worldIn.setBlockState(pos, state.withProperty(CHARGE, newCharge));
         }
     }
 }

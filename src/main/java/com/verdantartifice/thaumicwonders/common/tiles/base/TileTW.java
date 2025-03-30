@@ -1,11 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.tiles.base;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketTileToClient;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketTileToServer;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,6 +13,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+
+import javax.annotation.Nullable;
 
 public class TileTW extends TileEntity {
     @Override
@@ -93,9 +92,9 @@ public class TileTW extends TileEntity {
     
     public EnumFacing getFacing() {
         try {
-            return EnumFacing.getFront(this.getBlockMetadata() & 0x7);
+            return EnumFacing.byHorizontalIndex(this.getBlockMetadata() & 0x7);
         }
-        catch (Exception localException) {}
+        catch (Exception ignored) {}
         return EnumFacing.UP;
     }
 }

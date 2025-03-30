@@ -1,14 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.common.misc.OreHelper;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -20,6 +13,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.client.fx.FXDispatcher;
+
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TileOreDiviner extends TileTW implements ITickable {
     public static final int SCAN_RANGE = 20;

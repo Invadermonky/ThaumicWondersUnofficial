@@ -1,9 +1,6 @@
 package com.verdantartifice.thaumicwonders.client.renderers.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import com.verdantartifice.thaumicwonders.common.entities.EntityVoidPortal;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.Tessellator;
@@ -15,6 +12,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 
 @SideOnly(Side.CLIENT)

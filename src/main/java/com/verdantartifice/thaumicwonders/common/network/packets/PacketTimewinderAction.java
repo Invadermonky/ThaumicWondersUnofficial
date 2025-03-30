@@ -1,10 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.common.items.misc.ItemTimewinder;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -15,6 +12,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.items.RechargeHelper;
+
+import javax.annotation.Nullable;
 
 public class PacketTimewinderAction implements IMessage {
     private int targetPhase;

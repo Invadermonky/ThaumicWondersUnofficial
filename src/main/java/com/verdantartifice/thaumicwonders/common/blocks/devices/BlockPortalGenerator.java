@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockDeviceTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalGenerator;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -43,7 +42,7 @@ public class BlockPortalGenerator extends BlockDeviceTW<TilePortalGenerator> imp
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         if (!worldIn.isRemote && worldIn.isAirBlock(pos.up(1)) && worldIn.isAirBlock(pos.up(2)) && worldIn.isAirBlock(pos.up(3))) { 
             TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile != null && tile instanceof TilePortalGenerator && stack.hasTagCompound()) {
+            if (tile instanceof TilePortalGenerator && stack.hasTagCompound()) {
                 TilePortalGenerator generatorTile = (TilePortalGenerator)tile;
                 generatorTile.setLink(
                         stack.getTagCompound().getInteger("linkX"), 
@@ -72,7 +71,7 @@ public class BlockPortalGenerator extends BlockDeviceTW<TilePortalGenerator> imp
     private void destroyPortal(World worldIn, BlockPos pos) {
         if (!worldIn.isRemote) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile != null && tile instanceof TilePortalGenerator) {
+            if (tile instanceof TilePortalGenerator) {
                 TilePortalGenerator generatorTile = (TilePortalGenerator)tile;
                 generatorTile.despawnPortal(true);
             }

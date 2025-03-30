@@ -4,7 +4,6 @@ import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import com.verdantartifice.thaumicwonders.common.misc.OreHelper;
-
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.aspects.Aspect;

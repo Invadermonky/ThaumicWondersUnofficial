@@ -1,7 +1,5 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
-import java.awt.Color;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -13,6 +11,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.client.fx.FXDispatcher;
+
+import java.awt.*;
 
 public class PacketMeteorbFx implements IMessage {
     protected BlockPos source;

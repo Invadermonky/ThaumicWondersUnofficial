@@ -1,10 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalAnchor;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -25,6 +22,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.common.lib.SoundsTC;
 
+import java.util.List;
+
 public class ItemBlockPortalGenerator extends ItemBlock {
     public ItemBlockPortalGenerator(Block block) {
         super(block);
@@ -38,7 +37,7 @@ public class ItemBlockPortalGenerator extends ItemBlock {
                 return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
             } else {
                 TileEntity tile = world.getTileEntity(pos);
-                if (tile != null && tile instanceof TilePortalAnchor) {
+                if (tile instanceof TilePortalAnchor) {
                     ItemStack stack = player.getHeldItem(hand).copy();
                     stack.setCount(1);
                     stack.setTagInfo("linkX", new NBTTagInt(tile.getPos().getX()));

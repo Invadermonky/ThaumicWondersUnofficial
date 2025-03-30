@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.client.renderers.entity;
 
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.entities.EntityHexamitePrimed;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;

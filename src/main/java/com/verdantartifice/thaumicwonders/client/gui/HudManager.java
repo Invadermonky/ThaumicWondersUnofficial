@@ -1,12 +1,9 @@
 package com.verdantartifice.thaumicwonders.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.items.entities.ItemFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.items.tools.ItemPrimalDestroyer;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.Entity;
@@ -16,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 import thaumcraft.api.casters.ICaster;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.config.ModConfig;
@@ -79,7 +77,7 @@ public class HudManager {
             
             // Show the carpet GUI if applicable
             Entity ridingEntity = player.getRidingEntity();
-            if (ridingEntity != null && ridingEntity instanceof EntityFlyingCarpet) {
+            if (ridingEntity instanceof EntityFlyingCarpet) {
                 this.renderCarpetHud(mc, renderTickTime, player, (EntityFlyingCarpet)ridingEntity, time, yStart);
                 yStart += 77;
             }

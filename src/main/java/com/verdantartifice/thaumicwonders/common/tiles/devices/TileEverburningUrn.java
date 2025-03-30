@@ -1,10 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -16,6 +12,9 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import thaumcraft.api.aura.AuraHelper;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileEverburningUrn extends TileTW implements ITickable, IFluidHandler {
     protected static final int CAPACITY = 1000;

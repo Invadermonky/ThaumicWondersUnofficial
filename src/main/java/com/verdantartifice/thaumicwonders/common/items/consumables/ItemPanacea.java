@@ -1,11 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.items.consumables;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.items.base.IVariantItem;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +16,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.potions.PotionWarpWard;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class ItemPanacea extends ItemFood implements IVariantItem {
     protected final String baseName;
     protected String[] variants;
@@ -29,7 +29,7 @@ public class ItemPanacea extends ItemFood implements IVariantItem {
         super(6, 1.8F, false);
         this.baseName = "panacea";
         this.setRegistryName(ThaumicWonders.MODID, this.baseName);
-        this.setUnlocalizedName(ThaumicWonders.MODID + "." + this.getRegistryName().getResourcePath());
+        this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
         this.setAlwaysEdible();
         
@@ -40,16 +40,16 @@ public class ItemPanacea extends ItemFood implements IVariantItem {
             this.variantsMeta[index] = index;
         }
     }
-    
+
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        if (this.getHasSubtypes() && stack.getMetadata() < this.variants.length && this.variants[stack.getMetadata()] != this.baseName) {
-            return String.format(super.getUnlocalizedName() + ".%s", this.variants[stack.getMetadata()]);
+    public String getTranslationKey(ItemStack stack) {
+        if (this.getHasSubtypes() && stack.getMetadata() < this.variants.length && !Objects.equals(this.variants[stack.getMetadata()], this.baseName)) {
+            return String.format(super.getTranslationKey() + ".%s", this.variants[stack.getMetadata()]);
         } else {
-            return super.getUnlocalizedName(stack);
+            return super.getTranslationKey(stack);
         }
     }
-    
+
     @Override
     public boolean hasEffect(ItemStack stack) {
         return super.hasEffect(stack) || stack.getMetadata() > 0;

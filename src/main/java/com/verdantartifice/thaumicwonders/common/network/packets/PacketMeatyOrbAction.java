@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.network.packets;
 
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileMeatyOrb;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
@@ -48,7 +47,7 @@ public class PacketMeatyOrbAction implements IMessage {
             EntityPlayerMP entityPlayer = ctx.getServerHandler().player;
             World world = entityPlayer.getEntityWorld();
             TileEntity tileEntity = world.getTileEntity(message.tilePos);
-            if (tileEntity != null && tileEntity instanceof TileMeatyOrb) {
+            if (tileEntity instanceof TileMeatyOrb) {
                 TileMeatyOrb tile = (TileMeatyOrb)tileEntity;
                 if ( tile.doesContainerContainAmount(Aspect.WATER, TileMeatyOrb.MIN_FUEL) &&
                      tile.doesContainerContainAmount(Aspect.LIFE, TileMeatyOrb.MIN_FUEL) &&

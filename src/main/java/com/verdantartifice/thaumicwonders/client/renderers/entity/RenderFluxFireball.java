@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.client.renderers.entity;
 
 import com.verdantartifice.thaumicwonders.common.entities.EntityFluxFireball;
-
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

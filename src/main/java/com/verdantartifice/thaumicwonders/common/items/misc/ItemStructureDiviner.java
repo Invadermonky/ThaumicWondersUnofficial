@@ -1,12 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.items.misc;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import com.verdantartifice.thaumicwonders.common.misc.GuiIds;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -23,6 +19,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ItemStructureDiviner extends ItemTW {
     public ItemStructureDiviner() {
@@ -82,7 +81,7 @@ public class ItemStructureDiviner extends ItemTW {
             
             @SideOnly(Side.CLIENT)
             private double getFrameRotation(EntityItemFrame frame) {
-                return (double)MathHelper.wrapDegrees(180 + frame.facingDirection.getHorizontalIndex() * 90);
+                return MathHelper.wrapDegrees(180 + frame.facingDirection.getHorizontalIndex() * 90);
             }
 
             @SideOnly(Side.CLIENT)
@@ -105,7 +104,7 @@ public class ItemStructureDiviner extends ItemTW {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         playerIn.openGui(ThaumicWonders.INSTANCE, GuiIds.STRUCTURE_DIVINER, worldIn, 0, 0, 0);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+        return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
     
     @Override

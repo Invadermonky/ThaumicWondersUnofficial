@@ -1,94 +1,94 @@
-// Device Tiles
-tile.thaumicwonders.everburning_urn.name=Everburning Urn
-tile.thaumicwonders.dimensional_ripper.name=Dimensional Ripper
-tile.thaumicwonders.creative_essentia_jar.name=Creative Essentia Jar
+# Device Tiles
+tile.thaumicwonders:everburning_urn.name=Everburning Urn
+tile.thaumicwonders:dimensional_ripper.name=Dimensional Ripper
+tile.thaumicwonders:creative_essentia_jar.name=Creative Essentia Jar
 tile.thaumicwonders.creative_essentia_jar.tooltip.1=Returns infinite amount of
 tile.thaumicwonders.creative_essentia_jar.tooltip.2=contained essentia type.
 tile.thaumicwonders.creative_essentia_jar.tooltip.3=Empty by shift-right-clicking
 tile.thaumicwonders.creative_essentia_jar.tooltip.4=with an empty hand.
-tile.thaumicwonders.inspiration_engine.name=Inspiration Engine
-tile.thaumicwonders.madness_engine.name=Madness Engine
-tile.thaumicwonders.portal_anchor.name=Portal Anchor
-tile.thaumicwonders.portal_generator.name=Portal Generator
+tile.thaumicwonders:inspiration_engine.name=Inspiration Engine
+tile.thaumicwonders:madness_engine.name=Madness Engine
+tile.thaumicwonders:portal_anchor.name=Portal Anchor
+tile.thaumicwonders:portal_generator.name=Portal Generator
 tile.thaumicwonders.portal_generator.tooltip.linkedto=Linked to %1$d, %2$d, %3$d in %4$s
-tile.thaumicwonders.catalyzation_chamber.name=Catalyzation Chamber
-tile.thaumicwonders.hexamite.name=Hexamite
-tile.thaumicwonders.flux_capacitor.name=Flux Capacitor
+tile.thaumicwonders:catalyzation_chamber.name=Catalyzation Chamber
+tile.thaumicwonders:hexamite.name=Hexamite
+tile.thaumicwonders:flux_capacitor.name=Flux Capacitor
 tile.thaumicwonders.flux_capacitor.tooltip.flux=Flux: %1$d
-tile.thaumicwonders.meteorb.name=Meteorb
-tile.thaumicwonders.ore_diviner.name=Ore Diviner
-tile.thaumicwonders.meaty_orb.name=Meaty Orb
-tile.thaumicwonders.void_beacon.name=Void Beacon
-tile.thaumicwonders.flux_distiller.name=Flux Distiller
+tile.thaumicwonders:meteorb.name=Meteorb
+tile.thaumicwonders:ore_diviner.name=Ore Diviner
+tile.thaumicwonders:meaty_orb.name=Meaty Orb
+tile.thaumicwonders:void_beacon.name=Void Beacon
+tile.thaumicwonders:flux_distiller.name=Flux Distiller
 tile.thaumicwonders.flux_distiller.tooltip.flux=Flux: %1$d
-tile.thaumicwonders.primordial_accelerator.name=Primordial Accelerator
-tile.thaumicwonders.primordial_accelerator_tunnel.name=Primordial Accelerator Tunnel
-tile.thaumicwonders.primordial_accelerator_terminus.name=Primordial Accelerator Terminus
-tile.thaumicwonders.primordial_accretion_chamber.name=Primordial Accretion Chamber
-tile.thaumicwonders.alkahest_vat.name=Alkahest Vat
-tile.thaumicwonders.coalescence_matrix.name=Coalescence Matrix
-tile.thaumicwonders.coalescence_matrix_precursor.name=Coalescence Matrix
+tile.thaumicwonders:primordial_accelerator.name=Primordial Accelerator
+tile.thaumicwonders:primordial_accelerator_tunnel.name=Primordial Accelerator Tunnel
+tile.thaumicwonders:primordial_accelerator_terminus.name=Primordial Accelerator Terminus
+tile.thaumicwonders:primordial_accretion_chamber.name=Primordial Accretion Chamber
+tile.thaumicwonders:alkahest_vat.name=Alkahest Vat
+tile.thaumicwonders:coalescence_matrix.name=Coalescence Matrix
+tile.thaumicwonders:coalescence_matrix_precursor.name=Coalescence Matrix
 
-// Misc Tiles
-tile.thaumicwonders.fluid_quicksilver.name=Quicksilver
-tile.thaumicwonders.placeholder_arcane_stone.name=Catalyzation Chamber
-tile.thaumicwonders.placeholder_obsidian.name=Catalyzation Chamber
-tile.thaumicwonders.placeholder_thaumium_block.name=Primordial Accretion Chamber
-tile.thaumicwonders.placeholder_void_metal_block.name=Primordial Accretion Chamber
-tile.thaumicwonders.placeholder_adv_alch_construct.name=Primordial Accretion Chamber
-tile.thaumicwonders.shimmerleaf_crop.name=Shimmerleaf
-tile.thaumicwonders.cinderpearl_crop.name=Cinderpearl
-tile.thaumicwonders.vishroom_crop.name=Vishroom
+# Misc Tiles
+tile.thaumicwonders:fluid_quicksilver.name=Quicksilver
+tile.thaumicwonders:placeholder_arcane_stone.name=Catalyzation Chamber
+tile.thaumicwonders:placeholder_obsidian.name=Catalyzation Chamber
+tile.thaumicwonders:placeholder_thaumium_block.name=Primordial Accretion Chamber
+tile.thaumicwonders:placeholder_void_metal_block.name=Primordial Accretion Chamber
+tile.thaumicwonders:placeholder_adv_alch_construct.name=Primordial Accretion Chamber
+tile.thaumicwonders:shimmerleaf_crop.name=Shimmerleaf
+tile.thaumicwonders:cinderpearl_crop.name=Cinderpearl
+tile.thaumicwonders:vishroom_crop.name=Vishroom
 
-// Items
-item.thaumicwonders.disjunction_cloth.name=Disjunction Cloth
-item.thaumicwonders.primal_destroyer.name=Primal Destroyer
-item.thaumicwonders.flying_carpet.name=Flying Carpet
-item.thaumicwonders.timewinder.name=Timewinder
-item.thaumicwonders.alchemist_stone.name=Alchemist's Stone
-item.thaumicwonders.transmuter_stone.name=Transmuter's Stone
-item.thaumicwonders.eldritch_cluster.iron.name=Eldritch Iron Cluster
-item.thaumicwonders.eldritch_cluster.gold.name=Eldritch Gold Cluster
-item.thaumicwonders.eldritch_cluster.copper.name=Eldritch Copper Cluster
-item.thaumicwonders.eldritch_cluster.tin.name=Eldritch Tin Cluster
-item.thaumicwonders.eldritch_cluster.silver.name=Eldritch Silver Cluster
-item.thaumicwonders.eldritch_cluster.lead.name=Eldritch Lead Cluster
-item.thaumicwonders.eldritch_cluster.cinnabar.name=Eldritch Cinnabar Cluster
-item.thaumicwonders.eldritch_cluster.quartz.name=Eldritch Quartz Cluster
-item.thaumicwonders.eldritch_cluster.void.name=Eldritch Void Cluster
-item.thaumicwonders.alienist_stone.name=Alienist's Stone
-item.thaumicwonders.void_fortress_helm.name=Void Fortress Helm
-item.thaumicwonders.void_fortress_chest.name=Void Fortress Cuirass
-item.thaumicwonders.void_fortress_legs.name=Void Fortress Thigh Guards
-item.thaumicwonders.structure_diviner.name=Structure Diviner
-item.thaumicwonders.night_vision_goggles.name=Night-Vision Goggles
-item.thaumicwonders.cleansing_charm.name=Cleansing Charm
+# Items
+item.thaumicwonders:disjunction_cloth.name=Disjunction Cloth
+item.thaumicwonders:primal_destroyer.name=Primal Destroyer
+item.thaumicwonders:flying_carpet.name=Flying Carpet
+item.thaumicwonders:timewinder.name=Timewinder
+item.thaumicwonders:alchemist_stone.name=Alchemist's Stone
+item.thaumicwonders:transmuter_stone.name=Transmuter's Stone
+item.thaumicwonders:eldritch_cluster.iron.name=Eldritch Iron Cluster
+item.thaumicwonders:eldritch_cluster.gold.name=Eldritch Gold Cluster
+item.thaumicwonders:eldritch_cluster.copper.name=Eldritch Copper Cluster
+item.thaumicwonders:eldritch_cluster.tin.name=Eldritch Tin Cluster
+item.thaumicwonders:eldritch_cluster.silver.name=Eldritch Silver Cluster
+item.thaumicwonders:eldritch_cluster.lead.name=Eldritch Lead Cluster
+item.thaumicwonders:eldritch_cluster.cinnabar.name=Eldritch Cinnabar Cluster
+item.thaumicwonders:eldritch_cluster.quartz.name=Eldritch Quartz Cluster
+item.thaumicwonders:eldritch_cluster.void.name=Eldritch Void Cluster
+item.thaumicwonders:alienist_stone.name=Alienist's Stone
+item.thaumicwonders:void_fortress_helm.name=Void Fortress Helm
+item.thaumicwonders:void_fortress_chest.name=Void Fortress Cuirass
+item.thaumicwonders:void_fortress_legs.name=Void Fortress Thigh Guards
+item.thaumicwonders:structure_diviner.name=Structure Diviner
+item.thaumicwonders:night_vision_goggles.name=Night-Vision Goggles
+item.thaumicwonders:cleansing_charm.name=Cleansing Charm
 item.thaumicwonders.cleansing_charm.tooltip.progress=Progress: %1$d%%
-item.thaumicwonders.bone_bow.name=Bow of Bone
-item.thaumicwonders.primal_arrow.air.name=Air Arrow
-item.thaumicwonders.primal_arrow.earth.name=Earth Arrow
-item.thaumicwonders.primal_arrow.fire.name=Fire Arrow
-item.thaumicwonders.primal_arrow.water.name=Water Arrow
-item.thaumicwonders.primal_arrow.order.name=Order Arrow
-item.thaumicwonders.primal_arrow.entropy.name=Entropy Arrow
-item.thaumicwonders.primordial_grain.name=Primordial Grain
-item.thaumicwonders.shimmerleaf_seed.name=Shimmerleaf Seed
-item.thaumicwonders.cinderpearl_seed.name=Cinderpearl Seed
-item.thaumicwonders.vishroom_spore.name=Vishroom Spore
-item.thaumicwonders.panacea.normal.name=Panacea
-item.thaumicwonders.panacea.enchanted.name=Enchanted Panacea
-item.thaumicwonders.lethe_water.name=Lethe Water
+item.thaumicwonders:bone_bow.name=Bow of Bone
+item.thaumicwonders:primal_arrow.air.name=Air Arrow
+item.thaumicwonders:primal_arrow.earth.name=Earth Arrow
+item.thaumicwonders:primal_arrow.fire.name=Fire Arrow
+item.thaumicwonders:primal_arrow.water.name=Water Arrow
+item.thaumicwonders:primal_arrow.order.name=Order Arrow
+item.thaumicwonders:primal_arrow.entropy.name=Entropy Arrow
+item.thaumicwonders:primordial_grain.name=Primordial Grain
+item.thaumicwonders:shimmerleaf_seed.name=Shimmerleaf Seed
+item.thaumicwonders:cinderpearl_seed.name=Cinderpearl Seed
+item.thaumicwonders:vishroom_spore.name=Vishroom Spore
+item.thaumicwonders:panacea.normal.name=Panacea
+item.thaumicwonders:panacea.enchanted.name=Enchanted Panacea
+item.thaumicwonders:lethe_water.name=Lethe Water
 
-// Entities
+# Entities
 entity.flying_carpet.name=Flying Carpet
 entity.void_portal.name=Void Portal
 entity.hexamite_primed.name=Hexamite
 entity.corruption_avatar.name=Avatar of Corruption
 
-// Fluids
+# Fluids
 fluid.fluid_quicksilver=Quicksilver
 
-// Research
+# Research
 tc.research_category.THAUMIC_WONDERS=Thaumic Wonders
 
 thaumicwonders.research.base.title=Thaumic Wonders
@@ -240,23 +240,23 @@ thaumicwonders.research.coalescence_matrix.text.stage.2=Using what I've learned 
 thaumicwonders.research.corruption_avatar.title=Avatar of Corruption
 thaumicwonders.research.corruption_avatar.text.stage.1=The forces of taint and corruption, forced into humanoid form by my magical ritual.  It doesn't seem to appreciate that, either.<BR>The Avatar is a tough and dangerous foe.  It hurls explosive orbs at anything around it not eldritch or tainted.  What's worse, it constantly warps and pollutes the area around it, in turn gaining strength from that corruption.
 
-// Theorycraft Cards
+# Theorycraft Cards
 card.induced_inspiration.name=Induced Inspiration
 card.induced_inspiration.text=The Inspiration Engine feeds ideas directly into your mind, ones highly relevant to the research you're currently pursuing. You gain %1$s %2$s, 1 inspiration, and a bonus draw.
 card.induced_madness.name=Induced Madness
 card.induced_madness.text=Alien thoughts projected by the Madness Engine tear at your psyche, but a precious few contain hints at deeper truths.  You gain 20 to 25 Eldritch progress, 1 inspiration, and a bonus draw.  You also gain Warp.
 
-// Enchantments
+# Enchantments
 enchantment.special.sapgreat=Greater Sapping
 enchantment.special.voidflame=Voidflame
 enchantment.special.warpshell=Warpshell
 
-// Config
+# Config
 key.categories.thaumicwonders=Thaumic Wonders
 key.carpet_forward=Flying Carpet Forwards
 key.carpet_backward=Flying Carpet Backwards
 
-// GUI
+# GUI
 thaumicwonders.gui.timewinder.0=Full Moon
 thaumicwonders.gui.timewinder.1=Waning Gibbous
 thaumicwonders.gui.timewinder.2=Third Quarter
@@ -280,7 +280,7 @@ thaumicwonders.gui.structure_diviner.6=Nether Fortress
 thaumicwonders.gui.structure_diviner.7=End City
 thaumicwonders.gui.structure_diviner.8=Clear Selection
 
-// Events
+# Events
 event.primal_destroyer.hunger_full=The Primal Destroyer twists of its own will and cuts you!
 event.timewinder.offworld=The Timewinder doesn't seem to function here.
 event.timewinder.used=Time suddenly skips forward.
@@ -312,7 +312,7 @@ event.lethe_water.forgot=You feel like you've forgotten something.
 event.lethe_water.not_found=You don't feel any different.
 event.corruption_avatar.empower=The Avatar of Corruption is empowered by a nearby rift!
 
-// Misc
+# Misc
 itemGroup.thaumicwonders=Thaumic Wonders
 item.creative_only=Creative only
 death.attack.primalDestroyerHunger=%s was devoured by their own Primal Destroyer

@@ -1,8 +1,5 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemNightVisionGoggles;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
 import com.verdantartifice.thaumicwonders.common.items.base.IVariantItem;
@@ -23,15 +20,17 @@ import com.verdantartifice.thaumicwonders.common.items.plants.ItemShimmerleafSee
 import com.verdantartifice.thaumicwonders.common.items.plants.ItemVishroomSpore;
 import com.verdantartifice.thaumicwonders.common.items.tools.ItemBoneBow;
 import com.verdantartifice.thaumicwonders.common.items.tools.ItemPrimalDestroyer;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class InitItems {
-    public static final Set<Item> ITEMS = new HashSet<Item>();
-    public static final Set<IVariantItem> ITEM_VARIANT_HOLDERS = new HashSet<IVariantItem>();
-    
+    public static final Set<Item> ITEMS = new HashSet<>();
+    public static final Set<IVariantItem> ITEM_VARIANT_HOLDERS = new HashSet<>();
+
     public static void initItems(IForgeRegistry<Item> forgeRegistry) {
         registerItem(forgeRegistry, new ItemDisjunctionCloth());
         registerItem(forgeRegistry, new ItemPrimalDestroyer());
@@ -39,7 +38,7 @@ public class InitItems {
         registerItem(forgeRegistry, new ItemTimewinder());
         registerItem(forgeRegistry, new ItemAlchemistStone());
         registerItem(forgeRegistry, new ItemTransmuterStone());
-        registerItem(forgeRegistry, new ItemTW("eldritch_cluster", new String[] { "iron", "gold", "copper", "tin", "silver", "lead", "cinnabar", "quartz", "void" }));
+        registerItem(forgeRegistry, new ItemTW("eldritch_cluster", "iron", "gold", "copper", "tin", "silver", "lead", "cinnabar", "quartz", "void"));
         registerItem(forgeRegistry, new ItemAlienistStone());
         registerItem(forgeRegistry, new ItemVoidFortressArmor("void_fortress_helm", ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.HEAD));
         registerItem(forgeRegistry, new ItemVoidFortressArmor("void_fortress_chest", ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.CHEST));

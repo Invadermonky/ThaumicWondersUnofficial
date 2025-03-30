@@ -1,10 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockDeviceTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileEverburningUrn;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -24,6 +21,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockEverburningUrn extends BlockDeviceTW<TileEverburningUrn> {
     public BlockEverburningUrn() {
@@ -55,7 +54,7 @@ public class BlockEverburningUrn extends BlockDeviceTW<TileEverburningUrn> {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity != null && tileEntity instanceof TileEverburningUrn) {
+            if (tileEntity instanceof TileEverburningUrn) {
                 TileEverburningUrn tile = (TileEverburningUrn)tileEntity;
                 if (FluidUtil.interactWithFluidHandler(playerIn, hand, tile.getTank())) {
                     playerIn.inventoryContainer.detectAndSendChanges();
@@ -75,7 +74,7 @@ public class BlockEverburningUrn extends BlockDeviceTW<TileEverburningUrn> {
         Block block = stateIn.getBlock();
         if (block.hasTileEntity(stateIn)) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity != null && tileEntity instanceof TileEverburningUrn) {
+            if (tileEntity instanceof TileEverburningUrn) {
                 TileEverburningUrn tile = (TileEverburningUrn)tileEntity;
                 if (tile.getTank().getFluidAmount() >= tile.getTank().getCapacity()) {
                     double xp = (double)pos.getX() + 0.5D + (rand.nextDouble() * 0.2D - 0.1D);

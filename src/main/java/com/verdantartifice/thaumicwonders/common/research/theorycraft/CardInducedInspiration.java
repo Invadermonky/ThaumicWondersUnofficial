@@ -1,15 +1,14 @@
 package com.verdantartifice.thaumicwonders.common.research.theorycraft;
 
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.common.tiles.devices.IResearchEngine;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileInspirationEngine;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import thaumcraft.api.research.theorycraft.ResearchTableData;
+
+import java.util.Random;
 
 public class CardInducedInspiration extends AbstractResearchEngineCard {
     private String category = null;
@@ -51,7 +50,7 @@ public class CardInducedInspiration extends AbstractResearchEngineCard {
             return false;
         }
         
-        if (data.categoryTotals.size() < 1) {
+        if (data.categoryTotals.isEmpty()) {
             return false;
         }
         int highestValue = 0;
@@ -70,12 +69,12 @@ public class CardInducedInspiration extends AbstractResearchEngineCard {
 
     @Override
     public String getLocalizedName() {
-        return new TextComponentTranslation("card.induced_inspiration.name", new Object[0]).getUnformattedText();
+        return new TextComponentTranslation("card.induced_inspiration.name").getUnformattedText();
     }
 
     @Override
     public String getLocalizedText() {
-        return new TextComponentTranslation("card.induced_inspiration.text", new Object[] { Integer.valueOf(this.amount), TextFormatting.BOLD + new TextComponentTranslation(new StringBuilder().append("tc.research_category.").append(this.category).toString(), new Object[0]).getFormattedText() + TextFormatting.RESET }).getUnformattedText();
+        return new TextComponentTranslation("card.induced_inspiration.text", Integer.valueOf(this.amount), TextFormatting.BOLD + new TextComponentTranslation(new StringBuilder().append("tc.research_category.").append(this.category).toString()).getFormattedText() + TextFormatting.RESET).getUnformattedText();
     }
     
 }

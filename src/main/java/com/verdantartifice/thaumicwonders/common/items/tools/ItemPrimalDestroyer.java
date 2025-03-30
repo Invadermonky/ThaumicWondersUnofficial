@@ -1,11 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.items.tools;
 
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
-
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -31,6 +28,8 @@ import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.items.IWarpingGear;
 import thaumcraft.api.items.ItemsTC;
 
+import java.util.List;
+
 public class ItemPrimalDestroyer extends ItemSword implements IWarpingGear {
     public static final int MAX_HUNGER = 600;
     
@@ -40,7 +39,7 @@ public class ItemPrimalDestroyer extends ItemSword implements IWarpingGear {
         super(toolMatVoidflame);
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
         this.setRegistryName(ThaumicWonders.MODID, "primal_destroyer");
-        this.setUnlocalizedName(ThaumicWonders.MODID + "." + this.getRegistryName().getResourcePath());
+        this.setTranslationKey(this.getRegistryName().toString());
     }
 
     @Override
@@ -108,7 +107,7 @@ public class ItemPrimalDestroyer extends ItemSword implements IWarpingGear {
                 target.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 60));
                 target.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 120));
                 target.setFire(3);
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
         }
         if (!target.world.isRemote) {
             if (target.getHealth() <= 0.0F) {

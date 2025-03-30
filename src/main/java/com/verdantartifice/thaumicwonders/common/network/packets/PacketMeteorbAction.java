@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.network.packets;
 
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileMeteorb;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
@@ -54,7 +53,7 @@ public class PacketMeteorbAction implements IMessage {
             World world = entityPlayer.getEntityWorld();
             WorldInfo worldinfo = world.getWorldInfo();
             TileEntity tileEntity = world.getTileEntity(message.tilePos);
-            if (tileEntity != null && tileEntity instanceof TileMeteorb) {
+            if (tileEntity instanceof TileMeteorb) {
                 TileMeteorb tile = (TileMeteorb)tileEntity;
                 int duration = (300 + world.rand.nextInt(600)) * 20;
                 if (message.targetWeather == 0 && tile.doesContainerContainAmount(Aspect.AIR, TileMeteorb.MIN_FUEL)) {

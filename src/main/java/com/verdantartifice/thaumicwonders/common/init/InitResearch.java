@@ -7,7 +7,6 @@ import com.verdantartifice.thaumicwonders.common.research.theorycraft.AidInspira
 import com.verdantartifice.thaumicwonders.common.research.theorycraft.AidMadnessEngine;
 import com.verdantartifice.thaumicwonders.common.research.theorycraft.CardInducedInspiration;
 import com.verdantartifice.thaumicwonders.common.research.theorycraft.CardInducedMadness;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.ThaumcraftApi;
@@ -18,6 +17,7 @@ import thaumcraft.api.research.ScanItem;
 import thaumcraft.api.research.ScanningManager;
 import thaumcraft.api.research.theorycraft.TheorycraftManager;
 
+@SuppressWarnings("ConstantConditions")
 public class InitResearch {
     public static void initResearch() {
         initCategories();

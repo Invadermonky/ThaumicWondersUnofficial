@@ -3,7 +3,6 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -58,12 +57,11 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
                         if (curFacing == facing) {
                             // Drop grains and stop safely
                             this.completeReaction(curPos, tunnelCount, pearlStack);
-                            done = true;
                         } else {
                             // Explode!
                             this.explode(curPos);
-                            done = true;
                         }
+                        done = true;
                     } else if (curState.getBlock() == BlocksTW.PRIMORDIAL_ACCELERATOR_TUNNEL) {
                         EnumFacing curFacing = curState.getValue(IBlockFacingHorizontal.FACING);
                         if (curFacing == facing && tunnelCount < MAX_TUNNELS) {

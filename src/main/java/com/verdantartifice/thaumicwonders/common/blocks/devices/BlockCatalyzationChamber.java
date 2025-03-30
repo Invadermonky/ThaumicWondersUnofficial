@@ -1,13 +1,10 @@
 package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockDeviceTW;
 import com.verdantartifice.thaumicwonders.common.misc.GuiIds;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCatalyzationChamber;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -32,6 +29,8 @@ import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 
+import java.util.Random;
+
 public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationChamber> implements IBlockFacingHorizontal {
     public static boolean ignoreDestroy = false;
     
@@ -54,13 +53,13 @@ public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationCham
     
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {}
-    
-    @Override
+
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    @Override
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
-    
+
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         IBlockState bs = getDefaultState();
@@ -105,9 +104,9 @@ public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationCham
         destroyChamber(worldIn, pos, state, pos);
         super.breakBlock(worldIn, pos, state);
     }
-    
+
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if (entityIn.posX < pos.getX() + 0.3F) {
             entityIn.motionX += 0.0001D;
         }
@@ -131,9 +130,9 @@ public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationCham
                 ((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
             }
         }
-        super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
+        super.onEntityCollision(worldIn, pos, state, entityIn);
     }
-    
+
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {

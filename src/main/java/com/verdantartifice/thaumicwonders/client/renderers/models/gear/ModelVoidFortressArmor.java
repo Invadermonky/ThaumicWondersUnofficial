@@ -1,25 +1,23 @@
 package com.verdantartifice.thaumicwonders.client.renderers.models.gear;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.lwjgl.opengl.GL11;
-
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
-
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
 import thaumcraft.client.renderers.models.gear.ModelCustomArmor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ModelVoidFortressArmor - Daedalus4096
  * Created using Tabula 7.0.0
  */
 public class ModelVoidFortressArmor extends ModelCustomArmor {
-    protected static final Map<Integer, Integer> HAS_SET = new HashMap<Integer, Integer>();
+    protected static final Map<Integer, Integer> HAS_SET = new HashMap<>();
     
     public ModelRenderer Mask;
     public ModelRenderer FrontHornL1;
@@ -492,9 +490,9 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
             }
             
             if (set > 0) {
-                HAS_SET.put(Integer.valueOf(elb.getEntityId()), Integer.valueOf(set));
+                HAS_SET.put(elb.getEntityId(), set);
             } else {
-                HAS_SET.remove(Integer.valueOf(elb.getEntityId()));
+                HAS_SET.remove(elb.getEntityId());
             }
         }
     }
@@ -502,7 +500,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.checkSet(entityIn);
-        int set = HAS_SET.getOrDefault(Integer.valueOf(entityIn.getEntityId()), Integer.valueOf(-1)).intValue();
+        int set = HAS_SET.getOrDefault(entityIn.getEntityId(), -1);
         
         this.Book.isHidden = (set < 2);
         this.SideHornR1.isHidden = (set < 2);

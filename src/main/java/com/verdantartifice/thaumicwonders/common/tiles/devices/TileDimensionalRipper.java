@@ -1,13 +1,10 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketDimensionalRipperFx;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -28,6 +25,8 @@ import thaumcraft.common.blocks.IBlockFacing;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.EntityUtils;
+
+import java.util.List;
 
 public class TileDimensionalRipper extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable {
     private static final int CAPACITY = 250;
@@ -221,7 +220,7 @@ public class TileDimensionalRipper extends TileTW implements IAspectContainer, I
                 continue;
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
-            if (te != null && te instanceof IEssentiaTransport) {
+            if (te instanceof IEssentiaTransport) {
                 IEssentiaTransport otherTile = (IEssentiaTransport)te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
@@ -253,7 +252,7 @@ public class TileDimensionalRipper extends TileTW implements IAspectContainer, I
         BlockPos otherPos = this.pos.offset(blockFacing, DISTANCE);
         TileEntity otherTe = this.world.getTileEntity(otherPos);
         
-        if (otherTe != null && otherTe instanceof TileDimensionalRipper) {
+        if (otherTe instanceof TileDimensionalRipper) {
             TileDimensionalRipper otherTile = (TileDimensionalRipper)otherTe;
             IBlockState otherState = this.world.getBlockState(otherPos);
             EnumFacing otherBlockFacing = otherState.getValue(IBlockFacing.FACING);
@@ -295,7 +294,7 @@ public class TileDimensionalRipper extends TileTW implements IAspectContainer, I
 
     protected void createRift(BlockPos pos, int fuelUsed) {
         List<EntityFluxRift> localRifts = EntityUtils.getEntitiesInRange(this.world, pos, null, EntityFluxRift.class, 2.0D);
-        if (localRifts.size() > 0) {
+        if (!localRifts.isEmpty()) {
             // Enlarge target rift
             EntityFluxRift rift = localRifts.get(0);
             int oldSize = rift.getRiftSize();
@@ -303,7 +302,7 @@ public class TileDimensionalRipper extends TileTW implements IAspectContainer, I
             int newSize = (int)Math.sqrt((oldFuel + (2 * fuelUsed)) * 3.0D);
             rift.setRiftSize(newSize);
             rift.setRiftStability(rift.getRiftStability() - (newSize - oldSize));
-        } else if (EntityUtils.getEntitiesInRange(this.world, pos, null, EntityFluxRift.class, 32.0D).size() == 0) {
+        } else if (EntityUtils.getEntitiesInRange(this.world, pos, null, EntityFluxRift.class, 32.0D).isEmpty()) {
             // Create new rift if no others are nearby
             EntityFluxRift rift = new EntityFluxRift(this.world);
             rift.setRiftSeed(this.world.rand.nextInt());

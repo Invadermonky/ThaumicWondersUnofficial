@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.blocks.plants;
 
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;

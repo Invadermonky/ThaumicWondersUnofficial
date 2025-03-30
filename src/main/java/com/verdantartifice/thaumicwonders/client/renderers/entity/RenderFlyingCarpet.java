@@ -3,7 +3,6 @@ package com.verdantartifice.thaumicwonders.client.renderers.entity;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.client.renderers.models.entity.ModelFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
-
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;

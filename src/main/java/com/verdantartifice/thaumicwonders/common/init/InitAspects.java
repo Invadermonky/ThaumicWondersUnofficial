@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.init;
 
 import com.verdantartifice.thaumicwonders.common.fluids.FluidQuicksilver;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -12,6 +11,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.internal.CommonInternals;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 
+@SuppressWarnings("ConstantConditions")
 public class InitAspects {
     public static void initAspects() {
         registerItemAspects();
@@ -33,7 +33,7 @@ public class InitAspects {
     
     @SuppressWarnings("deprecation")
     private static void registerEntityAspects() {
-        ThaumcraftApi.registerEntityTag("thaumicwonders.corruption_avatar", new AspectList().add(Aspect.ELDRITCH, 40).add(Aspect.MAN, 40).add(Aspect.FLUX, 40), new ThaumcraftApi.EntityTagsNBT[0]);
+        ThaumcraftApi.registerEntityTag("thaumicwonders.corruption_avatar", new AspectList().add(Aspect.ELDRITCH, 40).add(Aspect.MAN, 40).add(Aspect.FLUX, 40));
     }
     
     private static void appendAspects(ItemStack stack, AspectList toAdd) {

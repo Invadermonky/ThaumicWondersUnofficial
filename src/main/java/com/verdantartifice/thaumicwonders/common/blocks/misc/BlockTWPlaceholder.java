@@ -1,13 +1,10 @@
 package com.verdantartifice.thaumicwonders.common.blocks.misc;
 
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockTW;
 import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockCatalyzationChamber;
 import com.verdantartifice.thaumicwonders.common.misc.GuiIds;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
@@ -22,6 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import thaumcraft.api.blocks.BlocksTC;
 
+import java.util.Random;
+
 public class BlockTWPlaceholder extends BlockTW {
     public BlockTWPlaceholder(String name) {
         super(Material.ROCK, name);
@@ -29,12 +28,12 @@ public class BlockTWPlaceholder extends BlockTW {
         this.setSoundType(SoundType.STONE);
         this.setCreativeTab(null);
     }
-    
+
     @Override
-    public EnumPushReaction getMobilityFlag(IBlockState state) {
+    public EnumPushReaction getPushReaction(IBlockState state) {
         return EnumPushReaction.BLOCK;
     }
-    
+
     @Override
     protected boolean canSilkHarvest() {
         return false;

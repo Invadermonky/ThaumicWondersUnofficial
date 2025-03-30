@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.items.plants;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.util.math.BlockPos;
@@ -12,9 +11,9 @@ import net.minecraftforge.common.EnumPlantType;
 public class ItemVishroomSpore extends ItemSeeds {
     public ItemVishroomSpore() {
         super(BlocksTW.VISHROOM_CROP, Blocks.GRASS);
-        setRegistryName(ThaumicWonders.MODID, "vishroom_spore");
-        setUnlocalizedName(ThaumicWonders.MODID + "." + this.getRegistryName().getResourcePath());
-        setCreativeTab(ThaumicWonders.CREATIVE_TAB);
+        this.setRegistryName(ThaumicWonders.MODID, "vishroom_spore");
+        this.setTranslationKey(this.getRegistryName().toString());
+        this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
     }
 
     @Override

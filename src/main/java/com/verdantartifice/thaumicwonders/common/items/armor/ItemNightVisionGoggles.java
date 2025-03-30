@@ -1,10 +1,9 @@
 package com.verdantartifice.thaumicwonders.common.items.armor;
 
-import com.verdantartifice.thaumicwonders.ThaumicWonders;
-
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import baubles.api.render.IRenderBauble;
+import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -34,7 +33,7 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
     public ItemNightVisionGoggles() {
         super(ThaumcraftMaterials.ARMORMAT_SPECIAL, 4, EntityEquipmentSlot.HEAD);
         this.setRegistryName(ThaumicWonders.MODID, "night_vision_goggles");
-        this.setUnlocalizedName(ThaumicWonders.MODID + "." + this.getRegistryName().getResourcePath());
+        this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
         this.setMaxDamage(350);
     }
@@ -46,7 +45,7 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
     
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return repair.isItemEqual(new ItemStack(ItemsTC.ingots, 1, 2)) ? true : super.getIsRepairable(toRepair, repair);
+        return repair.isItemEqual(new ItemStack(ItemsTC.ingots, 1, 2)) || super.getIsRepairable(toRepair, repair);
     }
     
     @Override

@@ -3,7 +3,6 @@ package com.verdantartifice.thaumicwonders.common.items.catalysts;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import com.verdantartifice.thaumicwonders.common.misc.OreHelper;
-
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.items.ItemsTC;

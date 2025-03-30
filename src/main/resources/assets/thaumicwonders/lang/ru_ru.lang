@@ -1,96 +1,96 @@
-//Ru-ru by xRoBoTx
-// Device Tiles
-tile.thaumicwonders.everburning_urn.name=Вечнопылающая Урна
-tile.thaumicwonders.dimensional_ripper.name=Пространственный Потрошитель
-tile.thaumicwonders.creative_essentia_jar.name=Креативная Банка Эссенции
-tile.thaumicwonders.creative_essentia_jar.tooltip.1=Возвращанет бесконечное число
-tile.thaumicwonders.creative_essentia_jar.tooltip.2=содержится эссенция типа.
-tile.thaumicwonders.creative_essentia_jar.tooltip.3=Опустошить нажатием shift+ПКМ
-tile.thaumicwonders.creative_essentia_jar.tooltip.4=пустой рукой.
-tile.thaumicwonders.inspiration_engine.name=Двигатель Вдохновения
-tile.thaumicwonders.madness_engine.name=Двигатель Безумия
-tile.thaumicwonders.portal_anchor.name=Якорь Портала
-tile.thaumicwonders.portal_generator.name=Генератор Портала
-tile.thaumicwonders.portal_generator.tooltip.linkedto=Сввязано с %1$d, %2$d, %3$d в %4$s
-tile.thaumicwonders.catalyzation_chamber.name=Камера Катализации
-tile.thaumicwonders.hexamite.name=Гексамит
-tile.thaumicwonders.flux_capacitor.name=Конденсатор Флакса
-tile.thaumicwonders.flux_capacitor.tooltip.flux=Флакс: %1$d
-tile.thaumicwonders.meteorb.name=Метеорб
-tile.thaumicwonders.ore_diviner.name=Искатель Руд
-tile.thaumicwonders.meaty_orb.name=Мясная Сфера
-tile.thaumicwonders.void_beacon.name=Маяк Пустоты
-tile.thaumicwonders.flux_distiller.name=Дистиллятор Флакса
-tile.thaumicwonders.flux_distiller.tooltip.flux=Флакс: %1$d
-tile.thaumicwonders.primordial_accelerator.name=Первобытный Ускоритель
-tile.thaumicwonders.primordial_accelerator_tunnel.name=Туннель Первобытного Ускорителя
-tile.thaumicwonders.primordial_accelerator_terminus.name=Тупик Первобытного Ускорителя
-tile.thaumicwonders.primordial_accretion_chamber.name=Камера Первобытного Ускорителя
-tile.thaumicwonders.alkahest_vat.name=Бак Алкагеста
-tile.thaumicwonders.coalescence_matrix.name=Матрица Объединения
-tile.thaumicwonders.coalescence_matrix_precursor.name=Матрица Объединения
+#Ru-ru by xRoBoTx
+# Device Tiles
+tile.thaumicwonders:everburning_urn.name=Вечнопылающая Урна
+tile.thaumicwonders:dimensional_ripper.name=Пространственный Потрошитель
+tile.thaumicwonders:creative_essentia_jar.name=Креативная Банка Эссенции
+tile.thaumicwonders:creative_essentia_jar.tooltip.1=Возвращанет бесконечное число
+tile.thaumicwonders:creative_essentia_jar.tooltip.2=содержится эссенция типа.
+tile.thaumicwonders:creative_essentia_jar.tooltip.3=Опустошить нажатием shift+ПКМ
+tile.thaumicwonders:creative_essentia_jar.tooltip.4=пустой рукой.
+tile.thaumicwonders:inspiration_engine.name=Двигатель Вдохновения
+tile.thaumicwonders:madness_engine.name=Двигатель Безумия
+tile.thaumicwonders:portal_anchor.name=Якорь Портала
+tile.thaumicwonders:portal_generator.name=Генератор Портала
+tile.thaumicwonders:portal_generator.tooltip.linkedto=Сввязано с %1$d, %2$d, %3$d в %4$s
+tile.thaumicwonders:catalyzation_chamber.name=Камера Катализации
+tile.thaumicwonders:hexamite.name=Гексамит
+tile.thaumicwonders:flux_capacitor.name=Конденсатор Флакса
+tile.thaumicwonders:flux_capacitor.tooltip.flux=Флакс: %1$d
+tile.thaumicwonders:meteorb.name=Метеорб
+tile.thaumicwonders:ore_diviner.name=Искатель Руд
+tile.thaumicwonders:meaty_orb.name=Мясная Сфера
+tile.thaumicwonders:void_beacon.name=Маяк Пустоты
+tile.thaumicwonders:flux_distiller.name=Дистиллятор Флакса
+tile.thaumicwonders:flux_distiller.tooltip.flux=Флакс: %1$d
+tile.thaumicwonders:primordial_accelerator.name=Первобытный Ускоритель
+tile.thaumicwonders:primordial_accelerator_tunnel.name=Туннель Первобытного Ускорителя
+tile.thaumicwonders:primordial_accelerator_terminus.name=Тупик Первобытного Ускорителя
+tile.thaumicwonders:primordial_accretion_chamber.name=Камера Первобытного Ускорителя
+tile.thaumicwonders:alkahest_vat.name=Бак Алкагеста
+tile.thaumicwonders:coalescence_matrix.name=Матрица Объединения
+tile.thaumicwonders:coalescence_matrix_precursor.name=Матрица Объединения
 
-// Misc Tiles
-tile.thaumicwonders.fluid_quicksilver.name=Ртуть
-tile.thaumicwonders.placeholder_arcane_stone.name=Камера Катализации
-tile.thaumicwonders.placeholder_obsidian.name=Камера Катализации
-tile.thaumicwonders.placeholder_thaumium_block.name=Камера Первобытного Ускорителя
-tile.thaumicwonders.placeholder_void_metal_block.name=Камера Первобытного Ускорителя
-tile.thaumicwonders.placeholder_adv_alch_construct.name=Камера Первобытного Ускорителя
-tile.thaumicwonders.shimmerleaf_crop.name=Мерцающий Лист
-tile.thaumicwonders.cinderpearl_crop.name=Тлеющая Жемчужина
-tile.thaumicwonders.vishroom_crop.name=Висомор
+# Misc Tiles
+tile.thaumicwonders:fluid_quicksilver.name=Ртуть
+tile.thaumicwonders:placeholder_arcane_stone.name=Камера Катализации
+tile.thaumicwonders:placeholder_obsidian.name=Камера Катализации
+tile.thaumicwonders:placeholder_thaumium_block.name=Камера Первобытного Ускорителя
+tile.thaumicwonders:placeholder_void_metal_block.name=Камера Первобытного Ускорителя
+tile.thaumicwonders:placeholder_adv_alch_construct.name=Камера Первобытного Ускорителя
+tile.thaumicwonders:shimmerleaf_crop.name=Мерцающий Лист
+tile.thaumicwonders:cinderpearl_crop.name=Тлеющая Жемчужина
+tile.thaumicwonders:vishroom_crop.name=Висомор
 
-// Items
-item.thaumicwonders.disjunction_cloth.name=Ткань Дизъюнкции
-item.thaumicwonders.primal_destroyer.name=Первобытный Разрушитель
-item.thaumicwonders.flying_carpet.name=Летающий Ковер
-item.thaumicwonders.timewinder.name=Маховик Времени
-item.thaumicwonders.alchemist_stone.name=Камень Алхимии
-item.thaumicwonders.transmuter_stone.name=Камень Трансмутации
-item.thaumicwonders.eldritch_cluster.iron.name=Потусторонний Осколок Железа
-item.thaumicwonders.eldritch_cluster.gold.name=Потусторонний Осколок Золота
-item.thaumicwonders.eldritch_cluster.copper.name=Потусторонний Осколок Меди
-item.thaumicwonders.eldritch_cluster.tin.name=Потусторонний Осколок Олова
-item.thaumicwonders.eldritch_cluster.silver.name=Потусторонний Осколок Серебра
-item.thaumicwonders.eldritch_cluster.lead.name=Потусторонний Осколок Свинца
-item.thaumicwonders.eldritch_cluster.cinnabar.name=Потусторонний Осколок Киновари
-item.thaumicwonders.eldritch_cluster.quartz.name=Потусторонний Осколок Кварца
-item.thaumicwonders.eldritch_cluster.void.name=Потусторонний Осколок Пустоты
-item.thaumicwonders.alienist_stone.name=Камень Иноземца
-item.thaumicwonders.void_fortress_helm.name=Шлем Поножи Крепости Пустоты
-item.thaumicwonders.void_fortress_chest.name=Кираса Поножи Крепости Пустоты
-item.thaumicwonders.void_fortress_legs.name=Поножи Крепости Пустоты
-item.thaumicwonders.structure_diviner.name=Искатель Структур
-item.thaumicwonders.night_vision_goggles.name=Очки Ночного Зрения
-item.thaumicwonders.cleansing_charm.name=Амулет Очищения
-item.thaumicwonders.cleansing_charm.tooltip.progress=Прогресс: %1$d%%
-item.thaumicwonders.bone_bow.name=Лук Кости
-item.thaumicwonders.primal_arrow.air.name=Стрела Воздуха
-item.thaumicwonders.primal_arrow.earth.name=Стрела Земли
-item.thaumicwonders.primal_arrow.fire.name=Стрела Огня
-item.thaumicwonders.primal_arrow.water.name=Стрела Воды
-item.thaumicwonders.primal_arrow.order.name=Стрела Порядка
-item.thaumicwonders.primal_arrow.entropy.name=Стрела Энтропии
-item.thaumicwonders.primordial_grain.name=Первобытное Зерно
-item.thaumicwonders.shimmerleaf_seed.name=Семена Мерцающего Листа
-item.thaumicwonders.cinderpearl_seed.name=Семена Тлеющей Жемчужины
-item.thaumicwonders.vishroom_spore.name=Споры Висмора
-item.thaumicwonders.panacea.normal.name=Панацея
-item.thaumicwonders.panacea.enchanted.name=Зачарованная Панацея
-item.thaumicwonders.lethe_water.name=Вода Забвения
+# Items
+item.thaumicwonders:disjunction_cloth.name=Ткань Дизъюнкции
+item.thaumicwonders:primal_destroyer.name=Первобытный Разрушитель
+item.thaumicwonders:flying_carpet.name=Летающий Ковер
+item.thaumicwonders:timewinder.name=Маховик Времени
+item.thaumicwonders:alchemist_stone.name=Камень Алхимии
+item.thaumicwonders:transmuter_stone.name=Камень Трансмутации
+item.thaumicwonders:eldritch_cluster.iron.name=Потусторонний Осколок Железа
+item.thaumicwonders:eldritch_cluster.gold.name=Потусторонний Осколок Золота
+item.thaumicwonders:eldritch_cluster.copper.name=Потусторонний Осколок Меди
+item.thaumicwonders:eldritch_cluster.tin.name=Потусторонний Осколок Олова
+item.thaumicwonders:eldritch_cluster.silver.name=Потусторонний Осколок Серебра
+item.thaumicwonders:eldritch_cluster.lead.name=Потусторонний Осколок Свинца
+item.thaumicwonders:eldritch_cluster.cinnabar.name=Потусторонний Осколок Киновари
+item.thaumicwonders:eldritch_cluster.quartz.name=Потусторонний Осколок Кварца
+item.thaumicwonders:eldritch_cluster.void.name=Потусторонний Осколок Пустоты
+item.thaumicwonders:alienist_stone.name=Камень Иноземца
+item.thaumicwonders:void_fortress_helm.name=Шлем Поножи Крепости Пустоты
+item.thaumicwonders:void_fortress_chest.name=Кираса Поножи Крепости Пустоты
+item.thaumicwonders:void_fortress_legs.name=Поножи Крепости Пустоты
+item.thaumicwonders:structure_diviner.name=Искатель Структур
+item.thaumicwonders:night_vision_goggles.name=Очки Ночного Зрения
+item.thaumicwonders:cleansing_charm.name=Амулет Очищения
+item.thaumicwonders:cleansing_charm.tooltip.progress=Прогресс: %1$d%%
+item.thaumicwonders:bone_bow.name=Лук Кости
+item.thaumicwonders:primal_arrow.air.name=Стрела Воздуха
+item.thaumicwonders:primal_arrow.earth.name=Стрела Земли
+item.thaumicwonders:primal_arrow.fire.name=Стрела Огня
+item.thaumicwonders:primal_arrow.water.name=Стрела Воды
+item.thaumicwonders:primal_arrow.order.name=Стрела Порядка
+item.thaumicwonders:primal_arrow.entropy.name=Стрела Энтропии
+item.thaumicwonders:primordial_grain.name=Первобытное Зерно
+item.thaumicwonders:shimmerleaf_seed.name=Семена Мерцающего Листа
+item.thaumicwonders:cinderpearl_seed.name=Семена Тлеющей Жемчужины
+item.thaumicwonders:vishroom_spore.name=Споры Висмора
+item.thaumicwonders:panacea.normal.name=Панацея
+item.thaumicwonders:panacea.enchanted.name=Зачарованная Панацея
+item.thaumicwonders:lethe_water.name=Вода Забвения
 
-// Entities
+# Entities
 entity.flying_carpet.name=Летающий Ковер
 entity.void_portal.name=Портал в Пустоту
 entity.hexamite_primed.name=Гексамит
 entity.corruption_avatar.name=Аватар Искажения
 
-// Fluids
+# Fluids
 fluid.fluid_quicksilver=Ртуть
 
-// Research
-// Should translate them later
+# Research
+# Should translate them later
 tc.research_category.THAUMIC_WONDERS=Таумические Чудеса	
 
 thaumicwonders.research.base.title=Таумические Чудеса	
@@ -242,23 +242,23 @@ thaumicwonders.research.coalescence_matrix.text.stage.2=Using what I've learned 
 thaumicwonders.research.corruption_avatar.title=Аватар Искажения
 thaumicwonders.research.corruption_avatar.text.stage.1=The forces of taint and corruption, forced into humanoid form by my magical ritual.  It doesn't seem to appreciate that, either.<BR>The Avatar is a tough and dangerous foe.  It hurls explosive orbs at anything around it not eldritch or tainted.  What's worse, it constantly warps and pollutes the area around it, in turn gaining strength from that corruption.
 
-// Theorycraft Cards
+# Theorycraft Cards
 card.induced_inspiration.name=Вызванное Вдохновение
 card.induced_inspiration.text=The Inspiration Engine feeds ideas directly into your mind, ones highly relevant to the research you're currently pursuing. You gain %1$s %2$s, 1 inspiration, and a bonus draw.
 card.induced_madness.name=Вызванное Безумие
 card.induced_madness.text=Alien thoughts projected by the Madness Engine tear at your psyche, but a precious few contain hints at deeper truths.  You gain 20 to 25 Eldritch progress, 1 inspiration, and a bonus draw.  You also gain Warp.
 
-// Enchantments
+# Enchantments
 enchantment.special.sapgreat=Большее Истощение
 enchantment.special.voidflame=Пламя Пустоты
 enchantment.special.warpshell=Панцирь Искажения
 
-// Config
+# Config
 key.categories.thaumicwonders=Таумические Чудеса	
 key.carpet_forward=Летающий Ковер - Вперед
 key.carpet_backward=Летающий Ковер - Назад
 
-// GUI
+# GUI
 thaumicwonders.gui.timewinder.0=Полная Луна
 thaumicwonders.gui.timewinder.1=Убывающая Луна
 thaumicwonders.gui.timewinder.2=Третья четверть
@@ -282,7 +282,7 @@ thaumicwonders.gui.structure_diviner.6=Адская Крепость
 thaumicwonders.gui.structure_diviner.7=Город Края
 thaumicwonders.gui.structure_diviner.8=Очистить Выделение
 
-// Events
+# Events
 event.primal_destroyer.hunger_full=The Первобытный Разрушитель действует по собственной воле и может поглотить тебя!
 event.timewinder.offworld=The Маховик Времени не будет функционировать здесь.
 event.timewinder.used=Время неожиданно пролетает вперед.
@@ -314,7 +314,7 @@ event.lethe_water.forgot=Вы чувствуете что вы что-то за�
 event.lethe_water.not_found=Вы не чувствуете себя по-другому.
 event.corruption_avatar.empower=Аватар Искажения был усилен ближайшим разломом!
 
-// Misc
+# Misc
 itemGroup.thaumicwonders=Таумические Чудеса	
 item.creative_only=Только творческий режим
 death.attack.primalDestroyerHunger=%s был поглощен своим Первобытным Разрушителем

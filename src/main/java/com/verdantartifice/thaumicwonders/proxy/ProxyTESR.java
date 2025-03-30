@@ -6,7 +6,6 @@ import com.verdantartifice.thaumicwonders.client.renderers.tile.TesrVoidBeacon;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileDimensionalRipper;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileOreDiviner;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileVoidBeacon;
-
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ProxyTESR {

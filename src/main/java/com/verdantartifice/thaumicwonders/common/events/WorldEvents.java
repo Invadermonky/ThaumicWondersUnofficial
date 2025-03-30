@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.events;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.misc.FluxExplosion;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
@@ -22,7 +21,7 @@ public class WorldEvents {
                     EntityLivingBase elb = (EntityLivingBase)entity;
                     try {
                         elb.addPotionEffect(effect);
-                    } catch (Exception e) {}
+                    } catch (Exception ignored) {}
                 }
             }
         }

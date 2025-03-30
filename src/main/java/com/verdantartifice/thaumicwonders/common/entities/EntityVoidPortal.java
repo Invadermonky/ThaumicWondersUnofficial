@@ -5,7 +5,6 @@ import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalAnchor;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalGenerator;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,15 +21,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.util.ITeleporter;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.lib.SoundsTC;
 
 public class EntityVoidPortal extends Entity {
-    private static final DataParameter<Integer> LINK_X = EntityDataManager.<Integer>createKey(EntityVoidPortal.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> LINK_Y = EntityDataManager.<Integer>createKey(EntityVoidPortal.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> LINK_Z = EntityDataManager.<Integer>createKey(EntityVoidPortal.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> LINK_DIM = EntityDataManager.<Integer>createKey(EntityVoidPortal.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> LINK_X = EntityDataManager.createKey(EntityVoidPortal.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> LINK_Y = EntityDataManager.createKey(EntityVoidPortal.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> LINK_Z = EntityDataManager.createKey(EntityVoidPortal.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> LINK_DIM = EntityDataManager.createKey(EntityVoidPortal.class, DataSerializers.VARINT);
     
     private int soundTime = 0;
     private int cooldownTicks = 0;
@@ -43,10 +41,10 @@ public class EntityVoidPortal extends Entity {
 
     @Override
     protected void entityInit() {
-        this.dataManager.register(LINK_X, Integer.valueOf(0));
-        this.dataManager.register(LINK_Y, Integer.valueOf(0));
-        this.dataManager.register(LINK_Z, Integer.valueOf(0));
-        this.dataManager.register(LINK_DIM, Integer.valueOf(0));
+        this.dataManager.register(LINK_X, 0);
+        this.dataManager.register(LINK_Y, 0);
+        this.dataManager.register(LINK_Z, 0);
+        this.dataManager.register(LINK_DIM, 0);
     }
 
     @Override
@@ -66,35 +64,35 @@ public class EntityVoidPortal extends Entity {
     }
     
     public int getLinkX() {
-        return this.dataManager.get(LINK_X).intValue();
+        return this.dataManager.get(LINK_X);
     }
     
     public int getLinkY() {
-        return this.dataManager.get(LINK_Y).intValue();
+        return this.dataManager.get(LINK_Y);
     }
     
     public int getLinkZ() {
-        return this.dataManager.get(LINK_Z).intValue();
+        return this.dataManager.get(LINK_Z);
     }
     
     public int getLinkDim() {
-        return this.dataManager.get(LINK_DIM).intValue();
+        return this.dataManager.get(LINK_DIM);
     }
     
     public void setLinkX(int linkX) {
-        this.dataManager.set(LINK_X, Integer.valueOf(linkX));
+        this.dataManager.set(LINK_X, linkX);
     }
     
     public void setLinkY(int linkY) {
-        this.dataManager.set(LINK_Y, Integer.valueOf(linkY));
+        this.dataManager.set(LINK_Y, linkY);
     }
     
     public void setLinkZ(int linkZ) {
-        this.dataManager.set(LINK_Z, Integer.valueOf(linkZ));
+        this.dataManager.set(LINK_Z, linkZ);
     }
     
     public void setLinkDim(int linkDim) {
-        this.dataManager.set(LINK_DIM, Integer.valueOf(linkDim));
+        this.dataManager.set(LINK_DIM, linkDim);
     }
     
     @Override
@@ -119,7 +117,7 @@ public class EntityVoidPortal extends Entity {
     
     public float getGeneratorStability() {
         TileEntity generatorTile = this.world.getTileEntity(this.getPosition().down());
-        if (generatorTile != null && generatorTile instanceof TilePortalGenerator) {
+        if (generatorTile instanceof TilePortalGenerator) {
             return ((TilePortalGenerator)generatorTile).getStability();
         } else {
             return 0.0F;
@@ -160,16 +158,13 @@ public class EntityVoidPortal extends Entity {
             }
             if (targetWorld != null) {
                 TileEntity tile = targetWorld.getTileEntity(linkPos);
-                if (tile != null && tile instanceof TilePortalAnchor) {
+                if (tile instanceof TilePortalAnchor) {
                     // Generate source world flux before leaving
                     AuraHelper.polluteAura(sourceWorld, this.getPosition(), 5.0F, true);
                     
                     if (player.world.provider.getDimension() != this.getLinkDim()) {
                         // Change dimensions without spawning a nether portal at the other end
-                        player.changeDimension(this.getLinkDim(), new ITeleporter() {
-                            @Override
-                            public void placeEntity(World world, Entity entity, float yaw) {}
-                        });
+                        player.changeDimension(this.getLinkDim(), (world, entity, yaw) -> {});
                     }
                     player.setPositionAndUpdate(targetPos.getX() + 0.5D, targetPos.getY() + 1.0D, targetPos.getZ() + 0.5D);
                     if (player.world.provider.getDimension() == this.getLinkDim()) {

@@ -4,7 +4,6 @@ import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.init.InitBlocks;
 import com.verdantartifice.thaumicwonders.common.init.InitItems;
 import com.verdantartifice.thaumicwonders.common.items.base.IVariantItem;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;

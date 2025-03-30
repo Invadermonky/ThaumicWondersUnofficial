@@ -1,15 +1,14 @@
 package com.verdantartifice.thaumicwonders.common.research.theorycraft;
 
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.common.tiles.devices.IResearchEngine;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import thaumcraft.api.research.theorycraft.ResearchTableData;
 import thaumcraft.api.research.theorycraft.TheorycraftCard;
+
+import java.util.Random;
 
 public abstract class AbstractResearchEngineCard extends TheorycraftCard {
     protected abstract Class<? extends IResearchEngine> getEngineTileClass();

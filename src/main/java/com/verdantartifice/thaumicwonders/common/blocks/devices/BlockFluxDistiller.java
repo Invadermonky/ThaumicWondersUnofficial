@@ -2,10 +2,8 @@ package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockDeviceTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileFluxDistiller;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -25,7 +23,7 @@ public class BlockFluxDistiller extends BlockDeviceTW<TileFluxDistiller> {
     public BlockFluxDistiller() {
         super(Material.IRON, TileFluxDistiller.class, "flux_distiller");
         this.setSoundType(SoundType.METAL);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHARGE, Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHARGE, 0));
     }
     
     @Override
@@ -45,17 +43,17 @@ public class BlockFluxDistiller extends BlockDeviceTW<TileFluxDistiller> {
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] { CHARGE });
+        return new BlockStateContainer(this, CHARGE);
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(CHARGE, Integer.valueOf(meta));
+        return this.getDefaultState().withProperty(CHARGE, meta);
     }
     
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(CHARGE).intValue();
+        return state.getValue(CHARGE);
     }
     
     @Override

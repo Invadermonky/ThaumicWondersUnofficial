@@ -1,27 +1,13 @@
 package com.verdantartifice.thaumicwonders.common.entities.monsters;
 
-import java.util.List;
-
 import com.google.common.base.Predicate;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFluxFireball;
 import com.verdantartifice.thaumicwonders.common.misc.FluxExplosion;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketAvatarZapFx;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
@@ -44,16 +30,13 @@ import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.potions.PotionInfectiousVisExhaust;
 import thaumcraft.common.lib.utils.EntityUtils;
 
+import java.util.List;
+
 public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRangedAttackMob, IEldritchMob, ITaintedMob {
     protected int seedCooldown = 0;
     protected boolean isSuffocating = false;
     
-    protected static final Predicate<Entity> NOT_HORROR = new Predicate<Entity>() {
-        @Override
-        public boolean apply(Entity input) {
-            return !(input instanceof IEldritchMob) && !(input instanceof ITaintedMob);
-        }
-    };
+    protected static final Predicate<Entity> NOT_HORROR = input -> !(input instanceof IEldritchMob) && !(input instanceof ITaintedMob);
     
     public EntityCorruptionAvatar(World world) {
         super(world);
@@ -70,8 +53,8 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
         this.tasks.addTask(7, new EntityAIWander(this, 0.8D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(9, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityLiving>(this, EntityLiving.class, 0, false, false, NOT_HORROR));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLiving.class, 0, false, false, NOT_HORROR));
     }
     
     @Override

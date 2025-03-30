@@ -1,11 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
-import java.util.List;
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockDeviceTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileAlkahestVat;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,6 +24,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aspects.AspectHelper;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.damagesource.DamageSourceThaumcraft;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
     protected static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
@@ -66,9 +65,9 @@ public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return FULL_BLOCK_AABB;
     }
-    
+
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if (!worldIn.isRemote) {
             if (entityIn instanceof EntityItem) {
                 this.releaseVis(worldIn, pos, ((EntityItem)entityIn).getItem());
@@ -85,9 +84,9 @@ public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
                 }
             }
         }
-        super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
+        super.onEntityCollision(worldIn, pos, state, entityIn);
     }
-    
+
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote && facing == EnumFacing.UP) {

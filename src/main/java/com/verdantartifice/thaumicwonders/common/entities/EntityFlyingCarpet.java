@@ -1,12 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.entities;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.items.entities.ItemFlyingCarpet;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
@@ -28,10 +23,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.items.RechargeHelper;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class EntityFlyingCarpet extends Entity {
-    private static final DataParameter<Integer> VIS_CHARGE = EntityDataManager.<Integer>createKey(EntityFlyingCarpet.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> ENERGY = EntityDataManager.<Integer>createKey(EntityFlyingCarpet.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> DYE_COLOR = EntityDataManager.<Integer>createKey(EntityFlyingCarpet.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> VIS_CHARGE = EntityDataManager.createKey(EntityFlyingCarpet.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> ENERGY = EntityDataManager.createKey(EntityFlyingCarpet.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> DYE_COLOR = EntityDataManager.createKey(EntityFlyingCarpet.class, DataSerializers.VARINT);
 
     private float momentum;
     private int lerpSteps;
@@ -63,14 +61,14 @@ public class EntityFlyingCarpet extends Entity {
     }
     
     public EntityFlyingCarpet(World worldIn, BlockPos pos) {
-        this(worldIn, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ());
+        this(worldIn, pos.getX(), pos.getY(), pos.getZ());
     }
     
     @Override
     protected void entityInit() {
-        this.dataManager.register(VIS_CHARGE, Integer.valueOf(0));
-        this.dataManager.register(ENERGY, Integer.valueOf(0));
-        this.dataManager.register(DYE_COLOR, Integer.valueOf(-1));
+        this.dataManager.register(VIS_CHARGE, 0);
+        this.dataManager.register(ENERGY, 0);
+        this.dataManager.register(DYE_COLOR, -1);
     }
 
     @Override
@@ -116,8 +114,8 @@ public class EntityFlyingCarpet extends Entity {
         this.lerpX = x;
         this.lerpY = y;
         this.lerpZ = z;
-        this.lerpYaw = (double)yaw;
-        this.lerpPitch = (double)pitch;
+        this.lerpYaw = yaw;
+        this.lerpPitch = pitch;
         this.lerpSteps = 10;
     }
 
@@ -193,9 +191,9 @@ public class EntityFlyingCarpet extends Entity {
      */
     private void updateMotion() {
         this.momentum = 0.9F;
-        this.motionX *= (double)this.momentum;
-        this.motionY *= (double)this.momentum;
-        this.motionZ *= (double)this.momentum;
+        this.motionX *= this.momentum;
+        this.motionY *= this.momentum;
+        this.motionZ *= this.momentum;
         this.motionY += (this.hasNoGravity() ? 0.0D : -0.04D);
     }
     
@@ -212,9 +210,9 @@ public class EntityFlyingCarpet extends Entity {
             if (this.backInputDown) {
                 f -= 0.005F;
             }
-            this.motionX += (double)(MathHelper.sin(-this.rotationYaw * (float)(Math.PI / 180.0D)) * f);
-            this.motionY += (double)(MathHelper.sin(-pilot.rotationPitch * (float)(Math.PI / 180.0D)) * f);
-            this.motionZ += (double)(MathHelper.cos(this.rotationYaw * (float)(Math.PI / 180.0D)) * f);
+            this.motionX += (MathHelper.sin(-this.rotationYaw * (float)(Math.PI / 180.0D)) * f);
+            this.motionY += (MathHelper.sin(-pilot.rotationPitch * (float)(Math.PI / 180.0D)) * f);
+            this.motionZ += (MathHelper.cos(this.rotationYaw * (float)(Math.PI / 180.0D)) * f);
         }
     }
     
@@ -262,31 +260,31 @@ public class EntityFlyingCarpet extends Entity {
     }
 
     public void setVisCharge(int visCharge) {
-        this.dataManager.set(VIS_CHARGE, Integer.valueOf(visCharge));
+        this.dataManager.set(VIS_CHARGE, visCharge);
     }
     
     public int getVisCharge() {
-        return this.dataManager.get(VIS_CHARGE).intValue();
+        return this.dataManager.get(VIS_CHARGE);
     }
     
     public void setEnergy(int energy) {
-        this.dataManager.set(ENERGY, Integer.valueOf(energy));
+        this.dataManager.set(ENERGY, energy);
     }
     
     public int getEnergy() {
-        return this.dataManager.get(ENERGY).intValue();
+        return this.dataManager.get(ENERGY);
     }
     
     public void setDyeColor(EnumDyeColor color) {
         if (color == null) {
-            this.dataManager.set(DYE_COLOR, Integer.valueOf(-1));
+            this.dataManager.set(DYE_COLOR, -1);
         } else {
-            this.dataManager.set(DYE_COLOR, Integer.valueOf(color.getMetadata()));
+            this.dataManager.set(DYE_COLOR, color.getMetadata());
         }
     }
     
     public EnumDyeColor getDyeColor() {
-        int value = this.dataManager.get(DYE_COLOR).intValue();
+        int value = this.dataManager.get(DYE_COLOR);
         if (value == -1) {
             return null;
         } else {
@@ -298,8 +296,7 @@ public class EntityFlyingCarpet extends Entity {
     @Nullable
     public Entity getControllingPassenger() {
         List<Entity> list = this.getPassengers();
-        Entity retVal = list.isEmpty() ? null : list.get(0);
-        return retVal;
+        return list.isEmpty() ? null : list.get(0);
     }
 
     @Override

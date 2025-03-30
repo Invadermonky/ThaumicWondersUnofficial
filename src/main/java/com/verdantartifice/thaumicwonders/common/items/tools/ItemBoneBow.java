@@ -1,10 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.items.tools;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,7 +9,6 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
@@ -30,26 +26,23 @@ public class ItemBoneBow extends ItemBow implements IRechargable {
     public ItemBoneBow() {
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
         this.setRegistryName(ThaumicWonders.MODID, "bone_bow");
-        this.setUnlocalizedName(ThaumicWonders.MODID + "." + this.getRegistryName().getResourcePath());
+        this.setTranslationKey(this.getRegistryName().toString());
         this.setMaxStackSize(1);
         this.setMaxDamage(512);
         
-        this.addPropertyOverride(new ResourceLocation(ThaumicWonders.MODID, "pull"), new IItemPropertyGetter() {
-            @Override
-            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
-                if (entityIn == null) {
-                    return 0.0F;
-                } else {
-                    float maxCharge = (RechargeHelper.getCharge(stack) > 0) ? (float)POWERED_CHARGE_TIME : (float)UNPOWERED_CHARGE_TIME;
-                    return entityIn.getActiveItemStack().getItem() != ItemsTW.BONE_BOW ? 0.0F : (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / maxCharge;
-                }
+        this.addPropertyOverride(new ResourceLocation(ThaumicWonders.MODID, "pull"), (stack, worldIn, entityIn) -> {
+            if (entityIn == null) {
+                return 0.0F;
+            } else {
+                float maxCharge = (RechargeHelper.getCharge(stack) > 0) ? (float)POWERED_CHARGE_TIME : (float)UNPOWERED_CHARGE_TIME;
+                return entityIn.getActiveItemStack().getItem() != ItemsTW.BONE_BOW ? 0.0F : (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / maxCharge;
             }
         });
     }
     
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return repair.isItemEqual(new ItemStack(Items.BONE)) ? true : super.getIsRepairable(toRepair, repair);
+        return repair.isItemEqual(new ItemStack(Items.BONE)) || super.getIsRepairable(toRepair, repair);
     }
     
     @Override
@@ -140,7 +133,7 @@ public class ItemBoneBow extends ItemBow implements IRechargable {
                         worldIn.spawnEntity(entityarrow);
                     }
 
-                    worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
+                    worldIn.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
 
                     if (!flag1 && !entityplayer.capabilities.isCreativeMode) {
                         itemstack.shrink(1);

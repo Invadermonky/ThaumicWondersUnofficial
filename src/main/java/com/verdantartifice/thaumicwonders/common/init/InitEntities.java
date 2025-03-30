@@ -1,13 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-import com.verdantartifice.thaumicwonders.common.entities.EntityFluxFireball;
-import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
-import com.verdantartifice.thaumicwonders.common.entities.EntityHexamitePrimed;
-import com.verdantartifice.thaumicwonders.common.entities.EntityPrimalArrow;
-import com.verdantartifice.thaumicwonders.common.entities.EntityVoidPortal;
+import com.verdantartifice.thaumicwonders.common.entities.*;
 import com.verdantartifice.thaumicwonders.common.entities.monsters.EntityCorruptionAvatar;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;

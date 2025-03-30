@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.blocks.fluids;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.fluids.FluidQuicksilver;
-
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
@@ -21,15 +20,16 @@ public class BlockFluidQuicksilver extends BlockFluidClassic {
     public BlockFluidQuicksilver() {
         super(FluidQuicksilver.INSTANCE, FLUID_QUICKSILVER_MATERIAL);
         this.setRegistryName(ThaumicWonders.MODID, "fluid_quicksilver");
-        setUnlocalizedName(ThaumicWonders.MODID + "." + this.getRegistryName().getResourcePath());
+        this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
         this.setQuantaPerBlock(4);
     }
-    
+
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if (entityIn instanceof EntityLivingBase) {
             ((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
         }
+        super.onEntityCollision(worldIn, pos, state, entityIn);
     }
 }

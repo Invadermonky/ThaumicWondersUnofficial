@@ -1,11 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -21,6 +17,9 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
 import thaumcraft.common.lib.utils.RandomItemChooser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable {
     private static final RandomItemChooser RIC = new RandomItemChooser();
@@ -100,7 +99,7 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
                 continue;
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
-            if (te != null && te instanceof IEssentiaTransport) {
+            if (te instanceof IEssentiaTransport) {
                 IEssentiaTransport otherTile = (IEssentiaTransport)te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;

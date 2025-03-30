@@ -1,12 +1,9 @@
 package com.verdantartifice.thaumicwonders.common.blocks.misc;
 
-import java.util.Random;
-
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockTileTW;
 import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockPrimordialAccretionChamber;
 import com.verdantartifice.thaumicwonders.common.tiles.misc.TilePrimordialAccretionChamberPlaceholder;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +12,8 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import thaumcraft.api.blocks.BlocksTC;
+
+import java.util.Random;
 
 public class BlockPrimordialAccretionChamberPlaceholder extends BlockTileTW<TilePrimordialAccretionChamberPlaceholder> {
     public BlockPrimordialAccretionChamberPlaceholder(String name) {

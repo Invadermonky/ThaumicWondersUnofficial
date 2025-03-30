@@ -1,10 +1,9 @@
 package com.verdantartifice.thaumicwonders.common.items.misc;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
-
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nonnull;
 
 public class ItemDisjunctionCloth extends ItemTW {
     public ItemDisjunctionCloth() {

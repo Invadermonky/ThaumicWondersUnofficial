@@ -1,11 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.items.baubles;
 
-import java.util.List;
-
-import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
-
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,6 +19,8 @@ import thaumcraft.api.capabilities.IPlayerWarp;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.items.IRechargable;
 import thaumcraft.api.items.RechargeHelper;
+
+import java.util.List;
 
 public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable {
     protected static final int VIS_CAPACITY = 200;
@@ -51,7 +50,7 @@ public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable 
 
     @Override
     public void onWornTick(ItemStack itemstack, EntityLivingBase elb) {
-        if (elb != null && elb instanceof EntityPlayer) {
+        if (elb instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)elb;
             IPlayerWarp warp = ThaumcraftCapabilities.getWarp(player);
             if (warp.get(IPlayerWarp.EnumWarpType.NORMAL) > 0) {

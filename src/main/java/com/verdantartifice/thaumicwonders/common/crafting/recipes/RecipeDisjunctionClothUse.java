@@ -1,10 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.crafting.recipes;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -12,10 +9,12 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import javax.annotation.Nonnull;
+
 public class RecipeDisjunctionClothUse extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
     public RecipeDisjunctionClothUse() {
         super();
-        setRegistryName(ThaumicWonders.MODID, "disenchant");
+        this.setRegistryName(ThaumicWonders.MODID, "disenchant");
     }
     
     @Override
@@ -56,7 +55,7 @@ public class RecipeDisjunctionClothUse extends IForgeRegistryEntry.Impl<IRecipe>
                 break;
             }
         }
-        if (!stackToDisenchant.isEmpty()) {
+        if (!stackToDisenchant.isEmpty() && stackToDisenchant.hasTagCompound()) {
             stackToDisenchant.getTagCompound().removeTag("ench");
         }
         

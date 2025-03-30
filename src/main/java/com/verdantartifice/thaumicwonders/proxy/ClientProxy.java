@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.proxy;
 
 import com.verdantartifice.thaumicwonders.client.config.KeyBindings;
-
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 

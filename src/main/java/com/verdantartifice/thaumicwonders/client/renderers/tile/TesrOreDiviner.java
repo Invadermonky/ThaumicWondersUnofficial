@@ -1,9 +1,6 @@
 package com.verdantartifice.thaumicwonders.client.renderers.tile;
 
-import org.lwjgl.opengl.GL11;
-
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileOreDiviner;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -11,6 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class TesrOreDiviner extends TileEntitySpecialRenderer<TileOreDiviner> {

@@ -1,21 +1,35 @@
-v1.8.4
+# Changelog
+
+## v2.0.0
+------
+### Added
+
+### Fixed
+
+### Changed
+- Updated gradle to RFG
+
+### Removed
+
+
+## v1.8.4
 ------
 * Reverted to Forge 14.23.5.2768
 
-v1.8.3
+## v1.8.3
 ------
 * Fixed a memory leak with Void Fortress Armor, thanks Aqua!
 
-v1.8.2
+## v1.8.2
 ------
 * Fixed a crash when using Panacea
 
-v1.8.1
+## v1.8.1
 ------
 * Coalescence Matrix has a new texture, thanks TechnoMysterio!
 * Added Russian translations, thanks xRoBoTx!
 
-v1.8.0
+## v1.8.0
 ------
 * Added Flux Distiller, to clean out your capacitors
 * Added Primordial Accelerator, to smash your Primordial Pearls to bits, for science!
@@ -32,7 +46,7 @@ v1.8.0
 * Renamed Bone Bow to Bow of Bone
 * Adjusted essentia costs for Void Beacon recipe
 
-v1.7.0
+## v1.7.0
 ------
 * Added Night-Vision Goggles, for a different kind of revealing
 * Added Void Beacon, to conjure something from (almost) nothing
@@ -42,7 +56,7 @@ v1.7.0
 * Flying Carpets can now be dyed different colors
 * Fixed crafting recipe bug with Bone Bow and Hexamite
 
-v1.6.0
+## v1.6.0
 ------
 * Added Meaty Orb, for when the weather forecast should be "cloudy with a chance of meatballs"
 * Added Structure Diviner, to track down interesting spots in the world
@@ -54,7 +68,7 @@ v1.6.0
 * Fixed Z-clipping issue with the Void Fortress Helmet and skins with hats
 * Added star field effect to the business end of Dimensional Rippers
 
-v1.5.0
+## v1.5.0
 ------
 * Added Void Fortress Armor, the pinnacle of eldritch protection
 * Added Meteorb, for manipulating meteorological phenomena
@@ -66,7 +80,7 @@ v1.5.0
 * Catalyst stones can now be enchanted with Unbreaking to improve their longevity
 * Fixed a blockstate mod interaction bug with the Catalyzation Chamber
 
-v1.4.0
+## v1.4.0
 ------
 * Added Flux Capacitor, to help you manage your flux problem
 * Added Transmuter's Stone, to allow your Catalyzation Chamber to turn one metal into another
@@ -85,23 +99,23 @@ v1.4.0
 * The Everburning Urn is now a standard fluid handler and can be drained with pipes
 * Updated Thaumonomicon page's background image
 
-v1.3.0
+## v1.3.0
 ------
 * Added Void Portals, a means to teleport across space and dimensions
 * Added Advanced Metal Purification, a more efficient way to double your ore
 * Added Hexamite, for when you really need to ruin something's day
 * Fixed crash bug when Primal Destroyer hunger fills
 
-v1.2.0
+## v1.2.0
 ------
 * Added Madness Engine, an essentia-powered source of eldritch inspiration
 * Fixed another crash bug on server load
 
-v1.1.1
+## v1.1.1
 ------
 * Fixed crash bug on server load
 
-v1.1.0
+## v1.1.0
 ------
 * Added Timewinder, a device that lets you skip forward in time
 * Added Inspiration Engine, an essentia-powered research aid
@@ -109,7 +123,7 @@ v1.1.0
 * Increased Primal Destroyer damage to compensate
 * Reduced Flying Carpet speed and flight-time-per-vis.
 
-v1.0.0
+## v1.0.0
 ------
 * Added Everburning Urn, an infinite lava source
 * Added Disjunction Cloth, which removes enchantments from items

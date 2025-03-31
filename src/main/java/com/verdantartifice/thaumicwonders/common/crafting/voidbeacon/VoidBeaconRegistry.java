@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.crafting.voidbeacon;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
@@ -14,22 +15,33 @@ import java.util.stream.Collectors;
 public class VoidBeaconRegistry {
     private static final List<VoidBeaconEntry> VOID_BEACON_ENTRIES = new ArrayList<>();
 
-    public static void addEntry(ItemStack stack) {
+    public static void addEntry(ItemStack stack, int weight) {
         if(stack.isEmpty()) {
             ThaumicWonders.LOGGER.error("ItemStack cannot be empty");
+        } else if(weight <= 0) {
+            ThaumicWonders.LOGGER.error("Weight must be greater than 0");
         } else {
             VOID_BEACON_ENTRIES.add(new VoidBeaconEntry(stack));
         }
     }
 
-    public static void addEntry(String oreDict) {
+    public static void addEntry(ItemStack stack) {
+        addEntry(stack, 10);
+    }
+
+    public static void addEntry(String oreDict, int weight) {
         NonNullList<ItemStack> oreStacks = OreDictionary.getOres(oreDict);
         if(oreStacks.isEmpty()) {
             ThaumicWonders.LOGGER.error("There are no items registered with the {} ore dictionary string.", oreDict);
         } else {
             //Only add the first result to prevent ore dictionary strings from skewing the output.
-            addEntry(oreStacks.get(0));
+            addEntry(oreStacks.get(0), weight);
         }
+
+    }
+
+    public static void addEntry(String oreDict) {
+        addEntry(oreDict, 10);
     }
 
     public static void addEntry(VoidBeaconEntry entry) {
@@ -51,23 +63,22 @@ public class VoidBeaconRegistry {
     }
 
     private static List<VoidBeaconEntry> getEntriesForAspect(Aspect aspect) {
-        return VOID_BEACON_ENTRIES.stream().filter(entry -> entry.getAspectValue(aspect) > 0).collect(Collectors.toList());
+        return VOID_BEACON_ENTRIES.stream().filter(entry -> entry.matches(aspect)).collect(Collectors.toList());
     }
 
     public static ItemStack getDropForAspect(Random rand, Aspect aspect) {
         List<VoidBeaconEntry> aspectEntries = getEntriesForAspect(aspect);
-        int totalWeight = aspectEntries.stream().mapToInt(entry -> entry.getAspectValue(aspect)).sum();
+        int totalWeight = aspectEntries.stream().mapToInt(WeightedEntry::getWeight).sum();
         if(aspectEntries.isEmpty() || totalWeight <= 0) {
-            return !VOID_BEACON_ENTRIES.isEmpty() ? VOID_BEACON_ENTRIES.get(rand.nextInt(VOID_BEACON_ENTRIES.size())).getStack() : ItemStack.EMPTY;
+            return ItemStack.EMPTY;
         }
 
         int weight = rand.nextInt(totalWeight);
         for(VoidBeaconEntry entry : VOID_BEACON_ENTRIES) {
-            int aspectWeight = entry.getAspectValue(aspect);
-            if(weight < aspectWeight) {
+            if(weight < entry.getWeight()) {
                 return entry.getStack();
             } else {
-                weight -= aspectWeight;
+                weight -= entry.getWeight();
             }
         }
         return ItemStack.EMPTY;

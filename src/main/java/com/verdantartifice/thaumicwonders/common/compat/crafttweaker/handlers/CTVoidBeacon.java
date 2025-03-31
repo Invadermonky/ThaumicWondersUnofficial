@@ -16,21 +16,25 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("mods." + ThaumicWonders.MODID + ".VoidBeacon")
 public class CTVoidBeacon {
     @ZenMethod
-    public static void add(IItemStack stack) {
+    public static void add(IItemStack stack, int weight) {
         ItemStack itemStack = CraftTweakerMC.getItemStack(stack);
         if(itemStack.isEmpty()) {
             CraftTweakerAPI.logError("Failure adding void beacon entry, IItemStack cannot be empty");
+        } else if(weight <= 0) {
+            CraftTweakerAPI.logError("Error adding Void Beacon entry. Weight must be greater than 0.");
         } else {
-            VoidBeaconRegistry.addEntry(itemStack);
+            VoidBeaconRegistry.addEntry(itemStack, weight);
         }
     }
 
     @ZenMethod
-    public static void add(IOreDictEntry oreDictEntry) {
+    public static void add(IOreDictEntry oreDictEntry, int weight) {
         if(OreDictionary.getOres(oreDictEntry.getName()).isEmpty()) {
             CraftTweakerAPI.logError("There are no items registered to the Ore Dictionary " + oreDictEntry.getName());
+        } if(weight <= 0) {
+            CraftTweakerAPI.logError("Error adding Void Beacon entry. Weight must be greater than 0.");
         } else {
-            VoidBeaconRegistry.addEntry(oreDictEntry.getName());
+            VoidBeaconRegistry.addEntry(oreDictEntry.getName(), weight);
         }
     }
 

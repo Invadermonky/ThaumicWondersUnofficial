@@ -1,26 +1,21 @@
 package com.verdantartifice.thaumicwonders.common.crafting.voidbeacon;
 
-import com.google.common.base.Preconditions;
+import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectHelper;
 
-import java.util.*;
-
-public class VoidBeaconEntry {
-    protected ItemStack stack;
+public class VoidBeaconEntry extends WeightedEntry {
+    public VoidBeaconEntry(ItemStack stack, int weight) {
+        super(stack, weight);
+    }
 
     public VoidBeaconEntry(ItemStack stack) {
-        Preconditions.checkArgument(!stack.isEmpty(), "ItemStack cannot be empty.");
-        this.stack = stack;
+        this(stack, 10);
     }
 
-    public ItemStack getStack() {
-        return this.stack.copy();
-    }
-
-    public int getAspectValue(Aspect aspect) {
-        return AspectHelper.getObjectAspects(this.getStack()).aspects.getOrDefault(aspect, 0);
+    public boolean matches(Aspect aspect) {
+        return AspectHelper.getObjectAspects(this.getStack()).aspects.containsKey(aspect);
     }
 
     @Override
@@ -28,10 +23,5 @@ public class VoidBeaconEntry {
         if (!(o instanceof VoidBeaconEntry)) return false;
         VoidBeaconEntry that = (VoidBeaconEntry) o;
         return ItemStack.areItemStacksEqual(this.getStack(), that.getStack());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(stack);
     }
 }

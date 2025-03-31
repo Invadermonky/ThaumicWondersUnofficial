@@ -24,19 +24,19 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
 
     @MethodDescription(
             type = MethodDescription.Type.ADDITION,
-            example = @Example("item('minecraft:stone')")
+            example = @Example("item('minecraft:stone'), 10")
     )
-    public void add(ItemStack stack) {
-        new RecipeBuilder().setDrop(stack).register();
+    public void add(ItemStack stack, int weight) {
+        new RecipeBuilder().setDrop(stack).setWeight(weight).register();
     }
 
     @MethodDescription(
             type = MethodDescription.Type.ADDITION,
-            example = @Example("ore('stone')"),
+            example = @Example("ore('stone'), 10"),
             priority = 1001
     )
-    public void add(OreDictIngredient ingredient) {
-        new RecipeBuilder().setDrop(ingredient).register();
+    public void add(OreDictIngredient ingredient, int weight) {
+        new RecipeBuilder().setDrop(ingredient).setWeight(weight).register();
     }
 
     @MethodDescription(
@@ -68,8 +68,8 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
 
     @RecipeBuilderDescription(
             example = {
-                    @Example(".setDrop(item('minecraft:stone'))"),
-                    @Example(".setDrop(ore('stone'))")
+                    @Example(".setDrop(item('minecraft:stone')).setWeight(10)"),
+                    @Example(".setDrop(ore('stone')).setWeight(10)")
             }
     )
     public RecipeBuilder recipeBuilder() {
@@ -79,13 +79,21 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
     public static class RecipeBuilder extends AbstractRecipeBuilder<VoidBeaconEntry> {
         @Property
         private ItemStack stack;
+        @Property(comp = @Comp(gt = 0))
+        private int weight;
 
         public RecipeBuilder() {
             this.stack = ItemStack.EMPTY;
+            weight = 0;
         }
 
         public RecipeBuilder setDrop(ItemStack stack) {
             this.stack = stack;
+            return this;
+        }
+
+        public RecipeBuilder setWeight(int weight) {
+            this.weight = weight;
             return this;
         }
 
@@ -105,12 +113,13 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
         @Override
         public void validate(GroovyLog.Msg msg) {
             msg.add(this.stack.isEmpty(), "Void Beacon entry cannot be empty");
+            msg.add(this.weight <= 0, "Void Beacon entry weight must be greater than 0");
         }
 
         @Override
         public @Nullable VoidBeaconEntry register() {
             if(this.validate()) {
-                VoidBeaconEntry entry = new VoidBeaconEntry(this.stack);
+                VoidBeaconEntry entry = new VoidBeaconEntry(this.stack, this.weight);
                 VoidBeaconRegistry.addEntry(entry);
                 return entry;
             }

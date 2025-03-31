@@ -12,6 +12,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -36,19 +37,20 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
         this.setLightLevel(0.9F);
         this.setCreativeTab(null);
     }
-    
+
     @Override
     public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
         return false;
     }
-    
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
     }
-    
+
     @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {}
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+    }
 
     @SideOnly(Side.CLIENT)
     @Override
@@ -62,7 +64,7 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
         bs = bs.withProperty(IBlockFacingHorizontal.FACING, placer.getHorizontalFacing().getOpposite());
         return bs;
     }
-    
+
     public static void destroyChamber(World world, BlockPos pos, IBlockState state, BlockPos startPos) {
         if (ignoreDestroy || world.isRemote) {
             return;
@@ -91,12 +93,12 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
         world.setBlockState(pos, BlocksTW.FLUID_QUICKSILVER.getDefaultState());
         ignoreDestroy = false;
     }
-    
+
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemById(0);
     }
-    
+
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         destroyChamber(worldIn, pos, state, pos);
@@ -120,14 +122,19 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
         if (!worldIn.isRemote && (entityIn.ticksExisted % 10 == 0)) {
             if (entityIn instanceof EntityItem) {
                 entityIn.motionY = 0.025D;
-                if (entityIn.onGround) {
-                    TilePrimordialAccretionChamber tpac = (TilePrimordialAccretionChamber)worldIn.getTileEntity(pos);
-                    ((EntityItem)entityIn).setItem(tpac.addItemsToInventory(((EntityItem)entityIn).getItem()));
+                if (entityIn.onGround && !entityIn.isDead) {
+                    TilePrimordialAccretionChamber tpac = (TilePrimordialAccretionChamber) worldIn.getTileEntity(pos);
+                    ItemStack remainder = tpac.addItemsToInventory(((EntityItem) entityIn).getItem());
+                    if (remainder != null && !remainder.isEmpty()) {
+                        ((EntityItem) entityIn).setItem(remainder);
+                    } else {
+                        entityIn.setDead();
+                    }
+                } else if (entityIn instanceof EntityLivingBase) {
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
                 }
-            } else if (entityIn instanceof EntityLivingBase) {
-                ((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
             }
+            super.onEntityCollision(worldIn, pos, state, entityIn);
         }
-        super.onEntityCollision(worldIn, pos, state, entityIn);
     }
 }

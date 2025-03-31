@@ -11,6 +11,6 @@ import thaumcraft.api.aspects.AspectRegistryEvent;
 public class AspectEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void postAspects(AspectRegistryEvent event) {
-        InitVoidBeacon.init();
+        //InitVoidBeacon.init();
     }
 }

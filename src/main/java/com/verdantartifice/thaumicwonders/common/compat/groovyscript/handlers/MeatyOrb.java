@@ -6,14 +6,14 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbEntry;
+import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
 import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
 import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 @RegistryDescription(linkGenerator = ThaumicWonders.MODID)
-public class MeatyOrb extends VirtualizedRegistry<MeatyOrbEntry> {
+public class MeatyOrb extends VirtualizedRegistry<WeightedEntry> {
     @GroovyBlacklist
     @Override
     public void onReload() {
@@ -54,7 +54,7 @@ public class MeatyOrb extends VirtualizedRegistry<MeatyOrbEntry> {
         return new RecipeBuilder();
     }
 
-    public static class RecipeBuilder extends AbstractRecipeBuilder<MeatyOrbEntry> {
+    public static class RecipeBuilder extends AbstractRecipeBuilder<WeightedEntry> {
         @Property
         private ItemStack meatStack;
         @Property(comp = @Comp(gt = 0))
@@ -90,9 +90,9 @@ public class MeatyOrb extends VirtualizedRegistry<MeatyOrbEntry> {
         }
 
         @Override
-        public @Nullable MeatyOrbEntry register() {
+        public @Nullable WeightedEntry register() {
             if(this.validate()) {
-                MeatyOrbEntry entry = new MeatyOrbEntry(this.meatStack, this.weight);
+                WeightedEntry entry = new WeightedEntry(this.meatStack, this.weight);
                 MeatyOrbRegistry.addEntry(entry);
                 return entry;
             }

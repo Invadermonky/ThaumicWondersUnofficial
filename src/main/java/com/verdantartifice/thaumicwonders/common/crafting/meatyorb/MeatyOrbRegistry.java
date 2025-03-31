@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.crafting.meatyorb;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class MeatyOrbRegistry {
-    private static final List<MeatyOrbEntry> MEAT_ENTRIES = new ArrayList<>();
+    private static final List<WeightedEntry> MEAT_ENTRIES = new ArrayList<>();
     private static int totalWeight = -1;
 
     public static void addEntry(ItemStack meatStack, int weight) {
@@ -18,11 +19,11 @@ public class MeatyOrbRegistry {
             ThaumicWonders.LOGGER.error("Error adding Meaty Orb entry. Weight must be greater than 0.");
         } else {
             meatStack.setCount(1);
-            MEAT_ENTRIES.add(new MeatyOrbEntry(meatStack, weight));
+            MEAT_ENTRIES.add(new WeightedEntry(meatStack, weight));
         }
     }
 
-    public static void addEntry(MeatyOrbEntry entry) {
+    public static void addEntry(WeightedEntry entry) {
         MEAT_ENTRIES.add(entry);
     }
 
@@ -52,9 +53,9 @@ public class MeatyOrbRegistry {
             return ItemStack.EMPTY;
 
         int weight = rand.nextInt(totalWeight);
-        for(MeatyOrbEntry entry : MEAT_ENTRIES) {
+        for(WeightedEntry entry : MEAT_ENTRIES) {
             if(weight < entry.getWeight()) {
-                return entry.getMeatStack();
+                return entry.getStack();
             } else {
                 weight -= entry.getWeight();
             }

@@ -1,11 +1,11 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
+import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -26,24 +26,19 @@ import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.lib.utils.EntityUtils;
-import thaumcraft.common.lib.utils.RandomItemChooser;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TileVoidBeacon extends TileTW implements ITickable, IAspectContainer, IEssentiaTransport {
     private static final int CAPACITY = 100;
     private static final int PROGRESS_REQUIRED = 200;
     private static final int PLAY_EFFECTS = 4;
-    private static final Map<Aspect, List<RandomItemChooser.Item>> REGISTRY = new HashMap<Aspect, List<RandomItemChooser.Item>>();
-    private static final RandomItemChooser RIC = new RandomItemChooser();
-    
-    protected final List<TileVoidBeacon.BeamSegment> beamSegments = new ArrayList<TileVoidBeacon.BeamSegment>();
+
+    protected final List<TileVoidBeacon.BeamSegment> beamSegments = new ArrayList<>();
     
     protected Aspect essentiaType = null;
     protected int essentiaAmount = 0;
@@ -151,19 +146,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
     
     protected int getRequiredEssentia() {
-        switch (this.levels) {
-        case 4:
-            return 1;
-        case 3:
-            return 2;
-        case 2:
-            return 5;
-        case 1:
-            return 10;
-        case 0:
-        default:
-            return 20;
-        }
+        return ConfigHandlerTW.void_beacon.baseEssentiaCost / (int) (Math.pow(2, this.levels));
     }
     
     protected void eject(@Nonnull ItemStack stack) {
@@ -190,16 +173,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     
     @Nonnull
     protected ItemStack getConjuredItem(Aspect aspect) {
-        List<RandomItemChooser.Item> list = REGISTRY.get(aspect);
-        if (list == null || list.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-        RegistryEntry entry = (RegistryEntry)RIC.chooseOnWeight(list);
-        if (entry == null) {
-            return ItemStack.EMPTY;
-        } else {
-            return entry.stack.copy();
-        }
+        return VoidBeaconRegistry.getDropForAspect(this.world.rand, aspect);
     }
     
     protected boolean canEject() {
@@ -242,7 +216,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
     
     protected List<EntityFluxRift> getValidRifts() {
-        List<EntityFluxRift> retVal = new ArrayList<EntityFluxRift>();
+        List<EntityFluxRift> retVal = new ArrayList<>();
         List<EntityFluxRift> riftList = EntityUtils.getEntitiesInRange(this.world, this.pos, null, EntityFluxRift.class, 16.0D);
         for (EntityFluxRift rift : riftList) {
             if (!rift.isDead && rift.getRiftSize() > 1) {
@@ -397,7 +371,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
     @Override
     public int addToContainer(Aspect aspect, int toAdd) {
-        int retVal = 0;
+        int retVal;
         if (toAdd == 0) {
             return 0;
         } else if (this.essentiaAmount < CAPACITY && (this.essentiaType == null || this.essentiaType == aspect)) {
@@ -548,80 +522,6 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             return true;
         } else {
             return super.receiveClientEvent(id, type);
-        }
-    }
-    
-    public static void initRegistry() {
-        REGISTRY.clear();
-        for (Aspect aspect : Aspect.aspects.values()) {
-            REGISTRY.put(aspect, new ArrayList<RandomItemChooser.Item>());
-        }
-    }
-    
-    public static void registerItemStack(ItemStack stack) {
-        if (stack == null || stack.isEmpty()) {
-            return;
-        }
-        stack = stack.copy();
-        stack.setCount(1);
-        if (stack.getItemDamage() == 32767 && stack.getItem() instanceof ItemBlock) {
-            ThaumicWonders.LOGGER.warn("Wildcard meta detected for {} in void beacon registration; this can result in invalid result blocks", stack);
-            Block block = ((ItemBlock)stack.getItem()).getBlock();
-            for (IBlockState state : block.getBlockState().getValidStates()) {
-                registerItemStackInternal(new ItemStack(stack.getItem(), 1, block.getMetaFromState(state)));
-            }
-        } else {
-            registerItemStackInternal(stack);
-        }
-    }
-    
-    private static void registerItemStackInternal(@Nonnull ItemStack stack) {
-        AspectList aspects = AspectHelper.getObjectAspects(stack);
-        if (aspects != null) {
-            for (Aspect aspect : aspects.getAspects()) {
-                RegistryEntry entry = new RegistryEntry(stack, aspects.getAmount(aspect));
-                List<RandomItemChooser.Item> list = REGISTRY.get(aspect);
-                if (list != null && !list.contains(entry)) {
-                    list.add(entry);
-                }
-            }
-        }
-    }
-    
-    public static void registerOreDict(String oreDict) {
-        List<ItemStack> ores = ThaumcraftApiHelper.getOresWithWildCards(oreDict);
-        if (ores != null && !ores.isEmpty()) {
-            for (ItemStack ore : ores) {
-                registerItemStack(ore);
-            }
-        }
-    }
-    
-    public static class RegistryEntry implements RandomItemChooser.Item {
-        public ItemStack stack;
-        public int weight;
-        
-        protected RegistryEntry(ItemStack stack, int weight) {
-            this.stack = stack;
-            this.weight = weight;
-        }
-        
-        @Override
-        public double getWeight() {
-            return weight;
-        }
-        
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof RegistryEntry)) {
-                return false;
-            }
-            return ItemStack.areItemStacksEqual(stack, ((RegistryEntry)obj).stack);
-        }
-        
-        @Override
-        public int hashCode() {
-            return stack.hashCode();
         }
     }
     

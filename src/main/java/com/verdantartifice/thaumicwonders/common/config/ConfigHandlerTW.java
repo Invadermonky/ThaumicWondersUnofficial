@@ -5,6 +5,7 @@ import net.minecraftforge.common.config.Config;
 public class ConfigHandlerTW {
 
     public static MeatyOrbCategory meaty_orb = new MeatyOrbCategory();
+    public static VoidBeaconCategory void_beacon = new VoidBeaconCategory();
 
     public static class MeatyOrbCategory {
         @Config.RangeInt(min = 5, max = 6000)
@@ -16,5 +17,12 @@ public class ConfigHandlerTW {
         @Config.Name("Activation Essentia")
         @Config.Comment("The amount of Aqua, Victus, and Alienis essentia that is needed to activate the Meaty Orb")
         public int essentiaRequirement = 250;
+    }
+
+    public static class VoidBeaconCategory {
+        @Config.RangeInt(min = 20, max = 10000)
+        @Config.Name("Essentia Cost")
+        @Config.Comment("The amount of essentia required to generate a drop from the Void Beacon. Each beacon tier will reduce this amount by half.")
+        public int baseEssentiaCost = 20;
     }
 }

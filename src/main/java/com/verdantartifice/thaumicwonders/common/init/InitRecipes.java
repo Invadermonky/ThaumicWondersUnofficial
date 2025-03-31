@@ -51,6 +51,7 @@ public class InitRecipes {
         initMultiblockRecipes();
         initSmelting();
         initMeatyOrb();
+        InitVoidBeacon.init();
     }
     
     private static void initMultiblockRecipes() {

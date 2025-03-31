@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.items.armor;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.client.renderers.models.gear.ModelVoidFortressArmor;
+import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -156,6 +157,10 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        if(stack.getItem() == ItemsTW.VOID_FORTRESS_HELM) {
+            tooltip.add(TextFormatting.DARK_PURPLE + I18n.format("item.goggles.name"));
+            tooltip.add(TextFormatting.GOLD + I18n.format("item.fortress_helm.mask.2"));
+        }
         tooltip.add(TextFormatting.GOLD + I18n.format("enchantment.special.warpshell"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }

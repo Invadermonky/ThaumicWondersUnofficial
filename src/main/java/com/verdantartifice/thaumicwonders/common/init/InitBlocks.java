@@ -50,29 +50,34 @@ public class InitBlocks {
         registerBlock(forgeRegistry, new BlockPrimordialAcceleratorTunnel());
         registerBlock(forgeRegistry, new BlockPrimordialAcceleratorTerminus());
         registerBlock(forgeRegistry, new BlockPrimordialAccretionChamber());
-        registerBlock(forgeRegistry, new BlockShimmerleafCrop());
-        registerBlock(forgeRegistry, new BlockCinderpearlCrop());
-        registerBlock(forgeRegistry, new BlockVishroomCrop());
+        registerBlock(forgeRegistry, new BlockShimmerleafCrop(), false);
+        registerBlock(forgeRegistry, new BlockCinderpearlCrop(), false);
+        registerBlock(forgeRegistry, new BlockVishroomCrop(), false);
         registerBlock(forgeRegistry, new BlockAlkahestVat());
         registerBlock(forgeRegistry, new BlockCoalescenceMatrix());
         registerBlock(forgeRegistry, new BlockTW(Material.IRON, "coalescence_matrix_precursor"));
         
-        registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_arcane_stone"));
-        registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_obsidian"));
-        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_thaumium_block"));
-        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_void_metal_block"));
-        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_adv_alch_construct"));
+        registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_arcane_stone"), false);
+        registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_obsidian"), false);
+        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_thaumium_block"), false);
+        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_void_metal_block"), false);
+        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_adv_alch_construct"), false);
         
         FluidRegistry.registerFluid(FluidQuicksilver.INSTANCE);
         FluidRegistry.addBucketForFluid(FluidQuicksilver.INSTANCE);
         forgeRegistry.register(new BlockFluidQuicksilver());
     }
-    
+
     private static void registerBlock(IForgeRegistry<Block> forgeRegistry, Block block) {
-        forgeRegistry.register(block);
-        InitBlocks.ITEM_BLOCKS.add(new ItemBlock(block));
+        registerBlock(forgeRegistry, block, true);
     }
-    
+
+    private static void registerBlock(IForgeRegistry<Block> forgeRegistry, Block block, boolean hasItem) {
+        forgeRegistry.register(block);
+        if(hasItem)
+            InitBlocks.ITEM_BLOCKS.add(new ItemBlock(block));
+    }
+
     private static <T extends ItemBlock> void registerBlock(IForgeRegistry<Block> forgeRegistry, Block block, Class<T> clazz) {
         forgeRegistry.register(block);
         try {

@@ -25,16 +25,6 @@ repositories {
             includeGroup 'maven.modrinth'
         }
     }
-    exclusiveContent {
-        forRepository {
-            maven {
-                url "https://maven.blamejared.com/"
-            }
-        }
-        filter {
-            includeGroup 'maven.blamejared.CraftTweaker2'
-        }
-    }
     mavenLocal() // Must be last for caching to work
 }
 
@@ -43,6 +33,8 @@ dependencies {
     runtimeOnly 'com.cleanroommc:strip-latest-forge-requirements:1.0'
     // Include OSXNarratorBlocker by default for the dev env, for M1+ Macs
     runtimeOnly 'com.cleanroommc:osxnarratorblocker:1.0'
+    compileOnlyApi 'org.jetbrains:annotations:24.1.0'
+    annotationProcessor 'org.jetbrains:annotations:24.1.0'
 
     implementation rfg.deobf('curse.maven:had-enough-items-557549:4543375')
 

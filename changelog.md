@@ -3,11 +3,20 @@
 ## v2.0.0
 ------
 ### Added
+- Added Goggles of Revealing and Sipping Fiend mask tooltip to Void Fortress Helm
+- Added Meaty Orb Crafttweaker and Groovyscript methods
 
 ### Fixed
+- Fixed rare Disjunction Cloth crafting table recipe crash
+- Fixed mod registering several fake blocks
+- Fixed several dupe bugs [Pull Request #77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
 
 ### Changed
 - Updated gradle to RFG
+- Cinderpearl Seed recipe now produces 1 Cinderpearl Seed Stalk. Each stalk can be used to plant 8 Cinderpearl plants before being consumed.
+- Shimmerleaf Seed recipe now produces 1 Shimmerleaft Seed Bulb. Each bulb can be used to plant 8 Shimmerleaf plants before being consumed.
+- Vishroom Spore recipe now produces 1 Vishroom Spore Cluster. Each spore custer can be used to plant 8 Vishroom plants before being consumed.
+- Meaty Orb now uses recipe entry structure to generate drops
 
 ### Removed
 

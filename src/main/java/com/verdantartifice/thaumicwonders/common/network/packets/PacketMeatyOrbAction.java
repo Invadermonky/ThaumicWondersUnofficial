@@ -1,5 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.network.packets;
 
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileMeatyOrb;
 import io.netty.buffer.ByteBuf;
@@ -49,12 +50,13 @@ public class PacketMeatyOrbAction implements IMessage {
             TileEntity tileEntity = world.getTileEntity(message.tilePos);
             if (tileEntity instanceof TileMeatyOrb) {
                 TileMeatyOrb tile = (TileMeatyOrb)tileEntity;
-                if ( tile.doesContainerContainAmount(Aspect.WATER, TileMeatyOrb.MIN_FUEL) &&
-                     tile.doesContainerContainAmount(Aspect.LIFE, TileMeatyOrb.MIN_FUEL) &&
-                     tile.doesContainerContainAmount(Aspect.ELDRITCH, TileMeatyOrb.MIN_FUEL) ) {
-                    tile.takeFromContainer(Aspect.WATER, TileMeatyOrb.MIN_FUEL);
-                    tile.takeFromContainer(Aspect.LIFE, TileMeatyOrb.MIN_FUEL);
-                    tile.takeFromContainer(Aspect.ELDRITCH, TileMeatyOrb.MIN_FUEL);
+                int requiredFuel = ConfigHandlerTW.meaty_orb.essentiaRequirement;
+                if ( tile.doesContainerContainAmount(Aspect.WATER, requiredFuel) &&
+                     tile.doesContainerContainAmount(Aspect.LIFE, requiredFuel) &&
+                     tile.doesContainerContainAmount(Aspect.ELDRITCH, requiredFuel) ) {
+                    tile.takeFromContainer(Aspect.WATER, requiredFuel);
+                    tile.takeFromContainer(Aspect.LIFE, requiredFuel);
+                    tile.takeFromContainer(Aspect.ELDRITCH, requiredFuel);
                     AuraHelper.polluteAura(world, message.tilePos, 10.0F, true);
                     tile.setActive(true);
                     PacketHandler.INSTANCE.sendToAllAround(

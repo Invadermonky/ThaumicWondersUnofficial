@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.init;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
+import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeDisjunctionClothUse;
 import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeFlyingCarpetDyes;
 import com.verdantartifice.thaumicwonders.common.fluids.FluidQuicksilver;
@@ -49,6 +50,7 @@ public class InitRecipes {
         initInfusionRecipes();
         initMultiblockRecipes();
         initSmelting();
+        initMeatyOrb();
     }
     
     private static void initMultiblockRecipes() {
@@ -745,7 +747,7 @@ public class InitRecipes {
         
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "shimmerleaf_seed"), new InfusionRecipe(
                 "TWOND_MYSTIC_GARDENING",
-                new ItemStack(ItemsTW.SHIMMERLEAF_SEED, 8),
+                new ItemStack(ItemsTW.SHIMMERLEAF_SEED),
                 2,
                 new AspectList().add(Aspect.PLANT, 10).add(Aspect.LIFE, 10).add(Aspect.AURA, 5),
                 new ItemStack(Items.WHEAT_SEEDS),
@@ -754,7 +756,7 @@ public class InitRecipes {
         
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "cinderpearl_seed"), new InfusionRecipe(
                 "TWOND_MYSTIC_GARDENING",
-                new ItemStack(ItemsTW.CINDERPEARL_SEED, 8),
+                new ItemStack(ItemsTW.CINDERPEARL_SEED),
                 2,
                 new AspectList().add(Aspect.PLANT, 10).add(Aspect.LIFE, 10).add(Aspect.FIRE, 5),
                 new ItemStack(Items.WHEAT_SEEDS),
@@ -763,7 +765,7 @@ public class InitRecipes {
         
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "vishroom_spore"), new InfusionRecipe(
                 "TWOND_MYSTIC_GARDENING",
-                new ItemStack(ItemsTW.VISHROOM_SPORE, 8),
+                new ItemStack(ItemsTW.VISHROOM_SPORE),
                 2,
                 new AspectList().add(Aspect.PLANT, 10).add(Aspect.LIFE, 10).add(Aspect.MAGIC, 5),
                 new ItemStack(Items.WHEAT_SEEDS),
@@ -820,5 +822,13 @@ public class InitRecipes {
             GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 5), new ItemStack(stack.getItem(), 3, stack.getItemDamage()), 1.0F);
             ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 5), new ItemStack(ItemsTC.nuggets, 1, 4));
         }
+    }
+
+    public static void initMeatyOrb() {
+        MeatyOrbRegistry.addEntry(new ItemStack(Items.BEEF), 30);
+        MeatyOrbRegistry.addEntry(new ItemStack(Items.PORKCHOP), 25);
+        MeatyOrbRegistry.addEntry(new ItemStack(Items.CHICKEN), 20);
+        MeatyOrbRegistry.addEntry(new ItemStack(Items.MUTTON), 15);
+        MeatyOrbRegistry.addEntry(new ItemStack(Items.RABBIT), 10);
     }
 }

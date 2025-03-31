@@ -1,9 +1,10 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
+import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -16,42 +17,8 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
-import thaumcraft.common.lib.utils.RandomItemChooser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable {
-    private static final RandomItemChooser RIC = new RandomItemChooser();
-    private static final int DURATION_TICKS = 300;
-    private static final int CAPACITY = 250;
-    public static final int MIN_FUEL = 250;
-
-    protected static class MeatEntry implements RandomItemChooser.Item {
-        public ItemStack itemStack;
-        public int weight;
-        
-        public MeatEntry(ItemStack itemStack, int weight) {
-            this.itemStack = itemStack;
-            this.weight = weight;
-        }
-        
-        @Override
-        public double getWeight() {
-            return this.weight;
-        }
-    }
-    
-    protected static List<RandomItemChooser.Item> meats = new ArrayList<RandomItemChooser.Item>();
-    
-    static {
-        meats.add(new MeatEntry(new ItemStack(Items.BEEF, 1, 0), 30));
-        meats.add(new MeatEntry(new ItemStack(Items.PORKCHOP, 1, 0), 25));
-        meats.add(new MeatEntry(new ItemStack(Items.CHICKEN, 1, 0), 20));
-        meats.add(new MeatEntry(new ItemStack(Items.MUTTON, 1, 0), 15));
-        meats.add(new MeatEntry(new ItemStack(Items.RABBIT, 1, 0), 10));
-    }
-    
     protected int lifeEssentia = 0;
     protected int waterEssentia = 0;
     protected int eldritchEssentia = 0;
@@ -72,9 +39,10 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
         compound.setShort("eldritchEssentia", (short)this.eldritchEssentia);
         return compound;
     }
-    
+
+    //TODO: Add config option for MeatyOrb duration. (spawns 1 item per 5 ticks)
     public void setActive(boolean active) {
-        this.activeCounter = (active ? DURATION_TICKS : 0);
+        this.activeCounter = (active ? ConfigHandlerTW.meaty_orb.meatyOrbDuration : 0);
     }
 
     @Override
@@ -83,11 +51,11 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
             this.fill();
         }
         if (!this.world.isRemote && this.activeCounter > 0) {
-            MeatEntry entry = (MeatEntry)RIC.chooseOnWeight(meats);
-            if (entry != null) {
+            ItemStack meatStack = MeatyOrbRegistry.getMeatDrop(this.world.rand);
+            if (!meatStack.isEmpty()) {
                 double x = this.pos.getX() + 0.5D + (32.0D * (this.world.rand.nextDouble() - this.world.rand.nextDouble()));
                 double z = this.pos.getZ() + 0.5D + (32.0D * (this.world.rand.nextDouble() - this.world.rand.nextDouble()));
-                this.world.spawnEntity(new EntityItem(this.world, x, this.world.getActualHeight(), z, entry.itemStack.copy()));
+                this.world.spawnEntity(new EntityItem(this.world, x, this.world.getActualHeight(), z, meatStack));
             }
             this.activeCounter--;
         }
@@ -95,7 +63,7 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
 
     protected void fill() {
         for (EnumFacing face : EnumFacing.HORIZONTALS) {
-            if (!this.canInputFrom(face) || this.getEssentiaAmount(face) >= CAPACITY) {
+            if (!this.canInputFrom(face) || this.getEssentiaAmount(face) >= ConfigHandlerTW.meaty_orb.essentiaRequirement) {
                 continue;
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
@@ -201,7 +169,7 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
 
     @Override
     public int getSuctionAmount(EnumFacing face) {
-        return (this.getEssentiaAmount(face) >= CAPACITY) ? 0 : 128;
+        return (this.getEssentiaAmount(face) >= ConfigHandlerTW.meaty_orb.essentiaRequirement) ? 0 : 128;
     }
 
     @Override
@@ -230,19 +198,19 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
         int retVal = 0;
         if (toAdd == 0) {
             return 0;
-        } else if (this.lifeEssentia < CAPACITY && aspect == Aspect.LIFE) {
+        } else if (this.lifeEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.LIFE) {
             // Add as much life as possible and return the remainder
-            int added = Math.min(toAdd, CAPACITY - this.lifeEssentia);
+            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.lifeEssentia);
             this.lifeEssentia += added;
             retVal = (toAdd - added);
-        } else if (this.waterEssentia < CAPACITY && aspect == Aspect.WATER) {
+        } else if (this.waterEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.WATER) {
             // Add as much water as possible and return the remainder
-            int added = Math.min(toAdd, CAPACITY - this.waterEssentia);
+            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.waterEssentia);
             this.waterEssentia += added;
             retVal = (toAdd - added);
-        } else if (this.eldritchEssentia < CAPACITY && aspect == Aspect.ELDRITCH) {
+        } else if (this.eldritchEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.ELDRITCH) {
             // Add as much eldritch as possible and return the remainder
-            int added = Math.min(toAdd, CAPACITY - this.eldritchEssentia);
+            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.eldritchEssentia);
             this.eldritchEssentia += added;
             retVal = (toAdd - added);
         } else {

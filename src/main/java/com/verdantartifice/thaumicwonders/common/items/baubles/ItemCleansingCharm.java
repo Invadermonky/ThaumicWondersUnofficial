@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.items.baubles;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,8 +25,6 @@ import java.util.List;
 
 public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable {
     protected static final int VIS_CAPACITY = 200;
-    protected static final int MAX_PROGRESS = (20 * 60 * 60);
-    protected static final int ENERGY_PER_VIS = (MAX_PROGRESS / VIS_CAPACITY) - 1;
 
     public ItemCleansingCharm() {
         super("cleansing_charm");
@@ -60,7 +59,7 @@ public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable 
                     if (progress % 60 == 0) {
                         AuraHelper.polluteAura(player.world, player.getPosition(), 0.1F, true);
                     }
-                    if (progress >= MAX_PROGRESS) {
+                    if (progress >= ConfigHandlerTW.cleansing_charm.timeToRemoveFlux) {
                         ThaumcraftApi.internalMethods.addWarpToPlayer(player, -1, IPlayerWarp.EnumWarpType.NORMAL);
                         this.setProgress(itemstack, 0);
                     }
@@ -91,7 +90,7 @@ public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable 
         if (energy > 0) {
             energy--;
         } else if (RechargeHelper.consumeCharge(stack, player, 1)) {
-            energy = ENERGY_PER_VIS;
+            energy = (ConfigHandlerTW.cleansing_charm.timeToRemoveFlux / VIS_CAPACITY) - 1;
         }
         this.setEnergy(stack, energy);
     }
@@ -115,7 +114,7 @@ public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable 
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        int percent = (int)(((double)this.getProgress(stack) / (double)MAX_PROGRESS) * 100);
+        int percent = (int)(((double)this.getProgress(stack) / (double)ConfigHandlerTW.cleansing_charm.timeToRemoveFlux) * 100);
         tooltip.add(I18n.format("item.thaumicwonders.cleansing_charm.tooltip.progress", percent));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }

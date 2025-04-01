@@ -4,10 +4,8 @@ import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockFluxCapacitor;
 import mcjty.theoneprobe.api.*;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import thaumcraft.api.aspects.Aspect;
 
 import java.util.function.Function;
 

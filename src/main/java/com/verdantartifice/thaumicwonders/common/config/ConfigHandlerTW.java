@@ -3,9 +3,21 @@ package com.verdantartifice.thaumicwonders.common.config;
 import net.minecraftforge.common.config.Config;
 
 public class ConfigHandlerTW {
-
+    public static CleansingCharmCategory cleansing_charm = new CleansingCharmCategory();
     public static MeatyOrbCategory meaty_orb = new MeatyOrbCategory();
     public static VoidBeaconCategory void_beacon = new VoidBeaconCategory();
+
+    public static class CleansingCharmCategory {
+        @Config.RangeInt(min = 1, max = 72000)
+        @Config.Name("Removal Time")
+        @Config.Comment("The time, in ticks, it takes the Cleansing Charm to complete a full operation.")
+        public int timeToRemoveFlux = 72000;
+
+        @Config.RangeInt(min = 1, max = 100)
+        @Config.Name("Flux Removed")
+        @Config.Comment("The amount of 'Sticky' warp removed from the player per full operation.")
+        public int fluxRemoved = 1;
+    }
 
     public static class MeatyOrbCategory {
         @Config.RangeInt(min = 5, max = 6000)

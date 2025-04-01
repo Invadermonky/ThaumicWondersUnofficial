@@ -40,7 +40,6 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
         return compound;
     }
 
-    //TODO: Add config option for MeatyOrb duration. (spawns 1 item per 5 ticks)
     public void setActive(boolean active) {
         this.activeCounter = (active ? ConfigHandlerTW.meaty_orb.meatyOrbDuration : 0);
     }

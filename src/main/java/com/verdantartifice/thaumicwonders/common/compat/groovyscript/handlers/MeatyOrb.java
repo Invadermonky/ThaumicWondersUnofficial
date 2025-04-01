@@ -21,28 +21,17 @@ public class MeatyOrb extends VirtualizedRegistry<WeightedEntry> {
         InitRecipes.initMeatyOrb();
     }
 
-    @MethodDescription(
-            type = MethodDescription.Type.ADDITION,
-            example = @Example("item('minecraft:beef'), 30")
-    )
+    @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("item('minecraft:beef'), 30"))
     public void add(ItemStack stack, int weight) {
         new RecipeBuilder().setMeat(stack).setWeight(weight).register();
     }
 
-    @MethodDescription(
-            type = MethodDescription.Type.REMOVAL,
-            example = @Example("item('minecraft:beef')"),
-            priority = 1001
-    )
+    @MethodDescription(type = MethodDescription.Type.REMOVAL, example = @Example("item('minecraft:beef')"), priority = 1001)
     public void remove(ItemStack stack) {
         MeatyOrbRegistry.removeEntry(stack);
     }
 
-    @MethodDescription(
-            type = MethodDescription.Type.REMOVAL,
-            example = @Example(commented = true),
-            priority = 1002
-    )
+    @MethodDescription(type = MethodDescription.Type.REMOVAL, example = @Example(commented = true), priority = 1002)
     public void removeAll() {
         MeatyOrbRegistry.removeAll();
     }

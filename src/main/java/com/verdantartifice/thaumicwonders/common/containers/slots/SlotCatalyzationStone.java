@@ -1,6 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.containers.slots;
 
-import com.verdantartifice.thaumicwonders.common.items.catalysts.ICatalystStone;
+import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCatalyzationChamber;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -30,10 +30,10 @@ public class SlotCatalyzationStone extends Slot {
     
     @Override
     public void onSlotChanged() {}
-    
+
     @Override
     public int getSlotStackLimit() {
-        return 1;
+        return 64;
     }
     
     @Override
@@ -57,7 +57,7 @@ public class SlotCatalyzationStone extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
-            return stack.getItem() instanceof ICatalystStone;
+            return CatalyzationChamberRegistry.isValidCatalyst(stack);
         } else {
             return true;
         }

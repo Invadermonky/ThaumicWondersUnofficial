@@ -60,7 +60,7 @@ public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable 
                         AuraHelper.polluteAura(player.world, player.getPosition(), 0.1F, true);
                     }
                     if (progress >= ConfigHandlerTW.cleansing_charm.timeToRemoveFlux) {
-                        ThaumcraftApi.internalMethods.addWarpToPlayer(player, -1, IPlayerWarp.EnumWarpType.NORMAL);
+                        ThaumcraftApi.internalMethods.addWarpToPlayer(player, -ConfigHandlerTW.cleansing_charm.fluxRemoved, IPlayerWarp.EnumWarpType.NORMAL);
                         this.setProgress(itemstack, 0);
                     }
                 }

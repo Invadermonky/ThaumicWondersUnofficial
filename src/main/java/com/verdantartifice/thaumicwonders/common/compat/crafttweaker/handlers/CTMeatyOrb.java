@@ -18,10 +18,8 @@ public class CTMeatyOrb {
         ItemStack meatStack = CraftTweakerMC.getItemStack(stack);
         if(meatStack.isEmpty()) {
             CraftTweakerAPI.logError("Error adding Meaty Orb entry. IItemStack cannot be empty.");
-        } else if(weight <= 0) {
-            CraftTweakerAPI.logError("Error adding Meaty Orb entry. Weight must be greater than 0.");
         } else {
-            MeatyOrbRegistry.addEntry(meatStack, weight);
+            MeatyOrbRegistry.addEntry(meatStack, Math.max(weight, 1));
             CraftTweakerAPI.logInfo("Added Meaty Orb entry: " + stack.getName());
         }
     }

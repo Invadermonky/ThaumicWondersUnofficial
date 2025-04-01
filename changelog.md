@@ -3,12 +3,13 @@
 ## v2.0.0
 ------
 ### Added
-- Added config option for Meaty Orb duration
-- Added config option for Meaty Orb essentia requirement
+- Added several config options for Cleansing Charm
+- Added several config options for Meaty Orb
 - Added config option for Void Beacon essentia cost
 - Added Goggles of Revealing and Sipping Fiend mask tooltip to Void Fortress Helm
-- Added Meaty Orb Crafttweaker and Groovyscript methods
-- Added Void Beacon Crafttweaker and Groovyscript methods
+- Added Catalyzation Chamber Crafttweaker and GroovyScript methods
+- Added Meaty Orb Crafttweaker and GroovyScript methods
+- Added Void Beacon Crafttweaker and GroovyScript methods
 - Added Flux Capacitor TOP storage information
 
 ### Fixed
@@ -22,6 +23,7 @@
 - Cinderpearl Seed recipe now produces 1 Cinderpearl Seed Stalk. Each stalk can be used to plant 8 Cinderpearl plants before being consumed.
 - Shimmerleaf Seed recipe now produces 1 Shimmerleaft Seed Bulb. Each bulb can be used to plant 8 Shimmerleaf plants before being consumed.
 - Vishroom Spore recipe now produces 1 Vishroom Spore Cluster. Each spore custer can be used to plant 8 Vishroom plants before being consumed.
+- Catalyzation Chamber now uses recipe structure
 - Meaty Orb now uses recipe entry structure to generate drops
 - Void Beacon now uses recipe entry structure to generate drops
 

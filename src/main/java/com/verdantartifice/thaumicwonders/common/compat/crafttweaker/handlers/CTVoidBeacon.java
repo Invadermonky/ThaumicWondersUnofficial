@@ -20,10 +20,8 @@ public class CTVoidBeacon {
         ItemStack itemStack = CraftTweakerMC.getItemStack(stack);
         if(itemStack.isEmpty()) {
             CraftTweakerAPI.logError("Failure adding void beacon entry, IItemStack cannot be empty");
-        } else if(weight <= 0) {
-            CraftTweakerAPI.logError("Error adding Void Beacon entry. Weight must be greater than 0.");
         } else {
-            VoidBeaconRegistry.addEntry(itemStack, weight);
+            VoidBeaconRegistry.addEntry(itemStack, Math.max(weight, 1));
         }
     }
 

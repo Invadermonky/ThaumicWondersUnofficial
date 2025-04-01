@@ -1,7 +1,10 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
+import com.mr208.ea.common.ModContent;
+import com.mr208.ea.common.items.ItemCluster;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
+import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeDisjunctionClothUse;
 import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeFlyingCarpetDyes;
@@ -18,6 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -36,6 +40,7 @@ import thaumcraft.common.lib.enchantment.EnumInfusionEnchantment;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +55,7 @@ public class InitRecipes {
         initInfusionRecipes();
         initMultiblockRecipes();
         initSmelting();
+        initCatalyzationChamberRecipes();
         initMeatyOrb();
         InitVoidBeacon.init();
     }
@@ -823,6 +829,65 @@ public class InitRecipes {
             GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 5), new ItemStack(stack.getItem(), 3, stack.getItemDamage()), 1.0F);
             ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 5), new ItemStack(ItemsTC.nuggets, 1, 4));
         }
+    }
+
+    public static void initCatalyzationChamberRecipes() {
+        //Alchemist Stone
+        CatalyzationChamberRegistry.addAlchemistRecipe("oreIron", new ItemStack(ItemsTC.clusters, 1, 0));
+        CatalyzationChamberRegistry.addAlchemistRecipe("oreGold", new ItemStack(ItemsTC.clusters, 1, 1));
+        CatalyzationChamberRegistry.addAlchemistRecipe("oreCopper", new ItemStack(ItemsTC.clusters, 1, 2));
+        CatalyzationChamberRegistry.addAlchemistRecipe("oreTin", new ItemStack(ItemsTC.clusters, 1, 3));
+        CatalyzationChamberRegistry.addAlchemistRecipe("oreSilver", new ItemStack(ItemsTC.clusters, 1, 4));
+        CatalyzationChamberRegistry.addAlchemistRecipe("oreLead", new ItemStack(ItemsTC.clusters, 1, 5));
+        CatalyzationChamberRegistry.addAlchemistRecipe("oreCinnabar", new ItemStack(ItemsTC.clusters, 1, 6));
+        try {
+            if(Loader.isModLoaded("ea")) {
+                Field oreNameField = ItemCluster.class.getDeclaredField("oreName");
+                oreNameField.setAccessible(true);
+                ModContent.modClusters.forEach(cluster -> {
+                    try {
+                        CatalyzationChamberRegistry.addAlchemistRecipe((String) oreNameField.get(cluster), new ItemStack(cluster));
+                    } catch (Exception ignored) {}
+                });
+            }
+        } catch (Exception ignored) {}
+
+        //Alienist Stone
+        CatalyzationChamberRegistry.addAlienistRecipe("oreIron", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0));
+        CatalyzationChamberRegistry.addAlienistRecipe("oreGold", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 1));
+        CatalyzationChamberRegistry.addAlienistRecipe("oreCopper", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 2));
+        CatalyzationChamberRegistry.addAlienistRecipe("oreTin", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 3));
+        CatalyzationChamberRegistry.addAlienistRecipe("oreSilver", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 4));
+        CatalyzationChamberRegistry.addAlienistRecipe("oreLead", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 5));
+        CatalyzationChamberRegistry.addAlienistRecipe("oreCinnabar", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 6));
+        CatalyzationChamberRegistry.addAlienistRecipe("oreQuartz", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7));
+        CatalyzationChamberRegistry.addAlienistRecipe(Ingredient.fromItem(ItemsTC.voidSeed), new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 8));
+
+        //Transmuter Stone
+        CatalyzationChamberRegistry.addTransmuterRecipe("oreIron", new ItemStack(Blocks.GOLD_ORE));
+        CatalyzationChamberRegistry.addTransmuterRecipe("ingotIron", new ItemStack(Items.GOLD_INGOT));
+        CatalyzationChamberRegistry.addTransmuterRecipe("blockIron", new ItemStack(Blocks.GOLD_BLOCK));
+        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetIron", new ItemStack(Items.GOLD_NUGGET));
+        CatalyzationChamberRegistry.addTransmuterRecipe("oreGold", new ItemStack(Blocks.IRON_ORE));
+        CatalyzationChamberRegistry.addTransmuterRecipe("ingotGold", new ItemStack(Items.IRON_INGOT));
+        CatalyzationChamberRegistry.addTransmuterRecipe("blockGold", new ItemStack(Blocks.IRON_BLOCK));
+        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetGold", new ItemStack(Items.IRON_NUGGET));
+        CatalyzationChamberRegistry.addTransmuterRecipe("oreTin", "oreCopper");
+        CatalyzationChamberRegistry.addTransmuterRecipe("ingotTin", "ingotCopper");
+        CatalyzationChamberRegistry.addTransmuterRecipe("blockTin", "blockCopper");
+        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetTin", "nuggetCopper");
+        CatalyzationChamberRegistry.addTransmuterRecipe("oreCopper", "oreTin");
+        CatalyzationChamberRegistry.addTransmuterRecipe("ingotCopper", "ingotTin");
+        CatalyzationChamberRegistry.addTransmuterRecipe("blockCopper", "blockTin");
+        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetCopper", "nuggetTin");
+        CatalyzationChamberRegistry.addTransmuterRecipe("oreSilver", "oreLead");
+        CatalyzationChamberRegistry.addTransmuterRecipe("ingotSilver", "ingotLead");
+        CatalyzationChamberRegistry.addTransmuterRecipe("blockSilver", "blockLead");
+        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetSilver", "nuggetLead");
+        CatalyzationChamberRegistry.addTransmuterRecipe("oreLead", "oreSilver");
+        CatalyzationChamberRegistry.addTransmuterRecipe("ingotLead", "ingotSilver");
+        CatalyzationChamberRegistry.addTransmuterRecipe("blockLead", "blockSilver");
+        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetLead", "nuggetSilver");
     }
 
     public static void initMeatyOrb() {

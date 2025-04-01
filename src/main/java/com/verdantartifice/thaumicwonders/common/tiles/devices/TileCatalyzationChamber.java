@@ -1,7 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
-import com.verdantartifice.thaumicwonders.common.items.catalysts.ICatalystStone;
+import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipe;
+import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -32,6 +33,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     protected int facingZ = -5;
     
     protected ItemStack equippedStone = ItemStack.EMPTY;
+    protected CatalyzationChamberRecipe recipe = null;
     
     public TileCatalyzationChamber() {
         super(32);
@@ -43,14 +45,14 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     
     public boolean setEquippedStone(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
-            if (stack.getItem() instanceof ICatalystStone) {
+            if(CatalyzationChamberRegistry.isValidCatalyst(stack)) {
                 this.equippedStone = stack;
                 return true;
             } else {
                 return false;
             }
         } else {
-            this.equippedStone = stack;
+            this.equippedStone = ItemStack.EMPTY;
             return true;
         }
     }
@@ -112,31 +114,43 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
                     ItemStack stack = this.getStackInSlot(slot);
                     if (stack != null && !stack.isEmpty()) {
-                        ICatalystStone stone = null;
-                        if (this.getEquippedStone() != null && !this.getEquippedStone().isEmpty() && this.getEquippedStone().getItem() instanceof ICatalystStone) {
-                            stone = (ICatalystStone)this.getEquippedStone().getItem();
-                        }
-                        
-                        // Return the input stack if no catalyst stone is available
-                        ItemStack resultStack = (stone != null) ? stone.getRefiningResult(stack) : stack;
-                        if (resultStack == null || resultStack.isEmpty()) {
-                            resultStack = stack;
-                        }
-                        if (this.getEquippedStone().attemptDamageItem(1, this.world.rand, null)) {
-                            this.getEquippedStone().shrink(1);
-                        }
-                        if (this.speedyTime > 0) {
-                            this.speedyTime--;
-                        }
-                        this.ejectItem(resultStack.copy());
-                        this.world.addBlockEvent(this.getPos(), BlocksTW.CATALYZATION_CHAMBER, PLAY_EFFECTS, 0);
-                        if (stone != null) {
-                            if (this.world.rand.nextInt(stone.getFluxChance()) == 0) {
-                                AuraHelper.polluteAura(this.world, this.getPos().offset(this.getFacing().getOpposite()), 1.0F, true);
+                        ItemStack catalyst = this.getEquippedStone();
+                        this.recipe = CatalyzationChamberRegistry.getRecipe(stack, catalyst);
+                        if(this.recipe != null) {
+                            ItemStack output = this.recipe.getOutput();
+                            if(output.isEmpty()) {
+                                ItemStack copy = stack.copy();
+                                copy.setCount(1);
+                                this.ejectItem(copy);
+                                this.decrStackSize(slot, 1);
+                                continue;
                             }
+                            if(catalyst.isItemStackDamageable()) {
+                                if(catalyst.attemptDamageItem(1, this.world.rand, null)) {
+                                    catalyst.shrink(1);
+                                }
+                            } else if(catalyst.getItem().hasContainerItem(catalyst)) {
+                                ItemStack container = catalyst.getItem().getContainerItem(catalyst);
+                                if(!this.setEquippedStone(container)) {
+                                    this.ejectItem(container);
+                                    catalyst.shrink(1);
+                                }
+                            } else {
+                                catalyst.shrink(1);
+                            }
+                            if(this.speedyTime > 0) {
+                                this.speedyTime--;
+                            }
+                            this.ejectItem(output.copy());
+                            this.world.addBlockEvent(this.getPos(), BlocksTW.CATALYZATION_CHAMBER, PLAY_EFFECTS, 0);
+                            if(this.recipe.getFluxChance() > 0 && this.world.rand.nextInt(this.recipe.getFluxChance()) == 0) {
+                                AuraHelper.polluteAura(this.world, this.getPos().offset(this.getFacing().getOpposite()), 1.0f, true);
+                            }
+                            this.decrStackSize(slot, 1);
+                            break;
                         }
-                        this.decrStackSize(slot, resultStack.getCount());
-                        break;
+                    } else {
+                        this.recipe = null;
                     }
                 }
             }
@@ -168,13 +182,8 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     }
 
     private boolean canRefine(ItemStack stack) {
-        ICatalystStone stone = null;
-        if (this.getEquippedStone() != null && !this.getEquippedStone().isEmpty() && this.getEquippedStone().getItem() instanceof ICatalystStone) {
-            stone = (ICatalystStone)this.getEquippedStone().getItem();
-        }
-        if (stone != null) {
-            ItemStack resultStack = stone.getRefiningResult(stack);
-            return (resultStack != null) && !resultStack.isEmpty();
+        if(this.getEquippedStone() != null && !this.getEquippedStone().isEmpty()) {
+            return CatalyzationChamberRegistry.getRecipe(stack, this.getEquippedStone()) != null;
         } else {
             return false;
         }
@@ -219,17 +228,13 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     public boolean receiveClientEvent(int id, int type) {
         if (id == PLAY_EFFECTS) {
             if (this.world.isRemote) {
-                ICatalystStone stone = null;
-                if (this.getEquippedStone() != null && !this.getEquippedStone().isEmpty() && this.getEquippedStone().getItem() instanceof ICatalystStone) {
-                    stone = (ICatalystStone)this.getEquippedStone().getItem();
-                }
-                if (stone != null) {
+                if (this.recipe != null) {
                     for (int i = 0; i < 5; i++) {
                         BlockPos targetPos = this.getPos().offset(this.getFacing().getOpposite(), 2);
                         FXDispatcher.INSTANCE.visSparkle(
-                                this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 
-                                targetPos.getX(), targetPos.getY(), targetPos.getZ(), 
-                                stone.getSparkleColor());
+                                this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(),
+                                targetPos.getX(), targetPos.getY(), targetPos.getZ(),
+                                this.recipe.getSparkleColor());
                     }
                 }
             }

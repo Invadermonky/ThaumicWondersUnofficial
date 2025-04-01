@@ -110,6 +110,10 @@ repositories {
     maven {
         url "https://maven.blamejared.com/"
     }
+    maven { // TOP
+        name 'tterrag maven'
+        url "https://maven.tterrag.com/"
+    }
 }
 
 dependencies {

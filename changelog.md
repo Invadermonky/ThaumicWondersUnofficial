@@ -3,8 +3,12 @@
 ## v2.0.0
 ------
 ### Added
+- Added config option for Meaty Orb duration
+- Added config option for Meaty Orb essentia requirement
+- Added config option for Void Beacon essentia cost
 - Added Goggles of Revealing and Sipping Fiend mask tooltip to Void Fortress Helm
 - Added Meaty Orb Crafttweaker and Groovyscript methods
+- Added Void Beacon Crafttweaker and Groovyscript methods
 
 ### Fixed
 - Fixed rare Disjunction Cloth crafting table recipe crash
@@ -17,6 +21,7 @@
 - Shimmerleaf Seed recipe now produces 1 Shimmerleaft Seed Bulb. Each bulb can be used to plant 8 Shimmerleaf plants before being consumed.
 - Vishroom Spore recipe now produces 1 Vishroom Spore Cluster. Each spore custer can be used to plant 8 Vishroom plants before being consumed.
 - Meaty Orb now uses recipe entry structure to generate drops
+- Void Beacon now uses recipe entry structure to generate drops
 
 ### Removed
 

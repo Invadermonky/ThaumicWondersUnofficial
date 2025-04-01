@@ -1,6 +1,50 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "thaumicwonders:items/shimmerleaf_seed"
-    }
+        "layer0": "thaumicwonders:items/shimmerleaf_seed_0"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "thaumicwonders:seeds": 1
+            },
+            "model": "thaumicwonders:item/overrides/shimmerleaf_seed_1"
+        },
+        {
+            "predicate": {
+                "thaumicwonders:seeds": 2
+            },
+            "model": "thaumicwonders:item/overrides/shimmerleaf_seed_2"
+        },
+        {
+            "predicate": {
+                "thaumicwonders:seeds": 3
+            },
+            "model": "thaumicwonders:item/overrides/shimmerleaf_seed_3"
+        },
+        {
+            "predicate": {
+                "thaumicwonders:seeds": 4
+            },
+            "model": "thaumicwonders:item/overrides/shimmerleaf_seed_4"
+        },
+        {
+            "predicate": {
+                "thaumicwonders:seeds": 5
+            },
+            "model": "thaumicwonders:item/overrides/shimmerleaf_seed_5"
+        },
+        {
+            "predicate": {
+                "thaumicwonders:seeds": 6
+            },
+            "model": "thaumicwonders:item/overrides/shimmerleaf_seed_6"
+        },
+        {
+            "predicate": {
+                "thaumicwonders:seeds": 7
+            },
+            "model": "thaumicwonders:item/overrides/shimmerleaf_seed_7"
+        }
+    ]
 }

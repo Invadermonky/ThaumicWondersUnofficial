@@ -3,6 +3,8 @@ package com.verdantartifice.thaumicwonders.common.blocks.plants;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -36,7 +38,12 @@ public abstract class AbstractBlockMysticCrop extends BlockCrops {
             worldIn.setBlockState(pos, this.getMatureBlockState(), 3);
         }
     }
-    
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+
+    }
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return CROP_AABB;

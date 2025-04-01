@@ -57,11 +57,11 @@ public class InitBlocks {
         registerBlock(forgeRegistry, new BlockCoalescenceMatrix());
         registerBlock(forgeRegistry, new BlockTW(Material.IRON, "coalescence_matrix_precursor"));
         
-        registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_arcane_stone"), false);
-        registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_obsidian"), false);
-        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_thaumium_block"), false);
-        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_void_metal_block"), false);
-        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_adv_alch_construct"), false);
+        registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_arcane_stone"));
+        registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_obsidian"));
+        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_thaumium_block"));
+        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_void_metal_block"));
+        registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_adv_alch_construct"));
         
         FluidRegistry.registerFluid(FluidQuicksilver.INSTANCE);
         FluidRegistry.addBucketForFluid(FluidQuicksilver.INSTANCE);

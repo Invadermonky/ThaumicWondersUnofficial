@@ -9,11 +9,13 @@
 - Added Goggles of Revealing and Sipping Fiend mask tooltip to Void Fortress Helm
 - Added Meaty Orb Crafttweaker and Groovyscript methods
 - Added Void Beacon Crafttweaker and Groovyscript methods
+- Added Flux Capacitor TOP storage information
 
 ### Fixed
 - Fixed rare Disjunction Cloth crafting table recipe crash
 - Fixed mod registering several fake blocks
 - Fixed several dupe bugs [Pull Request #77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
+- Fixed Flux Capacitor losing flux charge when broken by non-players
 
 ### Changed
 - Updated gradle to RFG

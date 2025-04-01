@@ -7,10 +7,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -98,17 +97,17 @@ public class BlockFluxCapacitor extends BlockTW {
     public int getMetaFromState(IBlockState state) {
         return state.getValue(CHARGE);
     }
-    
+
     @Override
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         ItemStack drop = new ItemStack(this);
         if (!drop.hasTagCompound()) {
             drop.setTagCompound(new NBTTagCompound());
         }
         drop.getTagCompound().setInteger("charge", this.getMetaFromState(state));
-        spawnAsEntity(worldIn, pos, drop);
+        drops.add(drop);
     }
-    
+
     public int getCharge(World worldIn, BlockPos pos) {
         IBlockState state = worldIn.getBlockState(pos);
         if (state.getBlock() == BlocksTW.FLUX_CAPACITOR) {

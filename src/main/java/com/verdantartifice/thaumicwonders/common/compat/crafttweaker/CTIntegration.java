@@ -1,5 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.compat.crafttweaker;
 
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconRegistry;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class CTIntegration {
     @SubscribeEvent
     public void onScriptReloading(ScriptRunEvent.Pre event) {
+        PrimordialAccretionChamberRegistry.removeAll();
         CatalyzationChamberRegistry.removeAll();
         MeatyOrbRegistry.removeAll();
         VoidBeaconRegistry.removeAll();
@@ -18,6 +20,7 @@ public class CTIntegration {
 
     @SubscribeEvent
     public void onScriptReloadingPost(ScriptRunEvent.Post event) {
+        InitRecipes.initPrimordialAccretionChamberRecipes();
         InitRecipes.initCatalyzationChamberRecipes();
         InitRecipes.initMeatyOrb();
         InitVoidBeacon.registerDefaultEntries();

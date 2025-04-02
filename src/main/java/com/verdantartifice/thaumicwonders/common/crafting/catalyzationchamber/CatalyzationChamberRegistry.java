@@ -15,10 +15,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CatalyzationChamberRegistry {
-    private static final Set<CatalyzationChamberRecipe> CATALYZATION_RECIPES = new HashSet<>();
+    private static final Set<CatalyzationChamberRecipe> CATALYZATION_CHAMBER_RECIPES = new HashSet<>();
 
     public static void addRecipe(CatalyzationChamberRecipe recipe) {
-        CATALYZATION_RECIPES.add(recipe);
+        CATALYZATION_CHAMBER_RECIPES.add(recipe);
     }
 
     public static void addRecipe(Ingredient input, Ingredient catalyst, ItemStack output, int fluxChance, Aspect color) {
@@ -78,41 +78,37 @@ public class CatalyzationChamberRegistry {
     }
 
     public static void removeByInput(Ingredient input) {
-        CATALYZATION_RECIPES.removeIf(recipe ->
+        CATALYZATION_CHAMBER_RECIPES.removeIf(recipe ->
                 IngredientHelper.areIngredientsEqual(recipe.getInput(), input));
     }
 
     public static void removeByInput(Ingredient input, Ingredient catalyst) {
-        CATALYZATION_RECIPES.removeIf(recipe ->
+        CATALYZATION_CHAMBER_RECIPES.removeIf(recipe ->
                 IngredientHelper.areIngredientsEqual(recipe.getInput(), input) && IngredientHelper.areIngredientsEqual(recipe.getCatalyst(), catalyst));
     }
 
     public static void removeByOutput(ItemStack output, Ingredient catalyst) {
-        CATALYZATION_RECIPES.removeIf(recipe ->
+        CATALYZATION_CHAMBER_RECIPES.removeIf(recipe ->
                 ItemStack.areItemStacksEqual(recipe.getOutput(), output) && IngredientHelper.areIngredientsEqual(recipe.getCatalyst(), catalyst));
     }
 
     public static void removeByOutput(ItemStack output) {
-        CATALYZATION_RECIPES.removeIf(recipe ->
+        CATALYZATION_CHAMBER_RECIPES.removeIf(recipe ->
                 ItemStack.areItemStacksEqual(output, recipe.getOutput()));
     }
 
     public static void removeAll() {
-        CATALYZATION_RECIPES.clear();
+        CATALYZATION_CHAMBER_RECIPES.clear();
     }
 
     public static boolean isValidCatalyst(ItemStack stack) {
-        return CATALYZATION_RECIPES.stream().anyMatch(recipe -> recipe.getCatalyst().test(stack));
+        return CATALYZATION_CHAMBER_RECIPES.stream().anyMatch(recipe -> recipe.getCatalyst().test(stack));
     }
 
     @Nullable
     public static CatalyzationChamberRecipe getRecipe(ItemStack input, ItemStack catalyst) {
         if(input != null && !input.isEmpty() && catalyst != null && !catalyst.isEmpty()) {
-            for (CatalyzationChamberRecipe recipe : CATALYZATION_RECIPES) {
-                if (recipe.matches(input, catalyst)) {
-                    return recipe;
-                }
-            }
+            return CATALYZATION_CHAMBER_RECIPES.stream().filter(recipe -> recipe.matches(input, catalyst)).findFirst().orElse(null);
         }
         return null;
     }

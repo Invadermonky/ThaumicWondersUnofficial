@@ -78,6 +78,7 @@ public class MeatyOrb extends VirtualizedRegistry<WeightedEntry> {
             msg.add(this.weight <= 0, "Weight must be greather than 0");
         }
 
+        @RecipeBuilderRegistrationMethod
         @Override
         public @Nullable WeightedEntry register() {
             if(this.validate()) {

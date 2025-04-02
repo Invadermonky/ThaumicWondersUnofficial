@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber;
 
 import com.google.common.base.Preconditions;
+import com.verdantartifice.thaumicwonders.common.crafting.IngredientHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
@@ -69,7 +70,7 @@ public class CatalyzationChamberRecipe {
     public boolean equals(Object o) {
         if (!(o instanceof CatalyzationChamberRecipe)) return false;
         CatalyzationChamberRecipe that = (CatalyzationChamberRecipe) o;
-        return Objects.equals(getInput(), that.getInput()) && Objects.equals(getCatalyst(), that.getCatalyst());
+        return IngredientHelper.areIngredientsEqual(getInput(), that.getInput()) && IngredientHelper.areIngredientsEqual(getCatalyst(), that.getCatalyst());
     }
 
     @Override

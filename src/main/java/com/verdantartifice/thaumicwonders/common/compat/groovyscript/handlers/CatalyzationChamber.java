@@ -201,6 +201,7 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
             msg.add(fluxChance < 0, "Flux chance cannot be less than 0");
         }
 
+        @RecipeBuilderRegistrationMethod
         @Override
         public @Nullable CatalyzationChamberRecipe register() {
             if(this.validate()) {

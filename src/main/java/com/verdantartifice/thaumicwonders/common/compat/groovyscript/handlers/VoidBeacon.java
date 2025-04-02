@@ -116,6 +116,7 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
             msg.add(this.weight <= 0, "Void Beacon entry weight must be greater than 0");
         }
 
+        @RecipeBuilderRegistrationMethod
         @Override
         public @Nullable VoidBeaconEntry register() {
             if(this.validate()) {

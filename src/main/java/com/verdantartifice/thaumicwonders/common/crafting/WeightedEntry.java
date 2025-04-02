@@ -9,7 +9,7 @@ public class WeightedEntry {
     protected final ItemStack stack;
     protected final int weight;
 
-    public WeightedEntry(ItemStack stack, int weight) {
+    public WeightedEntry(ItemStack stack, int weight) throws IllegalArgumentException {
         Preconditions.checkArgument(!stack.isEmpty(), "Meat ItemStack cannot be empty");
         Preconditions.checkArgument(weight > 0, "Weight must be greater than 0");
 

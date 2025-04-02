@@ -29,7 +29,7 @@ public class ConfigHandlerTW {
 
         @Config.Name("Enable Stone Enchants")
         @Config.Comment("Allows the Catalyst Stone to be enchanted with Unbreaking and Mending")
-        public boolean enchantable = false;
+        public boolean enchantable = true;
 
         @Config.RequiresMcRestart
         @Config.RangeInt(min = 0, max = 10000)

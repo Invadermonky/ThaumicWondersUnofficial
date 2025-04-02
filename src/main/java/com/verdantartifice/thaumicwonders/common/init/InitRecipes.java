@@ -4,6 +4,9 @@ import com.mr208.ea.common.ModContent;
 import com.mr208.ea.common.items.ItemCluster;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
+import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRecipe;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeDisjunctionClothUse;
@@ -19,6 +22,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.Loader;
@@ -57,6 +61,7 @@ public class InitRecipes {
         initSmelting();
         initCatalyzationChamberRecipes();
         initMeatyOrb();
+        initPrimordialAccretionChamberRecipes();
         InitVoidBeacon.init();
     }
     
@@ -897,4 +902,15 @@ public class InitRecipes {
         MeatyOrbRegistry.addEntry(new ItemStack(Items.MUTTON), 15);
         MeatyOrbRegistry.addEntry(new ItemStack(Items.RABBIT), 10);
     }
+
+    public static void initPrimordialAccretionChamberRecipes() {
+        PrimordialAccretionChamberRegistry.addRecipe(
+                CraftingHelper.getIngredient(ItemsTW.PRIMORDIAL_GRAIN),
+                125,
+                new WeightedEntry(new ItemStack(ItemsTC.primordialPearl, 1, 5), 1),
+                new WeightedEntry(new ItemStack(ItemsTC.primordialPearl, 1, 6), 2),
+                new WeightedEntry(new ItemStack(ItemsTC.primordialPearl, 1, 7), 7)
+        );
+    }
+
 }

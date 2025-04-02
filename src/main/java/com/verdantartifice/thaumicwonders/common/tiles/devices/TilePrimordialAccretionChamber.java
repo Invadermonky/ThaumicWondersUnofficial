@@ -1,6 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRecipe;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
 import net.minecraft.init.SoundEvents;
@@ -23,8 +25,11 @@ import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public class TilePrimordialAccretionChamber extends TileTWInventory implements IAspectContainer, ITickable {
-    private static final int CAPACITY = 125;
+    private static final int CAPACITY = 250;
     private static final AspectList REQUIRED_FUEL = new AspectList().add(Aspect.AIR, 125).add(Aspect.EARTH, 125).add(Aspect.FIRE, 125).add(Aspect.WATER, 125).add(Aspect.ORDER, 125).add(Aspect.ENTROPY, 125);
     private static final int PLAY_EFFECTS = 4;
     
@@ -33,6 +38,8 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     protected int speedyTime = 0;
         
     protected AspectList essentia = new AspectList();
+
+    private PrimordialAccretionChamberRecipe recipe;
     
     public TilePrimordialAccretionChamber() {
         super(32);
@@ -62,7 +69,7 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     public void update() {
         if (!this.world.isRemote) {
             boolean refinedFlag = false;
-            if (this.refineTime > 0 && this.isEssentiaFull()) {
+            if(this.refineTime > 0 && this.recipe != null && this.doesContainerContain(this.recipe.getAspectList())) {
                 // Only refine if all necessary essentia is present
                 this.refineTime--;
                 refinedFlag = true;
@@ -73,18 +80,23 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
             if (this.refineTime > this.maxRefineTime) {
                 this.refineTime = this.maxRefineTime;
             }
-            if (this.refineTime <= 0 && refinedFlag) {
+            if (this.refineTime <= 0 && refinedFlag && this.recipe != null) {
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
                     ItemStack stack = this.getStackInSlot(slot);
-                    if (stack != null && !stack.isEmpty() && this.isEssentiaFull()) {
-                        ItemStack resultStack = this.getResultStack(stack);
-                        if (this.speedyTime > 0) {
+                    //TODO: Handle output
+                    if(!stack.isEmpty() && this.doesContainerContain(this.recipe.getAspectList())) {
+                        ItemStack result = this.recipe.getOutput(this.world.rand);
+                        if(this.speedyTime > 0) {
                             this.speedyTime--;
                         }
-                        this.takeFromContainer(REQUIRED_FUEL);
-                        this.ejectItem(resultStack.copy());
+                        this.takeFromContainer(this.recipe.getAspectList());
+                        this.ejectItem(result.copy());
                         this.world.addBlockEvent(this.getPos(), BlocksTW.PRIMORDIAL_ACCRETION_CHAMBER, PLAY_EFFECTS, 0);
-                        this.decrStackSize(slot, resultStack.getCount());
+
+                        int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
+                                .filter(input -> !input.isEmpty()).findFirst()
+                                .map(ItemStack::getCount).orElse(1);
+                        this.decrStackSize(slot, count);
                         break;
                     }
                 }
@@ -92,9 +104,11 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
             if (this.speedyTime <= 0) {
                 this.speedyTime = (int)AuraHelper.drainVis(this.getWorld(), this.getPos(), 20.0F, false);
             }
-            if (this.refineTime == 0 && !refinedFlag) {
+            if (this.refineTime <= 0 && !refinedFlag) {
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
-                    if (this.canRefine(this.getStackInSlot(slot))) {
+                    ItemStack stack = this.getStackInSlot(slot);
+                    this.recipe = PrimordialAccretionChamberRegistry.getRecipe(stack);
+                    if(this.recipe != null) {
                         this.maxRefineTime = this.calcRefineTime();
                         this.refineTime = this.maxRefineTime;
                         break;
@@ -104,21 +118,6 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
                     }
                 }
             }
-        }
-    }
-    
-    private ItemStack getResultStack(ItemStack inputStack) {
-        if (inputStack.getItem() == ItemsTW.PRIMORDIAL_GRAIN) {
-            int chance = this.world.rand.nextInt(10);
-            if (chance == 0) {
-                return new ItemStack(ItemsTC.primordialPearl, 1, 5);
-            } else if (chance < 3) {
-                return new ItemStack(ItemsTC.primordialPearl, 1, 6);
-            } else {
-                return new ItemStack(ItemsTC.primordialPearl, 1, 7);
-            }
-        } else {
-            return inputStack;
         }
     }
     
@@ -132,7 +131,7 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     }
 
     private boolean canRefine(ItemStack items) {
-        return (items != null && !items.isEmpty() && items.getItem() == ItemsTW.PRIMORDIAL_GRAIN && this.isEssentiaFull());
+        return PrimordialAccretionChamberRegistry.getRecipe(items) != null;
     }
 
     private void ejectItem(ItemStack itemStack) {

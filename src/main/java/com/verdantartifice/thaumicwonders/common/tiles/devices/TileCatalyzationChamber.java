@@ -4,7 +4,9 @@ import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipe;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
+import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -22,6 +24,8 @@ import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.lib.utils.InventoryUtils;
 import thaumcraft.common.tiles.devices.TileBellows;
 
+import java.util.Arrays;
+
 public class TileCatalyzationChamber extends TileTWInventory implements ITickable {
     private static final int PLAY_EFFECTS = 4;
     
@@ -31,7 +35,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     
     protected int facingX = -5;
     protected int facingZ = -5;
-    
+
     protected ItemStack equippedStone = ItemStack.EMPTY;
     protected CatalyzationChamberRecipe recipe = null;
     
@@ -146,7 +150,10 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
                             if(this.recipe.getFluxChance() > 0 && this.world.rand.nextInt(this.recipe.getFluxChance()) == 0) {
                                 AuraHelper.polluteAura(this.world, this.getPos().offset(this.getFacing().getOpposite()), 1.0f, true);
                             }
-                            this.decrStackSize(slot, 1);
+                            int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
+                                    .filter(input -> !input.isEmpty()).findFirst()
+                                    .map(ItemStack::getCount).orElse(1);
+                            this.decrStackSize(slot, count);
                             break;
                         }
                     } else {
@@ -169,6 +176,15 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
                     }
                 }
             }
+        }
+    }
+
+    public void dropInventoryContents() {
+        if(!this.world.isRemote) {
+            if(!this.getEquippedStone().isEmpty()) {
+                Block.spawnAsEntity(this.world, this.getPos(), this.getEquippedStone().copy());
+            }
+            InventoryHelper.dropInventoryItems(this.world, this.getPos(), this);
         }
     }
     

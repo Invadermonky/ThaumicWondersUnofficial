@@ -3,6 +3,7 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -114,5 +115,14 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
     
     protected void explode(BlockPos explosionPos) {
         this.world.createExplosion(null, explosionPos.getX() + 0.5D, explosionPos.getY() + 0.5D, explosionPos.getZ() + 0.5D, 4.0F, true);
+    }
+
+    public void dropInventoryContents() {
+        if(!this.world.isRemote) {
+            ItemStack stack = this.getStackInSlot(0);
+            if(!stack.isEmpty()) {
+                Block.spawnAsEntity(this.world, this.getPos(), stack.copy());
+            }
+        }
     }
 }

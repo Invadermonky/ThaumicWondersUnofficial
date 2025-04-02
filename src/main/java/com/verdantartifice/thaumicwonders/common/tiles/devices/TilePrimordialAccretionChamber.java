@@ -3,9 +3,9 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRecipe;
 import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRegistry;
-import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -20,13 +20,11 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aura.AuraHelper;
-import thaumcraft.api.items.ItemsTC;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public class TilePrimordialAccretionChamber extends TileTWInventory implements IAspectContainer, ITickable {
     private static final int CAPACITY = 250;
@@ -118,6 +116,12 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
                     }
                 }
             }
+        }
+    }
+
+    public void dropInventoryContents() {
+        if(!this.world.isRemote) {
+            InventoryHelper.dropInventoryItems(this.world, this.getPos(), this);
         }
     }
     

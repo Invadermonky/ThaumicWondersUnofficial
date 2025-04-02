@@ -17,6 +17,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -102,6 +103,9 @@ public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationCham
     
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if(tile instanceof TileCatalyzationChamber)
+            ((TileCatalyzationChamber) tile).dropInventoryContents();
         destroyChamber(worldIn, pos, state, pos);
         super.breakBlock(worldIn, pos, state);
     }

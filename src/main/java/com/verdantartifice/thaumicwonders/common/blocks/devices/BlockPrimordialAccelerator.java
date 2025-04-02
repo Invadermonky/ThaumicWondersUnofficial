@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -49,5 +50,14 @@ public class BlockPrimordialAccelerator extends BlockDeviceTW<TilePrimordialAcce
             playerIn.openGui(ThaumicWonders.INSTANCE, GuiIds.PRIMORDIAL_ACCELERATOR, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if(tile instanceof TilePrimordialAccelerator) {
+            ((TilePrimordialAccelerator) tile).dropInventoryContents();
+        }
+        super.breakBlock(worldIn, pos, state);
     }
 }

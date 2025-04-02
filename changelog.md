@@ -5,10 +5,11 @@
 ### Added
 - Added several config options for Cleansing Charm
 - Added several config options for Meaty Orb
-- Added config option for Void Beacon essentia cost
+- Added config options for several machines
 - Added Goggles of Revealing and Sipping Fiend mask tooltip to Void Fortress Helm
 - Added Catalyzation Chamber Crafttweaker and GroovyScript methods
 - Added Meaty Orb Crafttweaker and GroovyScript methods
+- Added Primordial Accretion Chamber Crafttweaker and GroovyScript methods
 - Added Void Beacon Crafttweaker and GroovyScript methods
 - Added Flux Capacitor TOP storage information
 
@@ -17,6 +18,9 @@
 - Fixed mod registering several fake blocks
 - Fixed several dupe bugs [Pull Request #77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
 - Fixed Flux Capacitor losing flux charge when broken by non-players
+- Catalization Chamber now drops any stored items when broken
+- Primordial Accretion Chamber now drops any stored items when broken
+- Primordial Accelerator now drops any stored items when broken
 
 ### Changed
 - Updated gradle to RFG
@@ -25,6 +29,7 @@
 - Vishroom Spore recipe now produces 1 Vishroom Spore Cluster. Each spore custer can be used to plant 8 Vishroom plants before being consumed.
 - Catalyzation Chamber now uses recipe structure
 - Meaty Orb now uses recipe entry structure to generate drops
+- Primordial Accretion Chamber now uses recipe structure
 - Void Beacon now uses recipe entry structure to generate drops
 
 ### Removed

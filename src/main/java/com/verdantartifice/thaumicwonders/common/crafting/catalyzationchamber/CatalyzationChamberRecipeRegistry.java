@@ -14,8 +14,12 @@ import thaumcraft.api.aspects.Aspect;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CatalyzationChamberRegistry {
+public class CatalyzationChamberRecipeRegistry {
     private static final Set<CatalyzationChamberRecipe> CATALYZATION_CHAMBER_RECIPES = new HashSet<>();
+
+    public static Set<CatalyzationChamberRecipe> getRecipes() {
+        return CATALYZATION_CHAMBER_RECIPES;
+    }
 
     public static void addRecipe(CatalyzationChamberRecipe recipe) {
         CATALYZATION_CHAMBER_RECIPES.add(recipe);
@@ -42,7 +46,7 @@ public class CatalyzationChamberRegistry {
     }
 
     public static void addAlchemistRecipe(Ingredient input, ItemStack output) {
-        addRecipe(input, Ingredient.fromItem(ItemsTW.ALCHEMIST_STONE), output, ConfigHandlerTW.alchemist_stone.defaultFluxChance, Aspect.ORDER);
+        addRecipe(input, Ingredient.fromItem(ItemsTW.ALCHEMIST_STONE), output, ConfigHandlerTW.catalyst_stones.alchemist_stone.defaultFluxChance, Aspect.ORDER);
     }
 
     public static void addAlchemistRecipe(String inputOreDict, ItemStack output) {
@@ -52,7 +56,7 @@ public class CatalyzationChamberRegistry {
     }
 
     public static void addAlienistRecipe(Ingredient input, ItemStack output) {
-        addRecipe(input, Ingredient.fromItem(ItemsTW.ALIENIST_STONE), output, ConfigHandlerTW.alienist_stone.defaultFluxChance, Aspect.FLUX);
+        addRecipe(input, Ingredient.fromItem(ItemsTW.ALIENIST_STONE), output, ConfigHandlerTW.catalyst_stones.alienist_stone.defaultFluxChance, Aspect.FLUX);
     }
 
     public static void addAlienistRecipe(String inputOreDict, ItemStack output) {
@@ -62,7 +66,7 @@ public class CatalyzationChamberRegistry {
     }
 
     public static void addTransmuterRecipe(Ingredient input, ItemStack output) {
-        addRecipe(input, Ingredient.fromItem(ItemsTW.TRANSMUTER_STONE), output, ConfigHandlerTW.transmuter_stone.defaultFluxChance, Aspect.EXCHANGE);
+        addRecipe(input, Ingredient.fromItem(ItemsTW.TRANSMUTER_STONE), output, ConfigHandlerTW.catalyst_stones.transmuter_stone.defaultFluxChance, Aspect.EXCHANGE);
     }
 
     public static void addTransmuterRecipe(String inputOreDict, ItemStack output) {

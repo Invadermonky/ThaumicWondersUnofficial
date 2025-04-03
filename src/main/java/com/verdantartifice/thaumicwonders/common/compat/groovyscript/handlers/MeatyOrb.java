@@ -3,11 +3,12 @@ package com.verdantartifice.thaumicwonders.common.compat.groovyscript.handlers;
 import com.cleanroommc.groovyscript.api.GroovyBlacklist;
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
+import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
-import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbEntryRegistry;
 import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +18,7 @@ public class MeatyOrb extends VirtualizedRegistry<WeightedEntry> {
     @GroovyBlacklist
     @Override
     public void onReload() {
-        MeatyOrbRegistry.removeAll();
+        MeatyOrbEntryRegistry.removeAll();
         InitRecipes.initMeatyOrb();
     }
 
@@ -26,14 +27,19 @@ public class MeatyOrb extends VirtualizedRegistry<WeightedEntry> {
         new RecipeBuilder().setMeat(stack).setWeight(weight).register();
     }
 
+    @MethodDescription(type = MethodDescription.Type.QUERY)
+    public SimpleObjectStream<WeightedEntry> streamRecipes() {
+        return new SimpleObjectStream<>(MeatyOrbEntryRegistry.getMeatEntries());
+    }
+
     @MethodDescription(type = MethodDescription.Type.REMOVAL, example = @Example("item('minecraft:beef')"), priority = 1001)
     public void remove(ItemStack stack) {
-        MeatyOrbRegistry.removeEntry(stack);
+        MeatyOrbEntryRegistry.removeEntry(stack);
     }
 
     @MethodDescription(type = MethodDescription.Type.REMOVAL, example = @Example(commented = true), priority = 1002)
     public void removeAll() {
-        MeatyOrbRegistry.removeAll();
+        MeatyOrbEntryRegistry.removeAll();
     }
 
     @RecipeBuilderDescription(
@@ -83,7 +89,7 @@ public class MeatyOrb extends VirtualizedRegistry<WeightedEntry> {
         public @Nullable WeightedEntry register() {
             if(this.validate()) {
                 WeightedEntry entry = new WeightedEntry(this.meatStack, this.weight);
-                MeatyOrbRegistry.addEntry(entry);
+                MeatyOrbEntryRegistry.addEntry(entry);
                 return entry;
             }
             return null;

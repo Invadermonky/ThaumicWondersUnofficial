@@ -5,10 +5,10 @@ import com.mr208.ea.common.items.ItemCluster;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
-import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRecipe;
-import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRegistry;
-import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
-import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.accelerator.AcceleratorRecipeRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.AccretionChamberRecipeRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbEntryRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeDisjunctionClothUse;
 import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeFlyingCarpetDyes;
 import com.verdantartifice.thaumicwonders.common.fluids.FluidQuicksilver;
@@ -22,6 +22,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -61,6 +62,7 @@ public class InitRecipes {
         initSmelting();
         initCatalyzationChamberRecipes();
         initMeatyOrb();
+        initPrimordialAcceleratorRecipes();
         initPrimordialAccretionChamberRecipes();
         InitVoidBeacon.init();
     }
@@ -838,73 +840,84 @@ public class InitRecipes {
 
     public static void initCatalyzationChamberRecipes() {
         //Alchemist Stone
-        CatalyzationChamberRegistry.addAlchemistRecipe("oreIron", new ItemStack(ItemsTC.clusters, 1, 0));
-        CatalyzationChamberRegistry.addAlchemistRecipe("oreGold", new ItemStack(ItemsTC.clusters, 1, 1));
-        CatalyzationChamberRegistry.addAlchemistRecipe("oreCopper", new ItemStack(ItemsTC.clusters, 1, 2));
-        CatalyzationChamberRegistry.addAlchemistRecipe("oreTin", new ItemStack(ItemsTC.clusters, 1, 3));
-        CatalyzationChamberRegistry.addAlchemistRecipe("oreSilver", new ItemStack(ItemsTC.clusters, 1, 4));
-        CatalyzationChamberRegistry.addAlchemistRecipe("oreLead", new ItemStack(ItemsTC.clusters, 1, 5));
-        CatalyzationChamberRegistry.addAlchemistRecipe("oreCinnabar", new ItemStack(ItemsTC.clusters, 1, 6));
+        CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreIron", new ItemStack(ItemsTC.clusters, 1, 0));
+        CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreGold", new ItemStack(ItemsTC.clusters, 1, 1));
+        CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreCopper", new ItemStack(ItemsTC.clusters, 1, 2));
+        CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreTin", new ItemStack(ItemsTC.clusters, 1, 3));
+        CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreSilver", new ItemStack(ItemsTC.clusters, 1, 4));
+        CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreLead", new ItemStack(ItemsTC.clusters, 1, 5));
+        CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreCinnabar", new ItemStack(ItemsTC.clusters, 1, 6));
         try {
             if(Loader.isModLoaded("ea")) {
                 Field oreNameField = ItemCluster.class.getDeclaredField("oreName");
                 oreNameField.setAccessible(true);
                 ModContent.modClusters.forEach(cluster -> {
                     try {
-                        CatalyzationChamberRegistry.addAlchemistRecipe((String) oreNameField.get(cluster), new ItemStack(cluster));
+                        CatalyzationChamberRecipeRegistry.addAlchemistRecipe((String) oreNameField.get(cluster), new ItemStack(cluster));
                     } catch (Exception ignored) {}
                 });
             }
         } catch (Exception ignored) {}
 
         //Alienist Stone
-        CatalyzationChamberRegistry.addAlienistRecipe("oreIron", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0));
-        CatalyzationChamberRegistry.addAlienistRecipe("oreGold", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 1));
-        CatalyzationChamberRegistry.addAlienistRecipe("oreCopper", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 2));
-        CatalyzationChamberRegistry.addAlienistRecipe("oreTin", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 3));
-        CatalyzationChamberRegistry.addAlienistRecipe("oreSilver", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 4));
-        CatalyzationChamberRegistry.addAlienistRecipe("oreLead", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 5));
-        CatalyzationChamberRegistry.addAlienistRecipe("oreCinnabar", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 6));
-        CatalyzationChamberRegistry.addAlienistRecipe("oreQuartz", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7));
-        CatalyzationChamberRegistry.addAlienistRecipe(Ingredient.fromItem(ItemsTC.voidSeed), new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 8));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreIron", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreGold", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 1));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreCopper", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 2));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreTin", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 3));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreSilver", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 4));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreLead", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 5));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreCinnabar", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 6));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreQuartz", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7));
+        CatalyzationChamberRecipeRegistry.addAlienistRecipe(Ingredient.fromItem(ItemsTC.voidSeed), new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 8));
 
         //Transmuter Stone
-        CatalyzationChamberRegistry.addTransmuterRecipe("oreIron", new ItemStack(Blocks.GOLD_ORE));
-        CatalyzationChamberRegistry.addTransmuterRecipe("ingotIron", new ItemStack(Items.GOLD_INGOT));
-        CatalyzationChamberRegistry.addTransmuterRecipe("blockIron", new ItemStack(Blocks.GOLD_BLOCK));
-        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetIron", new ItemStack(Items.GOLD_NUGGET));
-        CatalyzationChamberRegistry.addTransmuterRecipe("oreGold", new ItemStack(Blocks.IRON_ORE));
-        CatalyzationChamberRegistry.addTransmuterRecipe("ingotGold", new ItemStack(Items.IRON_INGOT));
-        CatalyzationChamberRegistry.addTransmuterRecipe("blockGold", new ItemStack(Blocks.IRON_BLOCK));
-        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetGold", new ItemStack(Items.IRON_NUGGET));
-        CatalyzationChamberRegistry.addTransmuterRecipe("oreTin", "oreCopper");
-        CatalyzationChamberRegistry.addTransmuterRecipe("ingotTin", "ingotCopper");
-        CatalyzationChamberRegistry.addTransmuterRecipe("blockTin", "blockCopper");
-        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetTin", "nuggetCopper");
-        CatalyzationChamberRegistry.addTransmuterRecipe("oreCopper", "oreTin");
-        CatalyzationChamberRegistry.addTransmuterRecipe("ingotCopper", "ingotTin");
-        CatalyzationChamberRegistry.addTransmuterRecipe("blockCopper", "blockTin");
-        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetCopper", "nuggetTin");
-        CatalyzationChamberRegistry.addTransmuterRecipe("oreSilver", "oreLead");
-        CatalyzationChamberRegistry.addTransmuterRecipe("ingotSilver", "ingotLead");
-        CatalyzationChamberRegistry.addTransmuterRecipe("blockSilver", "blockLead");
-        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetSilver", "nuggetLead");
-        CatalyzationChamberRegistry.addTransmuterRecipe("oreLead", "oreSilver");
-        CatalyzationChamberRegistry.addTransmuterRecipe("ingotLead", "ingotSilver");
-        CatalyzationChamberRegistry.addTransmuterRecipe("blockLead", "blockSilver");
-        CatalyzationChamberRegistry.addTransmuterRecipe("nuggetLead", "nuggetSilver");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("oreIron", new ItemStack(Blocks.GOLD_ORE));
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("ingotIron", new ItemStack(Items.GOLD_INGOT));
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("blockIron", new ItemStack(Blocks.GOLD_BLOCK));
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("nuggetIron", new ItemStack(Items.GOLD_NUGGET));
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("oreGold", new ItemStack(Blocks.IRON_ORE));
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("ingotGold", new ItemStack(Items.IRON_INGOT));
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("blockGold", new ItemStack(Blocks.IRON_BLOCK));
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("nuggetGold", new ItemStack(Items.IRON_NUGGET));
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("oreTin", "oreCopper");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("ingotTin", "ingotCopper");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("blockTin", "blockCopper");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("nuggetTin", "nuggetCopper");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("oreCopper", "oreTin");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("ingotCopper", "ingotTin");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("blockCopper", "blockTin");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("nuggetCopper", "nuggetTin");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("oreSilver", "oreLead");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("ingotSilver", "ingotLead");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("blockSilver", "blockLead");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("nuggetSilver", "nuggetLead");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("oreLead", "oreSilver");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("ingotLead", "ingotSilver");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("blockLead", "blockSilver");
+        CatalyzationChamberRecipeRegistry.addTransmuterRecipe("nuggetLead", "nuggetSilver");
     }
 
     public static void initMeatyOrb() {
-        MeatyOrbRegistry.addEntry(new ItemStack(Items.BEEF), 30);
-        MeatyOrbRegistry.addEntry(new ItemStack(Items.PORKCHOP), 25);
-        MeatyOrbRegistry.addEntry(new ItemStack(Items.CHICKEN), 20);
-        MeatyOrbRegistry.addEntry(new ItemStack(Items.MUTTON), 15);
-        MeatyOrbRegistry.addEntry(new ItemStack(Items.RABBIT), 10);
+        MeatyOrbEntryRegistry.addEntry(new ItemStack(Items.BEEF), 30);
+        MeatyOrbEntryRegistry.addEntry(new ItemStack(Items.PORKCHOP), 25);
+        MeatyOrbEntryRegistry.addEntry(new ItemStack(Items.CHICKEN), 20);
+        MeatyOrbEntryRegistry.addEntry(new ItemStack(Items.MUTTON), 15);
+        MeatyOrbEntryRegistry.addEntry(new ItemStack(Items.RABBIT), 10);
+    }
+
+    public static void initPrimordialAcceleratorRecipes() {
+        int maxSize = ItemsTC.primordialPearl.getDefaultInstance().getMaxDamage();
+        for(int size = 0; size < maxSize - 1; size++) {
+            int outputCount = MathHelper.clamp(maxSize - size, 0, 8);
+            AcceleratorRecipeRegistry.addRecipe(
+                    CraftingHelper.getIngredient(new ItemStack(ItemsTC.primordialPearl, 1, size)),
+                    new ItemStack(ItemsTW.PRIMORDIAL_GRAIN, 1, outputCount)
+            );
+        }
     }
 
     public static void initPrimordialAccretionChamberRecipes() {
-        PrimordialAccretionChamberRegistry.addRecipe(
+        AccretionChamberRecipeRegistry.addRecipe(
                 CraftingHelper.getIngredient(ItemsTW.PRIMORDIAL_GRAIN),
                 125,
                 new WeightedEntry(new ItemStack(ItemsTC.primordialPearl, 1, 5), 1),

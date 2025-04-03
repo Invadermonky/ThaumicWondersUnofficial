@@ -11,6 +11,7 @@
 - Added config options for Void Beacon base essentia cost
 - Added Crafttweaker and GroovyScript methods for Catalyzation Chamber recipes
 - Added Crafttweaker and GroovyScript methods for Meaty Orb entries
+- Added Crafttweaker and GroovyScript methods for Primordial Accelerator recipes
 - Added Crafttweaker and GroovyScript methods Primordial Accretion Chamber recipes
 - Added Crafttweaker and GroovyScript methods Void Beacon entries
 - Added Expanded Arcanum compat for Catalyzation Chamber
@@ -35,6 +36,7 @@
 - Creative Essentia Jars no longer pollute the aura when emptied
 - Meaty Orb now uses recipe entry structure to generate drops
 - Night Vision Goggles now have an adaptive on/off based on what the player is looking at (configurable)
+- Primordial Accelerator now uses recipe structure
 - Primordial Accretion Chamber now uses recipe structure
 - Shimmerleaf Seed recipe now produces 1 Shimmerleaft Seed Bulb. Each bulb can be used to plant 8 Shimmerleaf plants before being consumed.
 - Vishroom Spore recipe now produces 1 Vishroom Spore Cluster. Each spore custer can be used to plant 8 Vishroom plants before being consumed.

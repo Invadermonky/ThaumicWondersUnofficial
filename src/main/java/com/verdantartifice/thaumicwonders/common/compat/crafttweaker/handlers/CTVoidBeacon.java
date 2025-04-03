@@ -1,7 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.compat.crafttweaker.handlers;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconEntryRegistry;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
@@ -21,7 +21,7 @@ public class CTVoidBeacon {
         if(itemStack.isEmpty()) {
             CraftTweakerAPI.logError("Failure adding void beacon entry, IItemStack cannot be empty");
         } else {
-            VoidBeaconRegistry.addEntry(itemStack, Math.max(weight, 1));
+            VoidBeaconEntryRegistry.addEntry(itemStack, Math.max(weight, 1));
         }
     }
 
@@ -32,22 +32,22 @@ public class CTVoidBeacon {
         } if(weight <= 0) {
             CraftTweakerAPI.logError("Error adding Void Beacon entry. Weight must be greater than 0.");
         } else {
-            VoidBeaconRegistry.addEntry(oreDictEntry.getName(), weight);
+            VoidBeaconEntryRegistry.addEntry(oreDictEntry.getName(), weight);
         }
     }
 
     @ZenMethod
     public static void remove(IItemStack stack) {
-        VoidBeaconRegistry.removeEntry(CraftTweakerMC.getItemStack(stack));
+        VoidBeaconEntryRegistry.removeEntry(CraftTweakerMC.getItemStack(stack));
     }
 
     @ZenMethod
     public static void remove(IOreDictEntry oreDictEntry) {
-        VoidBeaconRegistry.removeEntry(oreDictEntry.getName());
+        VoidBeaconEntryRegistry.removeEntry(oreDictEntry.getName());
     }
 
     @ZenMethod
     public static void removeAll() {
-        VoidBeaconRegistry.removeAll();
+        VoidBeaconEntryRegistry.removeAll();
     }
 }

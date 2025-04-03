@@ -51,7 +51,7 @@ public class CatalyzationChamberRecipe {
     }
 
     public ItemStack getOutput() {
-        return output;
+        return output.copy();
     }
 
     public int getFluxChance() {

@@ -2,12 +2,13 @@ package com.verdantartifice.thaumicwonders.common.compat.groovyscript.handlers;
 
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
+import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconEntry;
-import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconEntryRegistry;
 import com.verdantartifice.thaumicwonders.common.init.InitVoidBeacon;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -18,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
     @Override
     public void onReload() {
-        VoidBeaconRegistry.removeAll();
+        VoidBeaconEntryRegistry.removeAll();
         InitVoidBeacon.registerDefaultEntries();
     }
 
@@ -39,13 +40,18 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
         new RecipeBuilder().setDrop(ingredient).setWeight(weight).register();
     }
 
+    @MethodDescription(type = MethodDescription.Type.QUERY)
+    public SimpleObjectStream<VoidBeaconEntry> getRecipes() {
+        return new SimpleObjectStream<>(VoidBeaconEntryRegistry.getVoidBeaconEntries());
+    }
+
     @MethodDescription(
             type = MethodDescription.Type.REMOVAL,
             example = @Example(commented = true),
             priority = 1002
     )
     public void remove(ItemStack stack) {
-        VoidBeaconRegistry.removeEntry(stack);
+        VoidBeaconEntryRegistry.removeEntry(stack);
     }
 
     @MethodDescription(
@@ -54,7 +60,7 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
             priority = 1003
     )
     public void remove(OreDictIngredient ingredient) {
-        VoidBeaconRegistry.removeEntry(ingredient.getOreDict());
+        VoidBeaconEntryRegistry.removeEntry(ingredient.getOreDict());
     }
 
     @MethodDescription(
@@ -63,7 +69,7 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
             priority = 1004
     )
     public void removeAll() {
-        VoidBeaconRegistry.removeAll();
+        VoidBeaconEntryRegistry.removeAll();
     }
 
     @RecipeBuilderDescription(
@@ -121,7 +127,7 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
         public @Nullable VoidBeaconEntry register() {
             if(this.validate()) {
                 VoidBeaconEntry entry = new VoidBeaconEntry(this.stack, this.weight);
-                VoidBeaconRegistry.addEntry(entry);
+                VoidBeaconEntryRegistry.addEntry(entry);
                 return entry;
             }
             return null;

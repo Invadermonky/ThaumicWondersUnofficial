@@ -2,7 +2,7 @@ package com.verdantartifice.thaumicwonders.common.compat.crafttweaker.handlers;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
-import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.AccretionChamberRecipeRegistry;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
@@ -26,7 +26,7 @@ public class CTPrimordialAccretionChamber {
         Arrays.stream(weightedOutputs).forEach(output -> outputs.add(
                 new WeightedEntry(CraftTweakerMC.getItemStack(output.getStack()), Math.max(1, (int) output.getPercent()))
         ));
-        PrimordialAccretionChamberRegistry.addRecipe(
+        AccretionChamberRecipeRegistry.addRecipe(
                 CraftTweakerMC.getIngredient(input),
                 aer, aqua, ignis, terra, ordo, perditio,
                 outputs.toArray(new WeightedEntry[0])
@@ -40,16 +40,16 @@ public class CTPrimordialAccretionChamber {
 
     @ZenMethod
     public static void removeByInput(IIngredient input) {
-        PrimordialAccretionChamberRegistry.removeByInput(CraftTweakerMC.getIngredient(input));
+        AccretionChamberRecipeRegistry.removeByInput(CraftTweakerMC.getIngredient(input));
     }
 
     @ZenMethod
     public static void removeByOutput(IItemStack output) {
-        PrimordialAccretionChamberRegistry.removeByOutput(CraftTweakerMC.getItemStack(output));
+        AccretionChamberRecipeRegistry.removeByOutput(CraftTweakerMC.getItemStack(output));
     }
 
     @ZenMethod
     public static void removeAll() {
-        PrimordialAccretionChamberRegistry.removeAll();
+        AccretionChamberRecipeRegistry.removeAll();
     }
 }

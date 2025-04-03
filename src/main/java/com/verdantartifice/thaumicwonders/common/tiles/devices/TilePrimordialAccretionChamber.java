@@ -1,8 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
-import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRecipe;
-import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.AccretionChamberRecipe;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.AccretionChamberRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
@@ -37,7 +37,7 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
         
     protected AspectList essentia = new AspectList();
 
-    private PrimordialAccretionChamberRecipe recipe;
+    private AccretionChamberRecipe recipe;
     
     public TilePrimordialAccretionChamber() {
         super(32);
@@ -80,9 +80,9 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
             }
             if (this.refineTime <= 0 && refinedFlag && this.recipe != null) {
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
-                    ItemStack stack = this.getStackInSlot(slot);
+                    ItemStack input = this.getStackInSlot(slot);
                     //TODO: Handle output
-                    if(!stack.isEmpty() && this.doesContainerContain(this.recipe.getAspectList())) {
+                    if(!input.isEmpty() && this.doesContainerContain(this.recipe.getAspectList())) {
                         ItemStack result = this.recipe.getOutput(this.world.rand);
                         if(this.speedyTime > 0) {
                             this.speedyTime--;
@@ -92,8 +92,13 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
                         this.world.addBlockEvent(this.getPos(), BlocksTW.PRIMORDIAL_ACCRETION_CHAMBER, PLAY_EFFECTS, 0);
 
                         int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
-                                .filter(input -> !input.isEmpty()).findFirst()
+                                .filter(ingredient -> !ingredient.isEmpty()).findFirst()
                                 .map(ItemStack::getCount).orElse(1);
+                        if(input.getItem().hasContainerItem(input)) {
+                            ItemStack container = input.getItem().getContainerItem(input).copy();
+                            container.setCount(count);
+                            this.ejectItem(container);
+                        }
                         this.decrStackSize(slot, count);
                         break;
                     }
@@ -105,7 +110,7 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
             if (this.refineTime <= 0 && !refinedFlag) {
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
                     ItemStack stack = this.getStackInSlot(slot);
-                    this.recipe = PrimordialAccretionChamberRegistry.getRecipe(stack);
+                    this.recipe = AccretionChamberRecipeRegistry.getRecipe(stack);
                     if(this.recipe != null) {
                         this.maxRefineTime = this.calcRefineTime();
                         this.refineTime = this.maxRefineTime;
@@ -135,7 +140,7 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     }
 
     private boolean canRefine(ItemStack items) {
-        return PrimordialAccretionChamberRegistry.getRecipe(items) != null;
+        return AccretionChamberRecipeRegistry.getRecipe(items) != null;
     }
 
     private void ejectItem(ItemStack itemStack) {

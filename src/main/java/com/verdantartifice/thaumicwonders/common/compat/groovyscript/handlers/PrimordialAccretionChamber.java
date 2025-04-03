@@ -4,11 +4,12 @@ import com.cleanroommc.groovyscript.api.GroovyBlacklist;
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
+import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
-import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRecipe;
-import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.PrimordialAccretionChamberRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.AccretionChamberRecipe;
+import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.AccretionChamberRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -17,11 +18,11 @@ import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrimordialAccretionChamber extends VirtualizedRegistry<PrimordialAccretionChamberRecipe> {
+public class PrimordialAccretionChamber extends VirtualizedRegistry<AccretionChamberRecipe> {
     @GroovyBlacklist
     @Override
     public void onReload() {
-        PrimordialAccretionChamberRegistry.removeAll();
+        AccretionChamberRecipeRegistry.removeAll();
         InitRecipes.initPrimordialAccretionChamberRecipes();
     }
 
@@ -45,14 +46,17 @@ public class PrimordialAccretionChamber extends VirtualizedRegistry<PrimordialAc
         addRecipe(input, output, aspectCost, aspectCost, aspectCost, aspectCost, aspectCost, aspectCost);
     }
 
-
+    @MethodDescription(type = MethodDescription.Type.QUERY)
+    public SimpleObjectStream<AccretionChamberRecipe> streamRecipes() {
+        return new SimpleObjectStream<>(AccretionChamberRecipeRegistry.getRecipes());
+    }
 
     @MethodDescription(
             type = MethodDescription.Type.REMOVAL,
             example = @Example("item('thaumicwonders:primordial_grain')")
     )
     public void removeByInput(IIngredient input) {
-        PrimordialAccretionChamberRegistry.removeByInput(input.toMcIngredient());
+        AccretionChamberRecipeRegistry.removeByInput(input.toMcIngredient());
     }
 
     @MethodDescription(
@@ -61,7 +65,7 @@ public class PrimordialAccretionChamber extends VirtualizedRegistry<PrimordialAc
             priority = 1001
     )
     public void removeByOutput(ItemStack output) {
-        PrimordialAccretionChamberRegistry.removeByOutput(output);
+        AccretionChamberRecipeRegistry.removeByOutput(output);
     }
 
     @MethodDescription(
@@ -70,7 +74,7 @@ public class PrimordialAccretionChamber extends VirtualizedRegistry<PrimordialAc
             priority = 1002
     )
     public void removeAll() {
-        PrimordialAccretionChamberRegistry.removeAll();
+        AccretionChamberRecipeRegistry.removeAll();
     }
 
     @RecipeBuilderDescription(
@@ -80,7 +84,7 @@ public class PrimordialAccretionChamber extends VirtualizedRegistry<PrimordialAc
         return new RecipeBuilder();
     }
 
-    public static class RecipeBuilder extends AbstractRecipeBuilder<PrimordialAccretionChamberRecipe> {
+    public static class RecipeBuilder extends AbstractRecipeBuilder<AccretionChamberRecipe> {
         @Property
         private IIngredient input;
         @Property
@@ -178,14 +182,14 @@ public class PrimordialAccretionChamber extends VirtualizedRegistry<PrimordialAc
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable PrimordialAccretionChamberRecipe register() {
+        public @Nullable AccretionChamberRecipe register() {
             if(this.validate()) {
-                PrimordialAccretionChamberRecipe recipe = new PrimordialAccretionChamberRecipe(
+                AccretionChamberRecipe recipe = new AccretionChamberRecipe(
                         this.input.toMcIngredient(),
                         this.aer, this.aqua, this.ignis, this.terra, this.ordo, this.perditio,
                         this.outputs.toArray(new WeightedEntry[0])
                 );
-                PrimordialAccretionChamberRegistry.addRecipe(recipe);
+                AccretionChamberRecipeRegistry.addRecipe(recipe);
                 return recipe;
             }
             return null;

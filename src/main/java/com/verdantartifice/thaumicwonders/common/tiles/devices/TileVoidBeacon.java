@@ -2,7 +2,7 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
-import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconEntryRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -176,7 +176,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     
     @Nonnull
     protected ItemStack getConjuredItem(Aspect aspect) {
-        return VoidBeaconRegistry.getDropForAspect(this.world.rand, aspect);
+        return VoidBeaconEntryRegistry.getDropForAspect(this.world.rand, aspect);
     }
     
     protected boolean canEject() {

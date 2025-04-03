@@ -10,9 +10,9 @@ public class TileCreativeEssentiaJar extends TileJarFillable {
         return this.getEssentiaType(loc) == null ? 0 : TileJarFillable.CAPACITY;
     }
 
-    //Overwriting to ensure no null pointers from null facing value
     @Override
     public Aspect getEssentiaType(EnumFacing loc) {
+        //Overwriting to ensure no null pointers from null facing value
         return this.aspect;
     }
 

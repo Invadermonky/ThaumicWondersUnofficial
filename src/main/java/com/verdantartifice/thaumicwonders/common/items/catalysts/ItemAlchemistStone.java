@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 public class ItemAlchemistStone extends ItemTW {
     public ItemAlchemistStone() {
         super("alchemist_stone");
-        this.setMaxDamage(ConfigHandlerTW.alchemist_stone.durability - 1);  // Gets one last use at durability 0
+        this.setMaxDamage(ConfigHandlerTW.catalyst_stones.alchemist_stone.durability - 1);  // Gets one last use at durability 0
         this.setMaxStackSize(1);
         this.setNoRepair();
     }
@@ -19,7 +19,7 @@ public class ItemAlchemistStone extends ItemTW {
 
     @Override
     public boolean isEnchantable(ItemStack stack) {
-        return ConfigHandlerTW.alchemist_stone.enchantable;
+        return ConfigHandlerTW.catalyst_stones.alchemist_stone.enchantable;
     }
 
     @Override

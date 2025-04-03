@@ -2,7 +2,7 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
-import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbEntryRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -50,7 +50,7 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
             this.fill();
         }
         if (!this.world.isRemote && this.activeCounter > 0) {
-            ItemStack meatStack = MeatyOrbRegistry.getMeatDrop(this.world.rand);
+            ItemStack meatStack = MeatyOrbEntryRegistry.getMeatDrop(this.world.rand);
             if (!meatStack.isEmpty()) {
                 double x = this.pos.getX() + 0.5D + (32.0D * (this.world.rand.nextDouble() - this.world.rand.nextDouble()));
                 double z = this.pos.getZ() + 0.5D + (32.0D * (this.world.rand.nextDouble() - this.world.rand.nextDouble()));

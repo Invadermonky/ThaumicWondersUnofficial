@@ -1,7 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
-import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
+import com.verdantartifice.thaumicwonders.common.crafting.accelerator.AcceleratorRecipe;
+import com.verdantartifice.thaumicwonders.common.crafting.accelerator.AcceleratorRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -10,16 +11,20 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import thaumcraft.api.items.ItemsTC;
+import org.jetbrains.annotations.Nullable;
 import thaumcraft.common.blocks.IBlockEnabled;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
 import thaumcraft.common.lib.SoundsTC;
 
+import java.util.Arrays;
+
 public class TilePrimordialAccelerator extends TileTWInventory implements ITickable {
-    protected static final int MAX_TUNNELS = 10;
+    public static final int MAX_TUNNELS = 10;
+
+    private @Nullable AcceleratorRecipe recipe = null;
     
     public TilePrimordialAccelerator() {
         super(1);
@@ -35,17 +40,27 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
         IBlockState state = this.world.getBlockState(this.pos);
         if (!this.world.isRemote && state != null && state.getBlock() == BlocksTW.PRIMORDIAL_ACCELERATOR) {
             boolean powered = !state.getValue(IBlockEnabled.ENABLED);   // "enabled" means no redstone signal in TC
-            ItemStack pearlStack = this.getStackInSlot(0);
-            
-            if (powered && pearlStack != null && !pearlStack.isEmpty() && pearlStack.getItem() == ItemsTC.primordialPearl && pearlStack.getItemDamage() < 7) {
+            ItemStack input = this.getStackInSlot(0);
+            this.recipe = AcceleratorRecipeRegistry.getRecipe(input);
+
+            if (powered && input != null && !input.isEmpty() && this.recipe != null) {
                 EnumFacing facing = state.getValue(IBlockFacingHorizontal.FACING);
                 BlockPos curPos = this.pos;
                 int tunnelCount = 0;
                 int index = 0;
                 boolean done = false;
-                
-                // Consume the loaded pearl and play sound effects
-                this.setInventorySlotContents(0, ItemStack.EMPTY);
+
+
+                // Consume the loaded item and play sound effects
+                int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
+                        .filter(ingredient -> !ingredient.isEmpty()).findFirst()
+                        .map(ItemStack::getCount).orElse(1);
+                if(input.getItem().hasContainerItem(input)) {
+                    ItemStack container = input.getItem().getContainerItem(input).copy();
+                    container.setCount(count);
+                    this.ejectInput(container, facing);
+                }
+                this.decrStackSize(0, count);
                 this.world.playSound(null, this.pos, SoundsTC.zap, SoundCategory.BLOCKS, 1.0F, (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F + 1.0F);
                 this.world.playSound(null, this.pos, SoundsTC.wind, SoundCategory.BLOCKS, 1.0F, (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F + 1.0F);
                 
@@ -57,7 +72,7 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
                         EnumFacing curFacing = curState.getValue(IBlockFacingHorizontal.FACING);
                         if (curFacing == facing) {
                             // Drop grains and stop safely
-                            this.completeReaction(curPos, tunnelCount, pearlStack);
+                            this.completeReaction(curPos, tunnelCount);
                         } else {
                             // Explode!
                             this.explode(curPos);
@@ -89,24 +104,24 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
         }
     }
 
-    protected void completeReaction(BlockPos terminusPos, int tunnelCount, ItemStack pearlStack) {
-        int count = MathHelper.clamp(pearlStack.getMaxDamage() - pearlStack.getItemDamage(), 0, 8);
-        for (int index = 0; index < count; index++) {
-            this.ejectGrain(terminusPos);
-            if (this.world.rand.nextInt(2 * MAX_TUNNELS) < (MAX_TUNNELS + tunnelCount)) {
-                // 50-100% chance of second grain
-                this.ejectGrain(terminusPos);
-            }
-            if (this.world.rand.nextInt(2 * MAX_TUNNELS) < (tunnelCount)) {
-                // 0-50% chance of third grain
-                this.ejectGrain(terminusPos);
-            }
+    protected void completeReaction(BlockPos terminusPos, int tunnelCount) {
+        if(this.recipe != null) {
+            NonNullList<ItemStack> outputs = this.recipe.getOutputs(this.world.rand, tunnelCount);
+            outputs.forEach(output -> this.ejectOutput(output, terminusPos));
         }
     }
+
+    protected void ejectInput(ItemStack input, EnumFacing facing) {
+        BlockPos outputPos = this.getPos().offset(facing.getOpposite());
+        EntityItem entityItem = new EntityItem(this.world, outputPos.getX() + 0.5D, outputPos.getY() + 0.5D, outputPos.getZ() + 0.5D, input.copy());
+        entityItem.motionX = 0.15 * facing.getOpposite().getDirectionVec().getX();
+        entityItem.motionY = 0.1;
+        entityItem.motionZ = 0.15 * facing.getOpposite().getDirectionVec().getZ();
+        world.spawnEntity(entityItem);
+    }
     
-    protected void ejectGrain(BlockPos ejectPos) {
-        ItemStack stack = new ItemStack(ItemsTW.PRIMORDIAL_GRAIN);
-        EntityItem entity = new EntityItem(this.world, ejectPos.getX() + 0.5D, ejectPos.getY() + 1.0D, ejectPos.getZ() + 0.5D, stack);
+    protected void ejectOutput(ItemStack output, BlockPos ejectPos) {
+        EntityItem entity = new EntityItem(this.world, ejectPos.getX() + 0.5D, ejectPos.getY() + 1.0D, ejectPos.getZ() + 0.5D, output.copy());
         entity.motionX = this.world.rand.nextGaussian() * 0.1D;
         entity.motionY = 0.3D;
         entity.motionZ = this.world.rand.nextGaussian() * 0.1D;

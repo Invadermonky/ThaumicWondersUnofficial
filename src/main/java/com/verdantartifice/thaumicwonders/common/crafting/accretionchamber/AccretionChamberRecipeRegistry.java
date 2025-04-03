@@ -11,18 +11,22 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PrimordialAccretionChamberRegistry {
-    private static final Set<PrimordialAccretionChamberRecipe> ACCRETION_CHAMBER_RECIPES = new HashSet<>();
+public class AccretionChamberRecipeRegistry {
+    private static final Set<AccretionChamberRecipe> ACCRETION_CHAMBER_RECIPES = new HashSet<>();
 
-    public static void addRecipe(PrimordialAccretionChamberRecipe recipe) {
+    public static Set<AccretionChamberRecipe> getRecipes() {
+        return ACCRETION_CHAMBER_RECIPES;
+    }
+
+    public static void addRecipe(AccretionChamberRecipe recipe) {
         ACCRETION_CHAMBER_RECIPES.add(recipe);
     }
 
     public static void addRecipe(Ingredient input, int aer, int aqua, int ignis, int terra, int ordo, int perditio, WeightedEntry... weightedOutput) {
         try {
-            addRecipe(new PrimordialAccretionChamberRecipe(input, aer, aqua, ignis, terra, ordo, perditio, weightedOutput));
+            addRecipe(new AccretionChamberRecipe(input, aer, aqua, ignis, terra, ordo, perditio, weightedOutput));
         } catch (IllegalArgumentException e) {
-            ThaumicWonders.LOGGER.error("Failed to add Accretion Chamber recipe");
+            ThaumicWonders.LOGGER.error("Failed to add Primordial Accretion Chamber recipe");
             ThaumicWonders.LOGGER.error(e);
         }
     }
@@ -48,7 +52,7 @@ public class PrimordialAccretionChamberRegistry {
     }
 
     @Nullable
-    public static PrimordialAccretionChamberRecipe getRecipe(ItemStack input) {
+    public static AccretionChamberRecipe getRecipe(ItemStack input) {
         if(!input.isEmpty()) {
             return ACCRETION_CHAMBER_RECIPES.stream().filter(recipe -> recipe.matchesInput(input)).findFirst().orElse(null);
         }

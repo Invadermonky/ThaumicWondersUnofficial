@@ -2,7 +2,7 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipe;
-import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
 import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
@@ -49,7 +49,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     
     public boolean setEquippedStone(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
-            if(CatalyzationChamberRegistry.isValidCatalyst(stack)) {
+            if(CatalyzationChamberRecipeRegistry.isValidCatalyst(stack)) {
                 this.equippedStone = stack;
                 return true;
             } else {
@@ -116,14 +116,14 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
             }
             if (this.refineTime <= 0 && refinedFlag) {
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
-                    ItemStack stack = this.getStackInSlot(slot);
-                    if (stack != null && !stack.isEmpty()) {
+                    ItemStack input = this.getStackInSlot(slot);
+                    if (input != null && !input.isEmpty()) {
                         ItemStack catalyst = this.getEquippedStone();
-                        this.recipe = CatalyzationChamberRegistry.getRecipe(stack, catalyst);
+                        this.recipe = CatalyzationChamberRecipeRegistry.getRecipe(input, catalyst);
                         if(this.recipe != null) {
                             ItemStack output = this.recipe.getOutput();
                             if(output.isEmpty()) {
-                                ItemStack copy = stack.copy();
+                                ItemStack copy = input.copy();
                                 copy.setCount(1);
                                 this.ejectItem(copy);
                                 this.decrStackSize(slot, 1);
@@ -150,9 +150,15 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
                             if(this.recipe.getFluxChance() > 0 && this.world.rand.nextInt(this.recipe.getFluxChance()) == 0) {
                                 AuraHelper.polluteAura(this.world, this.getPos().offset(this.getFacing().getOpposite()), 1.0f, true);
                             }
+
                             int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
-                                    .filter(input -> !input.isEmpty()).findFirst()
+                                    .filter(ingredient -> !ingredient.isEmpty()).findFirst()
                                     .map(ItemStack::getCount).orElse(1);
+                            if(input.getItem().hasContainerItem(input)) {
+                                ItemStack container = input.getItem().getContainerItem(input).copy();
+                                container.setCount(count);
+                                this.ejectItem(container);
+                            }
                             this.decrStackSize(slot, count);
                             break;
                         }
@@ -199,7 +205,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
 
     private boolean canRefine(ItemStack stack) {
         if(this.getEquippedStone() != null && !this.getEquippedStone().isEmpty()) {
-            return CatalyzationChamberRegistry.getRecipe(stack, this.getEquippedStone()) != null;
+            return CatalyzationChamberRecipeRegistry.getRecipe(stack, this.getEquippedStone()) != null;
         } else {
             return false;
         }

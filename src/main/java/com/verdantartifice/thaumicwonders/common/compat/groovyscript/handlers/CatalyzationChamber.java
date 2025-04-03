@@ -5,12 +5,13 @@ import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.thaumcraft.aspect.AspectStack;
+import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipe;
-import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
     @GroovyBlacklist
     @Override
     public void onReload() {
-        CatalyzationChamberRegistry.removeAll();
+        CatalyzationChamberRecipeRegistry.removeAll();
         InitRecipes.initCatalyzationChamberRecipes();
     }
 
@@ -63,7 +64,7 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
             priority = 1002
     )
     public void addAlchemistRecipe(IIngredient input, ItemStack output) {
-        addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.ALCHEMIST_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.alchemist_stone.defaultFluxChance, new AspectStack(Aspect.ORDER));
+        addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.ALCHEMIST_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.catalyst_stones.alchemist_stone.defaultFluxChance, new AspectStack(Aspect.ORDER));
     }
 
     @MethodDescription(
@@ -75,7 +76,7 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
             priority = 1002
     )
     public void addAlienistRecipe(IIngredient input, ItemStack output) {
-        addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.ALIENIST_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.alienist_stone.defaultFluxChance, new AspectStack(Aspect.FLUX));
+        addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.ALIENIST_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.catalyst_stones.alienist_stone.defaultFluxChance, new AspectStack(Aspect.FLUX));
     }
 
     @MethodDescription(
@@ -87,7 +88,12 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
             priority = 1002
     )
     public void addTransmuterRecipe(IIngredient input, ItemStack output) {
-        addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.TRANSMUTER_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.transmuter_stone.defaultFluxChance, new AspectStack(Aspect.EXCHANGE));
+        addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.TRANSMUTER_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.catalyst_stones.transmuter_stone.defaultFluxChance, new AspectStack(Aspect.EXCHANGE));
+    }
+
+    @MethodDescription(type = MethodDescription.Type.QUERY)
+    public SimpleObjectStream<CatalyzationChamberRecipe> streamRecipes() {
+        return new SimpleObjectStream<>(CatalyzationChamberRecipeRegistry.getRecipes());
     }
 
     @MethodDescription(
@@ -98,7 +104,7 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
             }
     )
     public void removeByInput(IIngredient input) {
-        CatalyzationChamberRegistry.removeByInput(input.toMcIngredient());
+        CatalyzationChamberRecipeRegistry.removeByInput(input.toMcIngredient());
     }
 
     @MethodDescription(
@@ -109,22 +115,22 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
             }
     )
     public void removeByInput(IIngredient input, IIngredient catalyst) {
-        CatalyzationChamberRegistry.removeByInput(input.toMcIngredient(), catalyst.toMcIngredient());
+        CatalyzationChamberRecipeRegistry.removeByInput(input.toMcIngredient(), catalyst.toMcIngredient());
     }
 
     @MethodDescription(type = MethodDescription.Type.REMOVAL, example = @Example("item('minecraft:iron_ingot')"), priority = 1001)
     public void removeByOutput(ItemStack output) {
-        CatalyzationChamberRegistry.removeByOutput(output);
+        CatalyzationChamberRecipeRegistry.removeByOutput(output);
     }
 
     @MethodDescription(type = MethodDescription.Type.REMOVAL, example = @Example("item('minecraft:iron_ingot'), item('thaumicwonders:alchemist_stone')"), priority = 1001)
     public void removeByOutput(ItemStack output, IIngredient catalyst) {
-        CatalyzationChamberRegistry.removeByOutput(output, catalyst.toMcIngredient());
+        CatalyzationChamberRecipeRegistry.removeByOutput(output, catalyst.toMcIngredient());
     }
 
     @MethodDescription(type = MethodDescription.Type.REMOVAL, example = @Example(commented = true), priority = 1002)
     public void removeAll() {
-        CatalyzationChamberRegistry.removeAll();
+        CatalyzationChamberRecipeRegistry.removeAll();
     }
 
     @RecipeBuilderDescription(
@@ -212,7 +218,7 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
                         this.fluxChance,
                         this.particleColor != null ? this.particleColor.getAspect() : null
                 );
-                CatalyzationChamberRegistry.addRecipe(recipe);
+                CatalyzationChamberRecipeRegistry.addRecipe(recipe);
                 return recipe;
             }
             return null;

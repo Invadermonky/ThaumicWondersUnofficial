@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
-public class PrimordialAccretionChamberRecipe {
+public class AccretionChamberRecipe {
 
     protected final Ingredient input;
     protected final WeightedEntry[] outputEntries;
@@ -26,7 +26,7 @@ public class PrimordialAccretionChamberRecipe {
 
     private final int totalWeight;
 
-    public PrimordialAccretionChamberRecipe(Ingredient input, int aer, int aqua, int ignis, int terra, int ordo, int perditio, WeightedEntry... outputEntries) throws IllegalArgumentException {
+    public AccretionChamberRecipe(Ingredient input, int aer, int aqua, int ignis, int terra, int ordo, int perditio, WeightedEntry... outputEntries) throws IllegalArgumentException {
         Preconditions.checkArgument(input != null && input != Ingredient.EMPTY, "Input cannot be null or empty");
         ValueRange aspectRange = ValueRange.of(0, 250);
         Preconditions.checkArgument(aspectRange.isValidIntValue(aer), "Aer aspect amount must be between 0 and 250");
@@ -48,11 +48,11 @@ public class PrimordialAccretionChamberRecipe {
         this.totalWeight = Arrays.stream(outputEntries).mapToInt(WeightedEntry::getWeight).sum();
     }
 
-    public PrimordialAccretionChamberRecipe(Ingredient input, int aspectUsage, WeightedEntry... outputEntries) throws IllegalArgumentException {
+    public AccretionChamberRecipe(Ingredient input, int aspectUsage, WeightedEntry... outputEntries) throws IllegalArgumentException {
         this(input, aspectUsage, aspectUsage, aspectUsage, aspectUsage, aspectUsage, aspectUsage, outputEntries);
     }
 
-    public PrimordialAccretionChamberRecipe(Ingredient input, WeightedEntry... outputEntries) throws IllegalArgumentException {
+    public AccretionChamberRecipe(Ingredient input, WeightedEntry... outputEntries) throws IllegalArgumentException {
         this(input, 125, outputEntries);
     }
 
@@ -120,8 +120,8 @@ public class PrimordialAccretionChamberRecipe {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PrimordialAccretionChamberRecipe)) return false;
-        PrimordialAccretionChamberRecipe that = (PrimordialAccretionChamberRecipe) o;
+        if (!(o instanceof AccretionChamberRecipe)) return false;
+        AccretionChamberRecipe that = (AccretionChamberRecipe) o;
         return IngredientHelper.areIngredientsEqual(getInput(), that.getInput());
     }
 

@@ -12,8 +12,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class VoidBeaconRegistry {
+public class VoidBeaconEntryRegistry {
     private static final List<VoidBeaconEntry> VOID_BEACON_ENTRIES = new ArrayList<>();
+
+    public static List<VoidBeaconEntry> getVoidBeaconEntries() {
+        return VOID_BEACON_ENTRIES;
+    }
 
     public static void addEntry(ItemStack stack, int weight) {
         if(stack.isEmpty()) {

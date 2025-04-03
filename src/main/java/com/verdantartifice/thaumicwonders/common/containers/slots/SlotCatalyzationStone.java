@@ -1,6 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.containers.slots;
 
-import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCatalyzationChamber;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -57,7 +57,7 @@ public class SlotCatalyzationStone extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
-            return CatalyzationChamberRegistry.isValidCatalyst(stack);
+            return CatalyzationChamberRecipeRegistry.isValidCatalyst(stack);
         } else {
             return true;
         }

@@ -18,6 +18,8 @@ public class ConfigHandlerTW {
     public static CleansingCharmCategory cleansing_charm = new CleansingCharmCategory();
     @Config.Name("Meaty Orb")
     public static MeatyOrbCategory meaty_orb = new MeatyOrbCategory();
+    @Config.Name("Night Vision Goggles")
+    public static NightVisionGogglesCategory night_vision_goggles = new NightVisionGogglesCategory();
     @Config.Name("Void Beacon")
     public static VoidBeaconCategory void_beacon = new VoidBeaconCategory();
 
@@ -68,6 +70,22 @@ public class ConfigHandlerTW {
         @Config.Name("Activation Essentia")
         @Config.Comment("The amount of Aqua, Victus, and Alienis essentia that is needed to activate the Meaty Orb")
         public int essentiaRequirement = 250;
+    }
+
+    public static class NightVisionGogglesCategory {
+        @Config.Name("Adaptive Night Vision")
+        @Config.Comment("Night Vision Goggles only apply their effect when the player is in or looking at darkness.")
+        public boolean adaptiveNightVision = true;
+
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Energy Per Vis")
+        @Config.Comment("The energy gained per point of Vis consumed. Each point of energy translates to 1 second of Night Vision.")
+        public int energyPerVis = 40;
+
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Vis Capacity")
+        @Config.Comment("The Vis storage capacity of the Night Vision Goggles")
+        public int visCapacity = 100;
     }
 
     public static class VoidBeaconCategory {

@@ -5,23 +5,25 @@
 ### Added
 - Added several config options for Cleansing Charm
 - Added several config options for Meaty Orb
-- Added config options for several machines
+- Added config options for most machines
 - Added Goggles of Revealing and Sipping Fiend mask tooltip to Void Fortress Helm
 - Added Catalyzation Chamber Crafttweaker and GroovyScript methods
 - Added Meaty Orb Crafttweaker and GroovyScript methods
 - Added Primordial Accretion Chamber Crafttweaker and GroovyScript methods
 - Added Void Beacon Crafttweaker and GroovyScript methods
 - Added Flux Capacitor TOP storage information
-- Added Expanded Arcanum compat
+- Added Expanded Arcanum compat for Catalyzation Chamber
+- Added Config options for Night Vision Goggles
 
 ### Fixed
 - Fixed rare Disjunction Cloth crafting table recipe crash
 - Fixed mod registering several fake blocks
 - Fixed several dupe bugs [Pull Request #77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
 - Fixed Flux Capacitor losing flux charge when broken by non-players
-- Catalization Chamber now drops any stored items when broken
-- Primordial Accretion Chamber now drops any stored items when broken
-- Primordial Accelerator now drops any stored items when broken
+- Fixed Catalization Chamber voiding inventory when broken
+- Fixed Primordial Accretion Chamber voiding inventory when broken
+- Fixed Primordial Accelerator voiding inventory when broken
+- Fixed Flying Carpet entity losing stored vis on world/chunk reload
 
 ### Changed
 - Updated gradle to RFG
@@ -33,6 +35,7 @@
 - Primordial Accretion Chamber now uses recipe structure
 - Void Beacon now uses recipe entry structure to generate drops
 - Avatar of Corruption now uses a loot table to generate drops
+- Night Vision Goggles are now have an adaptive on/off based on what the player is looking at
 
 ## v1.8.4
 ------

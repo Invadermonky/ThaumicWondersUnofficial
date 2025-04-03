@@ -72,10 +72,16 @@ public class EntityFlyingCarpet extends Entity {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound compound) {}
+    protected void readEntityFromNBT(NBTTagCompound compound) {
+        this.setVisCharge(compound.getInteger("VisCharge"));
+        this.setEnergy(compound.getInteger("Energy"));
+    }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound compound) {}
+    protected void writeEntityToNBT(NBTTagCompound compound) {
+        compound.setInteger("VisCharge", this.getVisCharge());
+        compound.setInteger("Energy", this.getEnergy());
+    }
 
     @Override
     protected boolean canTriggerWalking() {
@@ -190,10 +196,18 @@ public class EntityFlyingCarpet extends Entity {
      * Update the carpet's speed, based on momentum
      */
     private void updateMotion() {
+        /*
         this.momentum = 0.9F;
         this.motionX *= this.momentum;
         this.motionY *= this.momentum;
         this.motionZ *= this.momentum;
+         */
+        //TODO: This is controlling the carpet movement speed. Currently caps at 90% running speed.
+        //  Need to make this adjustable so it can be used.
+        this.momentum = 0.9f;
+        this.motionX = MathHelper.clamp(this.motionX * this.momentum, -1.2f, 1.2f);
+        this.motionY = MathHelper.clamp(this.motionY * this.momentum, -1.2f, 1.2f);
+        this.motionZ = MathHelper.clamp(this.motionZ * this.momentum, -1.2f, 1.2f);
         this.motionY += (this.hasNoGravity() ? 0.0D : -0.04D);
     }
     

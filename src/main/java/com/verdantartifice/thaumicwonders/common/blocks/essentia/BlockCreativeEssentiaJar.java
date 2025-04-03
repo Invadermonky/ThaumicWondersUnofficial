@@ -28,7 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
-import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.blocks.ILabelable;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.items.consumables.ItemPhial;
@@ -149,7 +148,8 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
                 if (playerIn.getHeldItem(hand).getItemDamage() == 0 && tileEntity.amount >= 10) {
                     // Fill the phial from the jar
                     if (!worldIn.isRemote && tileEntity.aspect != null && tileEntity.takeFromContainer(tileEntity.aspect, 10)) {
-                        playerIn.getHeldItem(hand).shrink(1);
+                        if(!playerIn.isCreative())
+                            playerIn.getHeldItem(hand).shrink(1);
                         ItemStack newPhialStack = new ItemStack(itemPhial, 1, 1);
                         itemPhial.setAspects(newPhialStack, new AspectList().add(tileEntity.aspect, 10));
                         if(!playerIn.inventory.addItemStackToInventory(newPhialStack)) {
@@ -166,10 +166,12 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
                         if (!worldIn.isRemote && playerIn.getHeldItem(hand).getItemDamage() != 0 && tileEntity.amount <= (CAPACITY - 10) && tileEntity.doesContainerAccept(aspect) && tileEntity.addToContainer(aspect, 10) == 0) {
                             worldIn.markAndNotifyBlock(pos, worldIn.getChunk(pos), state, state, 0x3);
                             tileEntity.syncTile(true);
-                            playerIn.getHeldItem(hand).shrink(1);
-                            ItemStack newPhialStack = new ItemStack(itemPhial, 1, 0);
-                            if (!playerIn.inventory.addItemStackToInventory(newPhialStack)) {
-                                worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, newPhialStack));
+                            if(!playerIn.isCreative()) {
+                                playerIn.getHeldItem(hand).shrink(1);
+                                ItemStack newPhialStack = new ItemStack(itemPhial, 1, 0);
+                                if (!playerIn.inventory.addItemStackToInventory(newPhialStack)) {
+                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, newPhialStack));
+                                }
                             }
                             worldIn.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.PLAYERS, 0.5F, 1.0F);
                             playerIn.inventoryContainer.detectAndSendChanges();

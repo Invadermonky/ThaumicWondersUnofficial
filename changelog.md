@@ -12,6 +12,7 @@
 - Added Primordial Accretion Chamber Crafttweaker and GroovyScript methods
 - Added Void Beacon Crafttweaker and GroovyScript methods
 - Added Flux Capacitor TOP storage information
+- Added Expanded Arcanum compat
 
 ### Fixed
 - Fixed rare Disjunction Cloth crafting table recipe crash
@@ -31,9 +32,7 @@
 - Meaty Orb now uses recipe entry structure to generate drops
 - Primordial Accretion Chamber now uses recipe structure
 - Void Beacon now uses recipe entry structure to generate drops
-
-### Removed
-
+- Avatar of Corruption now uses a loot table to generate drops
 
 ## v1.8.4
 ------

@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.entities.monsters;
 
 import com.google.common.base.Predicate;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFluxFireball;
+import com.verdantartifice.thaumicwonders.common.entities.LootTablesTW;
 import com.verdantartifice.thaumicwonders.common.misc.FluxExplosion;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketAvatarZapFx;
@@ -12,11 +13,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import org.jetbrains.annotations.Nullable;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.api.entities.ITaintedMob;
@@ -43,6 +46,11 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
         this.setSize(0.75F, 2.25F);
         this.experienceValue = 50;
     }
+
+    //TODO: On Spawn
+    // Spawn detonation, destroying pillars and matrix
+    // lock boss in place making invulnerable for a bit with AI disabled
+    // start health at 1 and heal until full, then enable AI and start fight
     
     @Override
     protected void initEntityAI() {
@@ -179,7 +187,15 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
         }
         super.updateAITasks();
     }
-    
+
+    @Override
+    protected @Nullable ResourceLocation getLootTable() {
+        return LootTablesTW.CORRUPTION_AVATAR;
+    }
+
+    @Override
+    protected void dropFewItems(boolean flag, int fortune) {}
+
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         if (source == DamageSource.DROWN || source.getTrueSource() instanceof EntityCorruptionAvatar) {

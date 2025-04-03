@@ -4,6 +4,7 @@ import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.entities.*;
 import com.verdantartifice.thaumicwonders.common.entities.monsters.EntityCorruptionAvatar;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -52,6 +53,7 @@ public class InitEntities {
                 .tracker(64, 1, true)
                 .build();
         iForgeRegistry.register(corruptionAvatarEntry);
+        LootTableList.register(LootTablesTW.CORRUPTION_AVATAR);
         
         EntityEntry fluxFireballEntry = EntityEntryBuilder.create()
                 .entity(EntityFluxFireball.class)

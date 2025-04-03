@@ -1,0 +1,32 @@
+{
+  "pools": [
+    {
+      "name": "primordial_pearl",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "thaumcraft:primordial_pearl",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "name": "loot_bag",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "thaumcraft:loot_bag",
+          "weight": 1,
+          "functions": [
+            {
+              "data": 2.0,
+              "function": "minecraft:set_data"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

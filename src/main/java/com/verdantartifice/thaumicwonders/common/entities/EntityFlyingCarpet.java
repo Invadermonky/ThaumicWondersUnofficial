@@ -1,10 +1,12 @@
 package com.verdantartifice.thaumicwonders.common.entities;
 
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.items.entities.ItemFlyingCarpet;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -102,7 +104,7 @@ public class EntityFlyingCarpet extends Entity {
 
     @Override
     public boolean canBePushed() {
-        return true;
+        return canBeCollidedWith();
     }
 
     @Override
@@ -148,6 +150,7 @@ public class EntityFlyingCarpet extends Entity {
                 this.controlCarpet();
             }
             this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+            this.markVelocityChanged();
         } else {
             this.motionX = 0.0D;
             this.motionY = 0.0D;
@@ -167,7 +170,7 @@ public class EntityFlyingCarpet extends Entity {
         } else {
             int visCharge = this.getVisCharge();
             if (visCharge > 0) {
-                energy = 30;
+                energy = ConfigHandlerTW.flying_carpet.energyPerVis;
                 this.setVisCharge(visCharge - 1); 
             }
         }
@@ -196,19 +199,25 @@ public class EntityFlyingCarpet extends Entity {
      * Update the carpet's speed, based on momentum
      */
     private void updateMotion() {
-        /*
-        this.momentum = 0.9F;
-        this.motionX *= this.momentum;
-        this.motionY *= this.momentum;
-        this.motionZ *= this.momentum;
-         */
-        //TODO: This is controlling the carpet movement speed. Currently caps at 90% running speed.
-        //  Need to make this adjustable so it can be used.
-        this.momentum = 0.9f;
-        this.motionX = MathHelper.clamp(this.motionX * this.momentum, -1.2f, 1.2f);
-        this.motionY = MathHelper.clamp(this.motionY * this.momentum, -1.2f, 1.2f);
-        this.motionZ = MathHelper.clamp(this.motionZ * this.momentum, -1.2f, 1.2f);
-        this.motionY += (this.hasNoGravity() ? 0.0D : -0.04D);
+        Entity rider = this.getControllingPassenger();
+        if(rider != null) {
+            double multiplier = ConfigHandlerTW.flying_carpet.maxSpeed;
+            double maxSpeed = SharedMonsterAttributes.MOVEMENT_SPEED.getDefaultValue() * multiplier;
+            float acceleration = (float) multiplier * 0.75F;
+            float friction = 0.9F;
+            this.motionX = (this.motionX + rider.motionX * acceleration) * friction;
+            this.motionZ = (this.motionZ + rider.motionZ * acceleration) * friction;
+            this.motionY = this.motionY * 0.9F + (this.hasNoGravity() ? 0.0D : -0.04D);
+
+            this.motionX = MathHelper.clamp(this.motionX, -maxSpeed, +maxSpeed);
+            this.motionZ = MathHelper.clamp(this.motionZ, -maxSpeed, +maxSpeed);
+        } else {
+            this.momentum = 0.9F;
+            this.motionX *= this.momentum;
+            this.motionY *= this.momentum;
+            this.motionZ *= this.momentum;
+            this.motionY += (this.hasNoGravity() ? 0.0D : -0.04D);
+        }
     }
     
     private void controlCarpet() {
@@ -325,7 +334,7 @@ public class EntityFlyingCarpet extends Entity {
             this.rotationPitch = (float)this.lerpPitch;
         }
     }
-    
+
     @Override
     protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {
         // Shield the carpet and passenger from falling damage

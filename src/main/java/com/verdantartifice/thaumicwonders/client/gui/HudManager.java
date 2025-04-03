@@ -1,8 +1,8 @@
 package com.verdantartifice.thaumicwonders.client.gui;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
-import com.verdantartifice.thaumicwonders.common.items.entities.ItemFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.items.tools.ItemPrimalDestroyer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -127,7 +127,8 @@ public class HudManager {
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 152.0F, 0.0F, 20.0F, 78.0F, -90.0D);
         
         int vis = carpet.getVisCharge();
-        int gap = (int)(((float)ItemFlyingCarpet.CAPACITY - vis) / (float)ItemFlyingCarpet.CAPACITY * 48.0F);
+        int capacity =  ConfigHandlerTW.flying_carpet.visCapacity;
+        int gap = (int)(((float)capacity - vis) / (float)capacity * 48.0F);
         
         // Draw vis level
         if (vis > 0) {

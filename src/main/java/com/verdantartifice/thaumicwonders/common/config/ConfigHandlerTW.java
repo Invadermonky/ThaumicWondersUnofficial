@@ -7,15 +7,14 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@Config(modid = ThaumicWonders.MODID)
 public class ConfigHandlerTW {
-    @Config.Name("Alchemist Stone")
-    public static CatalystStoneCategory alchemist_stone = new CatalystStoneCategory(50);
-    @Config.Name("Alienist Stone")
-    public static CatalystStoneCategory alienist_stone = new CatalystStoneCategory(10);
-    @Config.Name("Transmuter Stone")
-    public static CatalystStoneCategory transmuter_stone = new CatalystStoneCategory(33);
+    @Config.Name("Catalyst Stones")
+    public static CatalystStoneCategory catalyst_stones = new CatalystStoneCategory();
     @Config.Name("Cleansing Charm")
     public static CleansingCharmCategory cleansing_charm = new CleansingCharmCategory();
+    @Config.Name("Flying Carpet")
+    public static FlyingCarpetCategory flying_carpet = new FlyingCarpetCategory();
     @Config.Name("Meaty Orb")
     public static MeatyOrbCategory meaty_orb = new MeatyOrbCategory();
     @Config.Name("Night Vision Goggles")
@@ -24,27 +23,36 @@ public class ConfigHandlerTW {
     public static VoidBeaconCategory void_beacon = new VoidBeaconCategory();
 
     public static class CatalystStoneCategory {
-        @Config.RequiresMcRestart
-        @Config.Name("Catalyst Stone Uses")
-        @Config.Comment("The number of uses before the catalyst stone is consumed")
-        public int durability = 64;
+        @Config.Name("Alchemist Stone")
+        public StoneCategory alchemist_stone = new StoneCategory(50);
+        @Config.Name("Alienist Stone")
+        public StoneCategory alienist_stone = new StoneCategory(10);
+        @Config.Name("Transmuter Stone")
+        public StoneCategory transmuter_stone = new StoneCategory(33);
 
-        @Config.Name("Enable Stone Enchants")
-        @Config.Comment("Allows the Catalyst Stone to be enchanted with Unbreaking and Mending")
-        public boolean enchantable = true;
+        public static class StoneCategory {
+            @Config.RequiresMcRestart
+            @Config.Name("Catalyst Stone Uses")
+            @Config.Comment("The number of uses before the catalyst stone is consumed")
+            public int durability = 64;
 
-        @Config.RequiresMcRestart
-        @Config.RangeInt(min = 0, max = 10000)
-        @Config.Name("Default Flux Chance")
-        @Config.Comment
-                ({
-                        "The chance any default recipe using this catalyst stone will produce flux. The actual chance is",
-                        "1 / x, where x is this value. Setting this value to 0 will disable all flux generation."
-                })
-        public int defaultFluxChance;
+            @Config.Name("Enable Stone Enchants")
+            @Config.Comment("Allows the Catalyst Stone to be enchanted with Unbreaking and Mending")
+            public boolean enchantable = true;
 
-        public CatalystStoneCategory(int defaultFluxChance) {
-            this.defaultFluxChance = defaultFluxChance;
+            @Config.RequiresMcRestart
+            @Config.RangeInt(min = 0, max = 10000)
+            @Config.Name("Default Flux Chance")
+            @Config.Comment
+                    ({
+                            "The chance any default recipe using this catalyst stone will produce flux. The actual chance is",
+                            "1 / x, where x is this value. Setting this value to 0 will disable all flux generation."
+                    })
+            public int defaultFluxChance;
+
+            public StoneCategory( int defaultFluxChance){
+                this.defaultFluxChance = defaultFluxChance;
+            }
         }
     }
 
@@ -52,12 +60,29 @@ public class ConfigHandlerTW {
         @Config.RangeInt(min = 1, max = 72000)
         @Config.Name("Removal Time")
         @Config.Comment("The time, in ticks, it takes the Cleansing Charm to complete a full operation.")
-        public int timeToRemoveFlux = 72000;
+        public int timeToRemoveFlux = 32000;
 
         @Config.RangeInt(min = 1, max = 100)
         @Config.Name("Flux Removed")
         @Config.Comment("The amount of 'Sticky' warp removed from the player per full operation.")
         public int fluxRemoved = 1;
+    }
+
+    public static class FlyingCarpetCategory {
+        @Config.RangeDouble(min = 0, max = 20.0)
+        @Config.Name("Max Speed")
+        @Config.Comment("Magic Carpet maximum speed")
+        public double maxSpeed = 5.0;
+
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Energy Per Vis")
+        @Config.Comment("The energy gained per point of Vis consumed. Each point of energy translates to 1 second of flight.")
+        public int energyPerVis = 30;
+
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Vis Capacity")
+        @Config.Comment("The maximum Vis that can be stored in the Flying Carpet")
+        public int visCapacity = 240;
     }
 
     public static class MeatyOrbCategory {
@@ -84,7 +109,7 @@ public class ConfigHandlerTW {
 
         @Config.RangeInt(min = 1, max = 10000)
         @Config.Name("Vis Capacity")
-        @Config.Comment("The Vis storage capacity of the Night Vision Goggles")
+        @Config.Comment("The maximum Vis that can be stored in the Night Vision Goggles")
         public int visCapacity = 100;
     }
 

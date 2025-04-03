@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.items.entities;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import net.minecraft.block.BlockCauldron;
@@ -24,8 +25,6 @@ import thaumcraft.api.items.RechargeHelper;
 import javax.annotation.Nullable;
 
 public class ItemFlyingCarpet extends ItemTW implements IRechargable {
-    public static final int CAPACITY = 240;
-    
     public ItemFlyingCarpet() {
         super("flying_carpet");
         
@@ -82,7 +81,7 @@ public class ItemFlyingCarpet extends ItemTW implements IRechargable {
 
     @Override
     public int getMaxCharge(ItemStack stack, EntityLivingBase player) {
-        return CAPACITY;
+        return ConfigHandlerTW.flying_carpet.visCapacity;
     }
 
     @Override

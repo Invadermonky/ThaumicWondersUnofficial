@@ -3,26 +3,28 @@
 ## v2.0.0
 ------
 ### Added
-- Added several config options for Cleansing Charm
-- Added several config options for Meaty Orb
-- Added config options for most machines
-- Added Goggles of Revealing and Sipping Fiend mask tooltip to Void Fortress Helm
-- Added Catalyzation Chamber Crafttweaker and GroovyScript methods
-- Added Meaty Orb Crafttweaker and GroovyScript methods
-- Added Primordial Accretion Chamber Crafttweaker and GroovyScript methods
-- Added Void Beacon Crafttweaker and GroovyScript methods
-- Added Flux Capacitor TOP storage information
+- Added config options for Catalyst Stone durability, enchantabliity, and default flux chance
+- Added config options for Cleansing Charm flux removal amount and processing time
+- Added config options for Flying Carpet Vis storage/consumption and max flight speed
+- Added config options for Meaty Orb cost and duration
+- Added config options for Night Vision Goggles Vis storage/consumption and adaptive setting
+- Added config options for Void Beacon base essentia cost
+- Added Crafttweaker and GroovyScript methods for Catalyzation Chamber recipes
+- Added Crafttweaker and GroovyScript methods for Meaty Orb entries
+- Added Crafttweaker and GroovyScript methods Primordial Accretion Chamber recipes
+- Added Crafttweaker and GroovyScript methods Void Beacon entries
 - Added Expanded Arcanum compat for Catalyzation Chamber
-- Added Config options for Night Vision Goggles
+- Added tooltip to Void Fortress Helm indicating it includes Goggles of Revealing and Sipping Fiend mask
+- Added TOP tooltip for Flux Capacitor flux storage
 
 ### Fixed
 - Fixed rare Disjunction Cloth crafting table recipe crash
 - Fixed mod registering several fake blocks
-- Fixed several dupe bugs [Pull Request #77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
+- Fixed several dupe bugs [#77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
 - Fixed Flux Capacitor losing flux charge when broken by non-players
 - Fixed Catalization Chamber voiding inventory when broken
-- Fixed Primordial Accretion Chamber voiding inventory when broken
 - Fixed Primordial Accelerator voiding inventory when broken
+- Fixed Primordial Accretion Chamber voiding inventory when broken
 - Fixed Flying Carpet entity losing stored vis on world/chunk reload
 
 ### Changed
@@ -35,7 +37,7 @@
 - Primordial Accretion Chamber now uses recipe structure
 - Void Beacon now uses recipe entry structure to generate drops
 - Avatar of Corruption now uses a loot table to generate drops
-- Night Vision Goggles are now have an adaptive on/off based on what the player is looking at
+- Night Vision Goggles now have an adaptive on/off based on what the player is looking at (configurable)
 
 ## v1.8.4
 ------

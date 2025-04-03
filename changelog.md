@@ -28,16 +28,17 @@
 - Fixed Flying Carpet entity losing stored vis on world/chunk reload
 
 ### Changed
-- Updated gradle to RFG
+- Avatar of Corruption now uses a loot table to generate drops
+- Catalyzation Chamber now uses recipe structure
 - Cinderpearl Seed recipe now produces 1 Cinderpearl Seed Stalk. Each stalk can be used to plant 8 Cinderpearl plants before being consumed.
+- Creative Essentia Jars now display full when filled with essentia
+- Creative Essentia Jars no longer pollute the aura when emptied
+- Meaty Orb now uses recipe entry structure to generate drops
+- Night Vision Goggles now have an adaptive on/off based on what the player is looking at (configurable)
+- Primordial Accretion Chamber now uses recipe structure
 - Shimmerleaf Seed recipe now produces 1 Shimmerleaft Seed Bulb. Each bulb can be used to plant 8 Shimmerleaf plants before being consumed.
 - Vishroom Spore recipe now produces 1 Vishroom Spore Cluster. Each spore custer can be used to plant 8 Vishroom plants before being consumed.
-- Catalyzation Chamber now uses recipe structure
-- Meaty Orb now uses recipe entry structure to generate drops
-- Primordial Accretion Chamber now uses recipe structure
 - Void Beacon now uses recipe entry structure to generate drops
-- Avatar of Corruption now uses a loot table to generate drops
-- Night Vision Goggles now have an adaptive on/off based on what the player is looking at (configurable)
 
 ## v1.8.4
 ------

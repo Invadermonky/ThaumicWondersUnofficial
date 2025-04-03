@@ -201,8 +201,6 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
                 if (worldIn.isRemote) {
                     worldIn.playSound(null, pos, SoundsTC.jar, SoundCategory.BLOCKS, 0.4F, 1.0F);
                     worldIn.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 0.5F, 1.0F + (2F * worldIn.rand.nextFloat() - 1.0F) * 0.3F);
-                } else {
-                    AuraHelper.polluteAura(worldIn, pos, tileEntity.amount, true);
                 }
                 tileEntity.amount = 0;
                 tileEntity.markDirty();

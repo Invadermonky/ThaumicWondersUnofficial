@@ -20,14 +20,14 @@ public class ItemPrimalArrow extends ItemArrow implements IVariantItem {
     protected final String baseName;
     protected String[] variants;
     protected int[] variantsMeta;
-    
+
     public ItemPrimalArrow() {
         this.baseName = "primal_arrow";
         this.setRegistryName(ThaumicWonders.MODID, this.baseName);
         this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
-        
-        this.variants = new String[] { "air", "earth", "fire", "water", "order", "entropy" };
+
+        this.variants = new String[]{"air", "earth", "fire", "water", "order", "entropy"};
         this.setHasSubtypes(true);
         this.variantsMeta = new int[this.variants.length];
         for (int index = 0; index < this.variants.length; index++) {
@@ -61,17 +61,17 @@ public class ItemPrimalArrow extends ItemArrow implements IVariantItem {
     public Item getItem() {
         return this;
     }
-    
+
     @Override
     public String[] getVariantNames() {
         return this.variants;
     }
-    
+
     @Override
     public int[] getVariantMeta() {
         return this.variantsMeta;
     }
-    
+
     @Override
     public ModelResourceLocation getCustomModelResourceLocation(String variant) {
         if (this.baseName.equals(variant)) {
@@ -80,14 +80,14 @@ public class ItemPrimalArrow extends ItemArrow implements IVariantItem {
             return new ModelResourceLocation(ThaumicWonders.MODID + ":" + this.baseName, variant);
         }
     }
-    
+
     @Override
     public EntityArrow createArrow(World worldIn, ItemStack stack, EntityLivingBase shooter) {
         EntityPrimalArrow entity = new EntityPrimalArrow(worldIn, shooter);
         entity.setArrowType(stack.getMetadata());
         return entity;
     }
-    
+
     @Override
     public boolean isInfinite(ItemStack stack, ItemStack bow, EntityPlayer player) {
         int enchantLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bow);

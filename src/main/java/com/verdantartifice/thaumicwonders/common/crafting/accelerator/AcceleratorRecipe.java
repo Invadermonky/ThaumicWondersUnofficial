@@ -36,7 +36,7 @@ public class AcceleratorRecipe {
         ItemStack output = getOutput();
         int count = output.getCount();
         output.setCount(1);
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             outputs.add(output.copy());
             // 50-100% chance of second output
             if (rand.nextInt(2 * MAX_TUNNELS) < (MAX_TUNNELS + tunnelCount)) {
@@ -55,14 +55,14 @@ public class AcceleratorRecipe {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(getInput());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof AcceleratorRecipe)) return false;
         AcceleratorRecipe that = (AcceleratorRecipe) o;
         return IngredientHelper.areIngredientsEqual(getInput(), that.getInput());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getInput());
     }
 }

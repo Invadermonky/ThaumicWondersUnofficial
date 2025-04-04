@@ -87,7 +87,7 @@ public class MeatyOrb extends VirtualizedRegistry<WeightedEntry> {
         @RecipeBuilderRegistrationMethod
         @Override
         public @Nullable WeightedEntry register() {
-            if(this.validate()) {
+            if (this.validate()) {
                 WeightedEntry entry = new WeightedEntry(this.meatStack, this.weight);
                 MeatyOrbEntryRegistry.addEntry(entry);
                 return entry;

@@ -15,9 +15,8 @@ import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
 
 public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable {
-    private static final int CAPACITY = 50;
     public static final int MIN_FUEL = 50;
-
+    private static final int CAPACITY = 50;
     protected int airEssentia = 0;
     protected int waterEssentia = 0;
     protected int energyEssentia = 0;
@@ -32,9 +31,9 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
 
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
-        compound.setShort("airEssentia", (short)this.airEssentia);
-        compound.setShort("waterEssentia", (short)this.waterEssentia);
-        compound.setShort("energyEssentia", (short)this.energyEssentia);
+        compound.setShort("airEssentia", (short) this.airEssentia);
+        compound.setShort("waterEssentia", (short) this.waterEssentia);
+        compound.setShort("energyEssentia", (short) this.energyEssentia);
         return compound;
     }
 
@@ -52,14 +51,14 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
             if (te instanceof IEssentiaTransport) {
-                IEssentiaTransport otherTile = (IEssentiaTransport)te;
+                IEssentiaTransport otherTile = (IEssentiaTransport) te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
                 }
-                if ( otherTile.getEssentiaType(face.getOpposite()) == this.getEssentiaType(face) &&
-                     otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
-                     this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
-                     this.getSuctionAmount(face) >= otherTile.getMinimumSuction() ) {
+                if (otherTile.getEssentiaType(face.getOpposite()) == this.getEssentiaType(face) &&
+                        otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
+                        this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
+                        this.getSuctionAmount(face) >= otherTile.getMinimumSuction()) {
                     int taken = otherTile.takeEssentia(this.getEssentiaType(face), 1, face.getOpposite());
                     int leftover = this.addToContainer(this.getEssentiaType(face), taken);
                     if (leftover > 0) {
@@ -72,10 +71,11 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
             }
         }
     }
-    
+
     /**
      * Get the relative facing for the given absolute facing.  The Meteorb's relative north is its control
      * panel, west is air input, east is water input, south is energy input.
+     *
      * @param absFace facing relative to world axes
      * @return facing relative to orb faces
      */
@@ -96,14 +96,10 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
             return absFace;
         }
     }
-    
+
     @Override
-    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
-        if (this.canInputFrom(face) && aspect == this.getEssentiaType(face)) {
-            return (amt - this.addToContainer(aspect, amt));
-        } else {
-            return 0;
-        }
+    public boolean isConnectable(EnumFacing face) {
+        return this.canInputFrom(face);
     }
 
     @Override
@@ -118,14 +114,30 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
     }
 
     @Override
-    public int getEssentiaAmount(EnumFacing face) {
-        EnumFacing relFace = this.getRelativeFacing(face);
-        if (relFace == EnumFacing.WEST) {
-            return this.airEssentia;
-        } else if (relFace == EnumFacing.EAST) {
-            return this.waterEssentia;
-        } else if (relFace == EnumFacing.SOUTH) {
-            return this.energyEssentia;
+    public void setSuction(Aspect aspect, int amt) {
+        // Do nothing
+    }
+
+    @Override
+    public Aspect getSuctionType(EnumFacing face) {
+        return this.getEssentiaType(face);
+    }
+
+    @Override
+    public int getSuctionAmount(EnumFacing face) {
+        return (this.getEssentiaAmount(face) >= CAPACITY) ? 0 : 128;
+    }
+
+    @Override
+    public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
+        // Can't output
+        return 0;
+    }
+
+    @Override
+    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
+        if (this.canInputFrom(face) && aspect == this.getEssentiaType(face)) {
+            return (amt - this.addToContainer(aspect, amt));
         } else {
             return 0;
         }
@@ -146,73 +158,13 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
     }
 
     @Override
-    public int getMinimumSuction() {
-        // Can't output, so no need for minimum suction
-        return 0;
-    }
-
-    @Override
-    public int getSuctionAmount(EnumFacing face) {
-        return (this.getEssentiaAmount(face) >= CAPACITY) ? 0 : 128;
-    }
-
-    @Override
-    public Aspect getSuctionType(EnumFacing face) {
-        return this.getEssentiaType(face);
-    }
-
-    @Override
-    public boolean isConnectable(EnumFacing face) {
-        return this.canInputFrom(face);
-    }
-
-    @Override
-    public void setSuction(Aspect aspect, int amt) {
-        // Do nothing
-    }
-
-    @Override
-    public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
-        // Can't output
-        return 0;
-    }
-
-    @Override
-    public int addToContainer(Aspect aspect, int toAdd) {
-        int retVal = 0;
-        if (toAdd == 0) {
-            return 0;
-        } else if (this.airEssentia < CAPACITY && aspect == Aspect.AIR) {
-            // Add as much air as possible and return the remainder
-            int added = Math.min(toAdd, CAPACITY - this.airEssentia);
-            this.airEssentia += added;
-            retVal = (toAdd - added);
-        } else if (this.waterEssentia < CAPACITY && aspect == Aspect.WATER) {
-            // Add as much water as possible and return the remainder
-            int added = Math.min(toAdd, CAPACITY - this.waterEssentia);
-            this.waterEssentia += added;
-            retVal = (toAdd - added);
-        } else if (this.energyEssentia < CAPACITY && aspect == Aspect.ENERGY) {
-            // Add as much energy as possible and return the remainder
-            int added = Math.min(toAdd, CAPACITY - this.energyEssentia);
-            this.energyEssentia += added;
-            retVal = (toAdd - added);
-        } else {
-            retVal = toAdd;
-        }
-        
-        this.syncTile(false);
-        this.markDirty();
-        return retVal;
-    }
-
-    @Override
-    public int containerContains(Aspect aspect) {
-        if (aspect == Aspect.AIR) {
+    public int getEssentiaAmount(EnumFacing face) {
+        EnumFacing relFace = this.getRelativeFacing(face);
+        if (relFace == EnumFacing.WEST) {
             return this.airEssentia;
-        } else if (aspect == Aspect.WATER) {
+        } else if (relFace == EnumFacing.EAST) {
             return this.waterEssentia;
-        } else if (aspect == Aspect.ENERGY) {
+        } else if (relFace == EnumFacing.SOUTH) {
             return this.energyEssentia;
         } else {
             return 0;
@@ -220,24 +172,9 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
     }
 
     @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        return (aspect == Aspect.AIR || aspect == Aspect.WATER || aspect == Aspect.ENERGY);
-    }
-
-    @Override
-    public boolean doesContainerContain(AspectList aspectList) {
-        boolean satisfied = true;
-        for (Aspect aspect : aspectList.getAspects()) {
-            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
-        }
-        return satisfied;
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
-        return (aspect == Aspect.AIR && this.airEssentia >= amt) ||
-               (aspect == Aspect.WATER && this.waterEssentia >= amt) ||
-               (aspect == Aspect.ENERGY && this.energyEssentia >= amt);
+    public int getMinimumSuction() {
+        // Can't output, so no need for minimum suction
+        return 0;
     }
 
     @Override
@@ -265,16 +202,37 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
     }
 
     @Override
-    public boolean takeFromContainer(AspectList aspectList) {
-        if (!this.doesContainerContain(aspectList)) {
-            return false;
+    public boolean doesContainerAccept(Aspect aspect) {
+        return (aspect == Aspect.AIR || aspect == Aspect.WATER || aspect == Aspect.ENERGY);
+    }
+
+    @Override
+    public int addToContainer(Aspect aspect, int toAdd) {
+        int retVal = 0;
+        if (toAdd == 0) {
+            return 0;
+        } else if (this.airEssentia < CAPACITY && aspect == Aspect.AIR) {
+            // Add as much air as possible and return the remainder
+            int added = Math.min(toAdd, CAPACITY - this.airEssentia);
+            this.airEssentia += added;
+            retVal = (toAdd - added);
+        } else if (this.waterEssentia < CAPACITY && aspect == Aspect.WATER) {
+            // Add as much water as possible and return the remainder
+            int added = Math.min(toAdd, CAPACITY - this.waterEssentia);
+            this.waterEssentia += added;
+            retVal = (toAdd - added);
+        } else if (this.energyEssentia < CAPACITY && aspect == Aspect.ENERGY) {
+            // Add as much energy as possible and return the remainder
+            int added = Math.min(toAdd, CAPACITY - this.energyEssentia);
+            this.energyEssentia += added;
+            retVal = (toAdd - added);
         } else {
-            boolean satisfied = true;
-            for (Aspect aspect : aspectList.getAspects()) {
-                satisfied = satisfied && this.takeFromContainer(aspect, aspectList.getAmount(aspect));
-            }
-            return satisfied;
+            retVal = toAdd;
         }
+
+        this.syncTile(false);
+        this.markDirty();
+        return retVal;
     }
 
     @Override
@@ -291,6 +249,48 @@ public class TileMeteorb extends TileTW implements IAspectContainer, IEssentiaTr
         this.syncTile(false);
         this.markDirty();
         return true;
+    }
+
+    @Override
+    public boolean takeFromContainer(AspectList aspectList) {
+        if (!this.doesContainerContain(aspectList)) {
+            return false;
+        } else {
+            boolean satisfied = true;
+            for (Aspect aspect : aspectList.getAspects()) {
+                satisfied = satisfied && this.takeFromContainer(aspect, aspectList.getAmount(aspect));
+            }
+            return satisfied;
+        }
+    }
+
+    @Override
+    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
+        return (aspect == Aspect.AIR && this.airEssentia >= amt) ||
+                (aspect == Aspect.WATER && this.waterEssentia >= amt) ||
+                (aspect == Aspect.ENERGY && this.energyEssentia >= amt);
+    }
+
+    @Override
+    public boolean doesContainerContain(AspectList aspectList) {
+        boolean satisfied = true;
+        for (Aspect aspect : aspectList.getAspects()) {
+            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
+        }
+        return satisfied;
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        if (aspect == Aspect.AIR) {
+            return this.airEssentia;
+        } else if (aspect == Aspect.WATER) {
+            return this.waterEssentia;
+        } else if (aspect == Aspect.ENERGY) {
+            return this.energyEssentia;
+        } else {
+            return 0;
+        }
     }
 
 }

@@ -12,7 +12,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class InitEntities {
     public static void initEntities(IForgeRegistry<EntityEntry> iForgeRegistry) {
         int id = 0;
-        
+
         EntityEntry flyingCarpetEntry = EntityEntryBuilder.create()
                 .entity(EntityFlyingCarpet.class)
                 .id(new ResourceLocation(ThaumicWonders.MODID, "flying_carpet"), id++)
@@ -20,7 +20,7 @@ public class InitEntities {
                 .tracker(64, 1, true)
                 .build();
         iForgeRegistry.register(flyingCarpetEntry);
-        
+
         EntityEntry voidPortalEntry = EntityEntryBuilder.create()
                 .entity(EntityVoidPortal.class)
                 .id(new ResourceLocation(ThaumicWonders.MODID, "void_portal"), id++)
@@ -28,7 +28,7 @@ public class InitEntities {
                 .tracker(64, 20, false)
                 .build();
         iForgeRegistry.register(voidPortalEntry);
-        
+
         EntityEntry hexamitePrimedEntry = EntityEntryBuilder.create()
                 .entity(EntityHexamitePrimed.class)
                 .id(new ResourceLocation(ThaumicWonders.MODID, "hexamite_primed"), id++)
@@ -36,7 +36,7 @@ public class InitEntities {
                 .tracker(64, 1, true)
                 .build();
         iForgeRegistry.register(hexamitePrimedEntry);
-        
+
         EntityEntry primalArrowEntry = EntityEntryBuilder.create()
                 .entity(EntityPrimalArrow.class)
                 .id(new ResourceLocation(ThaumicWonders.MODID, "primal_arrow"), id++)
@@ -44,7 +44,7 @@ public class InitEntities {
                 .tracker(64, 1, true)
                 .build();
         iForgeRegistry.register(primalArrowEntry);
-        
+
         EntityEntry corruptionAvatarEntry = EntityEntryBuilder.create()
                 .entity(EntityCorruptionAvatar.class)
                 .id(new ResourceLocation(ThaumicWonders.MODID, "corruption_avatar"), id++)
@@ -54,7 +54,7 @@ public class InitEntities {
                 .build();
         iForgeRegistry.register(corruptionAvatarEntry);
         LootTableList.register(LootTablesTW.CORRUPTION_AVATAR);
-        
+
         EntityEntry fluxFireballEntry = EntityEntryBuilder.create()
                 .entity(EntityFluxFireball.class)
                 .id(new ResourceLocation(ThaumicWonders.MODID, "flux_fireball"), id++)

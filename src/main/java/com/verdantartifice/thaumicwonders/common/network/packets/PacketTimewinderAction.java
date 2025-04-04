@@ -17,11 +17,11 @@ import javax.annotation.Nullable;
 
 public class PacketTimewinderAction implements IMessage {
     private int targetPhase;
-    
+
     public PacketTimewinderAction() {
         this.targetPhase = -1;
     }
-    
+
     public PacketTimewinderAction(int targetPhase) {
         this.targetPhase = targetPhase;
     }
@@ -35,21 +35,21 @@ public class PacketTimewinderAction implements IMessage {
     public void toBytes(ByteBuf buf) {
         buf.writeInt(this.targetPhase);
     }
-    
+
     public static class Handler implements IMessageHandler<PacketTimewinderAction, IMessage> {
         @Override
         public IMessage onMessage(PacketTimewinderAction message, MessageContext ctx) {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         private void handle(PacketTimewinderAction message, MessageContext ctx) {
             EntityPlayerMP entityPlayer = ctx.getServerHandler().player;
             ItemStack timewinderStack = this.getTimewinderStack(entityPlayer);
             World world = entityPlayer.getEntityWorld();
             long currentTime = world.getWorldTime();
             long dayStart = currentTime - (currentTime % 24000L);
-            
+
             if (timewinderStack == null) {
                 return;
             }
@@ -57,7 +57,7 @@ public class PacketTimewinderAction implements IMessage {
             if (RechargeHelper.consumeCharge(timewinderStack, entityPlayer, ItemTimewinder.COST)) {
                 if (message.targetPhase >= 0 && message.targetPhase <= 7) {
                     // Advance to rise of specified moon phase
-                    int currentMoonPhase = (int)(currentTime / 24000L % 8L + 8L) % 8;   // from WorldProvider.getMoonPhase
+                    int currentMoonPhase = (int) (currentTime / 24000L % 8L + 8L) % 8;   // from WorldProvider.getMoonPhase
                     int daysToAdvance;
                     if (message.targetPhase != currentMoonPhase) {
                         daysToAdvance = (message.targetPhase - currentMoonPhase + 8) % 8;
@@ -74,7 +74,7 @@ public class PacketTimewinderAction implements IMessage {
                 }
             }
         }
-        
+
         @Nullable
         private ItemStack getTimewinderStack(EntityPlayerMP entityPlayer) {
             ItemStack stack = entityPlayer.getHeldItemMainhand();
@@ -89,7 +89,7 @@ public class PacketTimewinderAction implements IMessage {
                 }
             }
         }
-        
+
         private void doTimeJump(ItemStack stack, World world, EntityPlayerMP entityPlayer, long targetTime) {
             entityPlayer.getCooldownTracker().setCooldown(stack.getItem(), 1200);
             world.setWorldTime(targetTime);

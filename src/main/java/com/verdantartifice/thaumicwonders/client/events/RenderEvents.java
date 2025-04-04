@@ -16,13 +16,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = ThaumicWonders.MODID)
 public class RenderEvents {
     private static HudManager hudManager = new HudManager();
-    
+
     @SubscribeEvent
     public static void renderTick(TickEvent.RenderTickEvent event) {
         if (event.phase != TickEvent.Phase.START) {
             Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
             if (entity instanceof EntityPlayer) {
-                hudManager.renderHuds(FMLClientHandler.instance().getClient(), event.renderTickTime, (EntityPlayer)entity, System.currentTimeMillis());
+                hudManager.renderHuds(FMLClientHandler.instance().getClient(), event.renderTickTime, (EntityPlayer) entity, System.currentTimeMillis());
             }
         }
     }

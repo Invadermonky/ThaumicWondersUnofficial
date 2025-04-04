@@ -18,22 +18,22 @@ public class BlockShimmerleafCrop extends AbstractBlockMysticCrop {
     protected IBlockState getMatureBlockState() {
         return BlocksTC.shimmerleaf.getDefaultState();
     }
-    
-    @Override
-    protected Item getSeed() {
-        return ItemsTW.SHIMMERLEAF_SEED;
-    }
-    
+
     @Override
     protected boolean canSustainBush(IBlockState state) {
         return (state.getBlock() == Blocks.GRASS) || (state.getBlock() == Blocks.DIRT);
     }
-    
+
+    @Override
+    protected Item getSeed() {
+        return ItemsTW.SHIMMERLEAF_SEED;
+    }
+
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Plains;
     }
-    
+
     @Override
     public EnumOffsetType getOffsetType() {
         return EnumOffsetType.XZ;

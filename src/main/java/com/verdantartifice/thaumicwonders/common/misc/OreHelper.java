@@ -12,7 +12,7 @@ public class OreHelper {
         List<String> oreNames = OreHelper.getOreNames(stack);
         return oreNames.contains(name);
     }
-    
+
     @Nonnull
     public static List<String> getOreNames(@Nonnull ItemStack stack) {
         List<String> names = new ArrayList<>();
@@ -25,7 +25,7 @@ public class OreHelper {
         }
         return names;
     }
-    
+
     public static boolean isOreBlock(ItemStack stack) {
         for (String name : OreHelper.getOreNames(stack)) {
             if (name != null && name.toUpperCase().startsWith("ORE")) {
@@ -34,7 +34,7 @@ public class OreHelper {
         }
         return false;
     }
-    
+
     public static boolean isOreMatch(@Nonnull ItemStack stack1, @Nonnull ItemStack stack2) {
         List<String> names1 = OreHelper.getOreNames(stack1);
         List<String> names2 = OreHelper.getOreNames(stack2);

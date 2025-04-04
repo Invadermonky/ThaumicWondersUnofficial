@@ -18,10 +18,11 @@ public class WorldEvents {
             PotionEffect effect = new PotionEffect(PotionInfectiousVisExhaust.instance, 1200, 2);
             for (Entity entity : event.getAffectedEntities()) {
                 if (entity instanceof EntityLivingBase) {
-                    EntityLivingBase elb = (EntityLivingBase)entity;
+                    EntityLivingBase elb = (EntityLivingBase) entity;
                     try {
                         elb.addPotionEffect(effect);
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
                 }
             }
         }

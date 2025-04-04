@@ -30,33 +30,24 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     private static final int CAPACITY = 250;
     private static final AspectList REQUIRED_FUEL = new AspectList().add(Aspect.AIR, 125).add(Aspect.EARTH, 125).add(Aspect.FIRE, 125).add(Aspect.WATER, 125).add(Aspect.ORDER, 125).add(Aspect.ENTROPY, 125);
     private static final int PLAY_EFFECTS = 4;
-    
+
     protected int refineTime = 0;
     protected int maxRefineTime = 0;
     protected int speedyTime = 0;
-        
+
     protected AspectList essentia = new AspectList();
 
     private AccretionChamberRecipe recipe;
-    
+
     public TilePrimordialAccretionChamber() {
         super(32);
     }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(
-            this.getPos().getX() - 1.3D, this.getPos().getY() - 1.3D, this.getPos().getZ() - 1.3D,
-            this.getPos().getX() + 2.3D, this.getPos().getY() + 2.3D, this.getPos().getZ() + 1.3D
-        );
-    }
-    
+
     @Override
     protected void readFromTileNBT(NBTTagCompound compound) {
         this.essentia.readFromNBT(compound, "essentia");
     }
-    
+
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
         this.essentia.writeToNBT(compound, "essentia");
@@ -67,7 +58,7 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     public void update() {
         if (!this.world.isRemote) {
             boolean refinedFlag = false;
-            if(this.refineTime > 0 && this.recipe != null && this.doesContainerContain(this.recipe.getAspectList())) {
+            if (this.refineTime > 0 && this.recipe != null && this.doesContainerContain(this.recipe.getAspectList())) {
                 // Only refine if all necessary essentia is present
                 this.refineTime--;
                 refinedFlag = true;
@@ -81,10 +72,9 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
             if (this.refineTime <= 0 && refinedFlag && this.recipe != null) {
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
                     ItemStack input = this.getStackInSlot(slot);
-                    //TODO: Handle output
-                    if(!input.isEmpty() && this.doesContainerContain(this.recipe.getAspectList())) {
+                    if (!input.isEmpty() && this.doesContainerContain(this.recipe.getAspectList())) {
                         ItemStack result = this.recipe.getOutput(this.world.rand);
-                        if(this.speedyTime > 0) {
+                        if (this.speedyTime > 0) {
                             this.speedyTime--;
                         }
                         this.takeFromContainer(this.recipe.getAspectList());
@@ -94,7 +84,7 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
                         int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
                                 .filter(ingredient -> !ingredient.isEmpty()).findFirst()
                                 .map(ItemStack::getCount).orElse(1);
-                        if(input.getItem().hasContainerItem(input)) {
+                        if (input.getItem().hasContainerItem(input)) {
                             ItemStack container = input.getItem().getContainerItem(input).copy();
                             container.setCount(count);
                             this.ejectItem(container);
@@ -105,13 +95,13 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
                 }
             }
             if (this.speedyTime <= 0) {
-                this.speedyTime = (int)AuraHelper.drainVis(this.getWorld(), this.getPos(), 20.0F, false);
+                this.speedyTime = (int) AuraHelper.drainVis(this.getWorld(), this.getPos(), 20.0F, false);
             }
             if (this.refineTime <= 0 && !refinedFlag) {
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
                     ItemStack stack = this.getStackInSlot(slot);
                     this.recipe = AccretionChamberRecipeRegistry.getRecipe(stack);
-                    if(this.recipe != null) {
+                    if (this.recipe != null) {
                         this.maxRefineTime = this.calcRefineTime();
                         this.refineTime = this.maxRefineTime;
                         break;
@@ -125,11 +115,11 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     }
 
     public void dropInventoryContents() {
-        if(!this.world.isRemote) {
+        if (!this.world.isRemote) {
             InventoryHelper.dropInventoryItems(this.world, this.getPos(), this);
         }
     }
-    
+
     public ItemStack addItemsToInventory(ItemStack items) {
         if (this.canRefine(items)) {
             return ThaumcraftInvHelper.insertStackAt(this.getWorld(), this.getPos(), EnumFacing.UP, items, false);
@@ -162,9 +152,26 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
         }
         return null;
     }
-    
+
     public boolean isEssentiaFull() {
         return this.doesContainerContain(REQUIRED_FUEL);
+    }
+
+    @Override
+    public AspectList getAspects() {
+        return this.essentia.copy();
+    }
+
+    @Override
+    public void setAspects(AspectList aspects) {
+        if (aspects != null) {
+            this.essentia = aspects.copy();
+        }
+    }
+
+    @Override
+    public boolean doesContainerAccept(Aspect aspect) {
+        return (REQUIRED_FUEL.getAmount(aspect) > 0);
     }
 
     @Override
@@ -187,38 +194,14 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     }
 
     @Override
-    public int containerContains(Aspect aspect) {
-        return this.doesContainerAccept(aspect) ? this.essentia.getAmount(aspect) : 0;
-    }
-
-    @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        return (REQUIRED_FUEL.getAmount(aspect) > 0);
-    }
-
-    @Override
-    public boolean doesContainerContain(AspectList aspectList) {
-        boolean satisfied = true;
-        for (Aspect aspect : aspectList.getAspects()) {
-            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
-        }
-        return satisfied;
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
-        return this.essentia.getAmount(aspect) >= amt;
-    }
-
-    @Override
-    public AspectList getAspects() {
-        return this.essentia.copy();
-    }
-
-    @Override
-    public void setAspects(AspectList aspects) {
-        if (aspects != null) {
-            this.essentia = aspects.copy();
+    public boolean takeFromContainer(Aspect aspect, int amt) {
+        if (this.doesContainerContainAmount(aspect, amt)) {
+            this.essentia.reduce(aspect, amt);
+            this.syncTile(false);
+            this.markDirty();
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -236,17 +219,24 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
     }
 
     @Override
-    public boolean takeFromContainer(Aspect aspect, int amt) {
-        if (this.doesContainerContainAmount(aspect, amt)) {
-            this.essentia.reduce(aspect, amt);
-            this.syncTile(false);
-            this.markDirty();
-            return true;
-        } else {
-            return false;
-        }
+    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
+        return this.essentia.getAmount(aspect) >= amt;
     }
-    
+
+    @Override
+    public boolean doesContainerContain(AspectList aspectList) {
+        boolean satisfied = true;
+        for (Aspect aspect : aspectList.getAspects()) {
+            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
+        }
+        return satisfied;
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        return this.doesContainerAccept(aspect) ? this.essentia.getAmount(aspect) : 0;
+    }
+
     @Override
     public boolean receiveClientEvent(int id, int type) {
         if (id == PLAY_EFFECTS) {
@@ -254,8 +244,8 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
                 for (int i = 0; i < 5; i++) {
                     BlockPos targetPos = this.getPos().offset(this.getFacing().getOpposite(), 2);
                     FXDispatcher.INSTANCE.visSparkle(
-                            this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 
-                            targetPos.getX(), targetPos.getY(), targetPos.getZ(), 
+                            this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(),
+                            targetPos.getX(), targetPos.getY(), targetPos.getZ(),
                             Aspect.MAGIC.getColor());
                 }
             }
@@ -264,5 +254,14 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
         } else {
             return super.receiveClientEvent(id, type);
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+        return new AxisAlignedBB(
+                this.getPos().getX() - 1.3D, this.getPos().getY() - 1.3D, this.getPos().getZ() - 1.3D,
+                this.getPos().getX() + 2.3D, this.getPos().getY() + 2.3D, this.getPos().getZ() + 1.3D
+        );
     }
 }

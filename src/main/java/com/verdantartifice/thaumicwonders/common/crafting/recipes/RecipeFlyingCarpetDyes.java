@@ -24,7 +24,7 @@ public class RecipeFlyingCarpetDyes extends IForgeRegistryEntry.Impl<IRecipe> im
     public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World worldIn) {
         boolean foundCarpet = false;
         boolean foundDye = false;
-        
+
         for (int index = 0; index < inv.getSizeInventory(); index++) {
             ItemStack stack = inv.getStackInSlot(index);
             if (!stack.isEmpty()) {
@@ -38,7 +38,7 @@ public class RecipeFlyingCarpetDyes extends IForgeRegistryEntry.Impl<IRecipe> im
                 }
             }
         }
-        
+
         return foundCarpet && foundDye;
     }
 
@@ -46,7 +46,7 @@ public class RecipeFlyingCarpetDyes extends IForgeRegistryEntry.Impl<IRecipe> im
     public ItemStack getCraftingResult(@Nonnull InventoryCrafting inv) {
         ItemStack carpetStack = ItemStack.EMPTY;
         EnumDyeColor color = null;
-        
+
         for (int index = 0; index < inv.getSizeInventory(); index++) {
             ItemStack stack = inv.getStackInSlot(index);
             if (!stack.isEmpty()) {
@@ -58,9 +58,9 @@ public class RecipeFlyingCarpetDyes extends IForgeRegistryEntry.Impl<IRecipe> im
             }
         }
         if (!carpetStack.isEmpty() && carpetStack.getItem() instanceof ItemFlyingCarpet && color != null) {
-            ((ItemFlyingCarpet)carpetStack.getItem()).setDyeColor(carpetStack, color);
+            ((ItemFlyingCarpet) carpetStack.getItem()).setDyeColor(carpetStack, color);
         }
-        
+
         return carpetStack;
     }
 

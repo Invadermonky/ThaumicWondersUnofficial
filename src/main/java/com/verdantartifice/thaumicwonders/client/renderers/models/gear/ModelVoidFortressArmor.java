@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class ModelVoidFortressArmor extends ModelCustomArmor {
     protected static final Map<Integer, Integer> HAS_SET = new HashMap<>();
-    
+
     public ModelRenderer Mask;
     public ModelRenderer FrontHornL1;
     public ModelRenderer FrontHornR1;
@@ -96,7 +96,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         super(f, 0, 128, 64);
         this.textureWidth = 128;
         this.textureHeight = 64;
-        
+
         this.SideHornR2 = new ModelRenderer(this, 39, 11);
         this.SideHornR2.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.SideHornR2.addBox(-12.3F, -5.2F, -0.5F, 3, 1, 1, 0.0F);
@@ -386,7 +386,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         this.LegPanelL3.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.LegPanelL3.addBox(-2.0F, 6.5F, -1.5F, 3, 3, 1, 0.0F);
         this.setRotateAngle(LegPanelL3, -0.4363323129985824F, 0.0F, 0.0F);
-        
+
         this.bipedHeadwear.cubeList.clear();
         this.bipedHead.cubeList.clear();
         this.bipedHead.addChild(this.Helmet);
@@ -405,7 +405,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         this.bipedHead.addChild(this.SideHornL2);
         this.bipedHead.addChild(this.HelmCordR);
         this.bipedHead.addChild(this.HelmCordL);
-        
+
         this.bipedBody.cubeList.clear();
         if (f < 1.0F) {
             this.bipedBody.addChild(this.MBelt);
@@ -419,7 +419,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
             this.bipedBody.addChild(this.ChestCordR);
             this.bipedBody.addChild(this.ChestCordL);
         }
-        
+
         this.bipedRightArm.cubeList.clear();
         this.bipedRightArm.addChild(this.ShoulderR);
         this.bipedRightArm.addChild(this.ShoulderOrnamentR);
@@ -432,7 +432,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         this.bipedRightArm.addChild(this.ShoulderplateR2);
         this.bipedRightArm.addChild(this.ArmBladeR1);
         this.bipedRightArm.addChild(this.ArmBladeR2);
-        
+
         this.bipedLeftArm.cubeList.clear();
         this.bipedLeftArm.addChild(this.ShoulderL);
         this.bipedLeftArm.addChild(this.ShoulderOrnamentL);
@@ -445,7 +445,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         this.bipedLeftArm.addChild(this.ShoulderplateL2);
         this.bipedLeftArm.addChild(this.ArmBladeL1);
         this.bipedLeftArm.addChild(this.ArmBladeL2);
-        
+
         this.bipedRightLeg.cubeList.clear();
         this.bipedRightLeg.addChild(this.LegPanelR1);
         this.bipedRightLeg.addChild(this.LegPanelR2);
@@ -460,7 +460,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         this.bipedRightLeg.addChild(this.BackPanelR2);
         this.bipedRightLeg.addChild(this.BackPanelR3);
         this.bipedRightLeg.addChild(this.BeltCord);
-        
+
         this.bipedLeftLeg.cubeList.clear();
         this.bipedLeftLeg.addChild(this.LegPanelL1);
         this.bipedLeftLeg.addChild(this.LegPanelL2);
@@ -475,20 +475,20 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         this.bipedLeftLeg.addChild(this.BackPanelL2);
         this.bipedLeftLeg.addChild(this.BackPanelL3);
     }
-    
+
     protected void checkSet(Entity entity) {
         if (entity instanceof EntityLivingBase && entity.ticksExisted % 20 == 0) {
-            EntityLivingBase elb = (EntityLivingBase)entity;
+            EntityLivingBase elb = (EntityLivingBase) entity;
             int set = 0;
-            
-            EntityEquipmentSlot[] slots = new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.HEAD };
+
+            EntityEquipmentSlot[] slots = new EntityEquipmentSlot[]{EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.HEAD};
             for (EntityEquipmentSlot slot : slots) {
                 ItemStack piece = elb.getItemStackFromSlot(slot);
                 if (piece != null && piece.getItem() instanceof ItemVoidFortressArmor) {
                     set++;
                 }
             }
-            
+
             if (set > 0) {
                 HAS_SET.put(elb.getEntityId(), set);
             } else {
@@ -501,7 +501,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.checkSet(entityIn);
         int set = HAS_SET.getOrDefault(entityIn.getEntityId(), -1);
-        
+
         this.Book.isHidden = (set < 2);
         this.SideHornR1.isHidden = (set < 2);
         this.SideHornR2.isHidden = (set < 2);
@@ -536,7 +536,7 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         this.ArmBladeR2.isHidden = (set < 3);
         this.ArmBladeL1.isHidden = (set < 3);
         this.ArmBladeL2.isHidden = (set < 3);
-        
+
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
         GL11.glPushMatrix();
         if (this.isChild) {

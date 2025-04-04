@@ -27,23 +27,23 @@ public class ModelRegistrationEvents {
             registerItemModel(itemBlock);
         }
     }
-    
+
     private static void registerItemModels() {
         for (Item item : InitItems.ITEMS) {
             registerItemModel(item);
         }
     }
-    
+
     private static void registerItemModel(Item item) {
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
     }
-    
+
     private static void registerVariantModels() {
         for (IVariantItem variantHolder : InitItems.ITEM_VARIANT_HOLDERS) {
             registerVariantModel(variantHolder);
         }
     }
-    
+
     private static void registerVariantModel(IVariantItem item) {
         for (int i = 0; i < item.getVariantNames().length; i++) {
             ModelLoader.setCustomModelResourceLocation(item.getItem(), item.getVariantMeta()[i], item.getCustomModelResourceLocation(item.getVariantNames()[i]));

@@ -13,6 +13,6 @@ public class AidInspirationEngine implements ITheorycraftAid {
     @SuppressWarnings("unchecked")
     @Override
     public Class<TheorycraftCard>[] getCards() {
-        return new Class[] { CardInducedInspiration.class, CardInducedInspiration.class, CardInducedInspiration.class };
+        return new Class[]{CardInducedInspiration.class, CardInducedInspiration.class, CardInducedInspiration.class};
     }
 }

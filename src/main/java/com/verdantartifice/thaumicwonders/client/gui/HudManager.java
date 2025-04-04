@@ -23,7 +23,7 @@ import thaumcraft.common.items.tools.ItemThaumometer;
 @SideOnly(Side.CLIENT)
 public class HudManager {
     private static final ResourceLocation HUD = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/hud.png");
-    
+
     public void renderHuds(Minecraft mc, float renderTickTime, EntityPlayer player, long time) {
         GL11.glPushMatrix();
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
@@ -36,10 +36,10 @@ public class HudManager {
         GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        
+
         if (mc.inGameHasFocus && Minecraft.isGuiEnabled()) {
             mc.renderEngine.bindTexture(HUD);
-            
+
             ItemStack mhStack = player.getHeldItemMainhand();
             Item mhStackItem = null;
             if (mhStack != null && !mhStack.isEmpty()) {
@@ -50,7 +50,7 @@ public class HudManager {
             if (ohStack != null && !ohStack.isEmpty()) {
                 ohStackItem = ohStack.getItem();
             }
-            
+
             // Determine Y offset for GUI if other GUIs are being shown
             int yStart = 0;
             if (mhStackItem instanceof ICaster || ohStackItem instanceof ICaster) {
@@ -64,7 +64,7 @@ public class HudManager {
             if (mhStackItem instanceof ItemSanityChecker || ohStackItem instanceof ItemSanityChecker) {
                 yStart += 75;
             }
-            
+
             // Show the Primal Destroyer GUI if applicable
             if (mhStackItem instanceof ItemPrimalDestroyer) {
                 this.renderPrimalDestroyerHud(mc, renderTickTime, player, mhStack, time, yStart);
@@ -74,19 +74,19 @@ public class HudManager {
                 this.renderPrimalDestroyerHud(mc, renderTickTime, player, ohStack, time, yStart);
                 yStart += 77;
             }
-            
+
             // Show the carpet GUI if applicable
             Entity ridingEntity = player.getRidingEntity();
             if (ridingEntity instanceof EntityFlyingCarpet) {
-                this.renderCarpetHud(mc, renderTickTime, player, (EntityFlyingCarpet)ridingEntity, time, yStart);
+                this.renderCarpetHud(mc, renderTickTime, player, (EntityFlyingCarpet) ridingEntity, time, yStart);
                 yStart += 77;
             }
         }
-        
+
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
-    
+
     private void renderPrimalDestroyerHud(Minecraft mc, float partialTicks, EntityPlayer player, ItemStack itemStack, long time, int yStart) {
         // Draw background bars
         GL11.glPushMatrix();
@@ -95,10 +95,10 @@ public class HudManager {
         GL11.glTranslated(0.0D, yStart, 0.0D);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 152.0F, 0.0F, 20.0F, 78.0F, -90.0D);
-        
+
         int hunger = itemStack.hasTagCompound() ? itemStack.getTagCompound().getInteger("hunger") : 0;
-        int gap = (int)(((float)ItemPrimalDestroyer.MAX_HUNGER - hunger) / (float)ItemPrimalDestroyer.MAX_HUNGER * 48.0F);
-        
+        int gap = (int) (((float) ItemPrimalDestroyer.MAX_HUNGER - hunger) / (float) ItemPrimalDestroyer.MAX_HUNGER * 48.0F);
+
         // Draw hunger level
         if (hunger > 0) {
             GL11.glPushMatrix();
@@ -106,13 +106,13 @@ public class HudManager {
             UtilsFX.drawTexturedQuad(7.0F, 23 + gap, 200.0F, gap, 8.0F, 48.0F, -90.0D);
             GL11.glPopMatrix();
         }
-        
+
         // Draw foreground meter
         GL11.glPushMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 128.0F, 0.0F, 20.0F, 78.0F, -90.0D);
         GL11.glPopMatrix();
-     
+
         // Pop initially pushed matrix
         GL11.glPopMatrix();
     }
@@ -125,11 +125,11 @@ public class HudManager {
         GL11.glTranslated(0.0D, yStart, 0.0D);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 152.0F, 0.0F, 20.0F, 78.0F, -90.0D);
-        
+
         int vis = carpet.getVisCharge();
-        int capacity =  ConfigHandlerTW.flying_carpet.visCapacity;
-        int gap = (int)(((float)capacity - vis) / (float)capacity * 48.0F);
-        
+        int capacity = ConfigHandlerTW.flying_carpet.visCapacity;
+        int gap = (int) (((float) capacity - vis) / (float) capacity * 48.0F);
+
         // Draw vis level
         if (vis > 0) {
             GL11.glPushMatrix();
@@ -137,13 +137,13 @@ public class HudManager {
             UtilsFX.drawTexturedQuad(7.0F, 23 + gap, 200.0F, gap, 8.0F, 48.0F, -90.0D);
             GL11.glPopMatrix();
         }
-        
+
         // Draw foreground meter
         GL11.glPushMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 176.0F, 0.0F, 20.0F, 78.0F, -90.0D);
         GL11.glPopMatrix();
-     
+
         // Pop initially pushed matrix
         GL11.glPopMatrix();
     }

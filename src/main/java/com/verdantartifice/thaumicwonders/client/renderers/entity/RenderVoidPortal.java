@@ -18,7 +18,7 @@ import thaumcraft.client.lib.UtilsFX;
 @SideOnly(Side.CLIENT)
 public class RenderVoidPortal extends Render<EntityVoidPortal> {
     private static final ResourceLocation TEXTURE = new ResourceLocation("thaumcraft", "textures/misc/eldritch_portal.png");
-    
+
     public RenderVoidPortal(RenderManager renderManager) {
         super(renderManager);
         this.shadowSize = 0.0F;
@@ -26,18 +26,13 @@ public class RenderVoidPortal extends Render<EntityVoidPortal> {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(EntityVoidPortal entity) {
-        return TEXTURE;
-    }
-    
-    @Override
     public void doRender(EntityVoidPortal portal, double x, double y, double z, float entityYaw, float partialTicks) {
         long nt = System.nanoTime();
         long time = nt / 50000000L;
         float scaley = 1.4F;
-        int e = (int)Math.min(50.0F, portal.ticksExisted + partialTicks);
+        int e = (int) Math.min(50.0F, portal.ticksExisted + partialTicks);
         float scale = e / 50.0F * 1.25F;
-        
+
         y += portal.height / 2.0F;
 
         float stability = portal.getGeneratorStability();
@@ -50,11 +45,11 @@ public class RenderVoidPortal extends Render<EntityVoidPortal> {
 
         this.bindTexture(TEXTURE);
         GL11.glPushMatrix();
-        
+
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-        
+
         if (Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityPlayer) {
             GL11.glDepthMask(false);
             Tessellator tessellator = Tessellator.getInstance();
@@ -63,13 +58,13 @@ public class RenderVoidPortal extends Render<EntityVoidPortal> {
             float arYZ = ActiveRenderInfo.getRotationYZ();
             float arXY = ActiveRenderInfo.getRotationXY();
             float arXZ = ActiveRenderInfo.getRotationXZ();
-            
+
             tessellator.getBuffer().begin(7, UtilsFX.VERTEXFORMAT_POS_TEX_CO_LM_NO);
             Vec3d v1 = new Vec3d(-arX - arYZ, -arXZ, -arZ - arXY);
             Vec3d v2 = new Vec3d(-arX + arYZ, arXZ, -arZ + arXY);
             Vec3d v3 = new Vec3d(arX + arYZ, arXZ, arZ + arXY);
             Vec3d v4 = new Vec3d(arX - arYZ, -arXZ, arZ - arXY);
-            int frame = 15 - (int)time % 16;
+            int frame = 15 - (int) time % 16;
             float f2 = frame / 16.0F;
             float f3 = f2 + 0.0625F;
             float f4 = 0.0F;
@@ -87,5 +82,10 @@ public class RenderVoidPortal extends Render<EntityVoidPortal> {
         GL11.glDisable(32826);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
+    }
+
+    @Override
+    protected ResourceLocation getEntityTexture(EntityVoidPortal entity) {
+        return TEXTURE;
     }
 }

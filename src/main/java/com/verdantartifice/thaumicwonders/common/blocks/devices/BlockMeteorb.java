@@ -23,7 +23,7 @@ public class BlockMeteorb extends BlockDeviceTW<TileMeteorb> implements IBlockFa
         super(Material.ROCK, TileMeteorb.class, "meteorb");
         this.setSoundType(SoundType.STONE);
     }
-    
+
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
@@ -33,14 +33,7 @@ public class BlockMeteorb extends BlockDeviceTW<TileMeteorb> implements IBlockFa
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
-    
-    @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        IBlockState bs = getDefaultState();
-        bs = bs.withProperty(IBlockFacingHorizontal.FACING, placer.getHorizontalFacing().getOpposite());
-        return bs;
-    }
-    
+
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {
@@ -51,5 +44,12 @@ public class BlockMeteorb extends BlockDeviceTW<TileMeteorb> implements IBlockFa
             }
         }
         return true;
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        IBlockState bs = getDefaultState();
+        bs = bs.withProperty(IBlockFacingHorizontal.FACING, placer.getHorizontalFacing().getOpposite());
+        return bs;
     }
 }

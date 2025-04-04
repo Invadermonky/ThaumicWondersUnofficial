@@ -22,7 +22,7 @@ public class BlockVishroomCrop extends AbstractBlockMysticCrop {
     protected Item getSeed() {
         return ItemsTW.VISHROOM_SPORE;
     }
-    
+
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Cave;

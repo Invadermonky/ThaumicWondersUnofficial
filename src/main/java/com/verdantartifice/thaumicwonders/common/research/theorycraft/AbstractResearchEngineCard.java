@@ -12,19 +12,25 @@ import java.util.Random;
 
 public abstract class AbstractResearchEngineCard extends TheorycraftCard {
     protected abstract Class<? extends IResearchEngine> getEngineTileClass();
+
     protected abstract int getResearchAmount(Random rng);
 
-    @Override
-    public boolean isAidOnly() {
-        return true;
-    }
-    
     @Override
     public boolean initialize(EntityPlayer player, ResearchTableData data) {
         // Do an initial check for a fueled engine and abort if not found
         return this.findFueledEngine(data.table.getWorld(), data.table.getPos()) != null;
     }
-    
+
+    @Override
+    public boolean isAidOnly() {
+        return true;
+    }
+
+    @Override
+    public int getInspirationCost() {
+        return -1;
+    }
+
     @Override
     public boolean activate(EntityPlayer player, ResearchTableData data) {
         // Re-check to make sure the engine is still there between initialize and now
@@ -38,11 +44,6 @@ public abstract class AbstractResearchEngineCard extends TheorycraftCard {
         }
     }
 
-    @Override
-    public int getInspirationCost() {
-        return -1;
-    }
-
     private IResearchEngine findFueledEngine(World world, BlockPos tablePos) {
         BlockPos.PooledMutableBlockPos pmbp = BlockPos.PooledMutableBlockPos.retain();
         for (int i = -4; i <= 4; i++) {
@@ -51,7 +52,7 @@ public abstract class AbstractResearchEngineCard extends TheorycraftCard {
                     pmbp.setPos(tablePos.getX() + i, tablePos.getY() + j, tablePos.getZ() + k);
                     TileEntity tile = world.getTileEntity(pmbp);
                     if (tile != null && tile.getClass().equals(this.getEngineTileClass())) {
-                        IResearchEngine engineTile = (IResearchEngine)tile;
+                        IResearchEngine engineTile = (IResearchEngine) tile;
                         if (engineTile.isFueled()) {
                             pmbp.release();
                             return engineTile;

@@ -29,7 +29,7 @@ import java.util.Set;
 @SuppressWarnings("ConstantConditions")
 public class InitBlocks {
     public static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<>();
-    
+
     public static void initBlocks(IForgeRegistry<Block> forgeRegistry) {
         registerBlock(forgeRegistry, new BlockEverburningUrn());
         registerBlock(forgeRegistry, new BlockDimensionalRipper());
@@ -56,13 +56,13 @@ public class InitBlocks {
         registerBlock(forgeRegistry, new BlockAlkahestVat());
         registerBlock(forgeRegistry, new BlockCoalescenceMatrix());
         registerBlock(forgeRegistry, new BlockTW(Material.IRON, "coalescence_matrix_precursor"));
-        
+
         registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_arcane_stone"));
         registerBlock(forgeRegistry, new BlockTWPlaceholder("placeholder_obsidian"));
         registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_thaumium_block"));
         registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_void_metal_block"));
         registerBlock(forgeRegistry, new BlockPrimordialAccretionChamberPlaceholder("placeholder_adv_alch_construct"));
-        
+
         FluidRegistry.registerFluid(FluidQuicksilver.INSTANCE);
         FluidRegistry.addBucketForFluid(FluidQuicksilver.INSTANCE);
         forgeRegistry.register(new BlockFluidQuicksilver());
@@ -74,20 +74,20 @@ public class InitBlocks {
 
     private static void registerBlock(IForgeRegistry<Block> forgeRegistry, Block block, boolean hasItem) {
         forgeRegistry.register(block);
-        if(hasItem)
+        if (hasItem)
             InitBlocks.ITEM_BLOCKS.add(new ItemBlock(block));
     }
 
     private static <T extends ItemBlock> void registerBlock(IForgeRegistry<Block> forgeRegistry, Block block, Class<T> clazz) {
         forgeRegistry.register(block);
         try {
-            ItemBlock itemBlock = (ItemBlock)clazz.getConstructors()[0].newInstance(new Object[] { block });
+            ItemBlock itemBlock = (ItemBlock) clazz.getConstructors()[0].newInstance(new Object[]{block});
             InitBlocks.ITEM_BLOCKS.add(itemBlock);
         } catch (Exception e) {
             ThaumicWonders.LOGGER.catching(e);
         }
     }
-    
+
     public static void initItemBlocks(IForgeRegistry<Item> forgeRegistry) {
         for (ItemBlock itemBlock : InitBlocks.ITEM_BLOCKS) {
             Block block = itemBlock.getBlock();
@@ -95,7 +95,7 @@ public class InitBlocks {
             forgeRegistry.register(itemBlock);
         }
     }
-    
+
     public static void initTileEntities() {
         GameRegistry.registerTileEntity(TileEverburningUrn.class, new ResourceLocation(ThaumicWonders.MODID, "TileEverburningUrn"));
         GameRegistry.registerTileEntity(TileDimensionalRipper.class, new ResourceLocation(ThaumicWonders.MODID, "TileDimensionalRipper"));

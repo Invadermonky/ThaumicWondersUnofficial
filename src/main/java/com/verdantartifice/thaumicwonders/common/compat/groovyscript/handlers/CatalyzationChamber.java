@@ -210,7 +210,7 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
         @RecipeBuilderRegistrationMethod
         @Override
         public @Nullable CatalyzationChamberRecipe register() {
-            if(this.validate()) {
+            if (this.validate()) {
                 CatalyzationChamberRecipe recipe = new CatalyzationChamberRecipe(
                         this.input.toMcIngredient(),
                         this.catalyst.toMcIngredient(),

@@ -42,7 +42,7 @@ public class CTCatalyzationChamber {
 
     @ZenMethod
     public static void removeByInput(IIngredient input, @Optional IIngredient catalyst) {
-        if(catalyst == null) {
+        if (catalyst == null) {
             CatalyzationChamberRecipeRegistry.removeByInput(CraftTweakerMC.getIngredient(input));
         } else {
             CatalyzationChamberRecipeRegistry.removeByInput(CraftTweakerMC.getIngredient(input), CraftTweakerMC.getIngredient(catalyst));
@@ -51,7 +51,7 @@ public class CTCatalyzationChamber {
 
     @ZenMethod
     public static void removeByOutput(IItemStack output, @Optional IIngredient catalyst) {
-        if(catalyst == null) {
+        if (catalyst == null) {
             CatalyzationChamberRecipeRegistry.removeByOutput(CraftTweakerMC.getItemStack(output));
         } else {
             CatalyzationChamberRecipeRegistry.removeByOutput(CraftTweakerMC.getItemStack(output), CraftTweakerMC.getIngredient(catalyst));

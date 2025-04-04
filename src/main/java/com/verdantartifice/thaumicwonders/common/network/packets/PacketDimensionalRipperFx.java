@@ -20,12 +20,12 @@ import java.awt.*;
 public class PacketDimensionalRipperFx implements IMessage {
     protected BlockPos source;
     protected BlockPos target;
-    
+
     public PacketDimensionalRipperFx() {
         this.source = null;
         this.target = null;
     }
-    
+
     public PacketDimensionalRipperFx(BlockPos source, BlockPos target) {
         this.source = source;
         this.target = target;
@@ -49,7 +49,7 @@ public class PacketDimensionalRipperFx implements IMessage {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         @SideOnly(Side.CLIENT)
         private void handle(PacketDimensionalRipperFx message, MessageContext ctx) {
             World world = FMLClientHandler.instance().getClient().world;
@@ -57,18 +57,18 @@ public class PacketDimensionalRipperFx implements IMessage {
             if (state.getBlock() instanceof IBlockFacing) {
                 EnumFacing blockFacing = state.getValue(IBlockFacing.FACING);
                 FXDispatcher.INSTANCE.beamBore(
-                    message.source.getX() + 0.5D + (blockFacing.getXOffset() / 2.0D),
-                    message.source.getY() + 0.5D + (blockFacing.getYOffset() / 2.0D),
-                    message.source.getZ() + 0.5D + (blockFacing.getZOffset() / 2.0D),
-                    message.target.getX() + 0.5D, 
-                    message.target.getY() + 0.5D, 
-                    message.target.getZ() + 0.5D, 
-                    1, 
-                    Color.RED.getRGB(), 
-                    false, 
-                    1.0F, 
-                    null, 
-                    1
+                        message.source.getX() + 0.5D + (blockFacing.getXOffset() / 2.0D),
+                        message.source.getY() + 0.5D + (blockFacing.getYOffset() / 2.0D),
+                        message.source.getZ() + 0.5D + (blockFacing.getZOffset() / 2.0D),
+                        message.target.getX() + 0.5D,
+                        message.target.getY() + 0.5D,
+                        message.target.getZ() + 0.5D,
+                        1,
+                        Color.RED.getRGB(),
+                        false,
+                        1.0F,
+                        null,
+                        1
                 );
             }
         }

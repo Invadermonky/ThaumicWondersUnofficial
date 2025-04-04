@@ -22,14 +22,9 @@ public class BlockPortalGenerator extends BlockDeviceTW<TilePortalGenerator> imp
         super(Material.IRON, TilePortalGenerator.class, "portal_generator");
         this.setSoundType(SoundType.METAL);
     }
-    
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
@@ -39,15 +34,20 @@ public class BlockPortalGenerator extends BlockDeviceTW<TilePortalGenerator> imp
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        if (!worldIn.isRemote && worldIn.isAirBlock(pos.up(1)) && worldIn.isAirBlock(pos.up(2)) && worldIn.isAirBlock(pos.up(3))) { 
+        if (!worldIn.isRemote && worldIn.isAirBlock(pos.up(1)) && worldIn.isAirBlock(pos.up(2)) && worldIn.isAirBlock(pos.up(3))) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof TilePortalGenerator && stack.hasTagCompound()) {
-                TilePortalGenerator generatorTile = (TilePortalGenerator)tile;
+                TilePortalGenerator generatorTile = (TilePortalGenerator) tile;
                 generatorTile.setLink(
-                        stack.getTagCompound().getInteger("linkX"), 
-                        stack.getTagCompound().getInteger("linkY"), 
-                        stack.getTagCompound().getInteger("linkZ"), 
+                        stack.getTagCompound().getInteger("linkX"),
+                        stack.getTagCompound().getInteger("linkY"),
+                        stack.getTagCompound().getInteger("linkZ"),
                         stack.getTagCompound().getInteger("linkDim")
                 );
                 generatorTile.spawnPortal();
@@ -55,24 +55,24 @@ public class BlockPortalGenerator extends BlockDeviceTW<TilePortalGenerator> imp
         }
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     }
-    
+
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
         this.destroyPortal(worldIn, pos);
         super.onBlockHarvested(worldIn, pos, state, player);
     }
-    
+
     @Override
     public void onBlockExploded(World worldIn, BlockPos pos, Explosion explosionIn) {
         this.destroyPortal(worldIn, pos);
         super.onBlockExploded(worldIn, pos, explosionIn);
     }
-    
+
     private void destroyPortal(World worldIn, BlockPos pos) {
         if (!worldIn.isRemote) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof TilePortalGenerator) {
-                TilePortalGenerator generatorTile = (TilePortalGenerator)tile;
+                TilePortalGenerator generatorTile = (TilePortalGenerator) tile;
                 generatorTile.despawnPortal(true);
             }
         }

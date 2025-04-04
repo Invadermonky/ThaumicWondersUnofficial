@@ -67,14 +67,14 @@ public class CatalyzationChamberRecipe {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(getInput(), getCatalyst());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof CatalyzationChamberRecipe)) return false;
         CatalyzationChamberRecipe that = (CatalyzationChamberRecipe) o;
         return IngredientHelper.areIngredientsEqual(getInput(), that.getInput()) && IngredientHelper.areIngredientsEqual(getCatalyst(), that.getCatalyst());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getInput(), getCatalyst());
     }
 }

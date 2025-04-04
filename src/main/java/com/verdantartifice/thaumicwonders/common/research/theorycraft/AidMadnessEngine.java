@@ -13,6 +13,6 @@ public class AidMadnessEngine implements ITheorycraftAid {
     @SuppressWarnings("unchecked")
     @Override
     public Class<TheorycraftCard>[] getCards() {
-        return new Class[] { CardInducedMadness.class, CardInducedMadness.class, CardInducedMadness.class };
+        return new Class[]{CardInducedMadness.class, CardInducedMadness.class, CardInducedMadness.class};
     }
 }

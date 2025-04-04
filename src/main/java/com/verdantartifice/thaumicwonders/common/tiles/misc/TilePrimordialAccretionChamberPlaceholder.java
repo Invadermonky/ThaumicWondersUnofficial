@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable {
     protected int tickCounter = 0;
-    
+
     @Override
     public void update() {
         if (!this.world.isRemote && (++this.tickCounter % 5 == 0)) {
@@ -28,7 +28,7 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
             }
         }
     }
-    
+
     protected void fill() {
         TilePrimordialAccretionChamber centralTile = this.findCentralChamber();
         if (centralTile == null) {
@@ -40,15 +40,15 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
             if (te instanceof IEssentiaTransport) {
-                IEssentiaTransport otherTile = (IEssentiaTransport)te;
+                IEssentiaTransport otherTile = (IEssentiaTransport) te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
                 }
                 Aspect currentSuction = centralTile.getCurrentSuction();
-                if ( otherTile.getEssentiaType(face.getOpposite()) == currentSuction &&
-                     otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
-                     this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
-                     this.getSuctionAmount(face) >= otherTile.getMinimumSuction() ) {
+                if (otherTile.getEssentiaType(face.getOpposite()) == currentSuction &&
+                        otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
+                        this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
+                        this.getSuctionAmount(face) >= otherTile.getMinimumSuction()) {
                     int taken = otherTile.takeEssentia(currentSuction, 1, face.getOpposite());
                     int leftover = this.addToContainer(currentSuction, taken);
                     if (leftover > 0) {
@@ -64,7 +64,7 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
             }
         }
     }
-    
+
     @Nullable
     protected TilePrimordialAccretionChamber findCentralChamber() {
         for (int i = -1; i <= 1; i++) {
@@ -73,14 +73,14 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
                     BlockPos searchPos = this.pos.add(i, j, k);
                     TileEntity tile = this.world.getTileEntity(searchPos);
                     if (tile instanceof TilePrimordialAccretionChamber) {
-                        return (TilePrimordialAccretionChamber)tile;
+                        return (TilePrimordialAccretionChamber) tile;
                     }
                 }
             }
         }
         return null;
     }
-    
+
     protected boolean isEssentiaPort(EnumFacing face) {
         TilePrimordialAccretionChamber tile = this.findCentralChamber();
         if (tile == null) {
@@ -93,7 +93,7 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
                 if (leftPos.equals(this.pos)) {
                     return (face == leftFace);
                 }
-                
+
                 EnumFacing rightFace = facing.rotateY();
                 BlockPos rightPos = tile.getPos().offset(facing, offset).offset(rightFace);
                 if (rightPos.equals(this.pos)) {
@@ -102,36 +102,6 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
             }
         }
         return false;
-    }
-
-    @Override
-    public int addToContainer(Aspect aspect, int toAdd) {
-        TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile == null ? 0 : tile.addToContainer(aspect, toAdd);
-    }
-
-    @Override
-    public int containerContains(Aspect aspect) {
-        TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile == null ? 0 : tile.containerContains(aspect);
-    }
-
-    @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile != null && tile.doesContainerAccept(aspect);
-    }
-
-    @Override
-    public boolean doesContainerContain(AspectList aspectList) {
-        TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile != null && tile.doesContainerContain(aspectList);
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
-        TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile != null && tile.doesContainerContainAmount(aspect, amt);
     }
 
     @Override
@@ -149,9 +119,15 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
     }
 
     @Override
-    public boolean takeFromContainer(AspectList aspectList) {
+    public boolean doesContainerAccept(Aspect aspect) {
         TilePrimordialAccretionChamber tile = this.findCentralChamber();
-        return tile != null && tile.takeFromContainer(aspectList);
+        return tile != null && tile.doesContainerAccept(aspect);
+    }
+
+    @Override
+    public int addToContainer(Aspect aspect, int toAdd) {
+        TilePrimordialAccretionChamber tile = this.findCentralChamber();
+        return tile == null ? 0 : tile.addToContainer(aspect, toAdd);
     }
 
     @Override
@@ -161,12 +137,32 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
-        if (this.canInputFrom(face)) {
-            return (amt - this.addToContainer(aspect, amt));
-        } else {
-            return 0;
-        }
+    public boolean takeFromContainer(AspectList aspectList) {
+        TilePrimordialAccretionChamber tile = this.findCentralChamber();
+        return tile != null && tile.takeFromContainer(aspectList);
+    }
+
+    @Override
+    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
+        TilePrimordialAccretionChamber tile = this.findCentralChamber();
+        return tile != null && tile.doesContainerContainAmount(aspect, amt);
+    }
+
+    @Override
+    public boolean doesContainerContain(AspectList aspectList) {
+        TilePrimordialAccretionChamber tile = this.findCentralChamber();
+        return tile != null && tile.doesContainerContain(aspectList);
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        TilePrimordialAccretionChamber tile = this.findCentralChamber();
+        return tile == null ? 0 : tile.containerContains(aspect);
+    }
+
+    @Override
+    public boolean isConnectable(EnumFacing face) {
+        return this.isEssentiaPort(face);
     }
 
     @Override
@@ -180,12 +176,42 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
     }
 
     @Override
-    public int getEssentiaAmount(EnumFacing face) {
-        Aspect type = this.getEssentiaType(face);
-        if (type == null) {
-            return 0;
+    public void setSuction(Aspect aspect, int amt) {
+        // Do nothing
+    }
+
+    @Override
+    public Aspect getSuctionType(EnumFacing face) {
+        if (this.isEssentiaPort(face)) {
+            TilePrimordialAccretionChamber tile = this.findCentralChamber();
+            return tile == null ? null : tile.getCurrentSuction();
         } else {
-            return this.getAspects().getAmount(type);
+            return null;
+        }
+    }
+
+    @Override
+    public int getSuctionAmount(EnumFacing face) {
+        if (this.isEssentiaPort(face)) {
+            Aspect type = this.getSuctionType(face);
+            return type == null ? 0 : 128;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
+        // Can't output
+        return 0;
+    }
+
+    @Override
+    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
+        if (this.canInputFrom(face)) {
+            return (amt - this.addToContainer(aspect, amt));
+        } else {
+            return 0;
         }
     }
 
@@ -200,44 +226,18 @@ public class TilePrimordialAccretionChamberPlaceholder extends TileTW implements
     }
 
     @Override
+    public int getEssentiaAmount(EnumFacing face) {
+        Aspect type = this.getEssentiaType(face);
+        if (type == null) {
+            return 0;
+        } else {
+            return this.getAspects().getAmount(type);
+        }
+    }
+
+    @Override
     public int getMinimumSuction() {
         // Can't output, so no need for minimum suction
-        return 0;
-    }
-
-    @Override
-    public int getSuctionAmount(EnumFacing face) {
-        if (this.isEssentiaPort(face)) {
-            Aspect type = this.getSuctionType(face);
-            return type == null ? 0 : 128;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public Aspect getSuctionType(EnumFacing face) {
-        if (this.isEssentiaPort(face)) {
-            TilePrimordialAccretionChamber tile = this.findCentralChamber();
-            return tile == null ? null : tile.getCurrentSuction();
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public boolean isConnectable(EnumFacing face) {
-        return this.isEssentiaPort(face);
-    }
-
-    @Override
-    public void setSuction(Aspect aspect, int amt) {
-        // Do nothing
-    }
-
-    @Override
-    public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
-        // Can't output
         return 0;
     }
 

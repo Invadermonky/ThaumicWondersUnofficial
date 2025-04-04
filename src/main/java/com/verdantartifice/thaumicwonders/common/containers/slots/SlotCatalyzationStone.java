@@ -14,10 +14,19 @@ public class SlotCatalyzationStone extends Slot {
     }
 
     @Override
+    public boolean isItemValid(ItemStack stack) {
+        if (stack != null && !stack.isEmpty()) {
+            return CatalyzationChamberRecipeRegistry.isValidCatalyst(stack);
+        } else {
+            return true;
+        }
+    }
+
+    @Override
     public ItemStack getStack() {
         return this.tileEntity.getEquippedStone();
     }
-    
+
     @Override
     public void putStack(ItemStack stack) {
         if (this.tileEntity.setEquippedStone(stack)) {
@@ -27,15 +36,16 @@ public class SlotCatalyzationStone extends Slot {
             this.onSlotChanged();
         }
     }
-    
+
     @Override
-    public void onSlotChanged() {}
+    public void onSlotChanged() {
+    }
 
     @Override
     public int getSlotStackLimit() {
         return 64;
     }
-    
+
     @Override
     public ItemStack decrStackSize(int amount) {
         if (!this.getStack().isEmpty()) {
@@ -52,14 +62,5 @@ public class SlotCatalyzationStone extends Slot {
             }
         }
         return ItemStack.EMPTY;
-    }
-    
-    @Override
-    public boolean isItemValid(ItemStack stack) {
-        if (stack != null && !stack.isEmpty()) {
-            return CatalyzationChamberRecipeRegistry.isValidCatalyst(stack);
-        } else {
-            return true;
-        }
     }
 }

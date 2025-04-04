@@ -28,31 +28,31 @@ public class InitResearch {
 
     private static void initCategories() {
         ResearchCategories.registerCategory(
-                "THAUMIC_WONDERS", 
-                "FIRSTSTEPS", 
-                new AspectList(), 
-                new ResourceLocation(ThaumicWonders.MODID, "textures/gui/wonder_chest.png"), 
-                new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_research_back.jpg"), 
+                "THAUMIC_WONDERS",
+                "FIRSTSTEPS",
+                new AspectList(),
+                new ResourceLocation(ThaumicWonders.MODID, "textures/gui/wonder_chest.png"),
+                new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_research_back.jpg"),
                 new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_over.png")
         );
     }
 
     private static void initResearchLocations() {
-        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/misc" ));
-        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/alchemy" ));
-        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/artifice" ));
-        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/infusion" ));
-        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/eldritch" ));
-        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/scans" ));
+        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/misc"));
+        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/alchemy"));
+        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/artifice"));
+        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/infusion"));
+        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/eldritch"));
+        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/scans"));
     }
-    
+
     private static void initTheorycraft() {
         TheorycraftManager.registerAid(new AidInspirationEngine());
         TheorycraftManager.registerAid(new AidMadnessEngine());
         TheorycraftManager.registerCard(CardInducedInspiration.class);
         TheorycraftManager.registerCard(CardInducedMadness.class);
     }
-    
+
     private static void initScannables() {
         ScanningManager.addScannableThing(new ScanItem("!TWOND_PRIMORDIAL_GRAIN", new ItemStack(ItemsTW.PRIMORDIAL_GRAIN)));
         ScanningManager.addScannableThing(new ScanEntity("!TWOND_CORRUPTION_AVATAR", EntityCorruptionAvatar.class, true));

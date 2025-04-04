@@ -30,7 +30,7 @@ import thaumcraft.api.items.ItemsTC;
 import java.util.List;
 
 public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, IWarpingGear, IGoggles {
-    public static ItemArmor.ArmorMaterial MATERIAL = EnumHelper.addArmorMaterial("VOID_FORTRESS", "VOID_FORTRESS", 50, new int[] { 4, 7, 9, 4 }, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.0F);
+    public static ItemArmor.ArmorMaterial MATERIAL = EnumHelper.addArmorMaterial("VOID_FORTRESS", "VOID_FORTRESS", 50, new int[]{4, 7, 9, 4}, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.0F);
     ModelBiped model1 = null;
     ModelBiped model2 = null;
 
@@ -42,35 +42,8 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
-        if (this.model1 == null) {
-            this.model1 = new ModelVoidFortressArmor(0.5f);
-        }
-        if (this.model2 == null) {
-            this.model2 = new ModelVoidFortressArmor(1.0F);
-        }
-        EntityEquipmentSlot type = ((ItemArmor)itemStack.getItem()).armorType;
-        ModelBiped model = (type == EntityEquipmentSlot.LEGS) ? this.model1 : this.model2;
-        return CustomArmorHelper.getCustomArmorModel(entityLiving, itemStack, armorSlot, model);
-    }
-    
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return ThaumicWonders.MODID + ":textures/entities/armor/void_fortress_armor.png";
-    }
-    
-    @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
         return repair.isItemEqual(new ItemStack(ItemsTC.ingots, 1, 1)) || super.getIsRepairable(toRepair, repair);
-    }
-    
-    @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-        super.onArmorTick(world, player, itemStack);
-        if (!world.isRemote && itemStack.getItemDamage() > 0 && player.ticksExisted % 20 == 0) {
-            itemStack.damageItem(-1, player);
-        }
     }
 
     @Override
@@ -92,11 +65,11 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
             priority = 0;
             ratio = 0.0D;
         }
-        
+
         ArmorProperties ap = new ArmorProperties(priority, ratio, armor.getMaxDamage() - armor.getItemDamage() + 1);
-        
+
         // Compute set bonus
-        EntityEquipmentSlot[] slots = new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.HEAD };
+        EntityEquipmentSlot[] slots = new EntityEquipmentSlot[]{EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.HEAD};
         int set = 0;
         for (EntityEquipmentSlot equipmentSlot : slots) {
             ItemStack piece = player.getItemStackFromSlot(equipmentSlot);
@@ -114,11 +87,11 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
 
         // Compute warpshell bonus
         if (player instanceof EntityPlayer) {
-            EntityPlayer ep = (EntityPlayer)player;
+            EntityPlayer ep = (EntityPlayer) player;
             IPlayerWarp warp = ThaumcraftCapabilities.getWarp(ep);
             if (warp != null) {
                 int pw = Math.min(100, warp.get(IPlayerWarp.EnumWarpType.PERMANENT));
-                ap.Toughness += ((double)pw / 25.0D);
+                ap.Toughness += ((double) pw / 25.0D);
             }
         }
 
@@ -128,7 +101,7 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
     @Override
     public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
         // Compute set bonus for armor display
-        EntityEquipmentSlot[] slots = new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.HEAD };
+        EntityEquipmentSlot[] slots = new EntityEquipmentSlot[]{EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.HEAD};
         int set = 0;
         int armorRating = 0;
         for (EntityEquipmentSlot equipmentSlot : slots) {
@@ -143,7 +116,7 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
         if (set >= 3) {
             armorRating++;
         }
-        
+
         return armorRating;
     }
 
@@ -153,11 +126,11 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
             stack.damageItem(damage, entity);
         }
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        if(stack.getItem() == ItemsTW.VOID_FORTRESS_HELM) {
+        if (stack.getItem() == ItemsTW.VOID_FORTRESS_HELM) {
             tooltip.add(TextFormatting.DARK_PURPLE + I18n.format("item.goggles.name"));
             tooltip.add(TextFormatting.GOLD + I18n.format("item.fortress_helm.mask.2"));
         }
@@ -166,17 +139,44 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
     }
 
     @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.EPIC;
+    }
+
+    @Override
+    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
+        super.onArmorTick(world, player, itemStack);
+        if (!world.isRemote && itemStack.getItemDamage() > 0 && player.ticksExisted % 20 == 0) {
+            itemStack.damageItem(-1, player);
+        }
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
+        return ThaumicWonders.MODID + ":textures/entities/armor/void_fortress_armor.png";
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
+        if (this.model1 == null) {
+            this.model1 = new ModelVoidFortressArmor(0.5f);
+        }
+        if (this.model2 == null) {
+            this.model2 = new ModelVoidFortressArmor(1.0F);
+        }
+        EntityEquipmentSlot type = ((ItemArmor) itemStack.getItem()).armorType;
+        ModelBiped model = (type == EntityEquipmentSlot.LEGS) ? this.model1 : this.model2;
+        return CustomArmorHelper.getCustomArmorModel(entityLiving, itemStack, armorSlot, model);
+    }
+
+    @Override
     public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player) {
         if (itemstack != null && itemstack.getItem() instanceof ItemArmor) {
-            ItemArmor armor = (ItemArmor)itemstack.getItem();
+            ItemArmor armor = (ItemArmor) itemstack.getItem();
             return armor.armorType == EntityEquipmentSlot.HEAD;
         } else {
             return false;
         }
-    }
-    
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 }

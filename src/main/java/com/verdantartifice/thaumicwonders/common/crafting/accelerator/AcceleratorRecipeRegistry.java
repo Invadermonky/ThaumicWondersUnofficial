@@ -21,7 +21,7 @@ public class AcceleratorRecipeRegistry {
     }
 
     public static void addRecipe(Ingredient input, ItemStack output) {
-        try{
+        try {
             addRecipe(new AcceleratorRecipe(input, output));
         } catch (IllegalArgumentException e) {
             ThaumicWonders.LOGGER.error("Failed to add Primordial Accelerator recipe");
@@ -43,7 +43,7 @@ public class AcceleratorRecipeRegistry {
 
     @Nullable
     public static AcceleratorRecipe getRecipe(ItemStack input) {
-        if(!input.isEmpty()) {
+        if (!input.isEmpty()) {
             return ACCELERATOR_RECIPES.stream().filter(recipe -> recipe.matches(input)).findFirst().orElse(null);
         }
         return null;

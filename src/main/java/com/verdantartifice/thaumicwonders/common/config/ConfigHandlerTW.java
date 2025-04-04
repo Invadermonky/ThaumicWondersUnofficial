@@ -50,7 +50,7 @@ public class ConfigHandlerTW {
                     })
             public int defaultFluxChance;
 
-            public StoneCategory( int defaultFluxChance){
+            public StoneCategory(int defaultFluxChance) {
                 this.defaultFluxChance = defaultFluxChance;
             }
         }
@@ -60,7 +60,7 @@ public class ConfigHandlerTW {
         @Config.RangeInt(min = 1, max = 72000)
         @Config.Name("Removal Time")
         @Config.Comment("The time, in ticks, it takes the Cleansing Charm to complete a full operation.")
-        public int timeToRemoveFlux = 32000;
+        public int timeToRemoveFlux = 24000;
 
         @Config.RangeInt(min = 1, max = 100)
         @Config.Name("Flux Removed")
@@ -124,7 +124,7 @@ public class ConfigHandlerTW {
     public static class ConfigChangeListener {
         @SubscribeEvent
         public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-            if(event.getModID().equals(ThaumicWonders.MODID)) {
+            if (event.getModID().equals(ThaumicWonders.MODID)) {
                 ConfigManager.sync(ThaumicWonders.MODID, Config.Type.INSTANCE);
             }
         }

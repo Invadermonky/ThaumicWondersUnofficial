@@ -21,10 +21,11 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class CommonProxy implements IProxyTW, IGuiHandler {
     private ProxyGUI proxyGUI = new ProxyGUI();
-    
+
     @Override
-    public void preInit(FMLPreInitializationEvent event) {}
-    
+    public void preInit(FMLPreInitializationEvent event) {
+    }
+
     @Override
     public void init(FMLInitializationEvent event) {
         PacketHandler.registerMessages();
@@ -32,14 +33,14 @@ public class CommonProxy implements IProxyTW, IGuiHandler {
         NetworkRegistry.INSTANCE.registerGuiHandler(ThaumicWonders.INSTANCE, this);
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemsTW.PRIMAL_ARROW, new BehaviorDispensePrimalArrow());
 
-        if(Loader.isModLoaded("crafttweaker")) {
+        if (Loader.isModLoaded("crafttweaker")) {
             MinecraftForge.EVENT_BUS.register(new CTIntegration());
         }
-        if(Loader.isModLoaded("theoneprobe")) {
+        if (Loader.isModLoaded("theoneprobe")) {
             TOPCompat.init();
         }
     }
-    
+
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         InitAspects.initAspects();

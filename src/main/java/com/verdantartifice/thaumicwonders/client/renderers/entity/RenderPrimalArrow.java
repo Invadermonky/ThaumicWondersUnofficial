@@ -24,19 +24,19 @@ public class RenderPrimalArrow extends RenderArrow<EntityPrimalArrow> {
     @Override
     protected ResourceLocation getEntityTexture(EntityPrimalArrow entity) {
         switch (entity.getArrowType()) {
-        case 5:
-            return RES_ENTROPY;
-        case 4:
-            return RES_ORDER;
-        case 3:
-            return RES_WATER;
-        case 2:
-            return RES_FIRE;
-        case 1:
-            return RES_EARTH;
-        case 0:
-        default:
-            return RES_AIR;
+            case 5:
+                return RES_ENTROPY;
+            case 4:
+                return RES_ORDER;
+            case 3:
+                return RES_WATER;
+            case 2:
+                return RES_FIRE;
+            case 1:
+                return RES_EARTH;
+            case 0:
+            default:
+                return RES_AIR;
         }
     }
 

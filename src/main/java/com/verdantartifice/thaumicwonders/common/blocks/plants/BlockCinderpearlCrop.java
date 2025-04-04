@@ -20,21 +20,21 @@ public class BlockCinderpearlCrop extends AbstractBlockMysticCrop {
     }
 
     @Override
+    protected boolean canSustainBush(IBlockState state) {
+        return (state.getBlock() == Blocks.SAND) || (state.getBlock() == Blocks.DIRT) ||
+                (state.getBlock() == Blocks.STAINED_HARDENED_CLAY) || (state.getBlock() == Blocks.HARDENED_CLAY);
+    }
+
+    @Override
     protected Item getSeed() {
         return ItemsTW.CINDERPEARL_SEED;
     }
-    
-    @Override
-    protected boolean canSustainBush(IBlockState state) {
-        return (state.getBlock() == Blocks.SAND) || (state.getBlock() == Blocks.DIRT) || 
-                (state.getBlock() == Blocks.STAINED_HARDENED_CLAY) || (state.getBlock() == Blocks.HARDENED_CLAY);
-    }
-    
+
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Desert;
     }
-    
+
     @Override
     public EnumOffsetType getOffsetType() {
         return EnumOffsetType.XZ;

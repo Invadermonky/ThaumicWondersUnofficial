@@ -34,12 +34,12 @@ import java.util.Set;
 public class PacketOreDivinerSearch implements IMessage {
     protected BlockPos origin;
     protected ItemStack searchStack;
-    
+
     public PacketOreDivinerSearch() {
         this.origin = null;
         this.searchStack = null;
     }
-    
+
     public PacketOreDivinerSearch(BlockPos origin, ItemStack searchStack) {
         this.origin = origin;
         this.searchStack = searchStack;
@@ -63,7 +63,7 @@ public class PacketOreDivinerSearch implements IMessage {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         @SideOnly(Side.CLIENT)
         private void handle(PacketOreDivinerSearch message, MessageContext ctx) {
             World world = FMLClientHandler.instance().getClient().world;
@@ -79,11 +79,11 @@ public class PacketOreDivinerSearch implements IMessage {
                         EnumFacing facing = EnumFacing.getFacingFromVector(delta.getX(), delta.getY(), delta.getZ());
                         entityPlayer.sendStatusMessage(new TextComponentString(TextFormatting.DARK_PURPLE + I18n.format("event.ore_diviner.found." + facing.getName())), true);
                     }
-                    ((TileOreDiviner)tile).setTarget(target);
+                    ((TileOreDiviner) tile).setTarget(target);
                 }
             }
         }
-        
+
         @SideOnly(Side.CLIENT)
         @Nullable
         private BlockPos search(World world, BlockPos origin, ItemStack searchStack, int maxRange) {
@@ -96,7 +96,7 @@ public class PacketOreDivinerSearch implements IMessage {
             }
             return target;
         }
-        
+
         @SideOnly(Side.CLIENT)
         @Nullable
         private BlockPos searchShell(World world, BlockPos origin, ItemStack searchStack, int distance) {
@@ -109,7 +109,7 @@ public class PacketOreDivinerSearch implements IMessage {
             }
             return null;
         }
-        
+
         @SideOnly(Side.CLIENT)
         private Set<BlockPos> generateShell(BlockPos origin, int radius) {
             Set<BlockPos> posSet = new HashSet<>();
@@ -118,7 +118,7 @@ public class PacketOreDivinerSearch implements IMessage {
             this.generateZPlanes(origin, radius, posSet);
             return posSet;
         }
-        
+
         @SideOnly(Side.CLIENT)
         private void generateXPlanes(BlockPos origin, int radius, Set<BlockPos> posSet) {
             for (int yy = -radius; yy <= radius; yy++) {
@@ -128,7 +128,7 @@ public class PacketOreDivinerSearch implements IMessage {
                 }
             }
         }
-        
+
         @SideOnly(Side.CLIENT)
         private void generateYPlanes(BlockPos origin, int radius, Set<BlockPos> posSet) {
             for (int xx = -radius; xx <= radius; xx++) {
@@ -138,7 +138,7 @@ public class PacketOreDivinerSearch implements IMessage {
                 }
             }
         }
-        
+
         @SideOnly(Side.CLIENT)
         private void generateZPlanes(BlockPos origin, int radius, Set<BlockPos> posSet) {
             for (int xx = -radius; xx <= radius; xx++) {
@@ -148,7 +148,7 @@ public class PacketOreDivinerSearch implements IMessage {
                 }
             }
         }
-        
+
         @SideOnly(Side.CLIENT)
         @Nonnull
         private ItemStack getStackAtPos(World world, BlockPos pos) {

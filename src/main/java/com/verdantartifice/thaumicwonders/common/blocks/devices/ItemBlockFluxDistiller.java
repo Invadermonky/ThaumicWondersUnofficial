@@ -28,7 +28,7 @@ public class ItemBlockFluxDistiller extends ItemBlock {
             @Override
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
-                return (float)ItemBlockFluxDistiller.this.getCharge(stack);
+                return (float) ItemBlockFluxDistiller.this.getCharge(stack);
             }
         });
     }
@@ -40,7 +40,7 @@ public class ItemBlockFluxDistiller extends ItemBlock {
         tooltip.add(TextFormatting.YELLOW + I18n.format("tile.thaumicwonders.flux_distiller.tooltip.flux", charge));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
-    
+
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
         boolean success = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
@@ -50,7 +50,7 @@ public class ItemBlockFluxDistiller extends ItemBlock {
         }
         return success;
     }
-    
+
     protected int getCharge(ItemStack stack) {
         return stack.hasTagCompound() ? stack.getTagCompound().getInteger("charge") : 0;
     }

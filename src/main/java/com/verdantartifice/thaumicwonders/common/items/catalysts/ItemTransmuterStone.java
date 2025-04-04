@@ -11,11 +11,6 @@ public class ItemTransmuterStone extends ItemTW {
         this.setMaxStackSize(1);
         this.setNoRepair();
     }
-    
-    @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return false;
-    }
 
     @Override
     public boolean isEnchantable(ItemStack stack) {
@@ -25,5 +20,10 @@ public class ItemTransmuterStone extends ItemTW {
     @Override
     public int getItemEnchantability() {
         return 10;
+    }
+
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return false;
     }
 }

@@ -20,7 +20,7 @@ import thaumcraft.api.items.RechargeHelper;
 public class ItemTimewinder extends ItemClock implements IRechargable {
     public static final int COST = 25;
     public static final int CAPACITY = 100;
-    
+
     public ItemTimewinder() {
         super();
         this.setRegistryName(ThaumicWonders.MODID, "timewinder");
@@ -29,7 +29,7 @@ public class ItemTimewinder extends ItemClock implements IRechargable {
         setMaxStackSize(1);
         setNoRepair();
     }
-    
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if (worldIn.provider.isSurfaceWorld()) {
@@ -48,6 +48,11 @@ public class ItemTimewinder extends ItemClock implements IRechargable {
     }
 
     @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.RARE;
+    }
+
+    @Override
     public int getMaxCharge(ItemStack stack, EntityLivingBase player) {
         return CAPACITY;
     }
@@ -55,10 +60,5 @@ public class ItemTimewinder extends ItemClock implements IRechargable {
     @Override
     public EnumChargeDisplay showInHud(ItemStack stack, EntityLivingBase player) {
         return IRechargable.EnumChargeDisplay.NORMAL;
-    }
-    
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
     }
 }

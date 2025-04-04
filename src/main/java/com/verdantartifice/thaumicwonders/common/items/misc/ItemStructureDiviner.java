@@ -28,7 +28,7 @@ public class ItemStructureDiviner extends ItemTW {
         super("structure_diviner");
         this.setMaxStackSize(1);
         this.setNoRepair();
-        
+
         this.addPropertyOverride(new ResourceLocation("angle"), new IItemPropertyGetter() {
             @SideOnly(Side.CLIENT)
             double rotation;
@@ -48,24 +48,24 @@ public class ItemStructureDiviner extends ItemTW {
                     if (worldIn == null) {
                         worldIn = entity.getEntityWorld();
                     }
-                    
+
                     double angle;
                     BlockPos targetPoint = this.getTargetPoint(stack);
                     if (targetPoint != null) {
-                        double entityYaw = held ? (double)entity.rotationYaw : this.getFrameRotation(stack.getItemFrame());
+                        double entityYaw = held ? (double) entity.rotationYaw : this.getFrameRotation(stack.getItemFrame());
                         entityYaw = MathHelper.positiveModulo(entityYaw / 360.0D, 1.0D);
                         angle = 0.5D - (entityYaw - 0.25D - this.getTargetPointToAngle(targetPoint, entity));
                     } else {
                         angle = Math.random();
                     }
-                    
+
                     if (held) {
                         angle = this.wobble(worldIn, angle);
                     }
-                    return MathHelper.positiveModulo((float)angle, 1.0F);
+                    return MathHelper.positiveModulo((float) angle, 1.0F);
                 }
             }
-            
+
             @SideOnly(Side.CLIENT)
             private double wobble(World worldIn, double angle) {
                 if (worldIn.getTotalWorldTime() != this.lastUpdateTick) {
@@ -78,7 +78,7 @@ public class ItemStructureDiviner extends ItemTW {
                 }
                 return this.rotation;
             }
-            
+
             @SideOnly(Side.CLIENT)
             private double getFrameRotation(EntityItemFrame frame) {
                 return MathHelper.wrapDegrees(180 + frame.facingDirection.getHorizontalIndex() * 90);
@@ -93,20 +93,20 @@ public class ItemStructureDiviner extends ItemTW {
                     return null;
                 }
             }
-            
+
             @SideOnly(Side.CLIENT)
             private double getTargetPointToAngle(@Nonnull BlockPos targetPoint, @Nonnull Entity entity) {
-                return Math.atan2((double)targetPoint.getZ() - entity.posZ, (double)targetPoint.getX() - entity.posX) / (Math.PI * 2.0D);
+                return Math.atan2((double) targetPoint.getZ() - entity.posZ, (double) targetPoint.getX() - entity.posX) / (Math.PI * 2.0D);
             }
         });
     }
-    
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         playerIn.openGui(ThaumicWonders.INSTANCE, GuiIds.STRUCTURE_DIVINER, worldIn, 0, 0, 0);
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
-    
+
     @Override
     public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;

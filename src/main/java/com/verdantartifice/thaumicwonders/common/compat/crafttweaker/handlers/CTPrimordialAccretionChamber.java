@@ -18,8 +18,6 @@ import java.util.List;
 @ZenRegister
 @ZenClass("mods." + ThaumicWonders.MODID + ".PrimordialAccretionChamber")
 public class CTPrimordialAccretionChamber {
-    //TODO
-
     @ZenMethod
     public static void addRecipe(IIngredient input, int aer, int aqua, int ignis, int terra, int ordo, int perditio, WeightedItemStack... weightedOutputs) {
         List<WeightedEntry> outputs = new ArrayList<>();

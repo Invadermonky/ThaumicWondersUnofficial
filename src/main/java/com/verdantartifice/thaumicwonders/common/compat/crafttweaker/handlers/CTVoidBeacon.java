@@ -18,7 +18,7 @@ public class CTVoidBeacon {
     @ZenMethod
     public static void add(IItemStack stack, int weight) {
         ItemStack itemStack = CraftTweakerMC.getItemStack(stack);
-        if(itemStack.isEmpty()) {
+        if (itemStack.isEmpty()) {
             CraftTweakerAPI.logError("Failure adding void beacon entry, IItemStack cannot be empty");
         } else {
             VoidBeaconEntryRegistry.addEntry(itemStack, Math.max(weight, 1));
@@ -27,9 +27,10 @@ public class CTVoidBeacon {
 
     @ZenMethod
     public static void add(IOreDictEntry oreDictEntry, int weight) {
-        if(OreDictionary.getOres(oreDictEntry.getName()).isEmpty()) {
+        if (OreDictionary.getOres(oreDictEntry.getName()).isEmpty()) {
             CraftTweakerAPI.logError("There are no items registered to the Ore Dictionary " + oreDictEntry.getName());
-        } if(weight <= 0) {
+        }
+        if (weight <= 0) {
             CraftTweakerAPI.logError("Error adding Void Beacon entry. Weight must be greater than 0.");
         } else {
             VoidBeaconEntryRegistry.addEntry(oreDictEntry.getName(), weight);

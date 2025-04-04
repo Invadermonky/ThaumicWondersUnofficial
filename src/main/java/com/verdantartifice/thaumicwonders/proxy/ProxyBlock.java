@@ -13,7 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ProxyBlock {
     private static ModelResourceLocation fluidQuicksilverLocation = new ModelResourceLocation(new ResourceLocation(ThaumicWonders.MODID, "fluid_quicksilver"), "fluid");
-    
+
     public static void setupBlocksClient(IForgeRegistry<Block> forgeRegistry) {
         Block fluidQuicksilverBlock = forgeRegistry.getValue(new ResourceLocation(ThaumicWonders.MODID, "fluid_quicksilver"));
         Item fluidQuicksilverItem = Item.getItemFromBlock(fluidQuicksilverBlock);

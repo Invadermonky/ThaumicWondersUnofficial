@@ -20,9 +20,14 @@ public abstract class AbstractBlockMysticCrop extends BlockCrops {
         this.setRegistryName(ThaumicWonders.MODID, name);
         this.setTranslationKey(this.getRegistryName().toString());
     }
-    
+
     protected abstract IBlockState getMatureBlockState();
-    
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return CROP_AABB;
+    }
+
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         super.updateTick(worldIn, pos, state, rand);
@@ -30,7 +35,7 @@ public abstract class AbstractBlockMysticCrop extends BlockCrops {
             worldIn.setBlockState(pos, this.getMatureBlockState(), 3);
         }
     }
-    
+
     @Override
     public void grow(World worldIn, BlockPos pos, IBlockState state) {
         super.grow(worldIn, pos, state);
@@ -42,10 +47,5 @@ public abstract class AbstractBlockMysticCrop extends BlockCrops {
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return CROP_AABB;
     }
 }

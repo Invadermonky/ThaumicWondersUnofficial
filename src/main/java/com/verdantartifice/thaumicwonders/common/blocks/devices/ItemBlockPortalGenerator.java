@@ -28,7 +28,7 @@ public class ItemBlockPortalGenerator extends ItemBlock {
     public ItemBlockPortalGenerator(Block block) {
         super(block);
     }
-    
+
     @Override
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         if (world.getBlockState(pos).getBlock() == BlocksTW.PORTAL_ANCHOR) {
@@ -54,7 +54,7 @@ public class ItemBlockPortalGenerator extends ItemBlock {
         }
         return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

@@ -18,12 +18,12 @@ import thaumcraft.api.aspects.Aspect;
 public class PacketMeteorbAction implements IMessage {
     private int targetWeather;
     private BlockPos tilePos;
-    
+
     public PacketMeteorbAction() {
         this.targetWeather = -1;
         this.tilePos = null;
     }
-    
+
     public PacketMeteorbAction(int targetWeather, BlockPos tilePos) {
         this.targetWeather = targetWeather;
         this.tilePos = tilePos;
@@ -47,14 +47,14 @@ public class PacketMeteorbAction implements IMessage {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         private void handle(PacketMeteorbAction message, MessageContext ctx) {
             EntityPlayerMP entityPlayer = ctx.getServerHandler().player;
             World world = entityPlayer.getEntityWorld();
             WorldInfo worldinfo = world.getWorldInfo();
             TileEntity tileEntity = world.getTileEntity(message.tilePos);
             if (tileEntity instanceof TileMeteorb) {
-                TileMeteorb tile = (TileMeteorb)tileEntity;
+                TileMeteorb tile = (TileMeteorb) tileEntity;
                 int duration = (300 + world.rand.nextInt(600)) * 20;
                 if (message.targetWeather == 0 && tile.doesContainerContainAmount(Aspect.AIR, TileMeteorb.MIN_FUEL)) {
                     tile.takeFromContainer(Aspect.AIR, TileMeteorb.MIN_FUEL);
@@ -65,7 +65,7 @@ public class PacketMeteorbAction implements IMessage {
                     worldinfo.setThundering(false);
                     PacketHandler.INSTANCE.sendToDimension(new PacketLocalizedMessage("event.meteorb.used"), world.provider.getDimension());
                     PacketHandler.INSTANCE.sendToAllAround(
-                            new PacketMeteorbFx(message.tilePos, Aspect.AIR.getColor()), 
+                            new PacketMeteorbFx(message.tilePos, Aspect.AIR.getColor()),
                             new NetworkRegistry.TargetPoint(world.provider.getDimension(), message.tilePos.getX(), message.tilePos.getY(), message.tilePos.getZ(), 32.0D));
                 } else if (message.targetWeather == 1 && tile.doesContainerContainAmount(Aspect.WATER, TileMeteorb.MIN_FUEL)) {
                     tile.takeFromContainer(Aspect.WATER, TileMeteorb.MIN_FUEL);
@@ -76,7 +76,7 @@ public class PacketMeteorbAction implements IMessage {
                     worldinfo.setThundering(false);
                     PacketHandler.INSTANCE.sendToDimension(new PacketLocalizedMessage("event.meteorb.used"), world.provider.getDimension());
                     PacketHandler.INSTANCE.sendToAllAround(
-                            new PacketMeteorbFx(message.tilePos, Aspect.WATER.getColor()), 
+                            new PacketMeteorbFx(message.tilePos, Aspect.WATER.getColor()),
                             new NetworkRegistry.TargetPoint(world.provider.getDimension(), message.tilePos.getX(), message.tilePos.getY(), message.tilePos.getZ(), 32.0D));
                 } else if (message.targetWeather == 2 && tile.doesContainerContainAmount(Aspect.ENERGY, TileMeteorb.MIN_FUEL)) {
                     tile.takeFromContainer(Aspect.ENERGY, TileMeteorb.MIN_FUEL);
@@ -87,7 +87,7 @@ public class PacketMeteorbAction implements IMessage {
                     worldinfo.setThundering(true);
                     PacketHandler.INSTANCE.sendToDimension(new PacketLocalizedMessage("event.meteorb.used"), world.provider.getDimension());
                     PacketHandler.INSTANCE.sendToAllAround(
-                            new PacketMeteorbFx(message.tilePos, Aspect.ENERGY.getColor()), 
+                            new PacketMeteorbFx(message.tilePos, Aspect.ENERGY.getColor()),
                             new NetworkRegistry.TargetPoint(world.provider.getDimension(), message.tilePos.getX(), message.tilePos.getY(), message.tilePos.getZ(), 32.0D));
                 } else {
                     PacketHandler.INSTANCE.sendTo(new PacketLocalizedMessage("event.meteorb.unfueled"), entityPlayer);

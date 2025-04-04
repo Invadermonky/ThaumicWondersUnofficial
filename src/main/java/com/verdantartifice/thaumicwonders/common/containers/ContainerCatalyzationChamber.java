@@ -11,11 +11,11 @@ import net.minecraft.item.ItemStack;
 public class ContainerCatalyzationChamber extends Container {
     private InventoryPlayer inventoryPlayer;
     private TileCatalyzationChamber tileEntity;
-    
+
     public ContainerCatalyzationChamber(InventoryPlayer inventoryPlayer, TileCatalyzationChamber chamberTile) {
         this.inventoryPlayer = inventoryPlayer;
         this.tileEntity = chamberTile;
-        
+
         this.addSlotToContainer(new SlotCatalyzationStone(this.tileEntity, 0, 80, 29));
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
@@ -25,11 +25,6 @@ public class ContainerCatalyzationChamber extends Container {
         for (int i = 0; i < 9; i++) {
             this.addSlotToContainer(new Slot(this.inventoryPlayer, i, 8 + (i * 18), 142));
         }
-    }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return true;
     }
 
     @Override
@@ -46,7 +41,7 @@ public class ContainerCatalyzationChamber extends Container {
             } else if (!this.mergeItemStack(stackInSlot, 0, 1, false)) {
                 return ItemStack.EMPTY;
             }
-            
+
             if (stackInSlot.getCount() == 0) {
                 slotObject.putStack(ItemStack.EMPTY);
             } else {
@@ -54,5 +49,10 @@ public class ContainerCatalyzationChamber extends Container {
             }
         }
         return stack;
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer playerIn) {
+        return true;
     }
 }

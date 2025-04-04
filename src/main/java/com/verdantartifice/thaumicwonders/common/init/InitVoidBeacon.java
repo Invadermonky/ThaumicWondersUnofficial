@@ -11,10 +11,10 @@ public class InitVoidBeacon {
     public static void init() {
         registerDefaultEntries();
     }
-    
+
     public static void registerDefaultEntries() {
         int meta;
-        
+
         VoidBeaconEntryRegistry.addEntry("oreLapis");
         VoidBeaconEntryRegistry.addEntry("oreDiamond");
         VoidBeaconEntryRegistry.addEntry("oreRedstone");

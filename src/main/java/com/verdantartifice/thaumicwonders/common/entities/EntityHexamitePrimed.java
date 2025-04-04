@@ -49,8 +49,8 @@ public class EntityHexamitePrimed extends EntityTNTPrimed {
             this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D);
         }
     }
-    
+
     protected void explode() {
-        FluxExplosion.create(this.world, this, this.posX, this.posY + (double)(this.height / 16.0F), this.posZ, 6.0F, true, true, false);
+        FluxExplosion.create(this.world, this, this.posX, this.posY + (double) (this.height / 16.0F), this.posZ, 6.0F, true, true, false);
     }
 }

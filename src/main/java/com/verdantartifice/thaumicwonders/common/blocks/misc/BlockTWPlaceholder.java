@@ -30,30 +30,28 @@ public class BlockTWPlaceholder extends BlockTW {
     }
 
     @Override
-    public EnumPushReaction getPushReaction(IBlockState state) {
-        return EnumPushReaction.BLOCK;
-    }
-
-    @Override
-    protected boolean canSilkHarvest() {
-        return false;
-    }
-    
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-    
-    @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
-    
+
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.INVISIBLE;
     }
-    
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        if ((state.getBlock() == BlocksTW.PLACEHOLDER_ARCANE_STONE || state.getBlock() == BlocksTW.PLACEHOLDER_OBSIDIAN) && !BlockCatalyzationChamber.ignoreDestroy && !worldIn.isRemote) {
+            this.destroyCatalyzer(worldIn, pos);
+        }
+        super.breakBlock(worldIn, pos, state);
+    }
+
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         if (state.getBlock() == BlocksTW.PLACEHOLDER_ARCANE_STONE) {
@@ -64,12 +62,7 @@ public class BlockTWPlaceholder extends BlockTW {
             return Item.getItemById(0);
         }
     }
-    
-    @Override
-    public int damageDropped(IBlockState state) {
-        return 0;
-    }
-    
+
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {
@@ -91,15 +84,22 @@ public class BlockTWPlaceholder extends BlockTW {
         }
         return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
-    
+
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if ((state.getBlock() == BlocksTW.PLACEHOLDER_ARCANE_STONE || state.getBlock() == BlocksTW.PLACEHOLDER_OBSIDIAN) && !BlockCatalyzationChamber.ignoreDestroy && !worldIn.isRemote) {
-            this.destroyCatalyzer(worldIn, pos);
-        }
-        super.breakBlock(worldIn, pos, state);
+    protected boolean canSilkHarvest() {
+        return false;
     }
-    
+
+    @Override
+    public EnumPushReaction getPushReaction(IBlockState state) {
+        return EnumPushReaction.BLOCK;
+    }
+
+    @Override
+    public int damageDropped(IBlockState state) {
+        return 0;
+    }
+
     private void destroyCatalyzer(World worldIn, BlockPos pos) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {

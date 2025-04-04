@@ -8,13 +8,13 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler {
     public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(ThaumicWonders.MODID);
-    
+
     private static int packetId = 0;
-    
+
     private static int nextId() {
         return packetId++;
     }
-    
+
     public static void registerMessages() {
         INSTANCE.registerMessage(PacketTimewinderAction.Handler.class, PacketTimewinderAction.class, nextId(), Side.SERVER);
         INSTANCE.registerMessage(PacketTileToServer.Handler.class, PacketTileToServer.class, nextId(), Side.SERVER);

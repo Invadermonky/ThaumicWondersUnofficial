@@ -24,7 +24,7 @@ public class ItemPanacea extends ItemFood implements IVariantItem {
     protected final String baseName;
     protected String[] variants;
     protected int[] variantsMeta;
-    
+
     public ItemPanacea() {
         super(6, 1.8F, false);
         this.baseName = "panacea";
@@ -32,8 +32,8 @@ public class ItemPanacea extends ItemFood implements IVariantItem {
         this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
         this.setAlwaysEdible();
-        
-        this.variants = new String[] { "normal", "enchanted" };
+
+        this.variants = new String[]{"normal", "enchanted"};
         this.setHasSubtypes(true);
         this.variantsMeta = new int[this.variants.length];
         for (int index = 0; index < this.variants.length; index++) {
@@ -54,12 +54,25 @@ public class ItemPanacea extends ItemFood implements IVariantItem {
     public boolean hasEffect(ItemStack stack) {
         return super.hasEffect(stack) || stack.getMetadata() > 0;
     }
-    
+
     @Override
     public EnumRarity getRarity(ItemStack stack) {
         return stack.getMetadata() == 0 ? EnumRarity.RARE : EnumRarity.EPIC;
     }
-    
+
+    @Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if (tab == ThaumicWonders.CREATIVE_TAB || tab == CreativeTabs.SEARCH) {
+            if (!this.getHasSubtypes()) {
+                super.getSubItems(tab, items);
+            } else {
+                for (int meta : this.variantsMeta) {
+                    items.add(new ItemStack(this, 1, meta));
+                }
+            }
+        }
+    }
+
     @Override
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
         if (!worldIn.isRemote) {
@@ -85,35 +98,22 @@ public class ItemPanacea extends ItemFood implements IVariantItem {
             }
         }
     }
-    
-    @Override
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-        if (tab == ThaumicWonders.CREATIVE_TAB || tab == CreativeTabs.SEARCH) {
-            if (!this.getHasSubtypes()) {
-                super.getSubItems(tab, items);
-            } else {
-                for (int meta : this.variantsMeta) {
-                    items.add(new ItemStack(this, 1, meta));
-                }
-            }
-        }
-    }
 
     @Override
     public Item getItem() {
         return this;
     }
-    
+
     @Override
     public String[] getVariantNames() {
         return this.variants;
     }
-    
+
     @Override
     public int[] getVariantMeta() {
         return this.variantsMeta;
     }
-    
+
     @Override
     public ModelResourceLocation getCustomModelResourceLocation(String variant) {
         if (this.baseName.equals(variant)) {

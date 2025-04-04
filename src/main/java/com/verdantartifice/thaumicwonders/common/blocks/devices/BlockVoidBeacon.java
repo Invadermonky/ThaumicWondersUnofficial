@@ -23,7 +23,7 @@ public class BlockVoidBeacon extends BlockDeviceTW<TileVoidBeacon> implements IB
     public BlockVoidBeacon() {
         super(Material.GLASS, TileVoidBeacon.class, "void_beacon");
     }
-    
+
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
@@ -44,7 +44,7 @@ public class BlockVoidBeacon extends BlockDeviceTW<TileVoidBeacon> implements IB
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileVoidBeacon) {
-            TileVoidBeacon tileEntity = (TileVoidBeacon)te;
+            TileVoidBeacon tileEntity = (TileVoidBeacon) te;
             if (playerIn.isSneaking() && playerIn.getHeldItem(hand).isEmpty()) {
                 // Dump the beacon's contents
                 if (!worldIn.isRemote) {

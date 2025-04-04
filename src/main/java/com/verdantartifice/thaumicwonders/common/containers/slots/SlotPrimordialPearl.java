@@ -16,29 +16,29 @@ public class SlotPrimordialPearl extends Slot {
     }
 
     @Override
+    public boolean isItemValid(ItemStack stack) {
+        return stack != null && !stack.isEmpty() && AcceleratorRecipeRegistry.getRecipe(stack) != null;
+    }
+
+    @Override
     public void putStack(ItemStack stack) {
         this.recipe = AcceleratorRecipeRegistry.getRecipe(stack);
         super.putStack(stack);
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack) {
-        return  stack != null && !stack.isEmpty() && AcceleratorRecipeRegistry.getRecipe(stack) != null;
+    public int getSlotStackLimit() {
+        return 1;
     }
 
     @Override
     public int getItemStackLimit(ItemStack stack) {
-        if(this.recipe != null) {
+        if (this.recipe != null) {
             return Arrays.stream(this.recipe.getInput().getMatchingStacks())
                     .filter(input -> !input.isEmpty()).findFirst()
                     .map(ItemStack::getCount).orElse(1);
         } else {
             return super.getItemStackLimit(stack);
         }
-    }
-
-    @Override
-    public int getSlotStackLimit() {
-        return 1;
     }
 }

@@ -19,16 +19,21 @@ import net.minecraft.world.World;
 
 public class BlockFluxDistiller extends BlockDeviceTW<TileFluxDistiller> {
     public static final PropertyInteger CHARGE = PropertyInteger.create("charge", 0, 10);
-    
+
     public BlockFluxDistiller() {
         super(Material.IRON, TileFluxDistiller.class, "flux_distiller");
         this.setSoundType(SoundType.METAL);
         this.setDefaultState(this.blockState.getBaseState().withProperty(CHARGE, 0));
     }
-    
+
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return BlockFaceShape.UNDEFINED;
     }
 
     @Override
@@ -37,26 +42,6 @@ public class BlockFluxDistiller extends BlockDeviceTW<TileFluxDistiller> {
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
-    }
-    
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, CHARGE);
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(CHARGE, meta);
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(CHARGE);
-    }
-    
-    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
         ItemStack drop = new ItemStack(this);
         if (!drop.hasTagCompound()) {
@@ -64,5 +49,20 @@ public class BlockFluxDistiller extends BlockDeviceTW<TileFluxDistiller> {
         }
         drop.getTagCompound().setInteger("charge", this.getMetaFromState(state));
         spawnAsEntity(worldIn, pos, drop);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(CHARGE, meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(CHARGE);
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, CHARGE);
     }
 }

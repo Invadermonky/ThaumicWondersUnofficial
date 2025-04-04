@@ -14,8 +14,8 @@ public class TileAlkahestVat extends TileTW implements ITickable {
 
     protected void drawEffects() {
         FXDispatcher.INSTANCE.crucibleFroth(
-                this.pos.getX() + 0.2F + (this.world.rand.nextFloat() * 0.6F), 
-                this.pos.getY() + this.getFluidHeight(), 
+                this.pos.getX() + 0.2F + (this.world.rand.nextFloat() * 0.6F),
+                this.pos.getY() + this.getFluidHeight(),
                 this.pos.getZ() + 0.2F + (this.world.rand.nextFloat() * 0.6F)
         );
     }

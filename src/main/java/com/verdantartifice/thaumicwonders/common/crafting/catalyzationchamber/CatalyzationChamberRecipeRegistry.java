@@ -26,18 +26,19 @@ public class CatalyzationChamberRecipeRegistry {
     }
 
     public static void addRecipe(Ingredient input, Ingredient catalyst, ItemStack output, int fluxChance, Aspect color) {
-        if(input == null || input == Ingredient.EMPTY) {
+        if (input == null || input == Ingredient.EMPTY) {
             ThaumicWonders.LOGGER.error("Input cannot be empty");
-        } else if(catalyst == null || catalyst == Ingredient.EMPTY) {
+        } else if (catalyst == null || catalyst == Ingredient.EMPTY) {
             ThaumicWonders.LOGGER.error("Catalyst cannot be empty");
-        } else if(output.isEmpty()) {
+        } else if (output.isEmpty()) {
             ThaumicWonders.LOGGER.error("Output cannot be empty");
-        } else if(fluxChance <= 0) {
+        } else if (fluxChance <= 0) {
             ThaumicWonders.LOGGER.error("Flux chance cannot be less than 0");
         } else {
             try {
                 addRecipe(new CatalyzationChamberRecipe(input, catalyst, output, fluxChance, color));
-            } catch (IllegalArgumentException ignored) {}
+            } catch (IllegalArgumentException ignored) {
+            }
         }
     }
 
@@ -50,7 +51,7 @@ public class CatalyzationChamberRecipeRegistry {
     }
 
     public static void addAlchemistRecipe(String inputOreDict, ItemStack output) {
-        if(OreDictionary.doesOreNameExist(inputOreDict)) {
+        if (OreDictionary.doesOreNameExist(inputOreDict)) {
             addAlchemistRecipe(CraftingHelper.getIngredient(inputOreDict), output);
         }
     }
@@ -60,7 +61,7 @@ public class CatalyzationChamberRecipeRegistry {
     }
 
     public static void addAlienistRecipe(String inputOreDict, ItemStack output) {
-        if(OreDictionary.doesOreNameExist(inputOreDict)) {
+        if (OreDictionary.doesOreNameExist(inputOreDict)) {
             addAlienistRecipe(CraftingHelper.getIngredient(inputOreDict), output);
         }
     }
@@ -70,13 +71,13 @@ public class CatalyzationChamberRecipeRegistry {
     }
 
     public static void addTransmuterRecipe(String inputOreDict, ItemStack output) {
-        if(OreDictionary.doesOreNameExist(inputOreDict)) {
+        if (OreDictionary.doesOreNameExist(inputOreDict)) {
             addTransmuterRecipe(CraftingHelper.getIngredient(inputOreDict), output);
         }
     }
 
     public static void addTransmuterRecipe(String inputOreDict, String outputOreDict) {
-        if(OreDictionary.doesOreNameExist(outputOreDict)) {
+        if (OreDictionary.doesOreNameExist(outputOreDict)) {
             OreDictionary.getOres(outputOreDict, false).stream().findFirst().ifPresent(output -> addTransmuterRecipe(inputOreDict, output));
         }
     }
@@ -111,7 +112,7 @@ public class CatalyzationChamberRecipeRegistry {
 
     @Nullable
     public static CatalyzationChamberRecipe getRecipe(ItemStack input, ItemStack catalyst) {
-        if(input != null && !input.isEmpty() && catalyst != null && !catalyst.isEmpty()) {
+        if (input != null && !input.isEmpty() && catalyst != null && !catalyst.isEmpty()) {
             return CATALYZATION_CHAMBER_RECIPES.stream().filter(recipe -> recipe.matches(input, catalyst)).findFirst().orElse(null);
         }
         return null;

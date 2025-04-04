@@ -13,12 +13,12 @@ public class EntityFluxFireball extends EntityFireball {
         super(world);
         this.setSize(1.0F, 1.0F);
     }
-    
+
     public EntityFluxFireball(World world, double x, double y, double z, double accelX, double accelY, double accelZ) {
         super(world, x, y, z, accelX, accelY, accelZ);
         this.setSize(1.0F, 1.0F);
     }
-    
+
     public EntityFluxFireball(World world, EntityLivingBase shooter, double accelX, double accelY, double accelZ) {
         super(world, shooter, accelX, accelY, accelZ);
         this.setSize(1.0F, 1.0F);
@@ -30,8 +30,8 @@ public class EntityFluxFireball extends EntityFireball {
             if (result.entityHit != null) {
                 if (this.shootingEntity != null) {
                     if (result.entityHit.attackEntityFrom(
-                            DamageSource.causeMobDamage(this.shootingEntity), 
-                            (float)this.shootingEntity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue())) {
+                            DamageSource.causeMobDamage(this.shootingEntity),
+                            (float) this.shootingEntity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue())) {
                         if (result.entityHit.isEntityAlive()) {
                             this.applyEnchantments(this.shootingEntity, result.entityHit);
                         }
@@ -49,7 +49,7 @@ public class EntityFluxFireball extends EntityFireball {
     public boolean canBeCollidedWith() {
         return false;
     }
-    
+
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         return false;

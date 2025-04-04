@@ -16,16 +16,11 @@ public class RecipeDisjunctionClothUse extends IForgeRegistryEntry.Impl<IRecipe>
         super();
         this.setRegistryName(ThaumicWonders.MODID, "disenchant");
     }
-    
-    @Override
-    public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World worldIn) {
-        return RecipeDisjunctionClothUse.matches(inv);
-    }
-    
+
     public static boolean matches(@Nonnull IInventory inv) {
         boolean foundCloth = false;
         boolean foundTarget = false;
-        
+
         for (int index = 0; index < inv.getSizeInventory(); index++) {
             ItemStack stack = inv.getStackInSlot(index);
             if (!stack.isEmpty()) {
@@ -39,15 +34,20 @@ public class RecipeDisjunctionClothUse extends IForgeRegistryEntry.Impl<IRecipe>
                 }
             }
         }
-        
+
         return foundCloth && foundTarget;
+    }
+
+    @Override
+    public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World worldIn) {
+        return RecipeDisjunctionClothUse.matches(inv);
     }
 
     @Override
     @Nonnull
     public ItemStack getCraftingResult(@Nonnull InventoryCrafting inv) {
         ItemStack stackToDisenchant = ItemStack.EMPTY;
-        
+
         for (int index = 0; index < inv.getSizeInventory(); index++) {
             ItemStack stack = inv.getStackInSlot(index);
             if (!stack.isEmpty() && stack.getItem() != ItemsTW.DISJUNCTION_CLOTH && stack.isItemEnchanted()) {
@@ -58,7 +58,7 @@ public class RecipeDisjunctionClothUse extends IForgeRegistryEntry.Impl<IRecipe>
         if (!stackToDisenchant.isEmpty() && stackToDisenchant.hasTagCompound()) {
             stackToDisenchant.getTagCompound().removeTag("ench");
         }
-        
+
         return stackToDisenchant;
     }
 

@@ -20,9 +20,9 @@ public class VoidBeaconEntryRegistry {
     }
 
     public static void addEntry(ItemStack stack, int weight) {
-        if(stack.isEmpty()) {
+        if (stack.isEmpty()) {
             ThaumicWonders.LOGGER.error("ItemStack cannot be empty");
-        } else if(weight <= 0) {
+        } else if (weight <= 0) {
             ThaumicWonders.LOGGER.error("Weight must be greater than 0");
         } else {
             VOID_BEACON_ENTRIES.add(new VoidBeaconEntry(stack));
@@ -35,7 +35,7 @@ public class VoidBeaconEntryRegistry {
 
     public static void addEntry(String oreDict, int weight) {
         NonNullList<ItemStack> oreStacks = OreDictionary.getOres(oreDict);
-        if(oreStacks.isEmpty()) {
+        if (oreStacks.isEmpty()) {
             ThaumicWonders.LOGGER.error("There are no items registered with the {} ore dictionary string.", oreDict);
         } else {
             //Only add the first result to prevent ore dictionary strings from skewing the output.
@@ -57,7 +57,7 @@ public class VoidBeaconEntryRegistry {
     }
 
     public static void removeEntry(String oreDict) {
-        for(ItemStack stack : OreDictionary.getOres(oreDict)) {
+        for (ItemStack stack : OreDictionary.getOres(oreDict)) {
             removeEntry(stack);
         }
     }
@@ -73,13 +73,13 @@ public class VoidBeaconEntryRegistry {
     public static ItemStack getDropForAspect(Random rand, Aspect aspect) {
         List<VoidBeaconEntry> aspectEntries = getEntriesForAspect(aspect);
         int totalWeight = aspectEntries.stream().mapToInt(WeightedEntry::getWeight).sum();
-        if(aspectEntries.isEmpty() || totalWeight <= 0) {
+        if (aspectEntries.isEmpty() || totalWeight <= 0) {
             return ItemStack.EMPTY;
         }
 
         int weight = rand.nextInt(totalWeight);
-        for(VoidBeaconEntry entry : VOID_BEACON_ENTRIES) {
-            if(weight < entry.getWeight()) {
+        for (VoidBeaconEntry entry : VOID_BEACON_ENTRIES) {
+            if (weight < entry.getWeight()) {
                 return entry.getStack();
             } else {
                 weight -= entry.getWeight();

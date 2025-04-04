@@ -22,12 +22,12 @@ public class BlockPortalAnchor extends BlockDeviceTW<TilePortalAnchor> {
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return BlockFaceShape.UNDEFINED;
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
     }
 }

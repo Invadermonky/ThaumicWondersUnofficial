@@ -10,20 +10,20 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiCatalyzationChamber extends GuiContainer {
     private static final ResourceLocation TEXTURE = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_catalyzation_chamber.png");
-    
+
     public GuiCatalyzationChamber(InventoryPlayer inventoryPlayer, TileCatalyzationChamber chamberTile) {
         super(new ContainerCatalyzationChamber(inventoryPlayer, chamberTile));
         this.xSize = 175;
         this.ySize = 232;
     }
-    
+
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
     }
-    
+
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         this.mc.renderEngine.bindTexture(TEXTURE);

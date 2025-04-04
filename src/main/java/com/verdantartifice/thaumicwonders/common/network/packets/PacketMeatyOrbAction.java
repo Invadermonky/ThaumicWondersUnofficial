@@ -18,15 +18,15 @@ import thaumcraft.api.aura.AuraHelper;
 
 public class PacketMeatyOrbAction implements IMessage {
     private BlockPos tilePos;
-    
+
     public PacketMeatyOrbAction() {
         this.tilePos = null;
     }
-    
+
     public PacketMeatyOrbAction(BlockPos tilePos) {
         this.tilePos = tilePos;
     }
-    
+
     @Override
     public void fromBytes(ByteBuf buf) {
         this.tilePos = BlockPos.fromLong(buf.readLong());
@@ -43,27 +43,27 @@ public class PacketMeatyOrbAction implements IMessage {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         private void handle(PacketMeatyOrbAction message, MessageContext ctx) {
             EntityPlayerMP entityPlayer = ctx.getServerHandler().player;
             World world = entityPlayer.getEntityWorld();
             TileEntity tileEntity = world.getTileEntity(message.tilePos);
             if (tileEntity instanceof TileMeatyOrb) {
-                TileMeatyOrb tile = (TileMeatyOrb)tileEntity;
+                TileMeatyOrb tile = (TileMeatyOrb) tileEntity;
                 int requiredFuel = ConfigHandlerTW.meaty_orb.essentiaRequirement;
-                if ( tile.doesContainerContainAmount(Aspect.WATER, requiredFuel) &&
-                     tile.doesContainerContainAmount(Aspect.LIFE, requiredFuel) &&
-                     tile.doesContainerContainAmount(Aspect.ELDRITCH, requiredFuel) ) {
+                if (tile.doesContainerContainAmount(Aspect.WATER, requiredFuel) &&
+                        tile.doesContainerContainAmount(Aspect.LIFE, requiredFuel) &&
+                        tile.doesContainerContainAmount(Aspect.ELDRITCH, requiredFuel)) {
                     tile.takeFromContainer(Aspect.WATER, requiredFuel);
                     tile.takeFromContainer(Aspect.LIFE, requiredFuel);
                     tile.takeFromContainer(Aspect.ELDRITCH, requiredFuel);
                     AuraHelper.polluteAura(world, message.tilePos, 10.0F, true);
                     tile.setActive(true);
                     PacketHandler.INSTANCE.sendToAllAround(
-                            new PacketLocalizedMessage("event.meaty_orb.used"), 
+                            new PacketLocalizedMessage("event.meaty_orb.used"),
                             new NetworkRegistry.TargetPoint(world.provider.getDimension(), message.tilePos.getX(), message.tilePos.getY(), message.tilePos.getZ(), 32.0D));
                     PacketHandler.INSTANCE.sendToAllAround(
-                            new PacketMeteorbFx(message.tilePos, Aspect.ELDRITCH.getColor()), 
+                            new PacketMeteorbFx(message.tilePos, Aspect.ELDRITCH.getColor()),
                             new NetworkRegistry.TargetPoint(world.provider.getDimension(), message.tilePos.getX(), message.tilePos.getY(), message.tilePos.getZ(), 32.0D));
                 } else {
                     PacketHandler.INSTANCE.sendTo(new PacketLocalizedMessage("event.meaty_orb.unfueled"), entityPlayer);

@@ -55,11 +55,11 @@ public class InitItems {
         registerItem(forgeRegistry, new ItemPanacea());
         registerItem(forgeRegistry, new ItemLetheWater());
     }
-    
+
     private static void registerItem(IForgeRegistry<Item> forgeRegistry, Item item) {
         forgeRegistry.register(item);
         if (item.getHasSubtypes() && item instanceof IVariantItem) {
-            InitItems.ITEM_VARIANT_HOLDERS.add((IVariantItem)item);
+            InitItems.ITEM_VARIANT_HOLDERS.add((IVariantItem) item);
         } else {
             InitItems.ITEMS.add(item);
         }

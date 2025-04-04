@@ -52,7 +52,7 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 public class InitRecipes {
     private static ResourceLocation defaultGroup = new ResourceLocation("");
-    
+
     public static void initRecipes(IForgeRegistry<IRecipe> forgeRegistry) {
         initNormalRecipes(forgeRegistry);
         initArcaneRecipes();
@@ -66,13 +66,13 @@ public class InitRecipes {
         initPrimordialAccretionChamberRecipes();
         InitVoidBeacon.init();
     }
-    
+
     private static void initMultiblockRecipes() {
         initCatalyzationChamber();
         initPrimordialAccretionChamber();
         initCoalescencePlatform();
     }
-    
+
     private static void initCatalyzationChamber() {
         Part AS = new Part(BlocksTC.stoneArcane, new ItemStack(BlocksTW.PLACEHOLDER_ARCANE_STONE));
         Part OB = new Part(Blocks.OBSIDIAN, new ItemStack(BlocksTW.PLACEHOLDER_OBSIDIAN));
@@ -80,31 +80,31 @@ public class InitRecipes {
         Part QS = new Part(BlocksTW.FLUID_QUICKSILVER, BlocksTW.CATALYZATION_CHAMBER, true);
         Part[][][] catalyzationChamberBlueprint = {
                 {
-                    { AS, OB, AS },
-                    { OB, null, OB},
-                    { AS, OB, AS }
+                        {AS, OB, AS},
+                        {OB, null, OB},
+                        {AS, OB, AS}
                 },
                 {
-                    { AS, OB, AS },
-                    { OB, QS, OB },
-                    { AS, IB, AS }
+                        {AS, OB, AS},
+                        {OB, QS, OB},
+                        {AS, IB, AS}
                 },
                 {
-                    { AS, OB, AS },
-                    { OB, OB, OB },
-                    { AS, OB, AS }
+                        {AS, OB, AS},
+                        {OB, OB, OB},
+                        {AS, OB, AS}
                 }
         };
         IDustTrigger.registerDustTrigger(new DustTriggerMultiblock("TWOND_CATALYZATION_CHAMBER@2", catalyzationChamberBlueprint));
         ThaumcraftApi.addMultiblockRecipeToCatalog(new ResourceLocation(ThaumicWonders.MODID, "catalyzation_chamber"), new ThaumcraftApi.BluePrint(
-                "TWOND_CATALYZATION_CHAMBER@2", 
+                "TWOND_CATALYZATION_CHAMBER@2",
                 catalyzationChamberBlueprint,
                 new ItemStack(BlocksTC.stoneArcane, 12),
                 new ItemStack(Blocks.OBSIDIAN, 12),
                 new ItemStack(Blocks.IRON_BARS),
                 FluidUtil.getFilledBucket(new FluidStack(FluidQuicksilver.INSTANCE, 1000))));
     }
-    
+
     private static void initPrimordialAccretionChamber() {
         Part TH = new Part(BlocksTC.metalBlockThaumium, new ItemStack(BlocksTW.PLACEHOLDER_THAUMIUM_BLOCK));
         Part VM = new Part(BlocksTC.metalBlockVoid, new ItemStack(BlocksTW.PLACEHOLDER_VOID_METAL_BLOCK));
@@ -113,24 +113,24 @@ public class InitRecipes {
         Part QS = new Part(BlocksTW.FLUID_QUICKSILVER, BlocksTW.PRIMORDIAL_ACCRETION_CHAMBER, true);
         Part[][][] accretionChamberBlueprint = {
                 {
-                    { VM, TH, VM },
-                    { TH, null, TH },
-                    { VM, TH, VM }
+                        {VM, TH, VM},
+                        {TH, null, TH},
+                        {VM, TH, VM}
                 },
                 {
-                    { AA, TH, AA },
-                    { AA, QS, AA },
-                    { AA, IB, AA }
+                        {AA, TH, AA},
+                        {AA, QS, AA},
+                        {AA, IB, AA}
                 },
                 {
-                    { VM, TH, VM },
-                    { TH, TH, TH },
-                    { VM, TH, VM }
+                        {VM, TH, VM},
+                        {TH, TH, TH},
+                        {VM, TH, VM}
                 }
         };
         IDustTrigger.registerDustTrigger(new DustTriggerMultiblock("TWOND_PRIMORDIAL_ACCRETION_CHAMBER", accretionChamberBlueprint));
         ThaumcraftApi.addMultiblockRecipeToCatalog(new ResourceLocation(ThaumicWonders.MODID, "primordial_accretion_chamber"), new ThaumcraftApi.BluePrint(
-                "TWOND_PRIMORDIAL_ACCRETION_CHAMBER", 
+                "TWOND_PRIMORDIAL_ACCRETION_CHAMBER",
                 accretionChamberBlueprint,
                 new ItemStack(BlocksTC.metalBlockThaumium, 10),
                 new ItemStack(BlocksTC.metalBlockVoid, 8),
@@ -138,7 +138,7 @@ public class InitRecipes {
                 new ItemStack(Blocks.IRON_BARS),
                 FluidUtil.getFilledBucket(new FluidStack(FluidQuicksilver.INSTANCE, 1000))));
     }
-    
+
     private static void initCoalescencePlatform() {
         Part VMET = new Part(BlocksTC.metalBlockVoid, null);
         Part ASBR = new Part(BlocksTC.stoneArcaneBrick, null);
@@ -150,70 +150,70 @@ public class InitRecipes {
         Part CMAT = new Part(BlocksTW.COALESCENCE_MATRIX_PRECURSOR, new ItemStack(BlocksTW.COALESCENCE_MATRIX));
         Part[][][] coalescencePlatformBlueprint = {
                 {
-                    { null, null, SNTP, null, null, null, SNTP, null, null },
-                    { null, null, null, null, null, null, null, null, null },
-                    { SNTP, null, null, null, null, null, null, null, SNTP },
-                    { null, null, null, null, null, null, null, null, null },
-                    { null, null, null, null, null, null, null, null, null },
-                    { null, null, null, null, null, null, null, null, null },
-                    { SNTP, null, null, null, null, null, null, null, SNTP },
-                    { null, null, null, null, null, null, null, null, null },
-                    { null, null, SNTP, null, null, null, SNTP, null, null },
+                        {null, null, SNTP, null, null, null, SNTP, null, null},
+                        {null, null, null, null, null, null, null, null, null},
+                        {SNTP, null, null, null, null, null, null, null, SNTP},
+                        {null, null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null, null},
+                        {SNTP, null, null, null, null, null, null, null, SNTP},
+                        {null, null, null, null, null, null, null, null, null},
+                        {null, null, SNTP, null, null, null, SNTP, null, null},
                 },
                 {
-                    { null, null, SNB1, null, null, null, SNB2, null, null },
-                    { null, null, null, null, null, null, null, null, null },
-                    { SNB1, null, null, null, null, null, null, null, SNB2 },
-                    { null, null, null, null, null, null, null, null, null },
-                    { null, null, null, null, CMAT, null, null, null, null },
-                    { null, null, null, null, null, null, null, null, null },
-                    { SNB3, null, null, null, null, null, null, null, SNB4 },
-                    { null, null, null, null, null, null, null, null, null },
-                    { null, null, SNB3, null, null, null, SNB4, null, null },
+                        {null, null, SNB1, null, null, null, SNB2, null, null},
+                        {null, null, null, null, null, null, null, null, null},
+                        {SNB1, null, null, null, null, null, null, null, SNB2},
+                        {null, null, null, null, null, null, null, null, null},
+                        {null, null, null, null, CMAT, null, null, null, null},
+                        {null, null, null, null, null, null, null, null, null},
+                        {SNB3, null, null, null, null, null, null, null, SNB4},
+                        {null, null, null, null, null, null, null, null, null},
+                        {null, null, SNB3, null, null, null, SNB4, null, null},
                 },
                 {
-                    { null, null, ASBR, ASBR, ASBR, ASBR, ASBR, null, null },
-                    { null, ASBR, VMET, VMET, VMET, VMET, VMET, ASBR, null },
-                    { ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR },
-                    { ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR },
-                    { ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR },
-                    { ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR },
-                    { ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR },
-                    { null, ASBR, VMET, VMET, VMET, VMET, VMET, ASBR, null },
-                    { null, null, ASBR, ASBR, ASBR, ASBR, ASBR, null, null },
+                        {null, null, ASBR, ASBR, ASBR, ASBR, ASBR, null, null},
+                        {null, ASBR, VMET, VMET, VMET, VMET, VMET, ASBR, null},
+                        {ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR},
+                        {ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR},
+                        {ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR},
+                        {ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR},
+                        {ASBR, VMET, VMET, VMET, VMET, VMET, VMET, VMET, ASBR},
+                        {null, ASBR, VMET, VMET, VMET, VMET, VMET, ASBR, null},
+                        {null, null, ASBR, ASBR, ASBR, ASBR, ASBR, null, null},
                 }
         };
         IDustTrigger.registerDustTrigger(new DustTriggerMultiblock("TWOND_COALESCENCE_MATRIX", coalescencePlatformBlueprint));
         ThaumcraftApi.addMultiblockRecipeToCatalog(new ResourceLocation(ThaumicWonders.MODID, "coalescence_platform"), new ThaumcraftApi.BluePrint(
-                "TWOND_COALESCENCE_MATRIX", 
+                "TWOND_COALESCENCE_MATRIX",
                 coalescencePlatformBlueprint,
                 new ItemStack(BlocksTC.metalBlockVoid, 45),
                 new ItemStack(BlocksTC.stoneArcaneBrick, 24),
                 new ItemStack(BlocksTC.stoneArcane, 16),
                 new ItemStack(BlocksTW.COALESCENCE_MATRIX_PRECURSOR)));
     }
-    
+
     private static void initNormalRecipes(IForgeRegistry<IRecipe> forgeRegistry) {
         forgeRegistry.register(new RecipeDisjunctionClothUse());
         forgeRegistry.register(new RecipeFlyingCarpetDyes());
-        
+
         ResourceLocation qsGroup = new ResourceLocation(ThaumicWonders.MODID, "quicksilver_bucket_group");
-        shapelessOreDictRecipe("quicksilver_bucket", qsGroup, FluidUtil.getFilledBucket(new FluidStack(FluidQuicksilver.INSTANCE, 1000)), new Object[] { 
-                Items.BUCKET, new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver), 
-                new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver), 
-                new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver) 
+        shapelessOreDictRecipe("quicksilver_bucket", qsGroup, FluidUtil.getFilledBucket(new FluidStack(FluidQuicksilver.INSTANCE, 1000)), new Object[]{
+                Items.BUCKET, new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver),
+                new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver),
+                new ItemStack(ItemsTC.quicksilver), new ItemStack(ItemsTC.quicksilver)
         });
-        shapelessOreDictRecipe("quicksilver_bucket_deconstruct", qsGroup, new ItemStack(ItemsTC.quicksilver, 8), 
-                new Object[] { new IngredientNBTTC(FluidUtil.getFilledBucket(new FluidStack(FluidQuicksilver.INSTANCE, 1000))) });
+        shapelessOreDictRecipe("quicksilver_bucket_deconstruct", qsGroup, new ItemStack(ItemsTC.quicksilver, 8),
+                new Object[]{new IngredientNBTTC(FluidUtil.getFilledBucket(new FluidStack(FluidQuicksilver.INSTANCE, 1000)))});
     }
-    
+
     private static IRecipe shapelessOreDictRecipe(@Nonnull String name, @Nullable ResourceLocation group, @Nonnull ItemStack result, Object[] inputs) {
         IRecipe recipe = new ShapelessOreRecipe(group, result, inputs);
         recipe.setRegistryName(new ResourceLocation(ThaumicWonders.MODID, name));
         GameData.register_impl(recipe);
         return recipe;
     }
-    
+
     private static void initArcaneRecipes() {
         ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "dimensional_ripper"), new ShapedArcaneRecipe(
                 defaultGroup,
@@ -471,7 +471,7 @@ public class InitRecipes {
                 new AspectList().add(Aspect.MAGIC, 20).add(Aspect.MIND, 20).add(Aspect.VOID, 20)
         ));
     }
-    
+
     private static void initInfusionRecipes() {
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "everburning_urn"), new InfusionRecipe(
                 "TWOND_EVERBURNING_URN",
@@ -484,7 +484,7 @@ public class InitRecipes {
                 new ItemStack(Items.LAVA_BUCKET),
                 ThaumcraftApiHelper.makeCrystal(Aspect.FIRE),
                 new ItemStack(Blocks.OBSIDIAN)));
-        
+
         ItemStack destroyer = new ItemStack(ItemsTW.PRIMAL_DESTROYER);
         EnumInfusionEnchantment.addInfusionEnchantment(destroyer, EnumInfusionEnchantment.ESSENCE, 3);
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "primal_destroyer"), new InfusionRecipe(
@@ -499,7 +499,7 @@ public class InitRecipes {
                 "plateVoid",
                 ThaumcraftApiHelper.makeCrystal(Aspect.FIRE),
                 ThaumcraftApiHelper.makeCrystal(Aspect.FIRE)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "flying_carpet"), new InfusionRecipe(
                 "TWOND_FLYING_CARPET",
                 new ItemStack(ItemsTW.FLYING_CARPET),
@@ -511,7 +511,7 @@ public class InitRecipes {
                 new ItemStack(ItemsTC.visResonator),
                 ThaumcraftApiHelper.makeCrystal(Aspect.AIR),
                 ThaumcraftApiHelper.makeCrystal(Aspect.AIR)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "timewinder"), new InfusionRecipe(
                 "TWOND_TIMEWINDER",
                 new ItemStack(ItemsTW.TIMEWINDER),
@@ -530,7 +530,7 @@ public class InitRecipes {
                 new ItemStack(ItemsTC.celestialNotes, 1, 11),
                 new ItemStack(ItemsTC.celestialNotes, 1, 12),
                 new ItemStack(ItemsTC.celestialNotes, 1, 0)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "madness_engine"), new InfusionRecipe(
                 "TWOND_MADNESS_ENGINE",
                 new ItemStack(BlocksTW.MADNESS_ENGINE),
@@ -543,7 +543,7 @@ public class InitRecipes {
                 "plateThaumium",
                 new ItemStack(ItemsTC.mind, 1, 1),
                 new ItemStack(Items.ENDER_PEARL)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "portal_generator"), new InfusionRecipe(
                 "TWOND_VOID_PORTAL",
                 new ItemStack(BlocksTW.PORTAL_GENERATOR),
@@ -553,7 +553,7 @@ public class InitRecipes {
                 Ingredient.fromItem(ItemsTC.primordialPearl),
                 new ItemStack(BlocksTC.mirror),
                 new ItemStack(Items.ENDER_PEARL)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "flux_capacitor"), new InfusionRecipe(
                 "TWOND_FLUX_CAPACITOR",
                 new ItemStack(BlocksTW.FLUX_CAPACITOR),
@@ -564,7 +564,7 @@ public class InitRecipes {
                 new ItemStack(BlocksTC.crystalTaint),
                 new ItemStack(ItemsTC.visResonator),
                 new ItemStack(BlocksTC.condenserlattice)));
-        
+
         List<Object> ingredients = new ArrayList<>();
         ingredients.add(Ingredient.fromItem(ItemsTC.primordialPearl));
         ingredients.add(new ItemStack(ItemsTC.clusters, 1, 0));
@@ -590,7 +590,7 @@ public class InitRecipes {
                 new ItemStack(ItemsTW.ALCHEMIST_STONE),
                 ingredients.toArray()
         ));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "meteorb"), new InfusionRecipe(
                 "TWOND_METEORB",
                 new ItemStack(BlocksTW.METEORB),
@@ -609,7 +609,7 @@ public class InitRecipes {
                 new ItemStack(BlocksTC.stoneArcane),
                 new ItemStack(BlocksTC.slabArcaneStone),
                 new ItemStack(Blocks.STONE_BUTTON)));
-        
+
         List<Object> divinerIngredients = new ArrayList<>();
         divinerIngredients.add("oreIron");
         divinerIngredients.add("oreGold");
@@ -653,7 +653,7 @@ public class InitRecipes {
                 new ItemStack(Items.GHAST_TEAR),
                 new ItemStack(ItemsTC.salisMundus),
                 "leather"));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "void_fortress_chest"), new InfusionRecipe(
                 "TWOND_VOID_FORTRESS_ARMOR",
                 new ItemStack(ItemsTW.VOID_FORTRESS_CHEST),
@@ -667,7 +667,7 @@ public class InitRecipes {
                 "plateVoid",
                 new ItemStack(ItemsTC.salisMundus),
                 "leather"));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "void_fortress_legs"), new InfusionRecipe(
                 "TWOND_VOID_FORTRESS_ARMOR",
                 new ItemStack(ItemsTW.VOID_FORTRESS_LEGS),
@@ -680,7 +680,7 @@ public class InitRecipes {
                 "plateVoid",
                 new ItemStack(ItemsTC.salisMundus),
                 "leather"));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "meaty_orb"), new InfusionRecipe(
                 "TWOND_MEATY_ORB",
                 new ItemStack(BlocksTW.MEATY_ORB),
@@ -693,7 +693,7 @@ public class InitRecipes {
                 new ItemStack(Items.CHICKEN),
                 new ItemStack(Items.MUTTON),
                 new ItemStack(Items.RABBIT)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "structure_diviner"), new InfusionRecipe(
                 "TWOND_STRUCTURE_DIVINER",
                 new ItemStack(ItemsTW.STRUCTURE_DIVINER),
@@ -706,7 +706,7 @@ public class InitRecipes {
                 new ItemStack(Blocks.NETHER_BRICK),
                 new ItemStack(Items.ENDER_EYE),
                 new ItemStack(Items.PRISMARINE_CRYSTALS)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "night_vision_goggles"), new InfusionRecipe(
                 "TWOND_NV_GOGGLES",
                 new ItemStack(ItemsTW.NIGHT_VISION_GOGGLES),
@@ -717,7 +717,7 @@ public class InitRecipes {
                 "nitor",
                 ThaumcraftApiHelper.makeCrystal(Aspect.SENSES),
                 ThaumcraftApiHelper.makeCrystal(Aspect.SENSES)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "void_beacon"), new InfusionRecipe(
                 "TWOND_VOID_BEACON",
                 new ItemStack(BlocksTW.VOID_BEACON),
@@ -732,7 +732,7 @@ public class InitRecipes {
                 "plateVoid",
                 Ingredient.fromItem(ItemsTC.primordialPearl),
                 "plateVoid"));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "cleansing_charm"), new InfusionRecipe(
                 "TWOND_CLEANSING_CHARM",
                 new ItemStack(ItemsTW.CLEANSING_CHARM),
@@ -743,7 +743,7 @@ public class InitRecipes {
                 new ItemStack(Items.GOLD_INGOT),
                 new ItemStack(Items.GOLD_INGOT),
                 new ItemStack(Items.GOLD_INGOT)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "primordial_accelerator"), new InfusionRecipe(
                 "TWOND_PRIMORDIAL_ACCELERATOR",
                 new ItemStack(BlocksTW.PRIMORDIAL_ACCELERATOR),
@@ -758,7 +758,7 @@ public class InitRecipes {
                 "plateVoid",
                 new ItemStack(ItemsTC.mechanismComplex),
                 "plateVoid"));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "shimmerleaf_seed"), new InfusionRecipe(
                 "TWOND_MYSTIC_GARDENING",
                 new ItemStack(ItemsTW.SHIMMERLEAF_SEED),
@@ -767,7 +767,7 @@ public class InitRecipes {
                 new ItemStack(Items.WHEAT_SEEDS),
                 new ItemStack(BlocksTC.shimmerleaf),
                 new ItemStack(ItemsTC.salisMundus)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "cinderpearl_seed"), new InfusionRecipe(
                 "TWOND_MYSTIC_GARDENING",
                 new ItemStack(ItemsTW.CINDERPEARL_SEED),
@@ -776,7 +776,7 @@ public class InitRecipes {
                 new ItemStack(Items.WHEAT_SEEDS),
                 new ItemStack(BlocksTC.cinderpearl),
                 new ItemStack(ItemsTC.salisMundus)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "vishroom_spore"), new InfusionRecipe(
                 "TWOND_MYSTIC_GARDENING",
                 new ItemStack(ItemsTW.VISHROOM_SPORE),
@@ -785,7 +785,7 @@ public class InitRecipes {
                 new ItemStack(Items.WHEAT_SEEDS),
                 new ItemStack(BlocksTC.vishroom),
                 new ItemStack(ItemsTC.salisMundus)));
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "coalescence_matrix"), new InfusionRecipe(
                 "TWOND_COALESCENCE_MATRIX",
                 new ItemStack(BlocksTW.COALESCENCE_MATRIX_PRECURSOR),
@@ -799,20 +799,20 @@ public class InitRecipes {
                 new ItemStack(BlocksTC.inlay),
                 new ItemStack(BlocksTC.inlay)));
     }
-    
+
     private static void initSmelting() {
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0), new ItemStack(Items.IRON_INGOT, 3, 0), 1.0F);
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 1), new ItemStack(Items.GOLD_INGOT, 3, 0), 1.0F);
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 6), new ItemStack(ItemsTC.quicksilver, 3, 0), 1.0F);
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7), new ItemStack(Items.QUARTZ, 3, 0), 1.0F);
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 8), new ItemStack(ItemsTC.ingots, 2, 1), 1.0F);
-        
+
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0), new ItemStack(Items.IRON_NUGGET, 1, 0));
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 1), new ItemStack(Items.GOLD_NUGGET, 1, 0));
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 6), new ItemStack(ItemsTC.nuggets, 1, 5));
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7), new ItemStack(ItemsTC.nuggets, 1, 9));
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 8), new ItemStack(ItemsTC.nuggets, 1, 7));
-        
+
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 32767), new ItemStack(ItemsTC.nuggets, 1, 10), 0.025F);
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 32767), ThaumcraftApiHelper.makeCrystal(Aspect.FLUX), 0.1F);
 
@@ -848,16 +848,18 @@ public class InitRecipes {
         CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreLead", new ItemStack(ItemsTC.clusters, 1, 5));
         CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreCinnabar", new ItemStack(ItemsTC.clusters, 1, 6));
         try {
-            if(Loader.isModLoaded("ea")) {
+            if (Loader.isModLoaded("ea")) {
                 Field oreNameField = ItemCluster.class.getDeclaredField("oreName");
                 oreNameField.setAccessible(true);
                 ModContent.modClusters.forEach(cluster -> {
                     try {
                         CatalyzationChamberRecipeRegistry.addAlchemistRecipe((String) oreNameField.get(cluster), new ItemStack(cluster));
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
                 });
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         //Alienist Stone
         CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreIron", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0));
@@ -907,7 +909,7 @@ public class InitRecipes {
 
     public static void initPrimordialAcceleratorRecipes() {
         int maxSize = ItemsTC.primordialPearl.getDefaultInstance().getMaxDamage();
-        for(int size = 0; size < maxSize - 1; size++) {
+        for (int size = 0; size < maxSize - 1; size++) {
             int outputCount = MathHelper.clamp(maxSize - size, 0, 8);
             AcceleratorRecipeRegistry.addRecipe(
                     CraftingHelper.getIngredient(new ItemStack(ItemsTC.primordialPearl, 1, size)),

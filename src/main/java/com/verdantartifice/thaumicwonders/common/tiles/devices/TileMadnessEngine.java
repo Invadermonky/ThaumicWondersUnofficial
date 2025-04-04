@@ -10,7 +10,7 @@ public class TileMadnessEngine extends AbstractTileResearchEngine {
     public int getCost() {
         return COST;
     }
-    
+
     @Override
     public int getCapacity() {
         return CAPACITY;

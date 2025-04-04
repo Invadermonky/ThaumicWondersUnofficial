@@ -34,9 +34,9 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
 
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
-        compound.setShort("lifeEssentia", (short)this.lifeEssentia);
-        compound.setShort("waterEssentia", (short)this.waterEssentia);
-        compound.setShort("eldritchEssentia", (short)this.eldritchEssentia);
+        compound.setShort("lifeEssentia", (short) this.lifeEssentia);
+        compound.setShort("waterEssentia", (short) this.waterEssentia);
+        compound.setShort("eldritchEssentia", (short) this.eldritchEssentia);
         return compound;
     }
 
@@ -67,14 +67,14 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
             if (te instanceof IEssentiaTransport) {
-                IEssentiaTransport otherTile = (IEssentiaTransport)te;
+                IEssentiaTransport otherTile = (IEssentiaTransport) te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
                 }
-                if ( otherTile.getEssentiaType(face.getOpposite()) == this.getEssentiaType(face) &&
-                     otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
-                     this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
-                     this.getSuctionAmount(face) >= otherTile.getMinimumSuction() ) {
+                if (otherTile.getEssentiaType(face.getOpposite()) == this.getEssentiaType(face) &&
+                        otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
+                        this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
+                        this.getSuctionAmount(face) >= otherTile.getMinimumSuction()) {
                     int taken = otherTile.takeEssentia(this.getEssentiaType(face), 1, face.getOpposite());
                     int leftover = this.addToContainer(this.getEssentiaType(face), taken);
                     if (leftover > 0) {
@@ -87,10 +87,11 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
             }
         }
     }
-    
+
     /**
      * Get the relative facing for the given absolute facing.  The Meaty Orb's relative north is its control
      * panel, west is life input, east is water input, south is eldritch input.
+     *
      * @param absFace facing relative to world axes
      * @return facing relative to orb faces
      */
@@ -111,14 +112,10 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
             return absFace;
         }
     }
-    
+
     @Override
-    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
-        if (this.canInputFrom(face) && aspect == this.getEssentiaType(face)) {
-            return (amt - this.addToContainer(aspect, amt));
-        } else {
-            return 0;
-        }
+    public boolean isConnectable(EnumFacing face) {
+        return this.canInputFrom(face);
     }
 
     @Override
@@ -133,14 +130,30 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
     }
 
     @Override
-    public int getEssentiaAmount(EnumFacing face) {
-        EnumFacing relFace = this.getRelativeFacing(face);
-        if (relFace == EnumFacing.WEST) {
-            return this.lifeEssentia;
-        } else if (relFace == EnumFacing.EAST) {
-            return this.waterEssentia;
-        } else if (relFace == EnumFacing.SOUTH) {
-            return this.eldritchEssentia;
+    public void setSuction(Aspect aspect, int amt) {
+        // Do nothing
+    }
+
+    @Override
+    public Aspect getSuctionType(EnumFacing face) {
+        return this.getEssentiaType(face);
+    }
+
+    @Override
+    public int getSuctionAmount(EnumFacing face) {
+        return (this.getEssentiaAmount(face) >= ConfigHandlerTW.meaty_orb.essentiaRequirement) ? 0 : 128;
+    }
+
+    @Override
+    public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
+        // Can't output
+        return 0;
+    }
+
+    @Override
+    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
+        if (this.canInputFrom(face) && aspect == this.getEssentiaType(face)) {
+            return (amt - this.addToContainer(aspect, amt));
         } else {
             return 0;
         }
@@ -161,73 +174,13 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
     }
 
     @Override
-    public int getMinimumSuction() {
-        // Can't output, so no need for minimum suction
-        return 0;
-    }
-
-    @Override
-    public int getSuctionAmount(EnumFacing face) {
-        return (this.getEssentiaAmount(face) >= ConfigHandlerTW.meaty_orb.essentiaRequirement) ? 0 : 128;
-    }
-
-    @Override
-    public Aspect getSuctionType(EnumFacing face) {
-        return this.getEssentiaType(face);
-    }
-
-    @Override
-    public boolean isConnectable(EnumFacing face) {
-        return this.canInputFrom(face);
-    }
-
-    @Override
-    public void setSuction(Aspect aspect, int amt) {
-        // Do nothing
-    }
-
-    @Override
-    public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
-        // Can't output
-        return 0;
-    }
-
-    @Override
-    public int addToContainer(Aspect aspect, int toAdd) {
-        int retVal = 0;
-        if (toAdd == 0) {
-            return 0;
-        } else if (this.lifeEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.LIFE) {
-            // Add as much life as possible and return the remainder
-            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.lifeEssentia);
-            this.lifeEssentia += added;
-            retVal = (toAdd - added);
-        } else if (this.waterEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.WATER) {
-            // Add as much water as possible and return the remainder
-            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.waterEssentia);
-            this.waterEssentia += added;
-            retVal = (toAdd - added);
-        } else if (this.eldritchEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.ELDRITCH) {
-            // Add as much eldritch as possible and return the remainder
-            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.eldritchEssentia);
-            this.eldritchEssentia += added;
-            retVal = (toAdd - added);
-        } else {
-            retVal = toAdd;
-        }
-        
-        this.syncTile(false);
-        this.markDirty();
-        return retVal;
-    }
-
-    @Override
-    public int containerContains(Aspect aspect) {
-        if (aspect == Aspect.LIFE) {
+    public int getEssentiaAmount(EnumFacing face) {
+        EnumFacing relFace = this.getRelativeFacing(face);
+        if (relFace == EnumFacing.WEST) {
             return this.lifeEssentia;
-        } else if (aspect == Aspect.WATER) {
+        } else if (relFace == EnumFacing.EAST) {
             return this.waterEssentia;
-        } else if (aspect == Aspect.ELDRITCH) {
+        } else if (relFace == EnumFacing.SOUTH) {
             return this.eldritchEssentia;
         } else {
             return 0;
@@ -235,24 +188,9 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
     }
 
     @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        return (aspect == Aspect.LIFE || aspect == Aspect.WATER || aspect == Aspect.ELDRITCH);
-    }
-
-    @Override
-    public boolean doesContainerContain(AspectList aspectList) {
-        boolean satisfied = true;
-        for (Aspect aspect : aspectList.getAspects()) {
-            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
-        }
-        return satisfied;
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
-        return (aspect == Aspect.LIFE && this.lifeEssentia >= amt) ||
-               (aspect == Aspect.WATER && this.waterEssentia >= amt) ||
-               (aspect == Aspect.ELDRITCH && this.eldritchEssentia >= amt);
+    public int getMinimumSuction() {
+        // Can't output, so no need for minimum suction
+        return 0;
     }
 
     @Override
@@ -280,16 +218,37 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
     }
 
     @Override
-    public boolean takeFromContainer(AspectList aspectList) {
-        if (!this.doesContainerContain(aspectList)) {
-            return false;
+    public boolean doesContainerAccept(Aspect aspect) {
+        return (aspect == Aspect.LIFE || aspect == Aspect.WATER || aspect == Aspect.ELDRITCH);
+    }
+
+    @Override
+    public int addToContainer(Aspect aspect, int toAdd) {
+        int retVal = 0;
+        if (toAdd == 0) {
+            return 0;
+        } else if (this.lifeEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.LIFE) {
+            // Add as much life as possible and return the remainder
+            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.lifeEssentia);
+            this.lifeEssentia += added;
+            retVal = (toAdd - added);
+        } else if (this.waterEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.WATER) {
+            // Add as much water as possible and return the remainder
+            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.waterEssentia);
+            this.waterEssentia += added;
+            retVal = (toAdd - added);
+        } else if (this.eldritchEssentia < ConfigHandlerTW.meaty_orb.essentiaRequirement && aspect == Aspect.ELDRITCH) {
+            // Add as much eldritch as possible and return the remainder
+            int added = Math.min(toAdd, ConfigHandlerTW.meaty_orb.essentiaRequirement - this.eldritchEssentia);
+            this.eldritchEssentia += added;
+            retVal = (toAdd - added);
         } else {
-            boolean satisfied = true;
-            for (Aspect aspect : aspectList.getAspects()) {
-                satisfied = satisfied && this.takeFromContainer(aspect, aspectList.getAmount(aspect));
-            }
-            return satisfied;
+            retVal = toAdd;
         }
+
+        this.syncTile(false);
+        this.markDirty();
+        return retVal;
     }
 
     @Override
@@ -306,5 +265,47 @@ public class TileMeatyOrb extends TileTW implements IAspectContainer, IEssentiaT
         this.syncTile(false);
         this.markDirty();
         return true;
+    }
+
+    @Override
+    public boolean takeFromContainer(AspectList aspectList) {
+        if (!this.doesContainerContain(aspectList)) {
+            return false;
+        } else {
+            boolean satisfied = true;
+            for (Aspect aspect : aspectList.getAspects()) {
+                satisfied = satisfied && this.takeFromContainer(aspect, aspectList.getAmount(aspect));
+            }
+            return satisfied;
+        }
+    }
+
+    @Override
+    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
+        return (aspect == Aspect.LIFE && this.lifeEssentia >= amt) ||
+                (aspect == Aspect.WATER && this.waterEssentia >= amt) ||
+                (aspect == Aspect.ELDRITCH && this.eldritchEssentia >= amt);
+    }
+
+    @Override
+    public boolean doesContainerContain(AspectList aspectList) {
+        boolean satisfied = true;
+        for (Aspect aspect : aspectList.getAspects()) {
+            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
+        }
+        return satisfied;
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        if (aspect == Aspect.LIFE) {
+            return this.lifeEssentia;
+        } else if (aspect == Aspect.WATER) {
+            return this.waterEssentia;
+        } else if (aspect == Aspect.ELDRITCH) {
+            return this.eldritchEssentia;
+        } else {
+            return 0;
+        }
     }
 }

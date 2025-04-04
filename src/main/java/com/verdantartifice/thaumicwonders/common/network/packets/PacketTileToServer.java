@@ -15,9 +15,10 @@ import thaumcraft.common.lib.utils.Utils;
 public class PacketTileToServer implements IMessage {
     private long pos;
     private NBTTagCompound nbt;
-    
-    public PacketTileToServer() {}
-    
+
+    public PacketTileToServer() {
+    }
+
     public PacketTileToServer(BlockPos pos, NBTTagCompound nbt) {
         this.pos = pos.toLong();
         this.nbt = nbt;
@@ -41,14 +42,14 @@ public class PacketTileToServer implements IMessage {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         private void handle(PacketTileToServer message, MessageContext ctx) {
             World world = ctx.getServerHandler().player.getServerWorld();
             BlockPos bp = BlockPos.fromLong(message.pos);
             if (world != null && bp != null) {
                 TileEntity tile = world.getTileEntity(bp);
                 if (tile instanceof TileTW) {
-                    ((TileTW)tile).messageFromClient(message.nbt == null ? new NBTTagCompound() : message.nbt, ctx.getServerHandler().player);
+                    ((TileTW) tile).messageFromClient(message.nbt == null ? new NBTTagCompound() : message.nbt, ctx.getServerHandler().player);
                 }
             }
         }

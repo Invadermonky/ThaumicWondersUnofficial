@@ -30,14 +30,14 @@ public class WeightedEntry {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(getStack());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof WeightedEntry)) return false;
         WeightedEntry that = (WeightedEntry) o;
         return ItemStack.areItemStacksEqual(getStack(), that.getStack());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getStack());
     }
 }

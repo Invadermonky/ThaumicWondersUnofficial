@@ -17,22 +17,22 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
     protected static final int PROCESS_TIME = 20;
     protected static final int MAX_CHARGE = 10;
     protected static final int MAX_ESSENTIA = 1;
-    
+
     protected int amount = 0;
     protected int tickCounter = 0;
-    
+
     public int getAmount() {
         return this.amount;
     }
-    
+
     @Override
     protected void readFromTileNBT(NBTTagCompound compound) {
         this.amount = compound.getShort("essentia");
     }
-    
+
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
-        compound.setShort("essentia", (short)this.amount);
+        compound.setShort("essentia", (short) this.amount);
         return compound;
     }
 
@@ -41,7 +41,7 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
         if (!this.world.isRemote && (++this.tickCounter % PROCESS_TIME == 0)) {
             IBlockState capacitorState = this.world.getBlockState(this.pos.down());
             if (capacitorState != null && capacitorState.getBlock() == BlocksTW.FLUX_CAPACITOR) {
-                BlockFluxCapacitor capacitorBlock = (BlockFluxCapacitor)capacitorState.getBlock();
+                BlockFluxCapacitor capacitorBlock = (BlockFluxCapacitor) capacitorState.getBlock();
                 int capacitorCharge = capacitorBlock.getCharge(this.world, this.pos.down());
                 int distillerCharge = this.getCharge();
                 if (capacitorCharge > 0 && distillerCharge < MAX_CHARGE) {
@@ -56,7 +56,7 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
             }
         }
     }
-    
+
     protected int getCharge() {
         IBlockState state = this.world.getBlockState(this.pos);
         if (state.getBlock() == BlocksTW.FLUX_DISTILLER) {
@@ -65,7 +65,7 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
             return 0;
         }
     }
-    
+
     protected void setCharge(int charge) {
         IBlockState state = this.world.getBlockState(this.pos);
         if (state.getBlock() == BlocksTW.FLUX_DISTILLER) {
@@ -74,9 +74,8 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
-        // Can't input, so always return zero
-        return 0;
+    public boolean isConnectable(EnumFacing face) {
+        return face == EnumFacing.UP;
     }
 
     @Override
@@ -90,23 +89,8 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
     }
 
     @Override
-    public int getEssentiaAmount(EnumFacing face) {
-        return this.amount;
-    }
-
-    @Override
-    public Aspect getEssentiaType(EnumFacing face) {
-        return Aspect.FLUX;
-    }
-
-    @Override
-    public int getMinimumSuction() {
-        return 0;
-    }
-
-    @Override
-    public int getSuctionAmount(EnumFacing face) {
-        return 0;
+    public void setSuction(Aspect aspect, int amt) {
+        // Do nothing
     }
 
     @Override
@@ -115,18 +99,55 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
     }
 
     @Override
-    public boolean isConnectable(EnumFacing face) {
-        return face == EnumFacing.UP;
-    }
-
-    @Override
-    public void setSuction(Aspect aspect, int amt) {
-        // Do nothing
+    public int getSuctionAmount(EnumFacing face) {
+        return 0;
     }
 
     @Override
     public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
         return (this.canOutputTo(face) && this.takeFromContainer(aspect, amt)) ? amt : 0;
+    }
+
+    @Override
+    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
+        // Can't input, so always return zero
+        return 0;
+    }
+
+    @Override
+    public Aspect getEssentiaType(EnumFacing face) {
+        return Aspect.FLUX;
+    }
+
+    @Override
+    public int getEssentiaAmount(EnumFacing face) {
+        return this.amount;
+    }
+
+    @Override
+    public int getMinimumSuction() {
+        return 0;
+    }
+
+    @Override
+    public AspectList getAspects() {
+        AspectList list = new AspectList();
+        if (this.amount > 0) {
+            list.add(Aspect.FLUX, this.amount);
+        }
+        return list;
+    }
+
+    @Override
+    public void setAspects(AspectList aspectList) {
+        if (aspectList != null && aspectList.size() > 0) {
+            this.amount = aspectList.getAmount(Aspect.FLUX);
+        }
+    }
+
+    @Override
+    public boolean doesContainerAccept(Aspect aspect) {
+        return (aspect == Aspect.FLUX);
     }
 
     @Override
@@ -149,42 +170,14 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
     }
 
     @Override
-    public int containerContains(Aspect aspect) {
-        return (aspect == Aspect.FLUX) ? this.amount : 0;
-    }
-
-    @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        return (aspect == Aspect.FLUX);
-    }
-
-    @Override
-    public boolean doesContainerContain(AspectList aspectList) {
-        boolean satisfied = true;
-        for (Aspect aspect : aspectList.getAspects()) {
-            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
-        }
-        return satisfied;
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
-        return (aspect == Aspect.FLUX && this.amount >= amt);
-    }
-
-    @Override
-    public AspectList getAspects() {
-        AspectList list = new AspectList();
-        if (this.amount > 0) {
-            list.add(Aspect.FLUX, this.amount);
-        }
-        return list;
-    }
-
-    @Override
-    public void setAspects(AspectList aspectList) {
-        if (aspectList != null && aspectList.size() > 0) {
-            this.amount = aspectList.getAmount(Aspect.FLUX);
+    public boolean takeFromContainer(Aspect aspect, int amt) {
+        if (aspect == Aspect.FLUX && this.amount >= amt) {
+            this.amount -= amt;
+            this.syncTile(false);
+            this.markDirty();
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -202,15 +195,22 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
     }
 
     @Override
-    public boolean takeFromContainer(Aspect aspect, int amt) {
-        if (aspect == Aspect.FLUX && this.amount >= amt) {
-            this.amount -= amt;
-            this.syncTile(false);
-            this.markDirty();
-            return true;
-        } else {
-            return false;
+    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
+        return (aspect == Aspect.FLUX && this.amount >= amt);
+    }
+
+    @Override
+    public boolean doesContainerContain(AspectList aspectList) {
+        boolean satisfied = true;
+        for (Aspect aspect : aspectList.getAspects()) {
+            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
         }
+        return satisfied;
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        return (aspect == Aspect.FLUX) ? this.amount : 0;
     }
 
 }

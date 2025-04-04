@@ -9,15 +9,14 @@ import org.lwjgl.input.Keyboard;
 
 @SideOnly(Side.CLIENT)
 public class KeyBindings {
+    private static final String KEY_CATEGORY = "key.categories." + ThaumicWonders.MODID;
     public static KeyBinding carpetForwardKey;
     public static KeyBinding carpetBackwardKey;
-    
-    private static final String KEY_CATEGORY = "key.categories." + ThaumicWonders.MODID;
-    
+
     public static void init() {
         carpetForwardKey = new KeyBinding("key.carpet_forward", Keyboard.KEY_W, KEY_CATEGORY);
         ClientRegistry.registerKeyBinding(carpetForwardKey);
-        
+
         carpetBackwardKey = new KeyBinding("key.carpet_backward", Keyboard.KEY_S, KEY_CATEGORY);
         ClientRegistry.registerKeyBinding(carpetBackwardKey);
     }

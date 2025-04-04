@@ -86,9 +86,9 @@ public class PrimordialAccretionChamber extends VirtualizedRegistry<AccretionCha
 
     public static class RecipeBuilder extends AbstractRecipeBuilder<AccretionChamberRecipe> {
         @Property
-        private IIngredient input;
-        @Property
         private final List<WeightedEntry> outputs;
+        @Property
+        private IIngredient input;
         @Property(comp = @Comp(gte = 0, lte = 250))
         private int aer;
         @Property(comp = @Comp(gte = 0, lte = 250))
@@ -183,7 +183,7 @@ public class PrimordialAccretionChamber extends VirtualizedRegistry<AccretionCha
         @RecipeBuilderRegistrationMethod
         @Override
         public @Nullable AccretionChamberRecipe register() {
-            if(this.validate()) {
+            if (this.validate()) {
                 AccretionChamberRecipe recipe = new AccretionChamberRecipe(
                         this.input.toMcIngredient(),
                         this.aer, this.aqua, this.ignis, this.terra, this.ordo, this.perditio,

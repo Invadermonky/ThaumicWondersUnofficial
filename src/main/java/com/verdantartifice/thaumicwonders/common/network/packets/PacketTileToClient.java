@@ -18,14 +18,15 @@ import thaumcraft.common.lib.utils.Utils;
 public class PacketTileToClient implements IMessage {
     private long pos;
     private NBTTagCompound nbt;
-    
-    public PacketTileToClient() {}
-    
+
+    public PacketTileToClient() {
+    }
+
     public PacketTileToClient(BlockPos pos, NBTTagCompound compound) {
         this.pos = pos.toLong();
         this.nbt = compound;
     }
-    
+
     @Override
     public void fromBytes(ByteBuf buf) {
         this.pos = buf.readLong();
@@ -37,14 +38,14 @@ public class PacketTileToClient implements IMessage {
         buf.writeLong(this.pos);
         Utils.writeNBTTagCompoundToBuffer(buf, this.nbt);
     }
-    
+
     public static class Handler implements IMessageHandler<PacketTileToClient, IMessage> {
         @Override
         public IMessage onMessage(PacketTileToClient message, MessageContext ctx) {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         @SideOnly(Side.CLIENT)
         private void handle(PacketTileToClient message, MessageContext ctx) {
             World world = FMLClientHandler.instance().getClient().world;
@@ -52,7 +53,7 @@ public class PacketTileToClient implements IMessage {
             if (world != null && bp != null) {
                 TileEntity tile = world.getTileEntity(bp);
                 if (tile instanceof TileTW) {
-                    ((TileTW)tile).messageFromServer(message.nbt == null ? new NBTTagCompound() : message.nbt);
+                    ((TileTW) tile).messageFromServer(message.nbt == null ? new NBTTagCompound() : message.nbt);
                 }
             }
         }

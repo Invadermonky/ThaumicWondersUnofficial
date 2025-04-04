@@ -18,12 +18,12 @@ import java.awt.*;
 public class PacketAvatarZapFx implements IMessage {
     protected int source;
     protected int target;
-    
+
     public PacketAvatarZapFx() {
         this.source = 0;
         this.target = 0;
     }
-    
+
     public PacketAvatarZapFx(int source, int target) {
         this.source = source;
         this.target = target;
@@ -47,7 +47,7 @@ public class PacketAvatarZapFx implements IMessage {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         @SideOnly(Side.CLIENT)
         private void handle(PacketAvatarZapFx message, MessageContext ctx) {
             WorldClient world = FMLClientHandler.instance().getClient().world;
@@ -59,13 +59,13 @@ public class PacketAvatarZapFx implements IMessage {
             float b = color.getBlue() / 255.0F;
             if (sourceEntity != null && targetEntity != null) {
                 FXDispatcher.INSTANCE.arcBolt(
-                        sourceEntity.posX, 
-                        sourceEntity.posY + sourceEntity.getEyeHeight(), 
-                        sourceEntity.posZ, 
-                        targetEntity.posX, 
-                        targetEntity.posY + targetEntity.getEyeHeight(), 
-                        targetEntity.posZ, 
-                        r, g, b, 0.6F);            
+                        sourceEntity.posX,
+                        sourceEntity.posY + sourceEntity.getEyeHeight(),
+                        sourceEntity.posZ,
+                        targetEntity.posX,
+                        targetEntity.posY + targetEntity.getEyeHeight(),
+                        targetEntity.posZ,
+                        r, g, b, 0.6F);
             }
         }
     }

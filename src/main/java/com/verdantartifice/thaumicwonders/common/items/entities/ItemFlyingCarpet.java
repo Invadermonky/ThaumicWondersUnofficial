@@ -27,23 +27,73 @@ import javax.annotation.Nullable;
 public class ItemFlyingCarpet extends ItemTW implements IRechargable {
     public ItemFlyingCarpet() {
         super("flying_carpet");
-        
+
         this.addPropertyOverride(new ResourceLocation(ThaumicWonders.MODID, "color"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
                 EnumDyeColor color = null;
                 if (stack != null && stack.getItem() instanceof ItemFlyingCarpet) {
-                    color = ((ItemFlyingCarpet)stack.getItem()).getDyeColor(stack);
+                    color = ((ItemFlyingCarpet) stack.getItem()).getDyeColor(stack);
                 }
                 if (color == null) {
                     // Default to red if no dye color is applied
                     color = EnumDyeColor.RED;
                 }
-                return ((float)color.getMetadata() / 16.0F);
+                return ((float) color.getMetadata() / 16.0F);
             }
         });
     }
-    
+
+    @Override
+    public int getMaxCharge(ItemStack stack, EntityLivingBase player) {
+        return ConfigHandlerTW.flying_carpet.visCapacity;
+    }
+
+    @Override
+    public IRechargable.EnumChargeDisplay showInHud(ItemStack stack, EntityLivingBase player) {
+        return IRechargable.EnumChargeDisplay.NORMAL;
+    }
+
+    public EnumDyeColor getDyeColor(ItemStack stack) {
+        NBTTagCompound compound = stack.getTagCompound();
+        if (compound != null) {
+            NBTTagCompound innerCompound = compound.getCompoundTag("display");
+            if (innerCompound != null && innerCompound.hasKey("color")) {
+                return EnumDyeColor.byMetadata(innerCompound.getInteger("color"));
+            }
+        }
+        return null;
+    }
+
+    public void setDyeColor(ItemStack stack, EnumDyeColor color) {
+        if (color == null) {
+            return;
+        }
+        if (!stack.hasTagCompound()) {
+            stack.setTagCompound(new NBTTagCompound());
+        }
+        NBTTagCompound compound = stack.getTagCompound();
+        if (!compound.hasKey("display")) {
+            compound.setTag("display", new NBTTagCompound());
+        }
+        compound.getCompoundTag("display").setInteger("color", color.getMetadata());
+    }
+
+    public void removeDyeColor(ItemStack stack) {
+        NBTTagCompound compound = stack.getTagCompound();
+        if (compound != null) {
+            NBTTagCompound innerCompound = compound.getCompoundTag("display");
+            if (innerCompound != null && innerCompound.hasKey("color")) {
+                innerCompound.removeTag("color");
+            }
+        }
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
+    }
+
     @Override
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         IBlockState state = world.getBlockState(pos);
@@ -60,9 +110,9 @@ public class ItemFlyingCarpet extends ItemTW implements IRechargable {
             if (side != EnumFacing.UP) {
                 return EnumActionResult.PASS;
             }
-            double posX = (double)pos.getX() + (double)hitX;
-            double posY = (double)pos.getY() + (double)hitY;
-            double posZ = (double)pos.getZ() + (double)hitZ;
+            double posX = (double) pos.getX() + (double) hitX;
+            double posY = (double) pos.getY() + (double) hitY;
+            double posZ = (double) pos.getZ() + (double) hitZ;
             EntityFlyingCarpet entityCarpet = new EntityFlyingCarpet(world, posX, posY, posZ);
             if (player.getHeldItem(hand).hasTagCompound()) {
                 entityCarpet.setVisCharge(RechargeHelper.getCharge(player.getHeldItem(hand)));
@@ -77,55 +127,5 @@ public class ItemFlyingCarpet extends ItemTW implements IRechargable {
         } else {
             return EnumActionResult.PASS;
         }
-    }
-
-    @Override
-    public int getMaxCharge(ItemStack stack, EntityLivingBase player) {
-        return ConfigHandlerTW.flying_carpet.visCapacity;
-    }
-
-    @Override
-    public IRechargable.EnumChargeDisplay showInHud(ItemStack stack, EntityLivingBase player) {
-        return IRechargable.EnumChargeDisplay.NORMAL;
-    }
-    
-    public EnumDyeColor getDyeColor(ItemStack stack) {
-        NBTTagCompound compound = stack.getTagCompound();
-        if (compound != null) {
-            NBTTagCompound innerCompound = compound.getCompoundTag("display");
-            if (innerCompound != null && innerCompound.hasKey("color")) {
-                return EnumDyeColor.byMetadata(innerCompound.getInteger("color"));
-            }
-        }
-        return null;
-    }
-    
-    public void setDyeColor(ItemStack stack, EnumDyeColor color) {
-        if (color == null) {
-            return;
-        }
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-        NBTTagCompound compound = stack.getTagCompound();
-        if (!compound.hasKey("display")) {
-            compound.setTag("display", new NBTTagCompound());
-        }
-        compound.getCompoundTag("display").setInteger("color", color.getMetadata());
-    }
-    
-    public void removeDyeColor(ItemStack stack) {
-        NBTTagCompound compound = stack.getTagCompound();
-        if (compound != null) {
-            NBTTagCompound innerCompound = compound.getCompoundTag("display");
-            if (innerCompound != null && innerCompound.hasKey("color")) {
-                innerCompound.removeTag("color");
-            }
-        }
-    }
-    
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
     }
 }

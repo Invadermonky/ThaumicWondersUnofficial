@@ -25,16 +25,16 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
     public static final int MAX_TUNNELS = 10;
 
     private @Nullable AcceleratorRecipe recipe = null;
-    
+
     public TilePrimordialAccelerator() {
         super(1);
     }
-    
+
     @Override
     public int getInventoryStackLimit() {
         return 1;
     }
-    
+
     @Override
     public void update() {
         IBlockState state = this.world.getBlockState(this.pos);
@@ -55,7 +55,7 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
                 int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
                         .filter(ingredient -> !ingredient.isEmpty()).findFirst()
                         .map(ItemStack::getCount).orElse(1);
-                if(input.getItem().hasContainerItem(input)) {
+                if (input.getItem().hasContainerItem(input)) {
                     ItemStack container = input.getItem().getContainerItem(input).copy();
                     container.setCount(count);
                     this.ejectInput(container, facing);
@@ -63,7 +63,7 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
                 this.decrStackSize(0, count);
                 this.world.playSound(null, this.pos, SoundsTC.zap, SoundCategory.BLOCKS, 1.0F, (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F + 1.0F);
                 this.world.playSound(null, this.pos, SoundsTC.wind, SoundCategory.BLOCKS, 1.0F, (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F + 1.0F);
-                
+
                 while (index < (2 * MAX_TUNNELS) && !done) {
                     index++;
                     curPos = curPos.offset(facing);
@@ -105,7 +105,7 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
     }
 
     protected void completeReaction(BlockPos terminusPos, int tunnelCount) {
-        if(this.recipe != null) {
+        if (this.recipe != null) {
             NonNullList<ItemStack> outputs = this.recipe.getOutputs(this.world.rand, tunnelCount);
             outputs.forEach(output -> this.ejectOutput(output, terminusPos));
         }
@@ -119,7 +119,7 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
         entityItem.motionZ = 0.15 * facing.getOpposite().getDirectionVec().getZ();
         world.spawnEntity(entityItem);
     }
-    
+
     protected void ejectOutput(ItemStack output, BlockPos ejectPos) {
         EntityItem entity = new EntityItem(this.world, ejectPos.getX() + 0.5D, ejectPos.getY() + 1.0D, ejectPos.getZ() + 0.5D, output.copy());
         entity.motionX = this.world.rand.nextGaussian() * 0.1D;
@@ -127,15 +127,15 @@ public class TilePrimordialAccelerator extends TileTWInventory implements ITicka
         entity.motionZ = this.world.rand.nextGaussian() * 0.1D;
         world.spawnEntity(entity);
     }
-    
+
     protected void explode(BlockPos explosionPos) {
         this.world.createExplosion(null, explosionPos.getX() + 0.5D, explosionPos.getY() + 0.5D, explosionPos.getZ() + 0.5D, 4.0F, true);
     }
 
     public void dropInventoryContents() {
-        if(!this.world.isRemote) {
+        if (!this.world.isRemote) {
             ItemStack stack = this.getStackInSlot(0);
-            if(!stack.isEmpty()) {
+            if (!stack.isEmpty()) {
                 Block.spawnAsEntity(this.world, this.getPos(), stack.copy());
             }
         }

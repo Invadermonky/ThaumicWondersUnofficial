@@ -21,9 +21,9 @@ public class InputEvents {
         if (player != null) {
             Entity ridingEntity = player.getRidingEntity();
             if (ridingEntity instanceof EntityFlyingCarpet) {
-                ((EntityFlyingCarpet)ridingEntity).updateInputs(
-                    KeyBindings.carpetForwardKey.isKeyDown(), 
-                    KeyBindings.carpetBackwardKey.isKeyDown()
+                ((EntityFlyingCarpet) ridingEntity).updateInputs(
+                        KeyBindings.carpetForwardKey.isKeyDown(),
+                        KeyBindings.carpetBackwardKey.isKeyDown()
                 );
             }
         }

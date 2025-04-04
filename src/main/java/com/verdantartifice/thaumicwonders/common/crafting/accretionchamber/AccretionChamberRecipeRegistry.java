@@ -53,7 +53,7 @@ public class AccretionChamberRecipeRegistry {
 
     @Nullable
     public static AccretionChamberRecipe getRecipe(ItemStack input) {
-        if(!input.isEmpty()) {
+        if (!input.isEmpty()) {
             return ACCRETION_CHAMBER_RECIPES.stream().filter(recipe -> recipe.matchesInput(input)).findFirst().orElse(null);
         }
         return null;

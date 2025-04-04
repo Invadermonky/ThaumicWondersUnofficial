@@ -13,7 +13,7 @@ import thaumcraft.common.blocks.IBlockEnabled;
 import thaumcraft.common.blocks.IBlockFacing;
 
 public class BlockDimensionalRipper extends BlockDeviceTW<TileDimensionalRipper> implements IBlockFacing, IBlockEnabled {
-    
+
     public BlockDimensionalRipper() {
         super(Material.IRON, TileDimensionalRipper.class, "dimensional_ripper");
         this.setSoundType(SoundType.METAL);
@@ -25,11 +25,6 @@ public class BlockDimensionalRipper extends BlockDeviceTW<TileDimensionalRipper>
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
-    @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         EnumFacing blockFacing = state.getValue(IBlockFacing.FACING);
         if (blockFacing.getOpposite() == face) {
@@ -37,5 +32,10 @@ public class BlockDimensionalRipper extends BlockDeviceTW<TileDimensionalRipper>
         } else {
             return BlockFaceShape.UNDEFINED;
         }
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
     }
 }

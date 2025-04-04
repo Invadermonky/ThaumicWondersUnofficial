@@ -39,66 +39,20 @@ public class RenderFlyingCarpet extends Render<EntityFlyingCarpet> {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(EntityFlyingCarpet entity) {
-        EnumDyeColor color = entity.getDyeColor();
-        if (color == null) {
-            return TEXTURE_RED;
-        } else {
-            switch (color) {
-            case WHITE:
-                return TEXTURE_WHITE;
-            case ORANGE:
-                return TEXTURE_ORANGE;
-            case MAGENTA:
-                return TEXTURE_MAGENTA;
-            case LIGHT_BLUE:
-                return TEXTURE_LIGHT_BLUE;
-            case YELLOW:
-                return TEXTURE_YELLOW;
-            case LIME:
-                return TEXTURE_LIME;
-            case PINK:
-                return TEXTURE_PINK;
-            case GRAY:
-                return TEXTURE_GRAY;
-            case SILVER:
-                return TEXTURE_SILVER;
-            case CYAN:
-                return TEXTURE_CYAN;
-            case PURPLE:
-                return TEXTURE_PURPLE;
-            case BLUE:
-                return TEXTURE_BLUE;
-            case BROWN:
-                return TEXTURE_BROWN;
-            case GREEN:
-                return TEXTURE_GREEN;
-            case BLACK:
-                return TEXTURE_BLACK;
-            case RED:
-            default:
-                return TEXTURE_RED;
-            }
-        }
-    }
-    
-    @Override
     public void doRender(EntityFlyingCarpet entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.pushMatrix();
         this.setupTranslation(x, y, z);
         this.setupRotation(entity, entityYaw, partialTicks);
         this.bindEntityTexture(entity);
 
-        if (this.renderOutlines)
-        {
+        if (this.renderOutlines) {
             GlStateManager.enableColorMaterial();
             GlStateManager.enableOutlineMode(this.getTeamColor(entity));
         }
 
         this.modelFlyingCarpet.render(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
-        if (this.renderOutlines)
-        {
+        if (this.renderOutlines) {
             GlStateManager.disableOutlineMode();
             GlStateManager.disableColorMaterial();
         }
@@ -106,13 +60,57 @@ public class RenderFlyingCarpet extends Render<EntityFlyingCarpet> {
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
-    
+
+    @Override
+    protected ResourceLocation getEntityTexture(EntityFlyingCarpet entity) {
+        EnumDyeColor color = entity.getDyeColor();
+        if (color == null) {
+            return TEXTURE_RED;
+        } else {
+            switch (color) {
+                case WHITE:
+                    return TEXTURE_WHITE;
+                case ORANGE:
+                    return TEXTURE_ORANGE;
+                case MAGENTA:
+                    return TEXTURE_MAGENTA;
+                case LIGHT_BLUE:
+                    return TEXTURE_LIGHT_BLUE;
+                case YELLOW:
+                    return TEXTURE_YELLOW;
+                case LIME:
+                    return TEXTURE_LIME;
+                case PINK:
+                    return TEXTURE_PINK;
+                case GRAY:
+                    return TEXTURE_GRAY;
+                case SILVER:
+                    return TEXTURE_SILVER;
+                case CYAN:
+                    return TEXTURE_CYAN;
+                case PURPLE:
+                    return TEXTURE_PURPLE;
+                case BLUE:
+                    return TEXTURE_BLUE;
+                case BROWN:
+                    return TEXTURE_BROWN;
+                case GREEN:
+                    return TEXTURE_GREEN;
+                case BLACK:
+                    return TEXTURE_BLACK;
+                case RED:
+                default:
+                    return TEXTURE_RED;
+            }
+        }
+    }
+
     public void setupRotation(EntityFlyingCarpet entity, float entityYaw, float partialTicks) {
         GlStateManager.rotate(90.0F - entityYaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.scale(-1.0F, -1.0F, 1.0F);
     }
 
     public void setupTranslation(double x, double y, double z) {
-        GlStateManager.translate((float)x, (float)y + 0.375F, (float)z);
+        GlStateManager.translate((float) x, (float) y + 0.375F, (float) z);
     }
 }

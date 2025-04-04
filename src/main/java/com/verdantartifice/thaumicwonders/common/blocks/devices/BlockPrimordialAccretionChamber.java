@@ -39,33 +39,6 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
         this.setCreativeTab(null);
     }
 
-    @Override
-    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
-        return false;
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
-    }
-
-    @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT_MIPPED;
-    }
-
-    @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        IBlockState bs = getDefaultState();
-        bs = bs.withProperty(IBlockFacingHorizontal.FACING, placer.getHorizontalFacing().getOpposite());
-        return bs;
-    }
-
     public static void destroyChamber(World world, BlockPos pos, IBlockState state, BlockPos startPos) {
         if (ignoreDestroy || world.isRemote) {
             return;
@@ -96,18 +69,19 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
     }
 
     @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+    }
+
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemById(0);
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        TileEntity tile = worldIn.getTileEntity(pos);
-        if(tile instanceof TilePrimordialAccretionChamber) {
-            ((TilePrimordialAccretionChamber) tile).dropInventoryContents();
-        }
-        destroyChamber(worldIn, pos, state, pos);
-        super.breakBlock(worldIn, pos, state);
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Override
@@ -141,5 +115,31 @@ public class BlockPrimordialAccretionChamber extends BlockDeviceTW<TilePrimordia
             }
             super.onEntityCollision(worldIn, pos, state, entityIn);
         }
+    }
+
+    @Override
+    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
+        return false;
+    }
+
+    @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        IBlockState bs = getDefaultState();
+        bs = bs.withProperty(IBlockFacingHorizontal.FACING, placer.getHorizontalFacing().getOpposite());
+        return bs;
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if (tile instanceof TilePrimordialAccretionChamber) {
+            ((TilePrimordialAccretionChamber) tile).dropInventoryContents();
+        }
+        destroyChamber(worldIn, pos, state, pos);
+        super.breakBlock(worldIn, pos, state);
     }
 }

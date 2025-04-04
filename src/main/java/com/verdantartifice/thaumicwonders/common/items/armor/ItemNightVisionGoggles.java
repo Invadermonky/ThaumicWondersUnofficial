@@ -38,17 +38,12 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
         this.setMaxDamage(350);
     }
-    
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "thaumicwonders:textures/entities/armor/night_vision_goggles.png";
-    }
-    
+
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
         return repair.isItemEqual(new ItemStack(ItemsTC.ingots, 1, 2)) || super.getIsRepairable(toRepair, repair);
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void onPlayerBaubleRender(ItemStack stack, EntityPlayer player, RenderType type, float partialTicks) {
@@ -68,15 +63,10 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
     public BaubleType getBaubleType(ItemStack itemstack) {
         return BaubleType.HEAD;
     }
-    
+
     @Override
     public void onWornTick(ItemStack stack, EntityLivingBase player) {
         this.doTick(stack, player);
-    }
-    
-    @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-        this.doTick(itemStack, player);
     }
 
     @Override
@@ -84,8 +74,18 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
         this.cancelNightVision(player, true);
     }
 
+    @Override
+    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
+        this.doTick(itemStack, player);
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
+        return "thaumicwonders:textures/entities/armor/night_vision_goggles.png";
+    }
+
     protected void doTick(ItemStack stack, EntityLivingBase player) {
-        if(this.shouldNightVisionActivate(player)) {
+        if (this.shouldNightVisionActivate(player)) {
             this.consumeEnergy(stack, player);
             if (this.hasEnergy(stack)) {
                 player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 305, 0, true, false));
@@ -96,23 +96,23 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
     }
 
     protected boolean shouldNightVisionActivate(EntityLivingBase entityLiving) {
-        if(!ConfigHandlerTW.night_vision_goggles.adaptiveNightVision)
+        if (!ConfigHandlerTW.night_vision_goggles.adaptiveNightVision)
             return true;
 
         World world = entityLiving.world;
         BlockPos playerPos = new BlockPos(entityLiving.posX, entityLiving.getEntityBoundingBox().maxY, entityLiving.posZ);
         int playerLight = world.getLightFromNeighbors(playerPos);
-        if(world.isThundering()) {
+        if (world.isThundering()) {
             int skyLight = world.getSkylightSubtracted();
             world.setSkylightSubtracted(10);
             playerLight = world.getLightFromNeighbors(playerPos);
             world.setSkylightSubtracted(skyLight);
         }
-        if(playerLight <= 7) {
+        if (playerLight <= 7) {
             return true;
         } else {
             RayTraceResult trace = entityLiving.rayTrace(24, 0);
-            if(trace != null) {
+            if (trace != null) {
                 switch (trace.typeOfHit) {
                     case BLOCK:
                         return world.getLight(trace.getBlockPos().offset(trace.sideHit)) <= 7;
@@ -127,11 +127,11 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
 
     protected void cancelNightVision(EntityLivingBase player, boolean forceDisable) {
         PotionEffect effect = player.getActivePotionEffect(MobEffects.NIGHT_VISION);
-        if(effect != null && (effect.getDuration() < 200 || (forceDisable && effect.getDuration() < 301))) {
+        if (effect != null && (effect.getDuration() < 200 || (forceDisable && effect.getDuration() < 301))) {
             player.removePotionEffect(MobEffects.NIGHT_VISION);
         }
     }
-    
+
     protected void consumeEnergy(ItemStack stack, EntityLivingBase player) {
         int energy = this.getEnergy(stack);
         if (energy > 0) {
@@ -141,7 +141,7 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
         }
         this.setEnergy(stack, energy);
     }
-    
+
     protected int getEnergy(ItemStack stack) {
         if (stack.hasTagCompound()) {
             return stack.getTagCompound().getInteger("energy");
@@ -149,15 +149,15 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
             return 0;
         }
     }
-    
+
     protected void setEnergy(ItemStack stack, int energy) {
         stack.setTagInfo("energy", new NBTTagInt(energy));
     }
-    
+
     protected boolean hasEnergy(ItemStack stack) {
         return (this.getEnergy(stack) > 0 || RechargeHelper.getCharge(stack) > 0);
     }
-    
+
     @Override
     public int getMaxCharge(ItemStack stack, EntityLivingBase player) {
         return ConfigHandlerTW.night_vision_goggles.visCapacity;

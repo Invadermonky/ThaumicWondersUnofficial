@@ -105,7 +105,7 @@ public class PrimordialAccelerator extends VirtualizedRegistry<AcceleratorRecipe
         @RecipeBuilderRegistrationMethod
         @Override
         public @Nullable AcceleratorRecipe register() {
-            if(this.validate()) {
+            if (this.validate()) {
                 AcceleratorRecipe recipe = new AcceleratorRecipe(this.input.toMcIngredient(), this.output);
                 AcceleratorRecipeRegistry.addRecipe(recipe);
                 return recipe;

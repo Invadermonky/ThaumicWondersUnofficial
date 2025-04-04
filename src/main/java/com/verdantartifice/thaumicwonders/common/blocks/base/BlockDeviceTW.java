@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
     public BlockDeviceTW(Material mat, Class<T> tileClass, String name) {
         super(mat, tileClass, name);
-        
+
         IBlockState blockState = this.blockState.getBaseState();
         if (this instanceof IBlockFacingHorizontal) {
             blockState.withProperty(IBlockFacingHorizontal.FACING, EnumFacing.NORTH);
@@ -34,19 +34,6 @@ public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
         this.setDefaultState(blockState);
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        this.updateState(worldIn, pos, state);
-        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
-    }
-
-    @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        super.onBlockAdded(worldIn, pos, state);
-        this.updateState(worldIn, pos, state);
-    }
-    
     protected void updateState(World worldIn, BlockPos pos, IBlockState state) {
         if (this instanceof IBlockEnabled) {
             boolean flag = !worldIn.isBlockPowered(pos);
@@ -54,22 +41,6 @@ public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
                 worldIn.setBlockState(pos, state.withProperty(IBlockEnabled.ENABLED, flag), 0x3);
             }
         }
-    }
-
-    @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        IBlockState state = this.getDefaultState();
-        if (this instanceof IBlockFacingHorizontal) {
-            EnumFacing placerFacing = placer.getHorizontalFacing();
-            state = state.withProperty(IBlockFacingHorizontal.FACING, placer.isSneaking() ? placerFacing : placerFacing.getOpposite());
-        } else if (this instanceof IBlockFacing) {
-            EnumFacing direction = EnumFacing.getDirectionFromEntityLiving(pos, placer);
-            state = state.withProperty(IBlockFacing.FACING, placer.isSneaking() ? direction.getOpposite() : direction);
-        }
-        if (this instanceof IBlockEnabled) {
-            state = state.withProperty(IBlockEnabled.ENABLED, Boolean.TRUE);
-        }
-        return state;
     }
 
     @Override
@@ -108,6 +79,35 @@ public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
         return meta;
     }
 
+    @SuppressWarnings("deprecation")
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        this.updateState(worldIn, pos, state);
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+    }
+
+    @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+        super.onBlockAdded(worldIn, pos, state);
+        this.updateState(worldIn, pos, state);
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        IBlockState state = this.getDefaultState();
+        if (this instanceof IBlockFacingHorizontal) {
+            EnumFacing placerFacing = placer.getHorizontalFacing();
+            state = state.withProperty(IBlockFacingHorizontal.FACING, placer.isSneaking() ? placerFacing : placerFacing.getOpposite());
+        } else if (this instanceof IBlockFacing) {
+            EnumFacing direction = EnumFacing.getDirectionFromEntityLiving(pos, placer);
+            state = state.withProperty(IBlockFacing.FACING, placer.isSneaking() ? direction.getOpposite() : direction);
+        }
+        if (this instanceof IBlockEnabled) {
+            state = state.withProperty(IBlockEnabled.ENABLED, Boolean.TRUE);
+        }
+        return state;
+    }
+
     @Override
     protected BlockStateContainer createBlockState() {
         ArrayList<IProperty<?>> properties = new ArrayList<>();
@@ -120,7 +120,7 @@ public class BlockDeviceTW<T extends TileEntity> extends BlockTileTW<T> {
             properties.add(IBlockEnabled.ENABLED);
         }
         return properties.isEmpty() ?
-            super.createBlockState() :
-            new BlockStateContainer(this, properties.toArray(new IProperty<?>[0]));
+                super.createBlockState() :
+                new BlockStateContainer(this, properties.toArray(new IProperty<?>[0]));
     }
 }

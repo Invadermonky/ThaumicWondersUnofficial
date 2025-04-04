@@ -41,50 +41,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDisplayExtended {
-    public enum Stability {
-        VERY_STABLE, STABLE, UNSTABLE, VERY_UNSTABLE;
-        
-        Stability() {}
-    }
-    
-    protected static class InstabilityEventEntry implements RandomItemChooser.Item {
-        public int eventId;
-        public int weight;
-        public float requiredInstability;
-        
-        protected InstabilityEventEntry(int eventId, int weight, float reqInstability) {
-            this.eventId = eventId;
-            this.weight = weight;
-            this.requiredInstability = reqInstability;
-        }
-        
-        @Override
-        public double getWeight() {
-            return this.weight;
-        }
-    }
-
     protected static DecimalFormat decFormatter = new DecimalFormat("#######.##");
-    
     protected static List<RandomItemChooser.Item> instabilityEvents = new ArrayList<RandomItemChooser.Item>();
     protected static List<RandomItemChooser.Item> spawnEvents = new ArrayList<RandomItemChooser.Item>();
     protected static List<RandomItemChooser.Item> subvertEvents = new ArrayList<RandomItemChooser.Item>();
-    
-    static {
-        instabilityEvents.add(new InstabilityEventEntry(0, 60, 0.0F));  // Flux burst
-        instabilityEvents.add(new InstabilityEventEntry(1, 35, 0.0F));  // Creature spawn
-        instabilityEvents.add(new InstabilityEventEntry(2, 5, -50.0F)); // Portal subversion
-        
-        spawnEvents.add(new InstabilityEventEntry(0, 40, 0.0F));    // Wisps
-        spawnEvents.add(new InstabilityEventEntry(1, 30, -20.0F));  // Zombie pigmen
-        spawnEvents.add(new InstabilityEventEntry(2, 20, -40.0F));  // Endermen
-        spawnEvents.add(new InstabilityEventEntry(3, 7, -60.0F));   // Inhabited zombie
-        spawnEvents.add(new InstabilityEventEntry(4, 3, -80.0F));   // Eldritch guardian
-        
-        subvertEvents.add(new InstabilityEventEntry(0, 75, -50.0F));    // Lesser crimson portal
-        subvertEvents.add(new InstabilityEventEntry(1, 25, -75.0F));    // Flux rift
-    }
-    
     protected int linkX = 0;
     protected int linkY = 0;
     protected int linkZ = 0;
@@ -95,7 +55,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
     protected boolean lastEnabled = true;
     protected float lastStabilityIncrease = 0.0F;
     protected float lastStabilityDecrease = 0.0F;
-    
+
     @Override
     protected void readFromTileNBT(NBTTagCompound compound) {
         this.linkX = compound.getInteger("linkX");
@@ -106,7 +66,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
         this.lastStabilityIncrease = compound.getFloat("lastStabilityIncrease");
         this.lastStabilityDecrease = compound.getFloat("lastStabilityDecrease");
     }
-    
+
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
         compound.setInteger("linkX", this.linkX);
@@ -118,22 +78,22 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
         compound.setFloat("lastStabilityDecrease", this.lastStabilityDecrease);
         return super.writeToTileNBT(compound);
     }
-    
+
     public void setLink(int linkX, int linkY, int linkZ, int linkDim) {
         this.linkX = linkX;
         this.linkY = linkY;
         this.linkZ = linkZ;
         this.linkDim = linkDim;
     }
-    
-    public void setStability(float stability) {
-        this.stability = MathHelper.clamp(stability, -100.0f, 100.0f);
-    }
-    
+
     public float getStability() {
         return this.stability;
     }
-    
+
+    public void setStability(float stability) {
+        this.stability = MathHelper.clamp(stability, -100.0f, 100.0f);
+    }
+
     public Stability getStabilityLevel() {
         if (this.stability >= 50.0F) {
             return Stability.VERY_STABLE;
@@ -145,7 +105,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
             return Stability.VERY_UNSTABLE;
         }
     }
-    
+
     public void spawnPortal() {
         if (!this.world.isRemote) {
             double posX = this.pos.up().getX() + 0.5D;
@@ -160,7 +120,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
             this.world.spawnEntity(portal);
         }
     }
-    
+
     public void despawnPortal(boolean playSound) {
         if (!this.world.isRemote) {
             EntityVoidPortal portal = this.getActivePortal();
@@ -172,17 +132,17 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
             }
         }
     }
-    
+
     protected EntityVoidPortal getActivePortal() {
         AxisAlignedBB bb = new AxisAlignedBB(this.pos.up());
         List<EntityVoidPortal> portalList = this.world.getEntitiesWithinAABB(EntityVoidPortal.class, bb);
         return (!portalList.isEmpty()) ? portalList.get(0) : null;
     }
-    
+
     protected boolean isPortalActive() {
         return (this.getActivePortal() != null);
     }
-    
+
     @Override
     public void onLoad() {
         super.onLoad();
@@ -221,7 +181,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
                 }
             }
             this.lastEnabled = enabled;
-            
+
             // Increase/decrease stability
             float lastStability = this.stability;
             boolean active = this.isPortalActive();
@@ -233,7 +193,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
                     for (BlockPos.MutableBlockPos mbp : BlockPos.getAllInBoxMutable(this.pos.add(-8, -8, -8), this.pos.add(8, 8, 8))) {
                         TileEntity tile = this.world.getTileEntity(mbp);
                         if (tile instanceof TileStabilizer) {
-                            TileStabilizer stabilizer = (TileStabilizer)tile;
+                            TileStabilizer stabilizer = (TileStabilizer) tile;
                             if (this.getStabilityLevel() != Stability.VERY_STABLE && stabilizer.mitigate(1)) {
                                 this.lastStabilityIncrease += 0.75F;
                                 this.setStability(this.stability + 0.75F);
@@ -257,20 +217,20 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
                 this.markDirty();
                 this.syncTile(false);
             }
-            
+
             // Execute instability event if applicable
             if (active && this.ticksExisted % 600 == 0 && this.getStability() < 0.0F && (this.world.rand.nextInt(1000) < Math.abs(this.getStability()))) {
                 this.executeInstabilityEvent();
             }
         }
     }
-    
+
     protected void executeInstabilityEvent() {
         if (instabilityEvents.size() <= 0) {
             return;
         }
         RandomItemChooser ric = new RandomItemChooser();
-        InstabilityEventEntry event = (InstabilityEventEntry)ric.chooseOnWeight(instabilityEvents);
+        InstabilityEventEntry event = (InstabilityEventEntry) ric.chooseOnWeight(instabilityEvents);
         if (event == null) {
             return;
         }
@@ -278,66 +238,66 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
             return;
         }
         switch (event.eventId) {
-        case 0:
-            this.fluxBurst();
-            break;
-        case 1:
-            this.spawnInvader();
-            break;
-        case 2:
-            this.subvertPortal();
-            break;
-        default:
-            ThaumicWonders.LOGGER.warn("Unexpected instability event ID {}", event.eventId);
+            case 0:
+                this.fluxBurst();
+                break;
+            case 1:
+                this.spawnInvader();
+                break;
+            case 2:
+                this.subvertPortal();
+                break;
+            default:
+                ThaumicWonders.LOGGER.warn("Unexpected instability event ID {}", event.eventId);
         }
     }
-    
+
     protected void fluxBurst() {
-        float amount = (float)Math.sqrt(Math.abs(this.stability));
+        float amount = (float) Math.sqrt(Math.abs(this.stability));
         AuraHelper.polluteAura(this.world, this.pos, amount, true);
     }
-    
+
     protected void spawnInvader() {
         if (spawnEvents.size() <= 0) {
             return;
         }
         RandomItemChooser ric = new RandomItemChooser();
-        InstabilityEventEntry event = (InstabilityEventEntry)ric.chooseOnWeight(spawnEvents);
+        InstabilityEventEntry event = (InstabilityEventEntry) ric.chooseOnWeight(spawnEvents);
         if (event == null) {
             return;
         }
         if (this.stability >= event.requiredInstability) {
             return;
         }
-        
+
         BlockPos portalPos = this.pos.up();
         int count = 0;
         switch (event.eventId) {
-        case 0:
-            count = 1 + (int)Math.floor(Math.abs(this.getStability()) / 20.0F);
-            break;
-        case 1:
-            count = 1 + (int)Math.floor(Math.abs(this.getStability()) / 30.0F);
-            break;
-        case 2:
-            count = 1 + (int)Math.floor(Math.abs(this.getStability()) / 40.0F);
-            break;
-        case 3:
+            case 0:
+                count = 1 + (int) Math.floor(Math.abs(this.getStability()) / 20.0F);
+                break;
+            case 1:
+                count = 1 + (int) Math.floor(Math.abs(this.getStability()) / 30.0F);
+                break;
+            case 2:
+                count = 1 + (int) Math.floor(Math.abs(this.getStability()) / 40.0F);
+                break;
+            case 3:
             case 4:
                 count = 1;
-            break;
+                break;
             default:
-            ThaumicWonders.LOGGER.warn("Unexpected spawn event ID {}", event.eventId);
-            return;
+                ThaumicWonders.LOGGER.warn("Unexpected spawn event ID {}", event.eventId);
+                return;
         }
-        
+
         boolean spawned = false;
         for (int i = 0; i < count; i++) {
             EntityLiving entity = this.getInvader(event.eventId);
             entity.setLocationAndAngles(
-                    portalPos.getX() + this.world.rand.nextGaussian() * 3.0D, 
-                    portalPos.getY() + this.world.rand.nextGaussian() * 3.0D, 
-                    portalPos.getZ() + this.world.rand.nextGaussian() * 3.0D, 
+                    portalPos.getX() + this.world.rand.nextGaussian() * 3.0D,
+                    portalPos.getY() + this.world.rand.nextGaussian() * 3.0D,
+                    portalPos.getZ() + this.world.rand.nextGaussian() * 3.0D,
                     0.0F, 0.0F);
             if (entity.getCanSpawnHere()) {
                 if (this.world.spawnEntity(entity)) {
@@ -347,35 +307,35 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
         }
         if (spawned) {
             PacketHandler.INSTANCE.sendToAllAround(
-                    new PacketLocalizedMessage("event.void_portal.invader"), 
+                    new PacketLocalizedMessage("event.void_portal.invader"),
                     new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 16.0D));
         }
     }
-    
+
     protected EntityLiving getInvader(int type) {
         switch (type) {
-        case 0:
-            return new EntityWisp(this.world);
-        case 1:
-            return new EntityPigZombie(this.world);
-        case 2:
-            return new EntityEnderman(this.world);
-        case 3:
-            return new EntityInhabitedZombie(this.world);
-        case 4:
-            return new EntityEldritchGuardian(this.world);
-        default:
-            ThaumicWonders.LOGGER.warn("No invader known for type {}", type);
-            return null;
+            case 0:
+                return new EntityWisp(this.world);
+            case 1:
+                return new EntityPigZombie(this.world);
+            case 2:
+                return new EntityEnderman(this.world);
+            case 3:
+                return new EntityInhabitedZombie(this.world);
+            case 4:
+                return new EntityEldritchGuardian(this.world);
+            default:
+                ThaumicWonders.LOGGER.warn("No invader known for type {}", type);
+                return null;
         }
     }
-    
+
     protected void subvertPortal() {
         if (subvertEvents.size() <= 0) {
             return;
         }
         RandomItemChooser ric = new RandomItemChooser();
-        InstabilityEventEntry event = (InstabilityEventEntry)ric.chooseOnWeight(subvertEvents);
+        InstabilityEventEntry event = (InstabilityEventEntry) ric.chooseOnWeight(subvertEvents);
         if (event == null) {
             return;
         }
@@ -384,41 +344,80 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
         }
 
         switch (event.eventId) {
-        case 0:
-            EntityCultistPortalLesser lesserPortal = new EntityCultistPortalLesser(this.world);
-            lesserPortal.setPosition(this.pos.getX() + 0.5D, this.pos.getY() + 1.0D, this.pos.getZ() + 0.5D);
-            this.despawnPortal(false);
-            lesserPortal.onInitialSpawn(this.world.getDifficultyForLocation(new BlockPos(lesserPortal)), null);
-            this.world.spawnEntity(lesserPortal);
-            PacketHandler.INSTANCE.sendToAllAround(
-                    new PacketLocalizedMessage("event.void_portal.subvert.lesser_crimson"), 
-                    new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 16.0D));
-            break;
-        case 1:
-            EntityFluxRift rift = new EntityFluxRift(this.world);
-            rift.setRiftSeed(this.world.rand.nextInt());
-            rift.setLocationAndAngles(this.pos.getX() + 0.5D, this.pos.getY() + 1.5D, this.pos.getZ() + 0.5D, (float)this.world.rand.nextInt(360), 0.0F);
-            double size = Math.sqrt((2 * Math.abs(this.getStability())) * 3.0F);
-            this.despawnPortal(false);
-            if (this.world.spawnEntity(rift)) {
-                rift.setRiftSize((int)size);
-            }
-            PacketHandler.INSTANCE.sendToAllAround(
-                    new PacketLocalizedMessage("event.void_portal.subvert.flux_rift"), 
-                    new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 16.0D));
-            break;
-        default:
-            ThaumicWonders.LOGGER.warn("Unexpected subversion event ID {}", event.eventId);
+            case 0:
+                EntityCultistPortalLesser lesserPortal = new EntityCultistPortalLesser(this.world);
+                lesserPortal.setPosition(this.pos.getX() + 0.5D, this.pos.getY() + 1.0D, this.pos.getZ() + 0.5D);
+                this.despawnPortal(false);
+                lesserPortal.onInitialSpawn(this.world.getDifficultyForLocation(new BlockPos(lesserPortal)), null);
+                this.world.spawnEntity(lesserPortal);
+                PacketHandler.INSTANCE.sendToAllAround(
+                        new PacketLocalizedMessage("event.void_portal.subvert.lesser_crimson"),
+                        new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 16.0D));
+                break;
+            case 1:
+                EntityFluxRift rift = new EntityFluxRift(this.world);
+                rift.setRiftSeed(this.world.rand.nextInt());
+                rift.setLocationAndAngles(this.pos.getX() + 0.5D, this.pos.getY() + 1.5D, this.pos.getZ() + 0.5D, (float) this.world.rand.nextInt(360), 0.0F);
+                double size = Math.sqrt((2 * Math.abs(this.getStability())) * 3.0F);
+                this.despawnPortal(false);
+                if (this.world.spawnEntity(rift)) {
+                    rift.setRiftSize((int) size);
+                }
+                PacketHandler.INSTANCE.sendToAllAround(
+                        new PacketLocalizedMessage("event.void_portal.subvert.flux_rift"),
+                        new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 16.0D));
+                break;
+            default:
+                ThaumicWonders.LOGGER.warn("Unexpected subversion event ID {}", event.eventId);
         }
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public String[] getIGogglesText() {
-        return new String[] {
-            TextFormatting.BOLD + I18n.format("stability." + this.getStabilityLevel().name()),
-            TextFormatting.GOLD + "" + TextFormatting.ITALIC + decFormatter.format(this.lastStabilityIncrease) + " " + I18n.format("stability.gain"),
-            TextFormatting.RED + "" + TextFormatting.ITALIC + decFormatter.format(this.lastStabilityDecrease) + " " + I18n.format("stability.loss")
+        return new String[]{
+                TextFormatting.BOLD + I18n.format("stability." + this.getStabilityLevel().name()),
+                TextFormatting.GOLD + "" + TextFormatting.ITALIC + decFormatter.format(this.lastStabilityIncrease) + " " + I18n.format("stability.gain"),
+                TextFormatting.RED + "" + TextFormatting.ITALIC + decFormatter.format(this.lastStabilityDecrease) + " " + I18n.format("stability.loss")
         };
+    }
+
+    public enum Stability {
+        VERY_STABLE, STABLE, UNSTABLE, VERY_UNSTABLE;
+
+        Stability() {
+        }
+    }
+
+    protected static class InstabilityEventEntry implements RandomItemChooser.Item {
+        public int eventId;
+        public int weight;
+        public float requiredInstability;
+
+        protected InstabilityEventEntry(int eventId, int weight, float reqInstability) {
+            this.eventId = eventId;
+            this.weight = weight;
+            this.requiredInstability = reqInstability;
+        }
+
+        @Override
+        public double getWeight() {
+            return this.weight;
+        }
+    }
+
+    static {
+        instabilityEvents.add(new InstabilityEventEntry(0, 60, 0.0F));  // Flux burst
+        instabilityEvents.add(new InstabilityEventEntry(1, 35, 0.0F));  // Creature spawn
+        instabilityEvents.add(new InstabilityEventEntry(2, 5, -50.0F)); // Portal subversion
+
+        spawnEvents.add(new InstabilityEventEntry(0, 40, 0.0F));    // Wisps
+        spawnEvents.add(new InstabilityEventEntry(1, 30, -20.0F));  // Zombie pigmen
+        spawnEvents.add(new InstabilityEventEntry(2, 20, -40.0F));  // Endermen
+        spawnEvents.add(new InstabilityEventEntry(3, 7, -60.0F));   // Inhabited zombie
+        spawnEvents.add(new InstabilityEventEntry(4, 3, -80.0F));   // Eldritch guardian
+
+        subvertEvents.add(new InstabilityEventEntry(0, 75, -50.0F));    // Lesser crimson portal
+        subvertEvents.add(new InstabilityEventEntry(1, 25, -75.0F));    // Flux rift
     }
 }

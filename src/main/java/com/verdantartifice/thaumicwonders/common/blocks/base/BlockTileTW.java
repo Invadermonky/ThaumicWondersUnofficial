@@ -11,8 +11,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockTileTW<T extends TileEntity> extends BlockTW implements ITileEntityProvider {
-    protected final Class<T> tileClass;
     protected static boolean keepInventory = false;
+    protected final Class<T> tileClass;
 
     public BlockTileTW(Material mat, Class<T> tileClass, String name) {
         super(mat, name);
@@ -20,7 +20,7 @@ public class BlockTileTW<T extends TileEntity> extends BlockTW implements ITileE
         setResistance(20.0f);
         this.tileClass = tileClass;
     }
-    
+
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         if (this.tileClass == null) {
@@ -28,9 +28,9 @@ public class BlockTileTW<T extends TileEntity> extends BlockTW implements ITileE
         }
         try {
             return this.tileClass.newInstance();
-        } catch(InstantiationException e) {
+        } catch (InstantiationException e) {
             ThaumicWonders.LOGGER.catching(e);
-        } catch(IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             ThaumicWonders.LOGGER.catching(e);
         }
         return null;
@@ -43,7 +43,6 @@ public class BlockTileTW<T extends TileEntity> extends BlockTW implements ITileE
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        // TODO drop block contents
         super.breakBlock(worldIn, pos, state);
         worldIn.removeTileEntity(pos);
     }

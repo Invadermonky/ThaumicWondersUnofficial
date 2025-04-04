@@ -15,11 +15,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketOreDivinerStop implements IMessage {
     protected BlockPos origin;
-    
+
     public PacketOreDivinerStop() {
         this.origin = null;
     }
-    
+
     public PacketOreDivinerStop(BlockPos origin) {
         this.origin = origin;
     }
@@ -40,13 +40,13 @@ public class PacketOreDivinerStop implements IMessage {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         @SideOnly(Side.CLIENT)
         private void handle(PacketOreDivinerStop message, MessageContext ctx) {
             World world = FMLClientHandler.instance().getClient().world;
             TileEntity tile = world.getTileEntity(message.origin);
             if (tile instanceof TileOreDiviner) {
-                ((TileOreDiviner)tile).setTarget(null);
+                ((TileOreDiviner) tile).setTarget(null);
             }
         }
     }

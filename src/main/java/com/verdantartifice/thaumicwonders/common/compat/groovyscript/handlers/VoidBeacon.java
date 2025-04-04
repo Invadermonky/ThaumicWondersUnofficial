@@ -105,7 +105,7 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
 
         public RecipeBuilder setDrop(OreDictIngredient oreDictIngredient) {
             NonNullList<ItemStack> stacks = OreDictionary.getOres(oreDictIngredient.getOreDict());
-            if(!stacks.isEmpty()) {
+            if (!stacks.isEmpty()) {
                 this.stack = stacks.get(0);
             }
             return this;
@@ -125,7 +125,7 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
         @RecipeBuilderRegistrationMethod
         @Override
         public @Nullable VoidBeaconEntry register() {
-            if(this.validate()) {
+            if (this.validate()) {
                 VoidBeaconEntry entry = new VoidBeaconEntry(this.stack, this.weight);
                 VoidBeaconEntryRegistry.addEntry(entry);
                 return entry;

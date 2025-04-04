@@ -16,11 +16,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketLocalizedMessage implements IMessage {
     protected String translationKey;
-    
+
     public PacketLocalizedMessage() {
         this.translationKey = "";
     }
-    
+
     public PacketLocalizedMessage(String key) {
         this.translationKey = key;
     }
@@ -34,7 +34,7 @@ public class PacketLocalizedMessage implements IMessage {
     public void toBytes(ByteBuf buf) {
         ByteBufUtils.writeUTF8String(buf, this.translationKey);
     }
-    
+
     public static class Handler implements IMessageHandler<PacketLocalizedMessage, IMessage> {
         @Override
         public IMessage onMessage(PacketLocalizedMessage message, MessageContext ctx) {

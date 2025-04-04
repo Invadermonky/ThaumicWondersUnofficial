@@ -24,24 +24,24 @@ public class RegistrationEvents {
         InitBlocks.initBlocks(event.getRegistry());
         InitBlocks.initTileEntities();
     }
-    
+
     @SideOnly(Side.CLIENT)
-    @SubscribeEvent(priority=EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerBlockClient(RegistryEvent.Register<Block> event) {
         ProxyBlock.setupBlocksClient(event.getRegistry());
     }
-    
+
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         InitBlocks.initItemBlocks(event.getRegistry());
         InitItems.initItems(event.getRegistry());
     }
-    
+
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         InitRecipes.initRecipes(event.getRegistry());
     }
-    
+
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
         InitEntities.initEntities(event.getRegistry());

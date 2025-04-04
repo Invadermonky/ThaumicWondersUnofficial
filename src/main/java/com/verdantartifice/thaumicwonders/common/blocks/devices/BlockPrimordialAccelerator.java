@@ -23,17 +23,12 @@ public class BlockPrimordialAccelerator extends BlockDeviceTW<TilePrimordialAcce
         super(Material.IRON, TilePrimordialAccelerator.class, "primordial_accelerator");
         this.setSoundType(SoundType.METAL);
     }
-    
+
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-    
     @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         EnumFacing blockFacing = state.getValue(IBlockFacingHorizontal.FACING);
@@ -43,7 +38,12 @@ public class BlockPrimordialAccelerator extends BlockDeviceTW<TilePrimordialAcce
             return BlockFaceShape.UNDEFINED;
         }
     }
-    
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
@@ -55,7 +55,7 @@ public class BlockPrimordialAccelerator extends BlockDeviceTW<TilePrimordialAcce
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tile = worldIn.getTileEntity(pos);
-        if(tile instanceof TilePrimordialAccelerator) {
+        if (tile instanceof TilePrimordialAccelerator) {
             ((TilePrimordialAccelerator) tile).dropInventoryContents();
         }
         super.breakBlock(worldIn, pos, state);

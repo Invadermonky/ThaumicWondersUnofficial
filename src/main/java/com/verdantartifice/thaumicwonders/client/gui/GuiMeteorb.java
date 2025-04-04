@@ -21,26 +21,12 @@ public class GuiMeteorb extends GuiScreen {
     private static final ResourceLocation BG_TEXTURE = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_meteorb_background.png");
 
     protected BlockPos pos;
-    
+
     public GuiMeteorb(BlockPos pos) {
         super();
         this.pos = pos;
     }
-    
-    @Override
-    public void initGui() {
-        if (this.mc == null) {
-            this.mc = Minecraft.getMinecraft();
-        }
-        this.buttonList.clear();
-        
-        int baseX = (this.width - 16) / 2;
-        int baseY = (this.height - 16) / 2;
-        this.buttonList.add(new GuiSelectorButton(2, baseX + 24, baseY, 144, 120, 16, 16, I18n.format("thaumicwonders.gui.meteorb.2")));
-        this.buttonList.add(new GuiSelectorButton(1, baseX, baseY, 120, 120, 16, 16, I18n.format("thaumicwonders.gui.meteorb.1")));
-        this.buttonList.add(new GuiSelectorButton(0, baseX - 24, baseY, 96, 120, 16, 16, I18n.format("thaumicwonders.gui.meteorb.0")));
-    }
-    
+
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         // Render background
@@ -53,28 +39,42 @@ public class GuiMeteorb extends GuiScreen {
         this.drawTexturedModalRect((this.width - 256) / 2, (this.height - 256) / 2, 0, 0, 256, 256);
         GlStateManager.disableBlend();
         GL11.glPopMatrix();
-        
+
         // Draw everything else
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
-    
+
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
         PacketHandler.INSTANCE.sendToServer(new PacketMeteorbAction(button.id, this.pos));
         this.mc.player.closeScreen();
     }
-    
+
+    @Override
+    public void initGui() {
+        if (this.mc == null) {
+            this.mc = Minecraft.getMinecraft();
+        }
+        this.buttonList.clear();
+
+        int baseX = (this.width - 16) / 2;
+        int baseY = (this.height - 16) / 2;
+        this.buttonList.add(new GuiSelectorButton(2, baseX + 24, baseY, 144, 120, 16, 16, I18n.format("thaumicwonders.gui.meteorb.2")));
+        this.buttonList.add(new GuiSelectorButton(1, baseX, baseY, 120, 120, 16, 16, I18n.format("thaumicwonders.gui.meteorb.1")));
+        this.buttonList.add(new GuiSelectorButton(0, baseX - 24, baseY, 96, 120, 16, 16, I18n.format("thaumicwonders.gui.meteorb.0")));
+    }
+
     private class GuiSelectorButton extends GuiButton {
         private final ResourceLocation TEXTURE = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_meteorb.png");
         private int texX;
         private int texY;
-        
+
         public GuiSelectorButton(int buttonId, int x, int y, int texX, int texY, int widthIn, int heightIn, String buttonText) {
             super(buttonId, x, y, widthIn, heightIn, buttonText);
             this.texX = texX;
             this.texY = texY;
         }
-        
+
         @Override
         public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
             if (this.visible) {

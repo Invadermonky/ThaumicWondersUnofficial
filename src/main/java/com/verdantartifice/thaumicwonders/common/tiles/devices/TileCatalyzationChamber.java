@@ -28,28 +28,28 @@ import java.util.Arrays;
 
 public class TileCatalyzationChamber extends TileTWInventory implements ITickable {
     private static final int PLAY_EFFECTS = 4;
-    
+
     protected int refineTime = 0;
     protected int maxRefineTime = 0;
     protected int speedyTime = 0;
-    
+
     protected int facingX = -5;
     protected int facingZ = -5;
 
     protected ItemStack equippedStone = ItemStack.EMPTY;
     protected CatalyzationChamberRecipe recipe = null;
-    
+
     public TileCatalyzationChamber() {
         super(32);
     }
-    
+
     public ItemStack getEquippedStone() {
         return this.equippedStone;
     }
-    
+
     public boolean setEquippedStone(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
-            if(CatalyzationChamberRecipeRegistry.isValidCatalyst(stack)) {
+            if (CatalyzationChamberRecipeRegistry.isValidCatalyst(stack)) {
                 this.equippedStone = stack;
                 return true;
             } else {
@@ -60,26 +60,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
             return true;
         }
     }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(
-            this.getPos().getX() - 1.3D, this.getPos().getY() - 1.3D, this.getPos().getZ() - 1.3D,
-            this.getPos().getX() + 2.3D, this.getPos().getY() + 2.3D, this.getPos().getZ() + 1.3D
-        );
-    }
-    
-    @Override
-    public int[] getSlotsForFace(EnumFacing side) {
-        return side == EnumFacing.UP ? super.getSlotsForFace(side) : new int[0];
-    }
-    
-    @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-        return false;
-    }
-    
+
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
@@ -87,16 +68,26 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
         this.speedyTime = compound.getShort("SpeedyTime");
         this.equippedStone = new ItemStack(compound.getCompoundTag("EquippedStone"));
     }
-    
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setShort("RefineTime", (short)this.refineTime);
-        compound.setShort("SpeedyTime", (short)this.speedyTime);
+        compound.setShort("RefineTime", (short) this.refineTime);
+        compound.setShort("SpeedyTime", (short) this.speedyTime);
         compound.setTag("EquippedStone", this.equippedStone.writeToNBT(new NBTTagCompound()));
         return compound;
     }
-    
+
+    @Override
+    public int[] getSlotsForFace(EnumFacing side) {
+        return side == EnumFacing.UP ? super.getSlotsForFace(side) : new int[0];
+    }
+
+    @Override
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+        return false;
+    }
+
     @Override
     public void update() {
         if (this.facingX == -5) {
@@ -120,41 +111,41 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
                     if (input != null && !input.isEmpty()) {
                         ItemStack catalyst = this.getEquippedStone();
                         this.recipe = CatalyzationChamberRecipeRegistry.getRecipe(input, catalyst);
-                        if(this.recipe != null) {
+                        if (this.recipe != null) {
                             ItemStack output = this.recipe.getOutput();
-                            if(output.isEmpty()) {
+                            if (output.isEmpty()) {
                                 ItemStack copy = input.copy();
                                 copy.setCount(1);
                                 this.ejectItem(copy);
                                 this.decrStackSize(slot, 1);
                                 continue;
                             }
-                            if(catalyst.isItemStackDamageable()) {
-                                if(catalyst.attemptDamageItem(1, this.world.rand, null)) {
+                            if (catalyst.isItemStackDamageable()) {
+                                if (catalyst.attemptDamageItem(1, this.world.rand, null)) {
                                     catalyst.shrink(1);
                                 }
-                            } else if(catalyst.getItem().hasContainerItem(catalyst)) {
+                            } else if (catalyst.getItem().hasContainerItem(catalyst)) {
                                 ItemStack container = catalyst.getItem().getContainerItem(catalyst);
-                                if(!this.setEquippedStone(container)) {
+                                if (!this.setEquippedStone(container)) {
                                     this.ejectItem(container);
                                     catalyst.shrink(1);
                                 }
                             } else {
                                 catalyst.shrink(1);
                             }
-                            if(this.speedyTime > 0) {
+                            if (this.speedyTime > 0) {
                                 this.speedyTime--;
                             }
                             this.ejectItem(output.copy());
                             this.world.addBlockEvent(this.getPos(), BlocksTW.CATALYZATION_CHAMBER, PLAY_EFFECTS, 0);
-                            if(this.recipe.getFluxChance() > 0 && this.world.rand.nextInt(this.recipe.getFluxChance()) == 0) {
+                            if (this.recipe.getFluxChance() > 0 && this.world.rand.nextInt(this.recipe.getFluxChance()) == 0) {
                                 AuraHelper.polluteAura(this.world, this.getPos().offset(this.getFacing().getOpposite()), 1.0f, true);
                             }
 
                             int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
                                     .filter(ingredient -> !ingredient.isEmpty()).findFirst()
                                     .map(ItemStack::getCount).orElse(1);
-                            if(input.getItem().hasContainerItem(input)) {
+                            if (input.getItem().hasContainerItem(input)) {
                                 ItemStack container = input.getItem().getContainerItem(input).copy();
                                 container.setCount(count);
                                 this.ejectItem(container);
@@ -168,7 +159,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
                 }
             }
             if (this.speedyTime <= 0) {
-                this.speedyTime = (int)AuraHelper.drainVis(this.getWorld(), this.getPos(), 20.0F, false);
+                this.speedyTime = (int) AuraHelper.drainVis(this.getWorld(), this.getPos(), 20.0F, false);
             }
             if (this.refineTime == 0 && !refinedFlag) {
                 for (int slot = 0; slot < this.getSizeInventory(); slot++) {
@@ -186,14 +177,14 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     }
 
     public void dropInventoryContents() {
-        if(!this.world.isRemote) {
-            if(!this.getEquippedStone().isEmpty()) {
+        if (!this.world.isRemote) {
+            if (!this.getEquippedStone().isEmpty()) {
                 Block.spawnAsEntity(this.world, this.getPos(), this.getEquippedStone().copy());
             }
             InventoryHelper.dropInventoryItems(this.world, this.getPos(), this);
         }
     }
-    
+
     public ItemStack addItemsToInventory(ItemStack items) {
         if (this.canRefine(items)) {
             return ThaumcraftInvHelper.insertStackAt(this.getWorld(), this.getPos(), EnumFacing.UP, items, false);
@@ -204,7 +195,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     }
 
     private boolean canRefine(ItemStack stack) {
-        if(this.getEquippedStone() != null && !this.getEquippedStone().isEmpty()) {
+        if (this.getEquippedStone() != null && !this.getEquippedStone().isEmpty()) {
             return CatalyzationChamberRecipeRegistry.getRecipe(stack, this.getEquippedStone()) != null;
         } else {
             return false;
@@ -245,7 +236,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
         this.facingX = face.getXOffset();
         this.facingZ = face.getZOffset();
     }
-    
+
     @Override
     public boolean receiveClientEvent(int id, int type) {
         if (id == PLAY_EFFECTS) {
@@ -265,5 +256,14 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
         } else {
             return super.receiveClientEvent(id, type);
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+        return new AxisAlignedBB(
+                this.getPos().getX() - 1.3D, this.getPos().getY() - 1.3D, this.getPos().getZ() - 1.3D,
+                this.getPos().getX() + 2.3D, this.getPos().getY() + 2.3D, this.getPos().getZ() + 1.3D
+        );
     }
 }

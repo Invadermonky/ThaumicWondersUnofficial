@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 
 public class BlockFluidQuicksilver extends BlockFluidClassic {
     public static final Material FLUID_QUICKSILVER_MATERIAL = new MaterialLiquid(MapColor.SILVER);
-    
+
     public BlockFluidQuicksilver() {
         super(FluidQuicksilver.INSTANCE, FLUID_QUICKSILVER_MATERIAL);
         this.setRegistryName(ThaumicWonders.MODID, "fluid_quicksilver");
@@ -28,7 +28,7 @@ public class BlockFluidQuicksilver extends BlockFluidClassic {
     @Override
     public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if (entityIn instanceof EntityLivingBase) {
-            ((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
+            ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
         }
         super.onEntityCollision(worldIn, pos, state, entityIn);
     }

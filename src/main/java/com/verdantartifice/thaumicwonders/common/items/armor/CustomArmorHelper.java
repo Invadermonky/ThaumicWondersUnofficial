@@ -20,11 +20,11 @@ public class CustomArmorHelper {
             model.bipedLeftArm.showModel = (armorSlot == EntityEquipmentSlot.CHEST);
             model.bipedRightLeg.showModel = (armorSlot == EntityEquipmentSlot.LEGS);
             model.bipedLeftLeg.showModel = (armorSlot == EntityEquipmentSlot.LEGS);
-            
+
             model.isSneak = entityLiving.isSneaking();
             model.isRiding = entityLiving.isRiding();
             model.isChild = entityLiving.isChild();
-            
+
             ItemStack stackMain = entityLiving.getHeldItemMainhand();
             ModelBiped.ArmPose armPoseMain = ModelBiped.ArmPose.EMPTY;
             if (stackMain != null && !stackMain.isEmpty()) {
@@ -38,7 +38,7 @@ public class CustomArmorHelper {
                     }
                 }
             }
-            
+
             ItemStack stackOff = entityLiving.getHeldItemOffhand();
             ModelBiped.ArmPose armPoseOff = ModelBiped.ArmPose.EMPTY;
             if (stackOff != null && !stackOff.isEmpty()) {
@@ -50,7 +50,7 @@ public class CustomArmorHelper {
                     }
                 }
             }
-            
+
             model.rightArmPose = (entityLiving.getPrimaryHand() == EnumHandSide.RIGHT) ? armPoseMain : armPoseOff;
             model.leftArmPose = (entityLiving.getPrimaryHand() == EnumHandSide.RIGHT) ? armPoseOff : armPoseMain;
         }

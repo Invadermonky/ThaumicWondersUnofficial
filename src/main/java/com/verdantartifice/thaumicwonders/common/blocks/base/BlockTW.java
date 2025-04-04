@@ -14,7 +14,7 @@ public class BlockTW extends Block {
         setResistance(2.0F);
         setHardness(1.5F);
     }
-    
+
     @Override
     public int damageDropped(IBlockState state) {
         return 0;

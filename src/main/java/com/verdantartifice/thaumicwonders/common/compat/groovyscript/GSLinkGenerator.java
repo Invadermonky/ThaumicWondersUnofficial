@@ -10,12 +10,12 @@ public class GSLinkGenerator extends BasicLinkGenerator {
     }
 
     @Override
-    protected String version() {
-        return ThaumicWonders.VERSION;
+    protected String domain() {
+        return "https://github.com/Invadermonky/ThaumicWondersUnofficial/";
     }
 
     @Override
-    protected String domain() {
-        return "https://github.com/Invadermonky/ThaumicWondersUnofficial/";
+    protected String version() {
+        return ThaumicWonders.VERSION;
     }
 }

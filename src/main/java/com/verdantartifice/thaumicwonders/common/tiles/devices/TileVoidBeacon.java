@@ -42,39 +42,39 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     private static final int PLAY_EFFECTS = 4;
 
     protected final List<TileVoidBeacon.BeamSegment> beamSegments = new ArrayList<>();
-    
+
     protected Aspect essentiaType = null;
     protected int essentiaAmount = 0;
     protected int tickCounter = 0;
     protected boolean validPlacement = false;
     protected int levels = -1;
     protected int progress = 0;
-    
+
     @SideOnly(Side.CLIENT)
     private long beamRenderCounter;
     @SideOnly(Side.CLIENT)
     private float beamRenderScale;
-    
+
     @Nullable
     public Aspect getEssentiaType() {
         return this.essentiaType;
     }
-    
+
     public int getEssentiaAmount() {
         return this.essentiaAmount;
     }
-    
+
     public void clearEssentia() {
         this.essentiaType = null;
         this.essentiaAmount = 0;
         this.markDirty();
         this.syncTile(false);
     }
-    
+
     public int getLevels() {
         return this.levels;
     }
-    
+
     public int getProgress() {
         return this.progress;
     }
@@ -86,18 +86,18 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         this.levels = compound.getShort("levels");
         this.progress = compound.getShort("progress");
     }
-    
+
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
         if (this.essentiaType != null) {
             compound.setString("essentiaType", this.essentiaType.getTag());
-            compound.setShort("essentiaAmount", (short)this.essentiaAmount);
+            compound.setShort("essentiaAmount", (short) this.essentiaAmount);
         }
-        compound.setShort("levels", (short)this.levels);
-        compound.setShort("progress", (short)this.progress);
+        compound.setShort("levels", (short) this.levels);
+        compound.setShort("progress", (short) this.progress);
         return compound;
     }
-    
+
     @Override
     public void update() {
         this.tickCounter++;
@@ -124,22 +124,22 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             }
         }
     }
-    
+
     protected boolean canMakeProgress() {
         return this.validPlacement &&
-            BlockStateUtils.isEnabled(this.getBlockMetadata()) &&
-            this.hasEnoughEssentia() &&
-            this.progress < PROGRESS_REQUIRED;
+                BlockStateUtils.isEnabled(this.getBlockMetadata()) &&
+                this.hasEnoughEssentia() &&
+                this.progress < PROGRESS_REQUIRED;
     }
-    
+
     protected boolean canConjureItem() {
         return this.validPlacement &&
-            BlockStateUtils.isEnabled(this.getBlockMetadata()) &&
-            this.hasEnoughEssentia() &&
-            this.canEject() &&
-            this.progress >= PROGRESS_REQUIRED;
+                BlockStateUtils.isEnabled(this.getBlockMetadata()) &&
+                this.hasEnoughEssentia() &&
+                this.canEject() &&
+                this.progress >= PROGRESS_REQUIRED;
     }
-    
+
     protected boolean hasEnoughEssentia() {
         if (this.essentiaType == null || this.levels < 0) {
             return false;
@@ -147,11 +147,11 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             return (this.essentiaAmount >= this.getRequiredEssentia());
         }
     }
-    
+
     protected int getRequiredEssentia() {
         return ConfigHandlerTW.void_beacon.baseEssentiaCost / (int) (Math.pow(2, this.levels));
     }
-    
+
     protected void eject(@Nonnull ItemStack stack) {
         if (stack.isEmpty()) {
             return;
@@ -173,12 +173,12 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             ThaumicWonders.LOGGER.warn("Void beacon failed to eject {}!", stack);
         }
     }
-    
+
     @Nonnull
     protected ItemStack getConjuredItem(Aspect aspect) {
         return VoidBeaconEntryRegistry.getDropForAspect(this.world.rand, aspect);
     }
-    
+
     protected boolean canEject() {
         for (EnumFacing face : EnumFacing.HORIZONTALS) {
             BlockPos otherPos = this.pos.offset(face);
@@ -194,14 +194,14 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         }
         return false;
     }
-    
+
     protected void drainRifts() {
         List<EntityFluxRift> riftList = this.getValidRifts();
         boolean found = false;
         for (EntityFluxRift rift : riftList) {
             double drained = Math.sqrt(rift.getRiftSize());
-            this.progress += (int)drained;
-            rift.setRiftStability(rift.getRiftStability() - (float)(drained / 15.0D));
+            this.progress += (int) drained;
+            rift.setRiftStability(rift.getRiftStability() - (float) (drained / 15.0D));
             if (this.world.rand.nextInt(33) == 0) {
                 rift.setRiftSize(rift.getRiftSize() - 1);
             }
@@ -217,7 +217,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             }
         }
     }
-    
+
     protected List<EntityFluxRift> getValidRifts() {
         List<EntityFluxRift> retVal = new ArrayList<>();
         List<EntityFluxRift> riftList = EntityUtils.getEntitiesInRange(this.world, this.pos, null, EntityFluxRift.class, 16.0D);
@@ -233,7 +233,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         }
         return retVal;
     }
-    
+
     protected void updateBeam() {
         this.beamSegments.clear();
         this.validPlacement = true;
@@ -241,7 +241,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         TileVoidBeacon.BeamSegment segment = new TileVoidBeacon.BeamSegment(beamColor.getRGBColorComponents(null));
         this.beamSegments.add(segment);
         BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
-        
+
         for (int y = this.pos.getY() + 1; y < this.world.getActualHeight(); y++) {
             mbp.setPos(this.pos.getX(), y, this.pos.getZ());
             IBlockState blockState = this.world.getBlockState(mbp);
@@ -254,7 +254,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             }
         }
     }
-    
+
     protected void updateLevels() {
         this.levels = 0;
         if (this.validPlacement) {
@@ -267,7 +267,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             }
         }
     }
-    
+
     protected boolean isLevelComplete(int yOffset) {
         for (int x = this.pos.getX() - yOffset; x <= this.pos.getX() + yOffset; x++) {
             for (int z = this.pos.getZ() - yOffset; z <= this.pos.getZ() + yOffset; z++) {
@@ -280,7 +280,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         }
         return true;
     }
-    
+
     protected void fill() {
         for (EnumFacing face : EnumFacing.HORIZONTALS) {
             if (!this.canInputFrom(face) || this.getEssentiaAmount(face) >= CAPACITY) {
@@ -288,16 +288,16 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
             if (te instanceof IEssentiaTransport) {
-                IEssentiaTransport otherTile = (IEssentiaTransport)te;
+                IEssentiaTransport otherTile = (IEssentiaTransport) te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
                 }
                 Aspect type = otherTile.getEssentiaType(face.getOpposite());
-                if ( type != null &&
-                     otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
-                     (this.getEssentiaType(face) == null || type == this.getEssentiaType(face)) &&
-                     this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
-                     this.getSuctionAmount(face) >= otherTile.getMinimumSuction() ) {
+                if (type != null &&
+                        otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
+                        (this.getEssentiaType(face) == null || type == this.getEssentiaType(face)) &&
+                        this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
+                        this.getSuctionAmount(face) >= otherTile.getMinimumSuction()) {
                     int taken = otherTile.takeEssentia(type, 1, face.getOpposite());
                     int leftover = this.addToContainer(type, taken);
                     if (leftover > 0) {
@@ -312,12 +312,8 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
-        if (this.canInputFrom(face) && (this.getEssentiaType(face) == null || aspect == this.getEssentiaType(face))) {
-            return (amt - this.addToContainer(aspect, amt));
-        } else {
-            return 0;
-        }
+    public boolean isConnectable(EnumFacing face) {
+        return this.canInputFrom(face);
     }
 
     @Override
@@ -331,24 +327,8 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
 
     @Override
-    public int getEssentiaAmount(EnumFacing face) {
-        return this.essentiaAmount;
-    }
-
-    @Override
-    public Aspect getEssentiaType(EnumFacing face) {
-        return this.essentiaType;
-    }
-
-    @Override
-    public int getMinimumSuction() {
-        // Can't output, so no need for minimum suction
-        return 0;
-    }
-
-    @Override
-    public int getSuctionAmount(EnumFacing face) {
-        return (this.getEssentiaAmount(face) >= CAPACITY) ? 0 : 128;
+    public void setSuction(Aspect aspect, int amt) {
+        // Do nothing
     }
 
     @Override
@@ -357,13 +337,8 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
 
     @Override
-    public boolean isConnectable(EnumFacing face) {
-        return this.canInputFrom(face);
-    }
-
-    @Override
-    public void setSuction(Aspect aspect, int amt) {
-        // Do nothing
+    public int getSuctionAmount(EnumFacing face) {
+        return (this.getEssentiaAmount(face) >= CAPACITY) ? 0 : 128;
     }
 
     @Override
@@ -373,47 +348,28 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
 
     @Override
-    public int addToContainer(Aspect aspect, int toAdd) {
-        int retVal;
-        if (toAdd == 0) {
-            return 0;
-        } else if (this.essentiaAmount < CAPACITY && (this.essentiaType == null || this.essentiaType == aspect)) {
-            // Add as much as possible and return the remainder
-            int added = Math.min(toAdd, CAPACITY - this.essentiaAmount);
-            this.essentiaAmount += added;
-            this.essentiaType = aspect;
-            retVal = (toAdd - added);
+    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
+        if (this.canInputFrom(face) && (this.getEssentiaType(face) == null || aspect == this.getEssentiaType(face))) {
+            return (amt - this.addToContainer(aspect, amt));
         } else {
-            retVal = toAdd;
+            return 0;
         }
-        
-        this.markDirty();
-        this.syncTile(false);
-        return retVal;
     }
 
     @Override
-    public int containerContains(Aspect aspect) {
-        return (this.essentiaType == aspect) ? this.essentiaAmount : 0;
+    public Aspect getEssentiaType(EnumFacing face) {
+        return this.essentiaType;
     }
 
     @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        return true;
+    public int getEssentiaAmount(EnumFacing face) {
+        return this.essentiaAmount;
     }
 
     @Override
-    public boolean doesContainerContain(AspectList aspectList) {
-        boolean satisfied = true;
-        for (Aspect aspect : aspectList.getAspects()) {
-            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
-        }
-        return satisfied;
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
-        return (this.essentiaType == aspect && this.essentiaAmount >= amt);
+    public int getMinimumSuction() {
+        // Can't output, so no need for minimum suction
+        return 0;
     }
 
     @Override
@@ -436,16 +392,28 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
 
     @Override
-    public boolean takeFromContainer(AspectList aspectList) {
-        if (!this.doesContainerContain(aspectList)) {
-            return false;
+    public boolean doesContainerAccept(Aspect aspect) {
+        return true;
+    }
+
+    @Override
+    public int addToContainer(Aspect aspect, int toAdd) {
+        int retVal;
+        if (toAdd == 0) {
+            return 0;
+        } else if (this.essentiaAmount < CAPACITY && (this.essentiaType == null || this.essentiaType == aspect)) {
+            // Add as much as possible and return the remainder
+            int added = Math.min(toAdd, CAPACITY - this.essentiaAmount);
+            this.essentiaAmount += added;
+            this.essentiaType = aspect;
+            retVal = (toAdd - added);
         } else {
-            boolean satisfied = true;
-            for (Aspect aspect : aspectList.getAspects()) {
-                satisfied = satisfied && this.takeFromContainer(aspect, aspectList.getAmount(aspect));
-            }
-            return satisfied;
+            retVal = toAdd;
         }
+
+        this.markDirty();
+        this.syncTile(false);
+        return retVal;
     }
 
     @Override
@@ -463,21 +431,53 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         }
     }
 
+    @Override
+    public boolean takeFromContainer(AspectList aspectList) {
+        if (!this.doesContainerContain(aspectList)) {
+            return false;
+        } else {
+            boolean satisfied = true;
+            for (Aspect aspect : aspectList.getAspects()) {
+                satisfied = satisfied && this.takeFromContainer(aspect, aspectList.getAmount(aspect));
+            }
+            return satisfied;
+        }
+    }
+
+    @Override
+    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
+        return (this.essentiaType == aspect && this.essentiaAmount >= amt);
+    }
+
+    @Override
+    public boolean doesContainerContain(AspectList aspectList) {
+        boolean satisfied = true;
+        for (Aspect aspect : aspectList.getAspects()) {
+            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
+        }
+        return satisfied;
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        return (this.essentiaType == aspect) ? this.essentiaAmount : 0;
+    }
+
     @SideOnly(Side.CLIENT)
     public List<TileVoidBeacon.BeamSegment> getBeamSegments() {
         return this.beamSegments;
     }
-    
+
     @SideOnly(Side.CLIENT)
     public float shouldBeamRender() {
         if (!this.validPlacement || !BlockStateUtils.isEnabled(this.getBlockMetadata())) {
             return 0.0F;
         } else {
-            int i = (int)(this.world.getTotalWorldTime() - this.beamRenderCounter);
+            int i = (int) (this.world.getTotalWorldTime() - this.beamRenderCounter);
             this.beamRenderCounter = this.world.getTotalWorldTime();
 
             if (i > 1) {
-                this.beamRenderScale -= (float)i / 40.0F;
+                this.beamRenderScale -= (float) i / 40.0F;
                 if (this.beamRenderScale < 0.0F) {
                     this.beamRenderScale = 0.0F;
                 }
@@ -492,19 +492,13 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             return this.beamRenderScale;
         }
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public double getMaxRenderDistanceSquared() {
         return 65536.0D;
     }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox() {
-        return INFINITE_EXTENT_AABB;
-    }
-    
+
     @Override
     public boolean receiveClientEvent(int id, int type) {
         if (id == PLAY_EFFECTS) {
@@ -512,13 +506,13 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
                 List<EntityFluxRift> riftList = this.getValidRifts();
                 for (EntityFluxRift rift : riftList) {
                     FXDispatcher.INSTANCE.voidStreak(
-                            rift.posX, 
-                            rift.posY, 
-                            rift.posZ, 
-                            this.pos.getX() + 0.5D, 
-                            this.pos.getY() + 1.0D, 
-                            this.pos.getZ() + 0.5D, 
-                            type, 
+                            rift.posX,
+                            rift.posY,
+                            rift.posZ,
+                            this.pos.getX() + 0.5D,
+                            this.pos.getY() + 1.0D,
+                            this.pos.getZ() + 0.5D,
+                            type,
                             0.04F);
                 }
             }
@@ -527,9 +521,17 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             return super.receiveClientEvent(id, type);
         }
     }
-    
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+        return INFINITE_EXTENT_AABB;
+    }
+
     public static class BeamSegment {
-        /** RGB (0 to 1.0) colors of this beam segment */
+        /**
+         * RGB (0 to 1.0) colors of this beam segment
+         */
         private final float[] colors;
         private int height;
 
@@ -542,7 +544,9 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             ++this.height;
         }
 
-        /** Returns RGB (0 to 1.0) colors of this beam segment */
+        /**
+         * Returns RGB (0 to 1.0) colors of this beam segment
+         */
         public float[] getColors() {
             return this.colors;
         }

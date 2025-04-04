@@ -41,7 +41,7 @@ public class EntityPrimalArrow extends EntityArrow {
     });
 
     private static final DataParameter<Integer> ARROW_TYPE = EntityDataManager.createKey(EntityPrimalArrow.class, DataSerializers.VARINT);
-    
+
     private int knockbackStrength;
     private int ticksInAir = 0;
     private int ticksInGround = 0;
@@ -55,41 +55,37 @@ public class EntityPrimalArrow extends EntityArrow {
         super(worldIn);
         this.pickupStatus = PickupStatus.CREATIVE_ONLY;
     }
-    
+
     public EntityPrimalArrow(World worldIn, double x, double y, double z) {
         super(worldIn, x, y, z);
         this.pickupStatus = PickupStatus.CREATIVE_ONLY;
     }
-    
+
     public EntityPrimalArrow(World worldIn, EntityLivingBase shooter) {
         super(worldIn, shooter);
         this.pickupStatus = PickupStatus.CREATIVE_ONLY;
     }
-    
+
     @Override
     protected void entityInit() {
         super.entityInit();
         this.dataManager.register(ARROW_TYPE, 0);
     }
-    
-    public int getArrowType() {
-        return this.dataManager.get(ARROW_TYPE);
-    }
-    
-    public void setArrowType(int type) {
-        this.dataManager.set(ARROW_TYPE, type);
-    }
-    
+
     @Override
-    public void setKnockbackStrength(int knockbackStrength) {
-        this.knockbackStrength = knockbackStrength;
+    public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+        super.shoot(x, y, z, velocity, inaccuracy);
+        this.ticksInGround = 0;
     }
 
     @Override
-    protected ItemStack getArrowStack() {
-        return new ItemStack(ItemsTW.PRIMAL_ARROW, 1, this.getArrowType());
+    public void setVelocity(double x, double y, double z) {
+        super.setVelocity(x, y, z);
+        if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
+            this.ticksInGround = 0;
+        }
     }
-    
+
     @Override
     public void onUpdate() {
         if (!this.world.isRemote) {
@@ -100,8 +96,8 @@ public class EntityPrimalArrow extends EntityArrow {
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
             float hVelocity = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-            this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
-            this.rotationPitch = (float)(MathHelper.atan2(this.motionY, hVelocity) * (180D / Math.PI));
+            this.rotationYaw = (float) (MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
+            this.rotationPitch = (float) (MathHelper.atan2(this.motionY, hVelocity) * (180D / Math.PI));
             this.prevRotationYaw = this.rotationYaw;
             this.prevRotationPitch = this.rotationPitch;
         }
@@ -156,8 +152,8 @@ public class EntityPrimalArrow extends EntityArrow {
             }
 
             if (raytraceresult != null && raytraceresult.entityHit instanceof EntityPlayer) {
-                EntityPlayer entityplayer = (EntityPlayer)raytraceresult.entityHit;
-                if (this.shootingEntity instanceof EntityPlayer && !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer)) {
+                EntityPlayer entityplayer = (EntityPlayer) raytraceresult.entityHit;
+                if (this.shootingEntity instanceof EntityPlayer && !((EntityPlayer) this.shootingEntity).canAttackPlayer(entityplayer)) {
                     raytraceresult = null;
                 }
             }
@@ -168,7 +164,7 @@ public class EntityPrimalArrow extends EntityArrow {
 
             if (this.getIsCritical()) {
                 for (int k = 0; k < 4; ++k) {
-                    this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX + this.motionX * (double)k / 4.0D, this.posY + this.motionY * (double)k / 4.0D, this.posZ + this.motionZ * (double)k / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ);
+                    this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX + this.motionX * (double) k / 4.0D, this.posY + this.motionY * (double) k / 4.0D, this.posZ + this.motionZ * (double) k / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ);
                 }
             }
 
@@ -176,9 +172,9 @@ public class EntityPrimalArrow extends EntityArrow {
             this.posY += this.motionY;
             this.posZ += this.motionZ;
             float hVelocity = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-            this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
+            this.rotationYaw = (float) (MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
 
-            for (this.rotationPitch = (float)(MathHelper.atan2(this.motionY, hVelocity) * (180D / Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+            for (this.rotationPitch = (float) (MathHelper.atan2(this.motionY, hVelocity) * (180D / Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
                 ;
             }
 
@@ -222,61 +218,6 @@ public class EntityPrimalArrow extends EntityArrow {
             this.doBlockCollisions();
         }
     }
-    
-    protected float computeTotalDamage() {
-        float motionMagnitude = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-        int baseDamage = MathHelper.ceil((double)motionMagnitude * this.getDamage());
-        if (this.getIsCritical()) {
-            baseDamage += this.rand.nextInt(baseDamage / 2 + 2);
-        }
-        double retVal = baseDamage;
-        switch (this.getArrowType()) {
-        case 1:
-            // Earth arrows do more damage than normal
-            retVal = retVal * 1.5D;
-            break;
-        case 4:
-        case 5:
-            // Order and entropy arrows do less damage than normal
-            retVal = retVal * 0.8D;
-            break;
-        }
-        return (float)retVal;
-    }
-    
-    protected DamageSource getDamageSource() {
-        Entity shooter = (this.shootingEntity == null) ? this : this.shootingEntity;
-        DamageSource damageSource = new EntityDamageSourceIndirect("arrow", this, shooter);
-        switch (this.getArrowType()) {
-        case 0:
-        case 4:
-            // Air and order arrows ignore armor
-            damageSource = damageSource.setProjectile().setDamageBypassesArmor();
-            break;
-        case 2:
-            // Fire arrows do fire damage
-            damageSource = damageSource.setProjectile().setFireDamage();
-            break;
-        default:
-            // Water, earth, and entropy arrows do normal damage
-            damageSource = damageSource.setProjectile();
-            break;
-        }
-        return damageSource;
-    }
-    
-    protected int getFireDuration() {
-        int duration = 0;
-        if (this.isBurning() && this.getArrowType() != 3) {
-            // Water arrows can't light targets on fire, even if burning
-            duration += 5;
-        }
-        if (this.getArrowType() == 2) {
-            // Fire arrows always light the target on fire, extending duration if the arrow is burning
-            duration += 5;
-        }
-        return duration;
-    }
 
     @Override
     protected void onHit(RayTraceResult raytraceResultIn) {
@@ -290,7 +231,7 @@ public class EntityPrimalArrow extends EntityArrow {
 
             if (entity.attackEntityFrom(this.getDamageSource(), this.computeTotalDamage())) {
                 if (entity instanceof EntityLivingBase) {
-                    EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
+                    EntityLivingBase entitylivingbase = (EntityLivingBase) entity;
                     if (!this.world.isRemote) {
                         entitylivingbase.setArrowCountInEntity(entitylivingbase.getArrowCountInEntity() + 1);
                     }
@@ -298,19 +239,19 @@ public class EntityPrimalArrow extends EntityArrow {
                     if (this.knockbackStrength > 0) {
                         float hVelocity = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                         if (hVelocity > 0.0F) {
-                            entitylivingbase.addVelocity(this.motionX * (double)this.knockbackStrength * 0.6D / (double)hVelocity, 0.1D, this.motionZ * (double)this.knockbackStrength * 0.6D / (double)hVelocity);
+                            entitylivingbase.addVelocity(this.motionX * (double) this.knockbackStrength * 0.6D / (double) hVelocity, 0.1D, this.motionZ * (double) this.knockbackStrength * 0.6D / (double) hVelocity);
                         }
                     }
 
                     if (this.shootingEntity instanceof EntityLivingBase) {
                         EnchantmentHelper.applyThornEnchantments(entitylivingbase, this.shootingEntity);
-                        EnchantmentHelper.applyArthropodEnchantments((EntityLivingBase)this.shootingEntity, entitylivingbase);
+                        EnchantmentHelper.applyArthropodEnchantments((EntityLivingBase) this.shootingEntity, entitylivingbase);
                     }
 
                     this.arrowHit(entitylivingbase);
 
                     if (this.shootingEntity != null && entitylivingbase != this.shootingEntity && entitylivingbase instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP) {
-                        ((EntityPlayerMP)this.shootingEntity).connection.sendPacket(new SPacketChangeGameState(6, 0.0F));
+                        ((EntityPlayerMP) this.shootingEntity).connection.sendPacket(new SPacketChangeGameState(6, 0.0F));
                     }
                 }
 
@@ -342,13 +283,13 @@ public class EntityPrimalArrow extends EntityArrow {
             IBlockState iblockstate = this.world.getBlockState(blockpos);
             this.inTile = iblockstate.getBlock();
             this.inData = this.inTile.getMetaFromState(iblockstate);
-            this.motionX = ((float)(raytraceResultIn.hitVec.x - this.posX));
-            this.motionY = ((float)(raytraceResultIn.hitVec.y - this.posY));
-            this.motionZ = ((float)(raytraceResultIn.hitVec.z - this.posZ));
+            this.motionX = ((float) (raytraceResultIn.hitVec.x - this.posX));
+            this.motionY = ((float) (raytraceResultIn.hitVec.y - this.posY));
+            this.motionZ = ((float) (raytraceResultIn.hitVec.z - this.posZ));
             float f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-            this.posX -= this.motionX / (double)f2 * 0.05D;
-            this.posY -= this.motionY / (double)f2 * 0.05D;
-            this.posZ -= this.motionZ / (double)f2 * 0.05D;
+            this.posX -= this.motionX / (double) f2 * 0.05D;
+            this.posY -= this.motionY / (double) f2 * 0.05D;
+            this.posZ -= this.motionZ / (double) f2 * 0.05D;
             this.playSound(SoundEvents.ENTITY_ARROW_HIT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
             this.inGround = true;
             this.arrowShake = 7;
@@ -359,26 +300,36 @@ public class EntityPrimalArrow extends EntityArrow {
             }
         }
     }
-    
+
+    @Override
+    public void move(MoverType type, double x, double y, double z) {
+        super.move(type, x, y, z);
+        if (this.inGround) {
+            this.xTile = MathHelper.floor(this.posX);
+            this.yTile = MathHelper.floor(this.posY);
+            this.zTile = MathHelper.floor(this.posZ);
+        }
+    }
+
     @Override
     protected void arrowHit(EntityLivingBase living) {
         super.arrowHit(living);
         switch (this.getArrowType()) {
-        case 3:
-            // Water arrows apply a slowing effect
-            living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 4));
-            break;
-        case 4:
-            // Order arrows apply a weakening effect
-            living.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 4));
-            break;
-        case 5:
-            // Entropy arrows apply a withering effect
-            living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 100));
-            break;
+            case 3:
+                // Water arrows apply a slowing effect
+                living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 4));
+                break;
+            case 4:
+                // Order arrows apply a weakening effect
+                living.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 4));
+                break;
+            case 5:
+                // Entropy arrows apply a withering effect
+                living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 100));
+                break;
         }
     }
-    
+
     @Override
     protected Entity findEntityOnPath(Vec3d start, Vec3d end) {
         Entity retVal = null;
@@ -402,7 +353,19 @@ public class EntityPrimalArrow extends EntityArrow {
 
         return retVal;
     }
-    
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setInteger("xTile", this.xTile);
+        compound.setInteger("yTile", this.yTile);
+        compound.setInteger("zTile", this.zTile);
+        compound.setShort("life", (short) this.ticksInGround);
+        ResourceLocation resourcelocation = Block.REGISTRY.getNameForObject(this.inTile);
+        compound.setString("inTile", resourcelocation == null ? "" : resourcelocation.toString());
+        compound.setByte("inData", (byte) this.inData);
+    }
+
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
@@ -417,40 +380,77 @@ public class EntityPrimalArrow extends EntityArrow {
         }
         this.inData = compound.getByte("inData") & 255;
     }
-    
+
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
-        compound.setInteger("xTile", this.xTile);
-        compound.setInteger("yTile", this.yTile);
-        compound.setInteger("zTile", this.zTile);
-        compound.setShort("life", (short)this.ticksInGround);
-        ResourceLocation resourcelocation = Block.REGISTRY.getNameForObject(this.inTile);
-        compound.setString("inTile", resourcelocation == null ? "" : resourcelocation.toString());
-        compound.setByte("inData", (byte)this.inData);
+    protected ItemStack getArrowStack() {
+        return new ItemStack(ItemsTW.PRIMAL_ARROW, 1, this.getArrowType());
     }
-    
+
     @Override
-    public void setVelocity(double x, double y, double z) {
-        super.setVelocity(x, y, z);
-        if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-            this.ticksInGround = 0;
+    public void setKnockbackStrength(int knockbackStrength) {
+        this.knockbackStrength = knockbackStrength;
+    }
+
+    public int getArrowType() {
+        return this.dataManager.get(ARROW_TYPE);
+    }
+
+    public void setArrowType(int type) {
+        this.dataManager.set(ARROW_TYPE, type);
+    }
+
+    protected float computeTotalDamage() {
+        float motionMagnitude = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+        int baseDamage = MathHelper.ceil((double) motionMagnitude * this.getDamage());
+        if (this.getIsCritical()) {
+            baseDamage += this.rand.nextInt(baseDamage / 2 + 2);
         }
-    }
-    
-    @Override
-    public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-        super.shoot(x, y, z, velocity, inaccuracy);
-        this.ticksInGround = 0;
-    }
-    
-    @Override
-    public void move(MoverType type, double x, double y, double z) {
-        super.move(type, x, y, z);
-        if (this.inGround) {
-            this.xTile = MathHelper.floor(this.posX);
-            this.yTile = MathHelper.floor(this.posY);
-            this.zTile = MathHelper.floor(this.posZ);
+        double retVal = baseDamage;
+        switch (this.getArrowType()) {
+            case 1:
+                // Earth arrows do more damage than normal
+                retVal = retVal * 1.5D;
+                break;
+            case 4:
+            case 5:
+                // Order and entropy arrows do less damage than normal
+                retVal = retVal * 0.8D;
+                break;
         }
+        return (float) retVal;
+    }
+
+    protected DamageSource getDamageSource() {
+        Entity shooter = (this.shootingEntity == null) ? this : this.shootingEntity;
+        DamageSource damageSource = new EntityDamageSourceIndirect("arrow", this, shooter);
+        switch (this.getArrowType()) {
+            case 0:
+            case 4:
+                // Air and order arrows ignore armor
+                damageSource = damageSource.setProjectile().setDamageBypassesArmor();
+                break;
+            case 2:
+                // Fire arrows do fire damage
+                damageSource = damageSource.setProjectile().setFireDamage();
+                break;
+            default:
+                // Water, earth, and entropy arrows do normal damage
+                damageSource = damageSource.setProjectile();
+                break;
+        }
+        return damageSource;
+    }
+
+    protected int getFireDuration() {
+        int duration = 0;
+        if (this.isBurning() && this.getArrowType() != 3) {
+            // Water arrows can't light targets on fire, even if burning
+            duration += 5;
+        }
+        if (this.getArrowType() == 2) {
+            // Fire arrows always light the target on fire, extending duration if the arrow is burning
+            duration += 5;
+        }
+        return duration;
     }
 }

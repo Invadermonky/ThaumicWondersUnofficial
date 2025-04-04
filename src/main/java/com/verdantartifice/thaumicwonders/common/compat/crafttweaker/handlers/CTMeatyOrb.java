@@ -16,7 +16,7 @@ public class CTMeatyOrb {
     @ZenMethod
     public static void add(IItemStack stack, int weight) {
         ItemStack meatStack = CraftTweakerMC.getItemStack(stack);
-        if(meatStack.isEmpty()) {
+        if (meatStack.isEmpty()) {
             CraftTweakerAPI.logError("Error adding Meaty Orb entry. IItemStack cannot be empty.");
         } else {
             MeatyOrbEntryRegistry.addEntry(meatStack, Math.max(weight, 1));

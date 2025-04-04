@@ -21,27 +21,22 @@ public class BlockPrimordialAccretionChamberPlaceholder extends BlockTileTW<Tile
         this.setSoundType(SoundType.METAL);
         this.setCreativeTab(null);
     }
-    
-    @Override
-    protected boolean canSilkHarvest() {
-        return false;
-    }
-    
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-    
+
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
-    
+
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.INVISIBLE;
     }
-    
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         if (state.getBlock() == BlocksTW.PLACEHOLDER_THAUMIUM_BLOCK) {
@@ -54,12 +49,17 @@ public class BlockPrimordialAccretionChamberPlaceholder extends BlockTileTW<Tile
             return Item.getItemById(0);
         }
     }
-    
+
+    @Override
+    protected boolean canSilkHarvest() {
+        return false;
+    }
+
     @Override
     public int damageDropped(IBlockState state) {
         return 0;
     }
-    
+
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if ((state.getBlock() == BlocksTW.PLACEHOLDER_THAUMIUM_BLOCK || state.getBlock() == BlocksTW.PLACEHOLDER_VOID_METAL_BLOCK || state.getBlock() == BlocksTW.PLACEHOLDER_ADV_ALCH_CONSTRUCT) && !BlockPrimordialAccretionChamber.ignoreDestroy && !worldIn.isRemote) {
@@ -67,7 +67,7 @@ public class BlockPrimordialAccretionChamberPlaceholder extends BlockTileTW<Tile
         }
         super.breakBlock(worldIn, pos, state);
     }
-    
+
     private void destroyAccretor(World worldIn, BlockPos pos) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {

@@ -14,7 +14,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void entityHurt(LivingHurtEvent event) {
         if (event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof EntityPlayer) {
-            EntityPlayer leecher = (EntityPlayer)event.getSource().getTrueSource();
+            EntityPlayer leecher = (EntityPlayer) event.getSource().getTrueSource();
             ItemStack helm = leecher.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
             if (helm != null && !helm.isEmpty() && helm.getItem() instanceof ItemVoidFortressArmor) {
                 if (leecher.world.rand.nextFloat() < (event.getAmount() / 12.0F)) {

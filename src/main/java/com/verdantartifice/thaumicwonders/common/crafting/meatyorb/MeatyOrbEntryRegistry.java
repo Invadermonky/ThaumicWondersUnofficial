@@ -17,9 +17,9 @@ public class MeatyOrbEntryRegistry {
     }
 
     public static void addEntry(ItemStack meatStack, int weight) {
-        if(meatStack.isEmpty()) {
+        if (meatStack.isEmpty()) {
             ThaumicWonders.LOGGER.error("Error adding Meaty Orb entry. ItemStack cannot be empty.");
-        } else if(weight <= 0) {
+        } else if (weight <= 0) {
             ThaumicWonders.LOGGER.error("Error adding Meaty Orb entry. Weight must be greater than 0.");
         } else {
             meatStack.setCount(1);
@@ -32,7 +32,7 @@ public class MeatyOrbEntryRegistry {
     }
 
     public static void removeEntry(ItemStack toRemove) {
-        if(toRemove.isEmpty()) return;
+        if (toRemove.isEmpty()) return;
 
         toRemove.setCount(1);
         MEAT_ENTRIES.removeIf(entry -> entry.equals(toRemove));
@@ -44,7 +44,7 @@ public class MeatyOrbEntryRegistry {
     }
 
     private static void initializeWeight() {
-        if(totalWeight < 0) {
+        if (totalWeight < 0) {
             totalWeight = 0;
             MEAT_ENTRIES.forEach(entry -> totalWeight += entry.getWeight());
         }
@@ -53,12 +53,12 @@ public class MeatyOrbEntryRegistry {
     public static ItemStack getMeatDrop(Random rand) {
         initializeWeight();
 
-        if(totalWeight <= 0)
+        if (totalWeight <= 0)
             return ItemStack.EMPTY;
 
         int weight = rand.nextInt(totalWeight);
-        for(WeightedEntry entry : MEAT_ENTRIES) {
-            if(weight < entry.getWeight()) {
+        for (WeightedEntry entry : MEAT_ENTRIES) {
+            if (weight < entry.getWeight()) {
                 return entry.getStack();
             } else {
                 weight -= entry.getWeight();

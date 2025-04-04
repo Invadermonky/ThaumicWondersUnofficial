@@ -36,11 +36,6 @@ public class BlockEverburningUrn extends BlockDeviceTW<TileEverburningUrn> {
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-    
-    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return new AxisAlignedBB(0.125D, 0.0D, 0.125D, 0.875D, 1.0D, 0.875D);
     }
@@ -51,21 +46,8 @@ public class BlockEverburningUrn extends BlockDeviceTW<TileEverburningUrn> {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!worldIn.isRemote) {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof TileEverburningUrn) {
-                TileEverburningUrn tile = (TileEverburningUrn)tileEntity;
-                if (FluidUtil.interactWithFluidHandler(playerIn, hand, tile.getTank())) {
-                    playerIn.inventoryContainer.detectAndSendChanges();
-                    tile.markDirty();
-                    tile.syncTile(false);
-                    worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundCategory.BLOCKS, 0.33F, 
-                            1.0F + (2F * worldIn.rand.nextFloat() - 1.0F) * 0.3F);
-                }
-            }
-        }
-        return true;
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
     }
 
     @Override
@@ -75,11 +57,11 @@ public class BlockEverburningUrn extends BlockDeviceTW<TileEverburningUrn> {
         if (block.hasTileEntity(stateIn)) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof TileEverburningUrn) {
-                TileEverburningUrn tile = (TileEverburningUrn)tileEntity;
+                TileEverburningUrn tile = (TileEverburningUrn) tileEntity;
                 if (tile.getTank().getFluidAmount() >= tile.getTank().getCapacity()) {
-                    double xp = (double)pos.getX() + 0.5D + (rand.nextDouble() * 0.2D - 0.1D);
-                    double yp = (double)pos.getY() + 1.1D;
-                    double zp = (double)pos.getZ() + 0.5D + (rand.nextDouble() * 0.2D - 0.1D);
+                    double xp = (double) pos.getX() + 0.5D + (rand.nextDouble() * 0.2D - 0.1D);
+                    double yp = (double) pos.getY() + 1.1D;
+                    double zp = (double) pos.getZ() + 0.5D + (rand.nextDouble() * 0.2D - 0.1D);
                     if (rand.nextDouble() < 0.1D) {
                         worldIn.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     }
@@ -88,5 +70,23 @@ public class BlockEverburningUrn extends BlockDeviceTW<TileEverburningUrn> {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!worldIn.isRemote) {
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if (tileEntity instanceof TileEverburningUrn) {
+                TileEverburningUrn tile = (TileEverburningUrn) tileEntity;
+                if (FluidUtil.interactWithFluidHandler(playerIn, hand, tile.getTank())) {
+                    playerIn.inventoryContainer.detectAndSendChanges();
+                    tile.markDirty();
+                    tile.syncTile(false);
+                    worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundCategory.BLOCKS, 0.33F,
+                            1.0F + (2F * worldIn.rand.nextFloat() - 1.0F) * 0.3F);
+                }
+            }
+        }
+        return true;
     }
 }

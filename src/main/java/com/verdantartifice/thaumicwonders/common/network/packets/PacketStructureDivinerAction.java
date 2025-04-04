@@ -16,11 +16,11 @@ import javax.annotation.Nullable;
 
 public class PacketStructureDivinerAction implements IMessage {
     private int targetType;
-    
+
     public PacketStructureDivinerAction() {
         this.targetType = -1;
     }
-    
+
     public PacketStructureDivinerAction(int type) {
         this.targetType = type;
     }
@@ -41,14 +41,14 @@ public class PacketStructureDivinerAction implements IMessage {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
-        
+
         private void handle(PacketStructureDivinerAction message, MessageContext ctx) {
             EntityPlayerMP entityPlayer = ctx.getServerHandler().player;
             ItemStack divinerStack = this.getDivinerStack(entityPlayer);
             if (divinerStack == null) {
                 return;
             }
-            
+
             String targetStr = this.getTargetStr(message.targetType);
             if (targetStr == null) {
                 if (divinerStack.hasTagCompound()) {
@@ -66,7 +66,7 @@ public class PacketStructureDivinerAction implements IMessage {
                         divinerStack.setTagCompound(new NBTTagCompound());
                     }
                     divinerStack.getTagCompound().setLong("targetPoint", targetPos.toLong());
-                    
+
                     BlockPos fudgedPos = new BlockPos(targetPos.getX(), entityPlayer.getPosition().getY(), targetPos.getZ());
                     double distanceSq = entityPlayer.getPosition().distanceSq(fudgedPos);
                     String key;
@@ -85,7 +85,7 @@ public class PacketStructureDivinerAction implements IMessage {
                 }
             }
         }
-        
+
         @Nullable
         private ItemStack getDivinerStack(EntityPlayerMP entityPlayer) {
             ItemStack stack = entityPlayer.getHeldItemMainhand();
@@ -100,28 +100,28 @@ public class PacketStructureDivinerAction implements IMessage {
                 }
             }
         }
-        
+
         @Nullable
         private String getTargetStr(int targetType) {
             switch (targetType) {
-            case 0:
-                return "Village";
-            case 1:
-                return "Temple";
-            case 2:
-                return "Mineshaft";
-            case 3:
-                return "Monument";
-            case 4:
-                return "Mansion";
-            case 5:
-                return "Stronghold";
-            case 6:
-                return "Fortress";
-            case 7:
-                return "EndCity";
-            default:
-                return null;
+                case 0:
+                    return "Village";
+                case 1:
+                    return "Temple";
+                case 2:
+                    return "Mineshaft";
+                case 3:
+                    return "Monument";
+                case 4:
+                    return "Mansion";
+                case 5:
+                    return "Stronghold";
+                case 6:
+                    return "Fortress";
+                case 7:
+                    return "EndCity";
+                default:
+                    return null;
             }
         }
     }

@@ -6,17 +6,6 @@ import thaumcraft.common.tiles.essentia.TileJarFillable;
 
 public class TileCreativeEssentiaJar extends TileJarFillable {
     @Override
-    public int getEssentiaAmount(EnumFacing loc) {
-        return this.getEssentiaType(loc) == null ? 0 : TileJarFillable.CAPACITY;
-    }
-
-    @Override
-    public Aspect getEssentiaType(EnumFacing loc) {
-        //Overwriting to ensure no null pointers from null facing value
-        return this.aspect;
-    }
-
-    @Override
     public int addToContainer(Aspect aspect, int amount) {
         if (amount > 0) {
             if (this.amount < CAPACITY && aspect == this.aspect || this.amount == 0) {
@@ -36,5 +25,16 @@ public class TileCreativeEssentiaJar extends TileJarFillable {
     public boolean takeFromContainer(Aspect tt, int am) {
         // Aspect must match, but don't deduct any essentia
         return (tt == this.aspect);
+    }
+
+    @Override
+    public Aspect getEssentiaType(EnumFacing loc) {
+        //Overwriting to ensure no null pointers from null facing value
+        return this.aspect;
+    }
+
+    @Override
+    public int getEssentiaAmount(EnumFacing loc) {
+        return this.getEssentiaType(loc) == null ? 0 : TileJarFillable.CAPACITY;
     }
 }

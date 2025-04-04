@@ -36,22 +36,16 @@ import thaumcraft.common.lib.utils.EntityUtils;
 import java.util.List;
 
 public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRangedAttackMob, IEldritchMob, ITaintedMob {
+    protected static final Predicate<Entity> NOT_HORROR = input -> !(input instanceof IEldritchMob) && !(input instanceof ITaintedMob);
     protected int seedCooldown = 0;
     protected boolean isSuffocating = false;
-    
-    protected static final Predicate<Entity> NOT_HORROR = input -> !(input instanceof IEldritchMob) && !(input instanceof ITaintedMob);
-    
+
     public EntityCorruptionAvatar(World world) {
         super(world);
         this.setSize(0.75F, 2.25F);
         this.experienceValue = 50;
     }
 
-    //TODO: On Spawn
-    // Spawn detonation, destroying pillars and matrix
-    // lock boss in place making invulnerable for a bit with AI disabled
-    // start health at 1 and heal until full, then enable AI and start fight
-    
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(1, new EntityAISwimming(this));
@@ -64,7 +58,27 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLiving.class, 0, false, false, NOT_HORROR));
     }
-    
+
+    @Override
+    public boolean canAttackClass(Class<? extends EntityLivingBase> cls) {
+        return !IEldritchMob.class.isAssignableFrom(cls) && !ITaintedMob.class.isAssignableFrom(cls) && super.canAttackClass(cls);
+    }
+
+    @Override
+    public int getTalkInterval() {
+        return 500;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundsTC.egidle;
+    }
+
+    @Override
+    protected @Nullable ResourceLocation getLootTable() {
+        return LootTablesTW.CORRUPTION_AVATAR;
+    }
+
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
@@ -73,41 +87,7 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0D);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(6.0D);
     }
-    
-    @Override
-    public boolean isOnSameTeam(Entity el) {
-        return (el instanceof IEldritchMob) || (el instanceof ITaintedMob) || super.isOnSameTeam(el);
-    }
-    
-    @Override
-    public boolean canAttackClass(Class<? extends EntityLivingBase> cls) {
-        return !IEldritchMob.class.isAssignableFrom(cls) && !ITaintedMob.class.isAssignableFrom(cls) && super.canAttackClass(cls);
-    }
 
-    @Override
-    public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
-        if (this.canEntityBeSeen(target)) {
-            this.swingArm(this.getActiveHand());
-            this.getLookHelper().setLookPosition(target.posX, target.getEntityBoundingBox().minY + target.height / 2.0F, target.posZ, 30.0F, 30.0F);
-            
-            double sourceY = this.posY + this.height / 2.0F;
-            double deltaX = target.posX - this.posX;
-            double deltaY = target.getEntityBoundingBox().minY + target.height / 2.0F - sourceY;
-            double deltaZ = target.posZ - this.posZ;
-            
-            EntityFluxFireball fireball = new EntityFluxFireball(this.world, this, deltaX, deltaY, deltaZ);
-            fireball.posX = this.posX;
-            fireball.posY = sourceY;
-            fireball.posZ = this.posZ;
-            
-            this.playSound(SoundsTC.egattack, 1.0F, 1.0F + this.rand.nextFloat() * 0.1F);
-            this.world.spawnEntity(fireball);
-        }
-    }
-
-    @Override
-    public void setSwingingArms(boolean swingingArms) {}
-    
     @Override
     protected void updateAITasks() {
         if (!this.world.isRemote) {
@@ -115,14 +95,14 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
             if (this.ticksExisted % 5 == 0) {
                 AuraHelper.polluteAura(this.world, this.getPosition().up(), 1.0F, true);
             }
-            
+
             // Regenerate based on local flux
             if (this.ticksExisted % 40 == 0) {
                 float flux = Math.min(100.0F, AuraHelper.getFlux(this.world, this.getPosition()));
-                int amp = (int)(0.5F * MathHelper.sqrt(flux));
+                int amp = (int) (0.5F * MathHelper.sqrt(flux));
                 this.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 40, amp, false, false));
             }
-            
+
             // Generate flux phage and taint poison aura
             if (this.ticksExisted % 20 == 0) {
                 List<EntityLivingBase> livingNearby = EntityUtils.getEntitiesInRange(this.world, this.getPosition(), this, EntityLivingBase.class, 8.0D);
@@ -131,7 +111,7 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
                     creature.addPotionEffect(new PotionEffect(PotionFluxTaint.instance, 100, 0));
                 }
             }
-            
+
             // Spawn taint seeds
             if (++this.seedCooldown >= 200) {
                 EnumDifficulty diff = this.world.getDifficulty();
@@ -141,25 +121,25 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
                     int primeThreshold = diff == EnumDifficulty.EASY ? -1 : (diff == EnumDifficulty.HARD ? 1 : 0);
                     int boost = diff == EnumDifficulty.EASY ? 50 : (diff == EnumDifficulty.HARD ? 200 : 100);
                     EntityTaintSeed seed = this.rand.nextInt(10) <= primeThreshold ?
-                        new EntityTaintSeedPrime(this.world) :
-                        new EntityTaintSeed(this.world);
+                            new EntityTaintSeedPrime(this.world) :
+                            new EntityTaintSeed(this.world);
                     seed.boost = boost;
                     seed.setLocationAndAngles(
-                            (int)(this.posX + this.rand.nextGaussian() * 5.0D) + 0.5D, 
-                            (int)(this.posY + this.rand.nextGaussian() * 5.0D), 
-                            (int)(this.posZ + this.rand.nextGaussian() * 5.0D) + 0.5D, 
+                            (int) (this.posX + this.rand.nextGaussian() * 5.0D) + 0.5D,
+                            (int) (this.posY + this.rand.nextGaussian() * 5.0D),
+                            (int) (this.posZ + this.rand.nextGaussian() * 5.0D) + 0.5D,
                             this.rand.nextInt(360), 0.0F);
                     if (diff != EnumDifficulty.PEACEFUL && seed.isNotColliding() && this.world.spawnEntity(seed)) {
                         this.getLookHelper().setLookPositionWithEntity(seed, this.getHorizontalFaceSpeed(), this.getVerticalFaceSpeed());
                         PacketHandler.INSTANCE.sendToAllAround(
-                                new PacketAvatarZapFx(this.getEntityId(), seed.getEntityId()), 
+                                new PacketAvatarZapFx(this.getEntityId(), seed.getEntityId()),
                                 new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.posX, this.posY, this.posZ, 32.0D));
                         this.playSound(SoundsTC.zap, 1.0F, 1.0F);
                         this.seedCooldown = 0;
                     }
                 }
             }
-            
+
             // Empower if near a rift
             if (this.ticksExisted % 200 == 0) {
                 List<EntityFluxRift> riftsNearby = EntityUtils.getEntitiesInRange(this.world, this.getPosition(), this, EntityFluxRift.class, 16.0D);
@@ -169,16 +149,16 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
                     this.addPotionEffect(new PotionEffect(MobEffects.HASTE, 200, riftCount));
                     for (EntityFluxRift rift : riftsNearby) {
                         PacketHandler.INSTANCE.sendToAllAround(
-                                new PacketAvatarZapFx(rift.getEntityId(), this.getEntityId()), 
+                                new PacketAvatarZapFx(rift.getEntityId(), this.getEntityId()),
                                 new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), rift.posX, rift.posY, rift.posZ, 32.0D));
                         rift.playSound(SoundsTC.zap, 1.0F, 1.0F);
                     }
                     PacketHandler.INSTANCE.sendToAllAround(
-                            new PacketLocalizedMessage("event.corruption_avatar.empower"), 
+                            new PacketLocalizedMessage("event.corruption_avatar.empower"),
                             new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.posX, this.posY, this.posZ, 32.0D));
                 }
             }
-            
+
             // Explode if suffocating
             if (this.isSuffocating && this.ticksExisted % 20 == 0) {
                 FluxExplosion.create(this.world, this, this.posX, this.posY, this.posZ, 7.0F, false, true, true);
@@ -189,12 +169,13 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
     }
 
     @Override
-    protected @Nullable ResourceLocation getLootTable() {
-        return LootTablesTW.CORRUPTION_AVATAR;
+    public boolean isOnSameTeam(Entity el) {
+        return (el instanceof IEldritchMob) || (el instanceof ITaintedMob) || super.isOnSameTeam(el);
     }
 
     @Override
-    protected void dropFewItems(boolean flag, int fortune) {}
+    protected void dropFewItems(boolean flag, int fortune) {
+    }
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
@@ -207,19 +188,34 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
             return super.attackEntityFrom(source, amount);
         }
     }
-    
+
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundsTC.egidle;
+    public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
+        if (this.canEntityBeSeen(target)) {
+            this.swingArm(this.getActiveHand());
+            this.getLookHelper().setLookPosition(target.posX, target.getEntityBoundingBox().minY + target.height / 2.0F, target.posZ, 30.0F, 30.0F);
+
+            double sourceY = this.posY + this.height / 2.0F;
+            double deltaX = target.posX - this.posX;
+            double deltaY = target.getEntityBoundingBox().minY + target.height / 2.0F - sourceY;
+            double deltaZ = target.posZ - this.posZ;
+
+            EntityFluxFireball fireball = new EntityFluxFireball(this.world, this, deltaX, deltaY, deltaZ);
+            fireball.posX = this.posX;
+            fireball.posY = sourceY;
+            fireball.posZ = this.posZ;
+
+            this.playSound(SoundsTC.egattack, 1.0F, 1.0F + this.rand.nextFloat() * 0.1F);
+            this.world.spawnEntity(fireball);
+        }
     }
-    
+
+    @Override
+    public void setSwingingArms(boolean swingingArms) {
+    }
+
     @Override
     protected SoundEvent getDeathSound() {
         return SoundsTC.egdeath;
-    }
-    
-    @Override
-    public int getTalkInterval() {
-        return 500;
     }
 }

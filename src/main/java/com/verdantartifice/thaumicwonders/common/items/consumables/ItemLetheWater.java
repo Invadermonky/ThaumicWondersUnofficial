@@ -29,61 +29,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemLetheWater extends ItemTW {
-    protected static class CategoryEntry implements RandomItemChooser.Item {
-        public ResearchCategory category;
-        public int weight;
-        
-        protected CategoryEntry(ResearchCategory category, int weight) {
-            this.category = category;
-            this.weight = weight;
-        }
-
-        @Override
-        public double getWeight() {
-            return this.weight;
-        }
-    }
-    
     public ItemLetheWater() {
         super("lethe_water");
     }
-    
-    @Override
-    public boolean hasEffect(ItemStack stack) {
-        return true;
-    }
-    
-    @Override
-    @Nonnull
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
-    }
-    
-    @Override
-    @Nonnull
-    public EnumAction getItemUseAction(ItemStack stack) {
-        return EnumAction.DRINK;
-    }
-    
-    @Override
-    public int getMaxItemUseDuration(ItemStack stack) {
-        return 32;
-    }
-    
+
     @Override
     @Nonnull
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         playerIn.setActiveHand(handIn);
         return ActionResult.newResult(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
-    
+
     @Override
     @Nonnull
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
         if (!worldIn.isRemote && entityLiving instanceof EntityPlayerMP) {
-            EntityPlayerMP player = (EntityPlayerMP)entityLiving;
+            EntityPlayerMP player = (EntityPlayerMP) entityLiving;
             IPlayerKnowledge knowledge = ThaumcraftCapabilities.getKnowledge(player);
-            
+
             ResearchCategory category = this.selectCategory(player, knowledge);
             if (category == null) {
                 PacketHandler.INSTANCE.sendTo(new PacketLocalizedMessage("event.lethe_water.not_found"), player);
@@ -94,13 +57,13 @@ public class ItemLetheWater extends ItemTW {
                     PacketHandler.INSTANCE.sendTo(new PacketLocalizedMessage("event.lethe_water.forgot"), player);
                 }
             }
-            
+
             if (worldIn.rand.nextBoolean()) {
                 worldIn.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 1F, 1F);
             }
 
             player.getCooldownTracker().setCooldown(this, 20);
-            
+
             if (!player.capabilities.isCreativeMode) {
                 stack.shrink(1);
                 ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
@@ -111,7 +74,29 @@ public class ItemLetheWater extends ItemTW {
         }
         return stack;
     }
-    
+
+    @Override
+    @Nonnull
+    public EnumAction getItemUseAction(ItemStack stack) {
+        return EnumAction.DRINK;
+    }
+
+    @Override
+    public int getMaxItemUseDuration(ItemStack stack) {
+        return 32;
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    @Nonnull
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
+    }
+
     @Nullable
     protected ResearchCategory selectCategory(EntityPlayer player, IPlayerKnowledge knowledge) {
         List<RandomItemChooser.Item> selectionList = new ArrayList<>();
@@ -125,12 +110,27 @@ public class ItemLetheWater extends ItemTW {
             return null;
         } else {
             RandomItemChooser ric = new RandomItemChooser();
-            CategoryEntry selected = (CategoryEntry)ric.chooseOnWeight(selectionList);
+            CategoryEntry selected = (CategoryEntry) ric.chooseOnWeight(selectionList);
             if (selected == null) {
                 return null;
             } else {
                 return selected.category;
             }
+        }
+    }
+
+    protected static class CategoryEntry implements RandomItemChooser.Item {
+        public ResearchCategory category;
+        public int weight;
+
+        protected CategoryEntry(ResearchCategory category, int weight) {
+            this.category = category;
+            this.weight = weight;
+        }
+
+        @Override
+        public double getWeight() {
+            return this.weight;
         }
     }
 }

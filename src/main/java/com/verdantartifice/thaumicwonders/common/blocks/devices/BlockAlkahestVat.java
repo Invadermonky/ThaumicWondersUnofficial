@@ -34,24 +34,24 @@ public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
     protected static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
     protected static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
     protected static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
-    
+
     protected int delay = 0;
 
     public BlockAlkahestVat() {
         super(Material.IRON, TileAlkahestVat.class, "alkahest_vat");
         this.setSoundType(SoundType.METAL);
     }
-    
+
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return FULL_BLOCK_AABB;
     }
-    
+
     @Override
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean isActualState) {
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
@@ -60,17 +60,38 @@ public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
     }
-    
+
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return FULL_BLOCK_AABB;
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        if (rand.nextInt(10) == 0) {
+            worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS,
+                    0.1F + (rand.nextFloat() * 0.1F), 1.2F + (rand.nextFloat() * 0.2F), false);
+        }
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!worldIn.isRemote && facing == EnumFacing.UP) {
+            ItemStack tempStack = playerIn.getHeldItem(hand).copy();
+            tempStack.setCount(1);
+            this.releaseVis(worldIn, pos, tempStack);
+            playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, 1);
+            this.playHissSound(worldIn, pos);
+        }
+        return true;
     }
 
     @Override
     public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if (!worldIn.isRemote) {
             if (entityIn instanceof EntityItem) {
-                this.releaseVis(worldIn, pos, ((EntityItem)entityIn).getItem());
+                this.releaseVis(worldIn, pos, ((EntityItem) entityIn).getItem());
                 entityIn.setDead();
                 this.playHissSound(worldIn, pos);
             } else {
@@ -87,18 +108,6 @@ public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
         super.onEntityCollision(worldIn, pos, state, entityIn);
     }
 
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!worldIn.isRemote && facing == EnumFacing.UP) {
-            ItemStack tempStack = playerIn.getHeldItem(hand).copy();
-            tempStack.setCount(1);
-            this.releaseVis(worldIn, pos, tempStack);
-            playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, 1);
-            this.playHissSound(worldIn, pos);
-        }
-        return true;
-    }
-    
     protected void releaseVis(World worldIn, BlockPos pos, ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
             ItemStack tempStack = stack.copy();
@@ -109,17 +118,8 @@ public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
             }
         }
     }
-    
+
     protected void playHissSound(World worldIn, BlockPos pos) {
         worldIn.playSound(null, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2.0F + worldIn.rand.nextFloat() * 0.4F);
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (rand.nextInt(10) == 0) {
-            worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 
-                    0.1F + (rand.nextFloat() * 0.1F), 1.2F + (rand.nextFloat() * 0.2F), false);
-        }
     }
 }

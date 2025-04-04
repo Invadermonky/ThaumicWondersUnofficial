@@ -14,8 +14,8 @@ public class ItemAlienistStone extends ItemTW {
     }
 
     @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return false;
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
     }
 
     @Override
@@ -27,9 +27,9 @@ public class ItemAlienistStone extends ItemTW {
     public int getItemEnchantability() {
         return 10;
     }
-    
+
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return false;
     }
 }

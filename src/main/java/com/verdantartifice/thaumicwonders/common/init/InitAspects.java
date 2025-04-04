@@ -17,7 +17,7 @@ public class InitAspects {
         registerItemAspects();
         registerEntityAspects();
     }
-    
+
     private static void registerItemAspects() {
         appendAspects(FluidUtil.getFilledBucket(new FluidStack(FluidQuicksilver.INSTANCE, 1000)), new AspectList().add(Aspect.DEATH, 15).add(Aspect.ALCHEMY, 15));
         appendAspects(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0), new AspectList().add(Aspect.METAL, 20).add(Aspect.EARTH, 5).add(Aspect.FLUX, 10));
@@ -30,12 +30,12 @@ public class InitAspects {
         appendAspects(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7), new AspectList().add(Aspect.FLUX, 10).add(Aspect.CRYSTAL, 15));
         appendAspects(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 8), new AspectList().add(Aspect.METAL, 10).add(Aspect.FLUX, 20));
     }
-    
+
     @SuppressWarnings("deprecation")
     private static void registerEntityAspects() {
         ThaumcraftApi.registerEntityTag("thaumicwonders.corruption_avatar", new AspectList().add(Aspect.ELDRITCH, 40).add(Aspect.MAN, 40).add(Aspect.FLUX, 40));
     }
-    
+
     private static void appendAspects(ItemStack stack, AspectList toAdd) {
         toAdd = toAdd.copy();
         AspectList existing = ThaumcraftCraftingManager.getObjectTags(stack);

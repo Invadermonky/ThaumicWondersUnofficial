@@ -15,16 +15,7 @@ import java.util.List;
 public class FluxExplosion extends Explosion {
     protected World world;
     protected boolean causesFlux;
-    
-    public static FluxExplosion create(World world, @Nullable Entity entity, double x, double y, double z, float strength, boolean isFlaming, boolean isSmoking, boolean causesFlux) {
-        FluxExplosion explosion = new FluxExplosion(world, entity, x, y, z, strength, isFlaming, isSmoking, causesFlux);
-        if (!ForgeEventFactory.onExplosionStart(world, explosion)) {
-            explosion.doExplosionA();
-            explosion.doExplosionB(true);
-        }
-        return explosion;
-    }
-    
+
     public FluxExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size, List<BlockPos> affectedPositions) {
         super(worldIn, entityIn, x, y, z, size, affectedPositions);
         this.world = worldIn;
@@ -41,6 +32,15 @@ public class FluxExplosion extends Explosion {
         super(worldIn, entityIn, x, y, z, size, causesFire, damagesTerrain, affectedPositions);
         this.world = worldIn;
         this.causesFlux = causesFlux;
+    }
+
+    public static FluxExplosion create(World world, @Nullable Entity entity, double x, double y, double z, float strength, boolean isFlaming, boolean isSmoking, boolean causesFlux) {
+        FluxExplosion explosion = new FluxExplosion(world, entity, x, y, z, strength, isFlaming, isSmoking, causesFlux);
+        if (!ForgeEventFactory.onExplosionStart(world, explosion)) {
+            explosion.doExplosionA();
+            explosion.doExplosionB(true);
+        }
+        return explosion;
     }
 
     @Override

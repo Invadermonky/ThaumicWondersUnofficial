@@ -35,40 +35,14 @@ import java.util.Random;
 
 public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationChamber> implements IBlockFacingHorizontal {
     public static boolean ignoreDestroy = false;
-    
+
     public BlockCatalyzationChamber() {
         super(Material.ROCK, TileCatalyzationChamber.class, "catalyzation_chamber");
         this.setSoundType(SoundType.STONE);
         this.setLightLevel(0.9F);
         this.setCreativeTab(null);
     }
-    
-    @Override
-    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
-        return false;
-    }
-    
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
-    }
-    
-    @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {}
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT_MIPPED;
-    }
-
-    @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        IBlockState bs = getDefaultState();
-        bs = bs.withProperty(IBlockFacingHorizontal.FACING, placer.getHorizontalFacing().getOpposite());
-        return bs;
-    }
-    
     public static void destroyChamber(World world, BlockPos pos, IBlockState state, BlockPos startPos) {
         if (ignoreDestroy || world.isRemote) {
             return;
@@ -95,19 +69,29 @@ public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationCham
         world.setBlockState(pos, BlocksTW.FLUID_QUICKSILVER.getDefaultState());
         ignoreDestroy = false;
     }
-    
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+    }
+
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemById(0);
     }
-    
+
+    @SideOnly(Side.CLIENT)
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        TileEntity tile = worldIn.getTileEntity(pos);
-        if(tile instanceof TileCatalyzationChamber)
-            ((TileCatalyzationChamber) tile).dropInventoryContents();
-        destroyChamber(worldIn, pos, state, pos);
-        super.breakBlock(worldIn, pos, state);
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT_MIPPED;
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!worldIn.isRemote) {
+            playerIn.openGui(ThaumicWonders.INSTANCE, GuiIds.CATALYZATION_CHAMBER, worldIn, pos.getX(), pos.getY(), pos.getZ());
+        }
+        return true;
     }
 
     @Override
@@ -128,26 +112,43 @@ public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationCham
             if (entityIn instanceof EntityItem) {
                 entityIn.motionY = 0.025D;
                 if (entityIn.onGround && !entityIn.isDead) {
-                    TileCatalyzationChamber tcc = (TileCatalyzationChamber)worldIn.getTileEntity(pos);
-                    ItemStack remainder = tcc.addItemsToInventory(((EntityItem)entityIn).getItem());
-                    if(remainder != null && !remainder.isEmpty()) {
-                        ((EntityItem)entityIn).setItem(remainder);
+                    TileCatalyzationChamber tcc = (TileCatalyzationChamber) worldIn.getTileEntity(pos);
+                    ItemStack remainder = tcc.addItemsToInventory(((EntityItem) entityIn).getItem());
+                    if (remainder != null && !remainder.isEmpty()) {
+                        ((EntityItem) entityIn).setItem(remainder);
                     } else {
                         entityIn.setDead();
                     }
                 }
             } else if (entityIn instanceof EntityLivingBase) {
-                ((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
+                ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON, 100));
             }
         }
         super.onEntityCollision(worldIn, pos, state, entityIn);
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!worldIn.isRemote) {
-            playerIn.openGui(ThaumicWonders.INSTANCE, GuiIds.CATALYZATION_CHAMBER, worldIn, pos.getX(), pos.getY(), pos.getZ());
-        }
-        return true;
+    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
+        return false;
+    }
+
+    @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        IBlockState bs = getDefaultState();
+        bs = bs.withProperty(IBlockFacingHorizontal.FACING, placer.getHorizontalFacing().getOpposite());
+        return bs;
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if (tile instanceof TileCatalyzationChamber)
+            ((TileCatalyzationChamber) tile).dropInventoryContents();
+        destroyChamber(worldIn, pos, state, pos);
+        super.breakBlock(worldIn, pos, state);
     }
 }

@@ -21,13 +21,35 @@ import java.util.Random;
 
 public class BlockFluxCapacitor extends BlockTW {
     public static final PropertyInteger CHARGE = PropertyInteger.create("charge", 0, 10);
-    
+
     public BlockFluxCapacitor() {
         super(Material.ROCK, "flux_capacitor");
         this.setTickRandomly(true);
         this.setDefaultState(this.blockState.getBaseState().withProperty(CHARGE, 0));
     }
-    
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(CHARGE, meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(CHARGE);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
+        int i = source.getCombinedLight(pos, state.getLightValue(source, pos));
+        int j = 180;
+        int k = i & 0xFF;
+        int l = j & 0xFF;
+        int i1 = i >> 16 & 0xFF;
+        int j1 = j >> 16 & 0xFF;
+        return (Math.max(k, l)) | (Math.max(i1, j1)) << 16;
+    }
+
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (!worldIn.isRemote) {
@@ -48,54 +70,32 @@ public class BlockFluxCapacitor extends BlockTW {
             }
         }
     }
-    
+
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (worldIn.isBlockPowered(pos)) {
             worldIn.scheduleUpdate(pos, this, 1);
         }
     }
-    
+
     @Override
     public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
     }
-    
+
     @Override
     public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
         return this.getMetaFromState(blockState);
     }
-    
-    @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return state.getBlock().getMetaFromState(state);
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
-        int i = source.getCombinedLight(pos, state.getLightValue(source, pos));
-        int j = 180;
-        int k = i & 0xFF;
-        int l = j & 0xFF;
-        int i1 = i >> 16 & 0xFF;
-        int j1 = j >> 16 & 0xFF;
-        return (Math.max(k, l)) | (Math.max(i1, j1)) << 16;
-    }
-    
+
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, CHARGE);
     }
-    
+
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(CHARGE, meta);
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(CHARGE);
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.getBlock().getMetaFromState(state);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class BlockFluxCapacitor extends BlockTW {
             return 0;
         }
     }
-    
+
     public void decrementCharge(World worldIn, BlockPos pos, int amount) {
         IBlockState state = worldIn.getBlockState(pos);
         if (state.getBlock() == BlocksTW.FLUX_CAPACITOR) {

@@ -16,16 +16,18 @@ import thaumcraft.api.aura.AuraHelper;
 public abstract class AbstractTileResearchEngine extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable, IResearchEngine {
     protected int amount = 0;
     protected int tickCounter = 0;
-    
+
     public abstract int getCost();
+
     public abstract int getCapacity();
+
     public abstract Aspect getAspect();
-    
+
     @Override
     public boolean isFueled() {
         return this.amount >= this.getCost();
     }
-    
+
     @Override
     public boolean deductCost() {
         return this.takeFromContainer(this.getAspect(), this.getCost());
@@ -38,7 +40,7 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
 
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
-        compound.setShort("essentia", (short)this.amount);
+        compound.setShort("essentia", (short) this.amount);
         return compound;
     }
 
@@ -58,14 +60,14 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
             }
             TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
             if (te instanceof IEssentiaTransport) {
-                IEssentiaTransport otherTile = (IEssentiaTransport)te;
+                IEssentiaTransport otherTile = (IEssentiaTransport) te;
                 if (!otherTile.canOutputTo(face.getOpposite())) {
                     continue;
                 }
-                if ( otherTile.getEssentiaType(face.getOpposite()) == this.getAspect() &&
-                     otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
-                     this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
-                     this.getSuctionAmount(face) >= otherTile.getMinimumSuction() ) {
+                if (otherTile.getEssentiaType(face.getOpposite()) == this.getAspect() &&
+                        otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
+                        this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
+                        this.getSuctionAmount(face) >= otherTile.getMinimumSuction()) {
                     int taken = otherTile.takeEssentia(this.getAspect(), 1, face.getOpposite());
                     int leftover = this.addToContainer(this.getAspect(), taken);
                     if (leftover > 0) {
@@ -83,12 +85,8 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
-        if (this.canInputFrom(face)) {
-            return (amt - this.addToContainer(aspect, amt));
-        } else {
-            return 0;
-        }
+    public boolean isConnectable(EnumFacing face) {
+        return face != EnumFacing.UP;
     }
 
     @Override
@@ -102,13 +100,43 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
     }
 
     @Override
-    public int getEssentiaAmount(EnumFacing face) {
-        return this.amount;
+    public void setSuction(Aspect aspect, int amt) {
+        // Do nothing
+    }
+
+    @Override
+    public Aspect getSuctionType(EnumFacing face) {
+        return this.getAspect();
+    }
+
+    @Override
+    public int getSuctionAmount(EnumFacing face) {
+        return (this.amount >= this.getCapacity()) ? 0 : 128;
+    }
+
+    @Override
+    public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
+        // Can't output
+        return 0;
+    }
+
+    @Override
+    public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
+        if (this.canInputFrom(face)) {
+            return (amt - this.addToContainer(aspect, amt));
+        } else {
+            return 0;
+        }
     }
 
     @Override
     public Aspect getEssentiaType(EnumFacing face) {
         return this.getAspect();
+    }
+
+    @Override
+    public int getEssentiaAmount(EnumFacing face) {
+        return this.amount;
     }
 
     @Override
@@ -118,29 +146,24 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
     }
 
     @Override
-    public int getSuctionAmount(EnumFacing face) {
-        return (this.amount >= this.getCapacity()) ? 0 : 128;
+    public AspectList getAspects() {
+        AspectList list = new AspectList();
+        if (this.amount > 0) {
+            list.add(this.getAspect(), this.amount);
+        }
+        return list;
     }
 
     @Override
-    public Aspect getSuctionType(EnumFacing face) {
-        return this.getAspect();
+    public void setAspects(AspectList aspects) {
+        if (aspects != null && aspects.size() > 0) {
+            this.amount = aspects.getAmount(this.getAspect());
+        }
     }
 
     @Override
-    public boolean isConnectable(EnumFacing face) {
-        return face != EnumFacing.UP;
-    }
-
-    @Override
-    public void setSuction(Aspect aspect, int amt) {
-        // Do nothing
-    }
-
-    @Override
-    public int takeEssentia(Aspect aspect, int amt, EnumFacing face) {
-        // Can't output
-        return 0;
+    public boolean doesContainerAccept(Aspect aspect) {
+        return (aspect == this.getAspect());
     }
 
     @Override
@@ -163,42 +186,14 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
     }
 
     @Override
-    public int containerContains(Aspect aspect) {
-        return (aspect == this.getAspect()) ? this.amount : 0;
-    }
-
-    @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        return (aspect == this.getAspect());
-    }
-
-    @Override
-    public boolean doesContainerContain(AspectList aspectList) {
-        boolean satisfied = true;
-        for (Aspect aspect : aspectList.getAspects()) {
-            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
-        }
-        return satisfied;
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
-        return (aspect == this.getAspect() && this.amount >= amt);
-    }
-
-    @Override
-    public AspectList getAspects() {
-        AspectList list = new AspectList();
-        if (this.amount > 0) {
-            list.add(this.getAspect(), this.amount);
-        }
-        return list;
-    }
-
-    @Override
-    public void setAspects(AspectList aspects) {
-        if (aspects != null && aspects.size() > 0) {
-            this.amount = aspects.getAmount(this.getAspect());
+    public boolean takeFromContainer(Aspect aspect, int amt) {
+        if (aspect == this.getAspect() && this.amount >= amt) {
+            this.amount -= amt;
+            this.syncTile(false);
+            this.markDirty();
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -216,14 +211,21 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
     }
 
     @Override
-    public boolean takeFromContainer(Aspect aspect, int amt) {
-        if (aspect == this.getAspect() && this.amount >= amt) {
-            this.amount -= amt;
-            this.syncTile(false);
-            this.markDirty();
-            return true;
-        } else {
-            return false;
+    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
+        return (aspect == this.getAspect() && this.amount >= amt);
+    }
+
+    @Override
+    public boolean doesContainerContain(AspectList aspectList) {
+        boolean satisfied = true;
+        for (Aspect aspect : aspectList.getAspects()) {
+            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
         }
+        return satisfied;
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        return (aspect == this.getAspect()) ? this.amount : 0;
     }
 }

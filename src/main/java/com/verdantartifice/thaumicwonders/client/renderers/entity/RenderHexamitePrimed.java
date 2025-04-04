@@ -19,15 +19,15 @@ public class RenderHexamitePrimed extends Render<EntityHexamitePrimed> {
         super(renderManager);
         this.shadowSize = 0.5F;
     }
-    
+
     @Override
     public void doRender(EntityHexamitePrimed entity, double x, double y, double z, float entityYaw, float partialTicks) {
         BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
         GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x, (float)y + 0.5F, (float)z);
+        GlStateManager.translate((float) x, (float) y + 0.5F, (float) z);
 
-        if ((float)entity.getFuse() - partialTicks + 1.0F < 10.0F) {
-            float f = 1.0F - ((float)entity.getFuse() - partialTicks + 1.0F) / 10.0F;
+        if ((float) entity.getFuse() - partialTicks + 1.0F < 10.0F) {
+            float f = 1.0F - ((float) entity.getFuse() - partialTicks + 1.0F) / 10.0F;
             f = MathHelper.clamp(f, 0.0F, 1.0F);
             f = f * f;
             f = f * f;
@@ -35,7 +35,7 @@ public class RenderHexamitePrimed extends Render<EntityHexamitePrimed> {
             GlStateManager.scale(f1, f1, f1);
         }
 
-        float f2 = (1.0F - ((float)entity.getFuse() - partialTicks + 1.0F) / 100.0F) * 0.8F;
+        float f2 = (1.0F - ((float) entity.getFuse() - partialTicks + 1.0F) / 100.0F) * 0.8F;
         this.bindEntityTexture(entity);
         GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(-0.5F, -0.5F, 0.5F);

@@ -31,12 +31,6 @@ public class ItemShimmerleafSeed extends ItemSeeds {
     }
 
     @Override
-    public int getMaxDamage(ItemStack stack) {
-        //No touching this value since the textures are based off of it.
-        return 8;
-    }
-
-    @Override
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
@@ -47,8 +41,9 @@ public class ItemShimmerleafSeed extends ItemSeeds {
     }
 
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
-        return EnumPlantType.Plains;
+    public int getMaxDamage(ItemStack stack) {
+        //No touching this value since the textures are based off of it.
+        return 8;
     }
 
     @Override
@@ -59,16 +54,21 @@ public class ItemShimmerleafSeed extends ItemSeeds {
             worldIn.setBlockState(pos.up(), this.crops.getDefaultState());
 
             if (player instanceof EntityPlayerMP) {
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos.up(), itemstack);
+                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos.up(), itemstack);
             }
 
             itemstack.setItemDamage(itemstack.getItemDamage() + 1);
-            if(itemstack.getItemDamage() == itemstack.getMaxDamage()) {
+            if (itemstack.getItemDamage() == itemstack.getMaxDamage()) {
                 itemstack.shrink(1);
             }
             return EnumActionResult.SUCCESS;
         } else {
             return EnumActionResult.FAIL;
         }
+    }
+
+    @Override
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+        return EnumPlantType.Plains;
     }
 }

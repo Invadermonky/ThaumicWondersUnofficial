@@ -16,17 +16,12 @@ public class CardInducedMadness extends AbstractResearchEngineCard {
     protected Class<? extends IResearchEngine> getEngineTileClass() {
         return TileMadnessEngine.class;
     }
-    
-    @Override
-    public String getResearchCategory() {
-        return "ELDRITCH";
-    }
 
     @Override
     protected int getResearchAmount(Random rng) {
         return MathHelper.getInt(rng, 20, 25);
     }
-    
+
     @Override
     public boolean activate(EntityPlayer player, ResearchTableData data) {
         if (super.activate(player, data)) {
@@ -36,6 +31,11 @@ public class CardInducedMadness extends AbstractResearchEngineCard {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String getResearchCategory() {
+        return "ELDRITCH";
     }
 
     @Override

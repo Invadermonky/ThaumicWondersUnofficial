@@ -11,20 +11,20 @@ public class ItemTW extends Item implements IVariantItem {
     protected final String baseName;
     protected String[] variants;
     protected int[] variantsMeta;
-    
+
     public ItemTW(String name) {
         this(name, new String[0]);
     }
-    
+
     public ItemTW(String name, String... variants) {
         super();
         this.setRegistryName(ThaumicWonders.MODID, name);
         this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
-        
+
         this.baseName = name;
         this.setHasSubtypes(variants.length > 1);
-        this.variants = (variants.length == 0) ? new String[] { name } : variants;
+        this.variants = (variants.length == 0) ? new String[]{name} : variants;
         this.variantsMeta = new int[this.variants.length];
         for (int index = 0; index < this.variants.length; index++) {
             this.variantsMeta[index] = index;
@@ -57,17 +57,17 @@ public class ItemTW extends Item implements IVariantItem {
     public Item getItem() {
         return this;
     }
-    
+
     @Override
     public String[] getVariantNames() {
         return this.variants;
     }
-    
+
     @Override
     public int[] getVariantMeta() {
         return this.variantsMeta;
     }
-    
+
     @Override
     public ModelResourceLocation getCustomModelResourceLocation(String variant) {
         if (this.baseName.equals(variant)) {

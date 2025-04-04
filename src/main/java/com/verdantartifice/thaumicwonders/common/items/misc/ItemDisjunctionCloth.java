@@ -12,16 +12,6 @@ public class ItemDisjunctionCloth extends ItemTW {
         setMaxStackSize(1);
         setNoRepair();
     }
-    
-    @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return false;
-    }
-
-    @Override
-    public boolean hasContainerItem(ItemStack stack) {
-        return true;
-    }
 
     @Nonnull
     @Override
@@ -29,5 +19,15 @@ public class ItemDisjunctionCloth extends ItemTW {
         ItemStack newStack = itemStack.copy();
         newStack.setItemDamage(itemStack.getItemDamage() + 1);
         return newStack;
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return false;
     }
 }

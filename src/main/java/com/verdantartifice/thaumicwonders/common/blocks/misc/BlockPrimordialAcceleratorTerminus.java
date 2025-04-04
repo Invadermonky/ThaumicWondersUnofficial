@@ -20,38 +20,12 @@ public class BlockPrimordialAcceleratorTerminus extends BlockTW implements IBloc
     public BlockPrimordialAcceleratorTerminus() {
         super(Material.ROCK, "primordial_accelerator_terminus");
         this.setSoundType(SoundType.STONE);
-        
+
         IBlockState blockState = this.blockState.getBaseState();
         blockState.withProperty(IBlockFacingHorizontal.FACING, EnumFacing.NORTH);
         this.setDefaultState(blockState);
     }
-    
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-    
-    @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
-    }
-
-    @Override
-    public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
-        return true;
-    }
-    
-    @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        EnumFacing placerFacing = placer.getHorizontalFacing();
-        return this.getDefaultState().withProperty(IBlockFacingHorizontal.FACING, placer.isSneaking() ? placerFacing : placerFacing.getOpposite());
-    }
-    
     @Override
     public IBlockState getStateFromMeta(int meta) {
         IBlockState state = this.getDefaultState();
@@ -66,14 +40,40 @@ public class BlockPrimordialAcceleratorTerminus extends BlockTW implements IBloc
         }
         return state;
     }
-    
+
     @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(IBlockFacingHorizontal.FACING).getIndex();
     }
-    
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return BlockFaceShape.UNDEFINED;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        EnumFacing placerFacing = placer.getHorizontalFacing();
+        return this.getDefaultState().withProperty(IBlockFacingHorizontal.FACING, placer.isSneaking() ? placerFacing : placerFacing.getOpposite());
+    }
+
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, IBlockFacingHorizontal.FACING);
+    }
+
+    @Override
+    public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
+        return true;
     }
 }

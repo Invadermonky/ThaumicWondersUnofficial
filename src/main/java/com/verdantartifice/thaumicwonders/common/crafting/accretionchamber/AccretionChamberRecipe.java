@@ -108,8 +108,8 @@ public class AccretionChamberRecipe {
 
     public ItemStack getOutput(Random rand) {
         int weight = rand.nextInt(this.totalWeight);
-        for(WeightedEntry entry : this.getOutputEntries()) {
-            if(weight < entry.getWeight()) {
+        for (WeightedEntry entry : this.getOutputEntries()) {
+            if (weight < entry.getWeight()) {
                 return entry.getStack();
             } else {
                 weight -= entry.getWeight();
@@ -119,14 +119,14 @@ public class AccretionChamberRecipe {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(input);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof AccretionChamberRecipe)) return false;
         AccretionChamberRecipe that = (AccretionChamberRecipe) o;
         return IngredientHelper.areIngredientsEqual(getInput(), that.getInput());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(input);
     }
 }

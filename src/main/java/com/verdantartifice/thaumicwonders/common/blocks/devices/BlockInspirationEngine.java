@@ -15,19 +15,19 @@ public class BlockInspirationEngine extends BlockDeviceTW<TileInspirationEngine>
         super(Material.IRON, TileInspirationEngine.class, "inspiration_engine");
         this.setSoundType(SoundType.METAL);
     }
-    
+
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-    
-    @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
     }
 }

@@ -31,6 +31,7 @@
 
 ### Changed
 - Avatar of Corruption now uses a loot table to generate drops
+- Avatar of Corruption how has a fancy summoning animation
 - Catalyzation Chamber now uses recipe structure
 - Cinderpearl Seed recipe now produces 1 Cinderpearl Seed Stalk. Each stalk can be used to plant 8 Cinderpearl plants before being consumed.
 - Creative Essentia Jars now display full when filled with essentia

@@ -15,6 +15,7 @@
 - Added Crafttweaker and GroovyScript methods Primordial Accretion Chamber recipes
 - Added Crafttweaker and GroovyScript methods Void Beacon entries
 - Added Expanded Arcanum compat for Catalyzation Chamber
+- Added JER integration
 - Added tooltip to Void Fortress Helm indicating it includes Goggles of Revealing and Sipping Fiend mask
 - Added TOP tooltip for Flux Capacitor flux storage
 

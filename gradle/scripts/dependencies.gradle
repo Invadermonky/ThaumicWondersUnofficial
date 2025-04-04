@@ -37,6 +37,7 @@ dependencies {
     annotationProcessor 'org.jetbrains:annotations:24.1.0'
 
     implementation 'mezz:jei:4.27.3'
+    implementation rfg.deobf("curse.maven:just-enough-resources-jer-240630:2728585")
     //implementation rfg.deobf('curse.maven:had-enough-items-557549:4543375')
 
     implementation "CraftTweaker2:CraftTweaker2-API:4.1.20.695"

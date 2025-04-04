@@ -19,6 +19,8 @@ public class ConfigHandlerTW {
     public static MeatyOrbCategory meaty_orb = new MeatyOrbCategory();
     @Config.Name("Night Vision Goggles")
     public static NightVisionGogglesCategory night_vision_goggles = new NightVisionGogglesCategory();
+    @Config.Name("Sharing Tome")
+    public static SharingTomeCategory sharing_tome = new SharingTomeCategory();
     @Config.Name("Void Beacon")
     public static VoidBeaconCategory void_beacon = new VoidBeaconCategory();
 
@@ -111,6 +113,26 @@ public class ConfigHandlerTW {
         @Config.Name("Vis Capacity")
         @Config.Comment("The maximum Vis that can be stored in the Night Vision Goggles")
         public int visCapacity = 100;
+    }
+
+    public static class SharingTomeCategory {
+        @Config.RequiresMcRestart
+        @Config.Name("Enable Sharing Tome")
+        @Config.Comment("One of the only Thaumcraft Sharing Tomes that comes with a on/off switch")
+        public boolean enableTome = true;
+
+        @Config.Name("Consume Tome")
+        @Config.Comment("Destroys the sharing tome after a player uses it to gain knowledge")
+        public boolean consumeTome = false;
+
+        @Config.RangeInt(min = 0, max = 100)
+        @Config.Name("Experience Required")
+        @Config.Comment("The amount of experience, in levels, required for a player to gain knowledge from the tome")
+        public int requiredExp = 10;
+
+        @Config.Name("Share Observations")
+        @Config.Comment("Observations will also be shared when using the Sharing Tome")
+        public boolean shareObservations = true;
     }
 
     public static class VoidBeaconCategory {

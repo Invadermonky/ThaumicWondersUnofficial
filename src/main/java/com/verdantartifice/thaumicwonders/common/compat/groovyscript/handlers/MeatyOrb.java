@@ -29,7 +29,7 @@ public class MeatyOrb extends VirtualizedRegistry<WeightedEntry> {
 
     @MethodDescription(type = MethodDescription.Type.QUERY)
     public SimpleObjectStream<WeightedEntry> streamRecipes() {
-        return new SimpleObjectStream<>(MeatyOrbEntryRegistry.getMeatEntries());
+        return new SimpleObjectStream<>(MeatyOrbEntryRegistry.getEntries());
     }
 
     @MethodDescription(type = MethodDescription.Type.REMOVAL, example = @Example("item('minecraft:beef')"), priority = 1001)

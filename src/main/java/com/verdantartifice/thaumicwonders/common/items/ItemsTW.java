@@ -31,4 +31,5 @@ public class ItemsTW {
     public static final Item VISHROOM_SPORE = null;
     public static final Item PANACEA = null;
     public static final Item LETHE_WATER = null;
+    public static final Item SHARING_TOME = null;
 }

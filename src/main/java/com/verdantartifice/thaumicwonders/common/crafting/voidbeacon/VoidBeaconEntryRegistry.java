@@ -1,22 +1,39 @@
 package com.verdantartifice.thaumicwonders.common.crafting.voidbeacon;
 
+import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
+import gnu.trove.map.hash.THashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class VoidBeaconEntryRegistry {
     private static final List<VoidBeaconEntry> VOID_BEACON_ENTRIES = new ArrayList<>();
 
-    public static List<VoidBeaconEntry> getVoidBeaconEntries() {
+    public static List<VoidBeaconEntry> getEntries() {
         return VOID_BEACON_ENTRIES;
+    }
+
+    /**
+     * JEI Helper method. Returns a list of all potential drops associated with each aspect
+     *
+     * @return Immutable map of Aspect and any drops that have that aspect.
+     */
+    public static ImmutableMap<Aspect, List<ItemStack>> getEntriesByAspect() {
+        Map<Aspect, List<ItemStack>> aspectMap = new THashMap<>();
+        getEntries().forEach(entry -> {
+            Arrays.stream(AspectHelper.getObjectAspects(entry.getStack()).getAspects()).forEach(aspect -> {
+                aspectMap.putIfAbsent(aspect, new ArrayList<>());
+                aspectMap.get(aspect).add(entry.getStack());
+            });
+        });
+        return ImmutableMap.copyOf(aspectMap);
     }
 
     public static void addEntry(ItemStack stack, int weight) {

@@ -78,6 +78,15 @@ item.thaumicwonders:vishroom_spore.name=Vishroom Spore Cluster
 item.thaumicwonders:panacea.normal.name=Panacea
 item.thaumicwonders:panacea.enchanted.name=Enchanted Panacea
 item.thaumicwonders:lethe_water.name=Lethe Water
+item.thaumicwonders:sharing_tome.name=Sharing Tome
+item.thaumicwonders.sharing_tome.chat.burn=You feel your knowledge expanding as the tome crumbles to ash.
+item.thaumicwonders.sharing_tome.chat.erase=The writing in the book melts away to nothing.
+item.thaumicwonders.sharing_tome.chat.fail=The letters within the tome are illegible, you need more experience before attempting to read it.
+item.thaumicwonders.sharing_tome.chat.owned=You read the tome, but nothing new is found within.
+item.thaumicwonders.sharing_tome.chat.read=You read the tome and feel your knowledge expanding.
+item.thaumicwonders.sharing_tome.chat.write=You scribble down your findings in the tome, sealing it for others to read.
+item.thaumicwonders.sharing_tome.tooltip.blank=Not Bound
+item.thaumicwonders.sharing_tome.tooltip.player=Bound to %s's research
 
 # Entities
 entity.flying_carpet.name=Flying Carpet
@@ -87,6 +96,13 @@ entity.corruption_avatar.name=Avatar of Corruption
 
 # Fluids
 fluid.fluid_quicksilver=Quicksilver
+
+# JEI
+jei.thaumicwonders.recipe.accretion=Primordial Accretion Chamber
+jei.thaumicwonders.recipe.accelerator=Primordial Accelerator
+jei.thaumicwonders.recipe.catalyzation=Catalyzation Chamber
+jei.thaumicwonders.recipe.meaty_orb=Meaty Orb
+jei.thaumicwonders.recipe.void_beacon=Void Beacon
 
 # Research
 tc.research_category.THAUMIC_WONDERS=Thaumic Wonders
@@ -232,6 +248,10 @@ thaumicwonders.research.alkahest.text.stage.2=Behold, alkahest, or as a layman m
 thaumicwonders.research.lethe_water.title=Lethe Water
 thaumicwonders.research.lethe_water.text.stage.1=Enchanting things uses up an awful lot of magical energy, and hunting monsters for that precious resource is both tedious and dangerous.  I'd much rather stay at home, where it's warm and well-lit.  Perhaps there's a way I can generate this energy alchemically?
 thaumicwonders.research.lethe_water.text.stage.2=I'm writing this down before I repeat my experiment what will apparently be for the fourth time.<BR>My concoction is a qualified success.  It certainly grants me magical energy that I can use for enchanting, but it has a curious side effect: it makes me forget things.<BR>After some controlled experiments, I've determined that each dose of this brew, which I'm calling Lethe Water, makes me forget one of my precious magical theories.  Research that I've completed and committed to paper is safe, as are basic observations, but the theories floating in my head are not.<BR>Curiously, if I don't have any unspent theories, then the potion seems to have no effect.
+
+thaumicwonders.research.sharing_tome.title=Sharing Knowledge
+thaumicwonders.research.sharing_tome.text.stage.1=Lethe Water's ability to strip knowledge from my very being makes me wonder about the intricacies of the liquid's mind altering properties.<BR>There is some sort of exchange occurring that grants me magical energy at the expense of previously gained insights.  As this gained magical energy can be imbued directly into books and items, I wonder if I can instead find a way to capture the lost knowledge directly.<BR>This requires further study.
+thaumicwonders.research.sharing_tome.text.stage.2=While not exactly what I hoped to achieve, the experiment was nonetheless a success.<BR>By combining Lethe Water's knowledge stripping capability with the Thaumonomicon's ability to retain knowledge, I have created a book that is able to record my own knowledge of the arcane in a form that is legible to others.<BR>Using this will allow me to impart my knowledge to others, but there is no way to limit the passed knowledge.  Any who read it will likely begin to suffer many of the negative effects I am experiencing.
 
 thaumicwonders.research.coalescence_matrix.title=Coalescence Matrix
 thaumicwonders.research.coalescence_matrix.text.stage.1=Every time I look into the void, I can't help but feel that something is looking back at me.  It's time to force an introduction.

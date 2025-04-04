@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.entities.monsters.EntityCorruptionAvatar;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.research.theorycraft.AidInspirationEngine;
@@ -24,6 +25,7 @@ public class InitResearch {
         initResearchLocations();
         initTheorycraft();
         initScannables();
+        initOptionals();
     }
 
     private static void initCategories() {
@@ -56,5 +58,11 @@ public class InitResearch {
     private static void initScannables() {
         ScanningManager.addScannableThing(new ScanItem("!TWOND_PRIMORDIAL_GRAIN", new ItemStack(ItemsTW.PRIMORDIAL_GRAIN)));
         ScanningManager.addScannableThing(new ScanEntity("!TWOND_CORRUPTION_AVATAR", EntityCorruptionAvatar.class, true));
+    }
+
+    private static void initOptionals() {
+        if (ConfigHandlerTW.sharing_tome.enableTome) {
+            ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/sharing_tome"));
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemNightVisionGoggles;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
 import com.verdantartifice.thaumicwonders.common.items.base.IVariantItem;
@@ -13,6 +14,7 @@ import com.verdantartifice.thaumicwonders.common.items.consumables.ItemPanacea;
 import com.verdantartifice.thaumicwonders.common.items.consumables.ItemPrimalArrow;
 import com.verdantartifice.thaumicwonders.common.items.entities.ItemFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.items.misc.ItemDisjunctionCloth;
+import com.verdantartifice.thaumicwonders.common.items.misc.ItemSharingTome;
 import com.verdantartifice.thaumicwonders.common.items.misc.ItemStructureDiviner;
 import com.verdantartifice.thaumicwonders.common.items.misc.ItemTimewinder;
 import com.verdantartifice.thaumicwonders.common.items.plants.ItemCinderpearlSeed;
@@ -54,6 +56,9 @@ public class InitItems {
         registerItem(forgeRegistry, new ItemVishroomSpore());
         registerItem(forgeRegistry, new ItemPanacea());
         registerItem(forgeRegistry, new ItemLetheWater());
+        if (ConfigHandlerTW.sharing_tome.enableTome) {
+            registerItem(forgeRegistry, new ItemSharingTome());
+        }
     }
 
     private static void registerItem(IForgeRegistry<Item> forgeRegistry, Item item) {

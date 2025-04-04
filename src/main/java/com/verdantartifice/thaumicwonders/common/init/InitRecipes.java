@@ -4,6 +4,7 @@ import com.mr208.ea.common.ModContent;
 import com.mr208.ea.common.items.ItemCluster;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
 import com.verdantartifice.thaumicwonders.common.crafting.accelerator.AcceleratorRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.AccretionChamberRecipeRegistry;
@@ -798,6 +799,19 @@ public class InitRecipes {
                 new ItemStack(Items.NETHER_STAR),
                 new ItemStack(BlocksTC.inlay),
                 new ItemStack(BlocksTC.inlay)));
+
+        if (ConfigHandlerTW.sharing_tome.enableTome) {
+            ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "sharing_tome"), new InfusionRecipe(
+                    "TWOND_SHARING_TOME",
+                    new ItemStack(ItemsTW.SHARING_TOME),
+                    3,
+                    new AspectList().add(Aspect.AIR, 20).add(Aspect.WATER, 20).add(Aspect.FIRE, 20).add(Aspect.EARTH, 20).add(Aspect.ORDER, 20).add(Aspect.ENTROPY, 20),
+                    CraftingHelper.getIngredient(new ItemStack(ItemsTC.thaumonomicon)),
+                    CraftingHelper.getIngredient(new ItemStack(ItemsTC.scribingTools)),
+                    CraftingHelper.getIngredient(ItemsTC.amber),
+                    CraftingHelper.getIngredient(ItemsTW.LETHE_WATER),
+                    CraftingHelper.getIngredient(ItemsTC.amber)));
+        }
     }
 
     private static void initSmelting() {

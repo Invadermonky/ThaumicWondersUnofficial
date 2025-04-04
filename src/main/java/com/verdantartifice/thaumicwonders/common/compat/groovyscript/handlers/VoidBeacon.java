@@ -42,7 +42,7 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
 
     @MethodDescription(type = MethodDescription.Type.QUERY)
     public SimpleObjectStream<VoidBeaconEntry> getRecipes() {
-        return new SimpleObjectStream<>(VoidBeaconEntryRegistry.getVoidBeaconEntries());
+        return new SimpleObjectStream<>(VoidBeaconEntryRegistry.getEntries());
     }
 
     @MethodDescription(

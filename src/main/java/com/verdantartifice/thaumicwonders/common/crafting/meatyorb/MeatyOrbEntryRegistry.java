@@ -12,7 +12,7 @@ public class MeatyOrbEntryRegistry {
     private static final List<WeightedEntry> MEAT_ENTRIES = new ArrayList<>();
     private static int totalWeight = -1;
 
-    public static List<WeightedEntry> getMeatEntries() {
+    public static List<WeightedEntry> getEntries() {
         return MEAT_ENTRIES;
     }
 

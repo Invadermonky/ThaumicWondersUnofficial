@@ -1,0 +1,30 @@
+{
+  "entries": [
+    {
+      "key": "TWOND_SHARING_TOME",
+      "name": "thaumicwonders.research.sharing_tome.title",
+      "icons": ["thaumicwonders:sharing_tome"],
+      "category": "THAUMIC_WONDERS",
+      "parents": ["TWOND_LETHE_WATER", "~INFUSION"],
+      "siblings": [],
+      "meta": [],
+      "location": [6, 0],
+      "reward_item": ["thaumicwonders:lethe_water", "thaumicwonders:"],
+      "reward_knowledge": [],
+      "stages": [
+        {
+          "text": "thaumicwonders.research.sharing_tome.text.stage.1",
+          "required_knowledge": ["OBSERVATION;INFUSION;1","THEORY;INFUSION;1"],
+          "required_item": ["minecraft:writeable_book", "thaumicwonders:lethe_water"]
+        },
+        {
+          "text": "thaumicwonders.research.sharing_tome.text.stage.2",
+          "recipes": [
+            "thaumicwonders:sharing_tome"
+          ]
+        }
+      ],
+      "addenda": []
+    }
+  ]
+}

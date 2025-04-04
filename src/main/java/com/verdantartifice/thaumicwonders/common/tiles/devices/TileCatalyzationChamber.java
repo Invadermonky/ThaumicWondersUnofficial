@@ -62,16 +62,14 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
+    protected void readFromTileNBT(NBTTagCompound compound) {
         this.refineTime = compound.getShort("RefineTime");
         this.speedyTime = compound.getShort("SpeedyTime");
         this.equippedStone = new ItemStack(compound.getCompoundTag("EquippedStone"));
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
+    protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
         compound.setShort("RefineTime", (short) this.refineTime);
         compound.setShort("SpeedyTime", (short) this.speedyTime);
         compound.setTag("EquippedStone", this.equippedStone.writeToNBT(new NBTTagCompound()));

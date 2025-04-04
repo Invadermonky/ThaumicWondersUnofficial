@@ -45,11 +45,17 @@ public class TilePrimordialAccretionChamber extends TileTWInventory implements I
 
     @Override
     protected void readFromTileNBT(NBTTagCompound compound) {
+        this.refineTime = compound.getShort("RefineTime");
+        this.maxRefineTime = compound.getShort("MaxRefineTime");
+        this.speedyTime = compound.getShort("SpeedyTime");
         this.essentia.readFromNBT(compound, "essentia");
     }
 
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
+        compound.setShort("RefineTime", (short) this.refineTime);
+        compound.setShort("MaxRefineTime", (short) this.maxRefineTime);
+        compound.setShort("SpeedyTime", (short) this.speedyTime);
         this.essentia.writeToNBT(compound, "essentia");
         return compound;
     }

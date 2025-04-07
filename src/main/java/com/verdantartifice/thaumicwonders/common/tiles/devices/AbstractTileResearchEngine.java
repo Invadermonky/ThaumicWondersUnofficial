@@ -12,6 +12,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.aura.AuraHelper;
+import thaumcraft.common.blocks.IBlockFacingHorizontal;
 
 public abstract class AbstractTileResearchEngine extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable, IResearchEngine {
     protected int amount = 0;
@@ -84,14 +85,39 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
         }
     }
 
+    /**
+     * Get the relative facing for the given absolute facing.  The Meaty Orb's relative north is its control
+     * panel, west is life input, east is water input, south is eldritch input.
+     *
+     * @param absFace facing relative to world axes
+     * @return facing relative to orb faces
+     */
+    public EnumFacing getRelativeFacing(EnumFacing absFace) {
+        if (this.getBlockType() instanceof IBlockFacingHorizontal && absFace != EnumFacing.UP && absFace != EnumFacing.DOWN) {
+            EnumFacing blockFacing = this.world.getBlockState(this.pos).getValue(IBlockFacingHorizontal.FACING);
+            int rotations = 0;
+            EnumFacing relativeFacing = absFace;
+            while (blockFacing != EnumFacing.NORTH) {
+                blockFacing = blockFacing.rotateY();
+                rotations++;
+            }
+            for (int index = 0; index < rotations; index++) {
+                relativeFacing = relativeFacing.rotateY();
+            }
+            return relativeFacing;
+        } else {
+            return absFace;
+        }
+    }
+
     @Override
     public boolean isConnectable(EnumFacing face) {
-        return face == this.getFacing().getOpposite();
+        return this.canInputFrom(face);
     }
 
     @Override
     public boolean canInputFrom(EnumFacing face) {
-        return this.isConnectable(face);
+        return this.getRelativeFacing(face) == EnumFacing.SOUTH;
     }
 
     @Override

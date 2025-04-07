@@ -491,10 +491,10 @@ public class InitRecipes {
                 new ItemStack(ItemsTC.clusters, 1, 0),
                 new ItemStack(ItemsTC.clusters, 1, 1),
                 new ItemStack(ItemsTC.clusters, 1, 6),
-                OreDictionary.doesOreNameExist("oreCopper") && !OreDictionary.getOres("oreCopper", false).isEmpty() ? new ItemStack(ItemsTC.clusters, 1, 2) : ItemStack.EMPTY,
-                OreDictionary.doesOreNameExist("oreTin") && !OreDictionary.getOres("oreTin", false).isEmpty() ? new ItemStack(ItemsTC.clusters, 1, 3) : ItemStack.EMPTY,
-                OreDictionary.doesOreNameExist("oreSilver") && !OreDictionary.getOres("oreSilver", false).isEmpty() ? new ItemStack(ItemsTC.clusters, 1, 4) : ItemStack.EMPTY,
-                OreDictionary.doesOreNameExist("oreLead") && !OreDictionary.getOres("oreLead", false).isEmpty() ? new ItemStack(ItemsTC.clusters, 1, 5) : ItemStack.EMPTY
+                OreDictionary.doesOreNameExist("oreCopper") && !OreDictionary.getOres("oreCopper", false).isEmpty() ? new ItemStack(ItemsTC.clusters, 1, 2) : new ItemStack(ItemsTC.clusters, 1, 0),
+                OreDictionary.doesOreNameExist("oreTin") && !OreDictionary.getOres("oreTin", false).isEmpty() ? new ItemStack(ItemsTC.clusters, 1, 3) : new ItemStack(ItemsTC.clusters, 1, 0),
+                OreDictionary.doesOreNameExist("oreSilver") && !OreDictionary.getOres("oreSilver", false).isEmpty() ? new ItemStack(ItemsTC.clusters, 1, 4) : new ItemStack(ItemsTC.clusters, 1, 0),
+                OreDictionary.doesOreNameExist("oreLead") && !OreDictionary.getOres("oreLead", false).isEmpty() ? new ItemStack(ItemsTC.clusters, 1, 5) : new ItemStack(ItemsTC.clusters, 1, 0)
         ));
 
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "meteorb"), new InfusionRecipe(

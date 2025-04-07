@@ -1,0 +1,5 @@
+newmtl material_all
+Kd 1.000000 1.000000 1.000000
+map_Kd thaumicwonders:blocks/dimensional_ripper
+illum 2
+

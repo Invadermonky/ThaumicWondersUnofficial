@@ -1,9 +1,9 @@
 {
     "entries": [
         {
-            "key": "TWOND_NETHER_HEDGE",
-            "name": "thaumicwonders.research.nether_hedge.title",
-            "icons": ["minecraft:soul_sand"],
+            "key": "TWOND_DIMENSIONAL_HEDGE",
+            "name": "thaumicwonders.research.dimensional_hedge.title",
+            "icons": ["minecraft:soul_sand", "minecraft:end_stone"],
             "category": "THAUMIC_WONDERS",
             "parents": ["TWOND_BASE", "~HEDGEALCHEMY"],
             "siblings": [],
@@ -13,41 +13,16 @@
             "reward_knowledge": [],
             "stages": [
                 {
-                    "text": "thaumicwonders.research.nether_hedge.text.stage.1",
-                    "required_knowledge": ["OBSERVATION;ALCHEMY;1"],
-                    "required_research": ["m_hellandback"]
+                    "text": "thaumicwonders.research.dimensional_hedge.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;ALCHEMY;2"],
+                    "required_research": ["m_hellandback", "m_endoftheworld"]
                 },
                 {
-                    "text": "thaumicwonders.research.nether_hedge.text.stage.2",
+                    "text": "thaumicwonders.research.dimensional_hedge.text.stage.2",
                     "recipes": [
-                        "thaumicwonders:hedge_soul_sand",
+	                    "thaumicwonders:hedge_soul_sand",
                         "thaumicwonders:hedge_ghast_tear",
-                        "thaumicwonders:hedge_wither_skull"
-                    ]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_END_HEDGE",
-            "name": "thaumicwonders.research.end_hedge.title",
-            "icons": ["minecraft:end_stone"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_NETHER_HEDGE"],
-            "siblings": [],
-            "meta": [],
-            "location": [0, 4],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.end_hedge.text.stage.1",
-                    "required_knowledge": ["OBSERVATION;ALCHEMY;1"],
-                    "required_research": ["m_endoftheworld"]
-                },
-                {
-                    "text": "thaumicwonders.research.end_hedge.text.stage.2",
-                    "recipes": [
+                        "thaumicwonders:hedge_wither_skull",
                         "thaumicwonders:hedge_end_stone",
                         "thaumicwonders:hedge_chorus_fruit",
                         "thaumicwonders:hedge_ender_pearl"
@@ -64,7 +39,7 @@
             "parents": ["TWOND_BASE"],
             "siblings": [],
             "meta": [],
-            "location": [2, 0],
+            "location": [4, 0],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -88,7 +63,7 @@
             "name": "thaumicwonders.research.catalyzation_chamber.title",
             "icons": ["thaumicwonders:catalyzation_chamber"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_EVERBURNING_URN", "TWOND_END_HEDGE", "~METALPURIFICATION", "~INFERNALFURNACE"],
+            "parents": ["TWOND_EVERBURNING_URN", "~METALPURIFICATION", "~INFERNALFURNACE"],
             "siblings": [],
             "meta": ["SPIKY"],
             "location": [-2, 6],
@@ -159,10 +134,10 @@
             "name": "thaumicwonders.research.panacea.title",
             "icons": ["thaumicwonders:panacea"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_END_HEDGE"],
+            "parents": ["TWOND_DIMENSIONAL_HEDGE"],
             "siblings": [],
             "meta": [],
-            "location": [0, 6],
+            "location": [0, 5],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -188,7 +163,7 @@
             "parents": ["TWOND_PANACEA"],
             "siblings": [],
             "meta": [],
-            "location": [0, 8],
+            "location": [0, 7],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -213,7 +188,7 @@
             "parents": ["TWOND_DISJUNCTION_CLOTH"],
             "siblings": [],
             "meta": [],
-            "location": [4, 0],
+            "location": [6, 0],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [

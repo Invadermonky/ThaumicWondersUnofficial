@@ -1,22 +1,23 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "thaumicwonders:dimensional_ripper",
-        "transform": "forge:default-block"
-     },
+        "model": "thaumicwonders:dimensional_ripper.obj",
+        "transform": "forge:default-block",
+        "textures": {"#material_all": "thaumicwonders:blocks/dimensional_ripper"}
+    },
     "variants": {
-        "normal": [{}], "inventory": [{}],        
-        "enabled=false,facing=down":    { "model": "thaumicwonders:dimensional_ripper","x": 180 },
-        "enabled=false,facing=up":      { "model": "thaumicwonders:dimensional_ripper"},
-        "enabled=false,facing=north":   { "model": "thaumicwonders:dimensional_ripper","x": 90 },
-        "enabled=false,facing=south":   { "model": "thaumicwonders:dimensional_ripper","y": 180, "x": 90 },
-        "enabled=false,facing=west":    { "model": "thaumicwonders:dimensional_ripper","y": 270, "x": 90 },
-        "enabled=false,facing=east":    { "model": "thaumicwonders:dimensional_ripper","y": 90, "x": 90 },
-        "enabled=true,facing=down":     { "model": "thaumicwonders:dimensional_ripper","x": 180 },
-        "enabled=true,facing=up":       { "model": "thaumicwonders:dimensional_ripper"},
-        "enabled=true,facing=north":    { "model": "thaumicwonders:dimensional_ripper","x": 90 },
-        "enabled=true,facing=south":    { "model": "thaumicwonders:dimensional_ripper","y": 180, "x": 90 },
-        "enabled=true,facing=west":     { "model": "thaumicwonders:dimensional_ripper","y": 270, "x": 90 },
-        "enabled=true,facing=east":     { "model": "thaumicwonders:dimensional_ripper","y": 90, "x": 90 }
+        "normal": [{}], "inventory": [{}],
+        "enabled=false,facing=down":    { "model": "thaumicwonders:dimensional_ripper.obj","x": 180 },
+        "enabled=false,facing=up":      { "model": "thaumicwonders:dimensional_ripper.obj"},
+        "enabled=false,facing=north":   { "model": "thaumicwonders:dimensional_ripper.obj","x": 90 },
+        "enabled=false,facing=south":   { "model": "thaumicwonders:dimensional_ripper.obj","y": 180, "x": 90 },
+        "enabled=false,facing=west":    { "model": "thaumicwonders:dimensional_ripper.obj","y": 270, "x": 90 },
+        "enabled=false,facing=east":    { "model": "thaumicwonders:dimensional_ripper.obj","y": 90, "x": 90 },
+        "enabled=true,facing=down":     { "model": "thaumicwonders:dimensional_ripper.obj","x": 180 },
+        "enabled=true,facing=up":       { "model": "thaumicwonders:dimensional_ripper.obj"},
+        "enabled=true,facing=north":    { "model": "thaumicwonders:dimensional_ripper.obj","x": 90 },
+        "enabled=true,facing=south":    { "model": "thaumicwonders:dimensional_ripper.obj","y": 180, "x": 90 },
+        "enabled=true,facing=west":     { "model": "thaumicwonders:dimensional_ripper.obj","y": 270, "x": 90 },
+        "enabled=true,facing=east":     { "model": "thaumicwonders:dimensional_ripper.obj","y": 90, "x": 90 }
     }
 }

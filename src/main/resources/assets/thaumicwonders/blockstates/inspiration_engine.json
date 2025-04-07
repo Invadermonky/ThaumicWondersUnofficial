@@ -1,10 +1,15 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "thaumicwonders:inspiration_engine",
-        "transform": "forge:default-block"
-     },
+        "model": "thaumicwonders:inspiration_engine.obj",
+        "transform": "forge:default-block",
+        "textures": {"#material_all": "thaumicwonders:blocks/inspiration_engine"}
+    },
     "variants": {
-        "normal": [{}], "inventory": [{}]
+        "normal": [{}], "inventory": [{}],
+        "facing=north": {"model": "thaumicwonders:inspiration_engine.obj"},
+        "facing=south": {"model": "thaumicwonders:inspiration_engine.obj","y": 180},
+        "facing=east": {"model": "thaumicwonders:inspiration_engine.obj","y": 90},
+        "facing=west": {"model": "thaumicwonders:inspiration_engine.obj","y": 270}
     }
 }

@@ -11,7 +11,6 @@ public class ProxyEntities {
         RenderingRegistry.registerEntityRenderingHandler(EntityFlyingCarpet.class, RenderFlyingCarpet::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityVoidPortal.class, RenderVoidPortal::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityHexamitePrimed.class, RenderHexamitePrimed::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityPrimalArrow.class, RenderPrimalArrow::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityCorruptionAvatar.class, RenderCorruptionAvatar::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityFluxFireball.class, RenderFluxFireball::new);
     }

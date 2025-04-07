@@ -34,7 +34,7 @@
             "parents": ["TWOND_BASE", "~ALUMENTUM"],
             "siblings": [],
             "meta": [],
-            "location": [-2, -2],
+            "location": [-2, -1],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -42,8 +42,7 @@
                     "text": "thaumicwonders.research.hexamite.text.stage.1",
                     "required_knowledge": ["THEORY;BASICS;1","OBSERVATION;ALCHEMY;1","OBSERVATION;ARTIFICE;1"],
                     "required_research": ["!vitium"],
-                    "required_item": ["minecraft:tnt"],
-                    "warp": 1
+                    "required_item": ["minecraft:tnt"]
                 },
                 {
                     "text": "thaumicwonders.research.hexamite.text.stage.2",
@@ -55,83 +54,6 @@
             "addenda": []
         },
         {
-            "key": "TWOND_BONE_BOW",
-            "name": "thaumicwonders.research.bone_bow.title",
-            "icons": ["thaumicwonders:bone_bow"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_FLYING_CARPET"],
-            "siblings": [],
-            "meta": [],
-            "location": [2, -4],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.bone_bow.text.stage.1",
-                    "required_knowledge": ["THEORY;ARTIFICE;1","OBSERVATION;GOLEMANCY;1"],
-                    "required_research": ["!volatus"],
-                    "required_item": ["minecraft:bone", "minecraft:bow"]
-                },
-                {
-                    "text": "thaumicwonders.research.bone_bow.text.stage.2",
-                    "recipes": [
-                        "thaumicwonders:bone_bow"
-                    ]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_PRIMAL_ARROWS",
-            "name": "thaumicwonders.research.primal_arrow.title",
-            "icons": [
-                "thaumicwonders:textures/items/primal_arrow_air.png",
-                "thaumicwonders:textures/items/primal_arrow_earth.png",
-                "thaumicwonders:textures/items/primal_arrow_fire.png",
-                "thaumicwonders:textures/items/primal_arrow_water.png",
-                "thaumicwonders:textures/items/primal_arrow_order.png",
-                "thaumicwonders:textures/items/primal_arrow_entropy.png"
-            ],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_BONE_BOW"],
-            "siblings": [],
-            "meta": [],
-            "location": [2, -6],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.primal_arrow.text.stage.1",
-                    "required_knowledge": ["THEORY;ARTIFICE;1","OBSERVATION;BASICS;1"],
-                    "required_item": [
-                        "thaumcraft:crystal_essence;1;0;{Aspects:[{amount:1,key:'aer'}]}",
-                        "thaumcraft:crystal_essence;1;0;{Aspects:[{amount:1,key:'terra'}]}",
-                        "thaumcraft:crystal_essence;1;0;{Aspects:[{amount:1,key:'ignis'}]}",
-                        "thaumcraft:crystal_essence;1;0;{Aspects:[{amount:1,key:'aqua'}]}",
-                        "thaumcraft:crystal_essence;1;0;{Aspects:[{amount:1,key:'ordo'}]}",
-                        "thaumcraft:crystal_essence;1;0;{Aspects:[{amount:1,key:'perditio'}]}"
-                    ]
-                },
-                {
-                    "text": "thaumicwonders.research.primal_arrow.text.stage.2",
-                    "recipes": [
-                        "thaumicwonders:primal_arrow_air",
-                        "thaumicwonders:primal_arrow_earth",
-                        "thaumicwonders:primal_arrow_fire",
-                        "thaumicwonders:primal_arrow_water",
-                        "thaumicwonders:primal_arrow_order",
-                        "thaumicwonders:primal_arrow_entropy"
-                    ]
-                }
-            ],
-            "addenda": [
-                {
-                    "text": "thaumicwonders.research.primal_arrow.text.addenda.1",
-                    "required_research": ["BASICTURRET"]
-                }
-            ]
-        },
-        {
             "key": "TWOND_FLUX_DISTILLER",
             "name": "thaumicwonders.research.flux_distiller.title",
             "icons": ["thaumicwonders:flux_distiller"],
@@ -139,7 +61,7 @@
             "parents": ["TWOND_FLUX_CAPACITOR"],
             "siblings": [],
             "meta": [],
-            "location": [-6, -5],
+            "location": [-5, -5],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [

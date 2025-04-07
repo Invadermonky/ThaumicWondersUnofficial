@@ -42,8 +42,7 @@
                     "text": "thaumicwonders.research.hexamite.text.stage.1",
                     "required_knowledge": ["THEORY;BASICS;1","OBSERVATION;ALCHEMY;1","OBSERVATION;ARTIFICE;1"],
                     "required_research": ["!vitium"],
-                    "required_item": ["minecraft:tnt"],
-                    "warp": 1
+                    "required_item": ["minecraft:tnt"]
                 },
                 {
                     "text": "thaumicwonders.research.hexamite.text.stage.2",

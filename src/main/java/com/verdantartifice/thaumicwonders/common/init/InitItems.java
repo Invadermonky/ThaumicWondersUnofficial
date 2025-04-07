@@ -3,6 +3,7 @@ package com.verdantartifice.thaumicwonders.common.init;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemNightVisionGoggles;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
+import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidcallerArmor;
 import com.verdantartifice.thaumicwonders.common.items.base.IVariantItem;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import com.verdantartifice.thaumicwonders.common.items.baubles.ItemCleansingCharm;
@@ -45,6 +46,9 @@ public class InitItems {
         registerItem(forgeRegistry, new ItemVoidFortressArmor("void_fortress_helm", ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.HEAD));
         registerItem(forgeRegistry, new ItemVoidFortressArmor("void_fortress_chest", ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.CHEST));
         registerItem(forgeRegistry, new ItemVoidFortressArmor("void_fortress_legs", ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.LEGS));
+        registerItem(forgeRegistry, new ItemVoidcallerArmor("voidcaller_helm", ItemVoidcallerArmor.MATERIAL, 4, EntityEquipmentSlot.HEAD));
+        registerItem(forgeRegistry, new ItemVoidcallerArmor("voidcaller_chest", ItemVoidcallerArmor.MATERIAL, 4, EntityEquipmentSlot.CHEST));
+        registerItem(forgeRegistry, new ItemVoidcallerArmor("voidcaller_legs", ItemVoidcallerArmor.MATERIAL, 4, EntityEquipmentSlot.LEGS));
         registerItem(forgeRegistry, new ItemStructureDiviner());
         registerItem(forgeRegistry, new ItemNightVisionGoggles());
         registerItem(forgeRegistry, new ItemCleansingCharm());

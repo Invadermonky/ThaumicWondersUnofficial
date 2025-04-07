@@ -15,8 +15,7 @@
                 {
                     "text": "thaumicwonders.research.dimensional_ripper.text.stage.1",
                     "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ELDRITCH;1", "THEORY;ARTIFICE;1"],
-                    "required_research":["!vitium"],
-                    "warp": 4
+                    "required_research":["!vitium"]
                 },
                 {
                     "text": "thaumicwonders.research.dimensional_ripper.text.stage.2",
@@ -96,8 +95,7 @@
                 {
                     "text": "thaumicwonders.research.void_portal.text.stage.1",
                     "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ARTIFICE;1"],
-                    "required_research":["f_TELEPORT"],
-                    "warp": 2
+                    "required_research":["f_TELEPORT"]
                 },
                 {
                     "text": "thaumicwonders.research.void_portal.text.stage.2",
@@ -131,8 +129,7 @@
             "stages": [
                 {
                     "text": "thaumicwonders.research.flux_capacitor.text.stage.1",
-                    "required_knowledge": ["OBSERVATION;AUROMANCY;1", "THEORY;ELDRITCH;1", "THEORY;AUROMANCY;1", "THEORY;INFUSION;1"],
-                    "warp": 1
+                    "required_knowledge": ["OBSERVATION;AUROMANCY;1", "THEORY;ELDRITCH;1", "THEORY;AUROMANCY;1", "THEORY;INFUSION;1"]
                 },
                 {
                     "text": "thaumicwonders.research.flux_capacitor.text.stage.2",
@@ -183,7 +180,7 @@
                 {
                     "text": "thaumicwonders.research.void_fortress_armor.text.stage.1",
                     "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ELDRITCH;1", "THEORY;INFUSION;1"],
-                    "warp": 1
+                    "warp": 3
                 },
                 {
                     "text": "thaumicwonders.research.void_fortress_armor.text.stage.2",

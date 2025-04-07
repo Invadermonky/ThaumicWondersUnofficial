@@ -7,7 +7,7 @@
             "category": "THAUMIC_WONDERS",
             "parents": ["FIRSTSTEPS"],
             "siblings": [],
-            "meta": ["ROUND"],
+            "meta": ["ROUND", "HIDDEN"],
             "location": [0, 0],
             "reward_item": [],
             "reward_knowledge": [],

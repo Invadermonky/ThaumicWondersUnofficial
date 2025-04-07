@@ -2,11 +2,11 @@ package com.verdantartifice.thaumicwonders.client.renderers.models.gear;
 
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 import thaumcraft.client.renderers.models.gear.ModelCustomArmor;
 
 import java.util.HashMap;
@@ -538,26 +538,26 @@ public class ModelVoidFortressArmor extends ModelCustomArmor {
         this.ArmBladeL2.isHidden = (set < 3);
 
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
         if (this.isChild) {
-            GL11.glScalef(0.75F, 0.75F, 0.75F);
-            GL11.glTranslatef(0.0F, 16.0F * scale, 0.0F);
+            GlStateManager.scale(0.75F, 0.75F, 0.75F);
+            GlStateManager.translate(0.0F, 16.0F * scale, 0.0F);
             this.bipedHead.render(scale);
-            GL11.glPopMatrix();
-            GL11.glPushMatrix();
-            GL11.glScalef(0.5F, 0.5F, 0.5F);
-            GL11.glTranslatef(0.0F, 24.0F * scale, 0.0F);
+            GlStateManager.popMatrix();
+            GlStateManager.pushMatrix();
+            GlStateManager.scale(0.5F, 0.5F, 0.5F);
+            GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
             this.bipedBody.render(scale);
             this.bipedRightArm.render(scale);
             this.bipedLeftArm.render(scale);
             this.bipedRightLeg.render(scale);
             this.bipedLeftLeg.render(scale);
             this.bipedHeadwear.render(scale);
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
         } else {
-            GL11.glScalef(1.01F, 1.01F, 1.01F); // Scale up slightly to prevent z-clipping with hatted skins
+            GlStateManager.scale(1.01F, 1.01F, 1.01F); // Scale up slightly to prevent z-clipping with hatted skins
             this.bipedHead.render(scale);
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
             this.bipedBody.render(scale);
             this.bipedRightArm.render(scale);
             this.bipedLeftArm.render(scale);

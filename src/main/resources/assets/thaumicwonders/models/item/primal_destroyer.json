@@ -1,6 +1,88 @@
 {
-    "parent": "item/handheld",
-    "textures": {
-        "layer0": "thaumicwonders:items/primal_destroyer"
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "thaumicwonders:items/primal_destroyer"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        55
+      ],
+      "translation": [
+        0,
+        10.75,
+        -0.25
+      ],
+      "scale": [
+        1.7,
+        1.7,
+        1.7
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -55
+      ],
+      "translation": [
+        0,
+        8.5,
+        0.5
+      ],
+      "scale": [
+        1.7,
+        1.7,
+        1.7
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        30
+      ],
+      "translation": [
+        1,
+        4,
+        1.25
+      ],
+      "scale": [
+        0.95,
+        0.95,
+        0.475
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -30
+      ],
+      "translation": [
+        1,
+        4,
+        1.25
+      ],
+      "scale": [
+        0.95,
+        0.95,
+        0.475
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        4.25,
+        0
+      ],
+      "scale": [
+        0.9375,
+        0.9375,
+        0.46875
+      ]
     }
+  }
 }

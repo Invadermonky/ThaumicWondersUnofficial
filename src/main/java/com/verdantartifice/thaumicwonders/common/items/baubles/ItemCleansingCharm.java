@@ -24,7 +24,7 @@ import thaumcraft.api.items.RechargeHelper;
 import java.util.List;
 
 public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable {
-    protected static final int VIS_CAPACITY = 200;
+    protected static final int VIS_CAPACITY = ConfigHandlerTW.cleansing_charm.capacity;
 
     public ItemCleansingCharm() {
         super("cleansing_charm");
@@ -56,8 +56,8 @@ public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable 
                 if (this.hasEnergy(itemstack)) {
                     this.incrementProgress(itemstack);
                     int progress = this.getProgress(itemstack);
-                    if (progress % 60 == 0) {
-                        AuraHelper.polluteAura(player.world, player.getPosition(), 0.1F, true);
+                    if (progress % ConfigHandlerTW.cleansing_charm.fluxTime == 0) {
+                        AuraHelper.polluteAura(player.world, player.getPosition(), (float) ConfigHandlerTW.cleansing_charm.fluxAmount, true);
                     }
                     if (progress >= ConfigHandlerTW.cleansing_charm.timeToRemoveFlux) {
                         ThaumcraftApi.internalMethods.addWarpToPlayer(player, -ConfigHandlerTW.cleansing_charm.fluxRemoved, IPlayerWarp.EnumWarpType.NORMAL);

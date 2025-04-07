@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.ARBShaderObjects;
-import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.client.lib.ender.ShaderCallback;
 import thaumcraft.client.lib.ender.ShaderHelper;
@@ -37,27 +36,27 @@ public class TesrDimensionalRipper extends TileEntitySpecialRenderer<TileDimensi
     public void render(TileDimensionalRipper te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         super.render(te, x, y, z, partialTicks, destroyStage, alpha);
         if (BlockStateUtils.isEnabled(te.getBlockMetadata())) {
-            GL11.glPushMatrix();
+            GlStateManager.pushMatrix();
             bindTexture(STARS_TEXTURE);
             ShaderHelper.useShader(ShaderHelper.endShader, this.shaderCallback);
 
-            GL11.glPushMatrix();
-            GL11.glTranslated(x + 0.5D, y + 0.5D, z + 0.5D);
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(x + 0.5D, y + 0.5D, z + 0.5D);
             switch (BlockStateUtils.getFacing(te.getBlockMetadata())) {
                 case DOWN:
-                    GL11.glRotated(180.0D, 1.0D, 0.0D, 0.0D);
+                	GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
                     break;
                 case NORTH:
-                    GL11.glRotated(90.0D, -1.0D, 0.0D, 0.0D);
+                	GlStateManager.rotate(90.0F, -1.0F, 0.0F, 0.0F);
                     break;
                 case SOUTH:
-                    GL11.glRotated(90.0D, 1.0D, 0.0D, 0.0D);
+                	GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
                     break;
                 case WEST:
-                    GL11.glRotated(90.0D, 0.0D, 0.0D, 1.0D);
+                	GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
                     break;
                 case EAST:
-                    GL11.glRotated(90.0D, 0.0D, 0.0D, -1.0D);
+                	GlStateManager.rotate(90.0F, 0.0F, 0.0F, -1.0F);
                     break;
                 case UP:
                 default:
@@ -65,30 +64,30 @@ public class TesrDimensionalRipper extends TileEntitySpecialRenderer<TileDimensi
                     break;
             }
 
-            GL11.glPushMatrix();
-            GL11.glTranslated(0.0D, 0.375D, 0.0D);
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(0.0D, 0.375D, 0.0D);
             GlStateManager.depthMask(false);
             for (EnumFacing face : EnumFacing.values()) {
-                GL11.glPushMatrix();
-                GL11.glRotatef(90.0F, -face.getYOffset(), face.getXOffset(), -face.getZOffset());
+                GlStateManager.pushMatrix();
+                GlStateManager.rotate(90.0F, -face.getYOffset(), face.getXOffset(), -face.getZOffset());
                 if (face.getZOffset() < 0) {
-                    GL11.glTranslated(0.0D, 0.0D, 0.126D);
-                    GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+                    GlStateManager.translate(0.0D, 0.0D, 0.126D);
+                    GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
                 } else {
-                    GL11.glTranslated(0.0D, 0.0D, -0.126D);
+                    GlStateManager.translate(0.0D, 0.0D, -0.126D);
                 }
-                GL11.glRotatef(90.0F, 0.0F, 0.0F, -1.0F);
-                GL11.glScaled(0.25D, 0.25D, 0.25D);
+                GlStateManager.rotate(90.0F, 0.0F, 0.0F, -1.0F);
+                GlStateManager.scale(0.25D, 0.25D, 0.25D);
                 UtilsFX.renderQuadCentered(1, 1, 0, 1.0F, 1.0F, 1.0F, 1.0F, 200, 1, 1.0F);
-                GL11.glPopMatrix();
+                GlStateManager.popMatrix();
             }
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
 
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
 
             GlStateManager.depthMask(true);
             ShaderHelper.releaseShader();
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
         }
     }
 }

@@ -230,17 +230,17 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
     protected boolean isValidPlacement() {
         int i, k;
 
-        // Check main void metal blocks
+        // Check main arcane stone blocks
         for (i = -2; i <= 2; i++) {
             for (k = -3; k <= 3; k++) {
-                if (this.world.getBlockState(this.pos.add(i, -1, k)).getBlock() != BlocksTC.metalBlockVoid) {
+                if (this.world.getBlockState(this.pos.add(i, -1, k)).getBlock() != BlocksTC.stoneArcane) {
                     return false;
                 }
             }
-            if (this.world.getBlockState(this.pos.add(-3, -1, i)).getBlock() != BlocksTC.metalBlockVoid) {
+            if (this.world.getBlockState(this.pos.add(-3, -1, i)).getBlock() != BlocksTC.stoneArcane) {
                 return false;
             }
-            if (this.world.getBlockState(this.pos.add(3, -1, i)).getBlock() != BlocksTC.metalBlockVoid) {
+            if (this.world.getBlockState(this.pos.add(3, -1, i)).getBlock() != BlocksTC.stoneArcane) {
                 return false;
             }
         }

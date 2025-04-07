@@ -1,5 +1,6 @@
 package com.verdantartifice.thaumicwonders.client.renderers.entity;
 
+import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.entities.EntityVoidPortal;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -17,7 +18,7 @@ import thaumcraft.client.lib.UtilsFX;
 
 @SideOnly(Side.CLIENT)
 public class RenderVoidPortal extends Render<EntityVoidPortal> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("thaumcraft", "textures/misc/eldritch_portal.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(ThaumicWonders.MODID, "textures/misc/void_portal.png");
 
     public RenderVoidPortal(RenderManager renderManager) {
         super(renderManager);

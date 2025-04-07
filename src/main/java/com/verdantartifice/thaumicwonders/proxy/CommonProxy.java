@@ -6,7 +6,6 @@ import com.verdantartifice.thaumicwonders.common.compat.theoneprobe.TOPCompat;
 import com.verdantartifice.thaumicwonders.common.init.InitAspects;
 import com.verdantartifice.thaumicwonders.common.init.InitResearch;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
-import com.verdantartifice.thaumicwonders.common.misc.BehaviorDispensePrimalArrow;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,7 +30,6 @@ public class CommonProxy implements IProxyTW, IGuiHandler {
         PacketHandler.registerMessages();
         InitResearch.initResearch();
         NetworkRegistry.INSTANCE.registerGuiHandler(ThaumicWonders.INSTANCE, this);
-        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemsTW.PRIMAL_ARROW, new BehaviorDispensePrimalArrow());
 
         if (Loader.isModLoaded("crafttweaker")) {
             MinecraftForge.EVENT_BUS.register(new CTIntegration());

@@ -37,14 +37,6 @@ public class InitEntities {
                 .build();
         iForgeRegistry.register(hexamitePrimedEntry);
 
-        EntityEntry primalArrowEntry = EntityEntryBuilder.create()
-                .entity(EntityPrimalArrow.class)
-                .id(new ResourceLocation(ThaumicWonders.MODID, "primal_arrow"), id++)
-                .name("primal_arrow")
-                .tracker(64, 1, true)
-                .build();
-        iForgeRegistry.register(primalArrowEntry);
-
         EntityEntry corruptionAvatarEntry = EntityEntryBuilder.create()
                 .entity(EntityCorruptionAvatar.class)
                 .id(new ResourceLocation(ThaumicWonders.MODID, "corruption_avatar"), id++)

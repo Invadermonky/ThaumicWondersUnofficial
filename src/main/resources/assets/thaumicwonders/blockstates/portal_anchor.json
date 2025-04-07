@@ -1,11 +1,15 @@
 {
     "forge_marker": 1,
-    "defaults":
-    {
+    "defaults": {
+        "model": "thaumicwonders:portal_anchor.obj",
         "transform": "forge:default-block",
-        "model": "thaumicwonders:portal_anchor" 
+        "textures": {"#material_all": "thaumicwonders:blocks/portal_anchor"}
     },
     "variants": {
-        "normal": [{}], "inventory": [{}]
+        "normal": [{}], "inventory": [{}],
+        "facing=north": {"model": "thaumicwonders:portal_anchor.obj"},
+        "facing=south": {"model": "thaumicwonders:portal_anchor.obj","y": 180},
+        "facing=east": {"model": "thaumicwonders:portal_anchor.obj","y": 90},
+        "facing=west": {"model": "thaumicwonders:portal_anchor.obj","y": 270}
     }
 }

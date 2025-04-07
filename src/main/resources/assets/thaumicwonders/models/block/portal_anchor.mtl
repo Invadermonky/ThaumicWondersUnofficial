@@ -1,0 +1,4 @@
+# Made in Blockbench 4.10.4
+newmtl material_all
+map_Kd portal_anchor.png
+newmtl none

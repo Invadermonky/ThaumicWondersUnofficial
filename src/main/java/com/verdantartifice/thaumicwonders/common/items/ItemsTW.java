@@ -23,8 +23,6 @@ public class ItemsTW {
     public static final Item STRUCTURE_DIVINER = null;
     public static final ItemArmor NIGHT_VISION_GOGGLES = null;
     public static final Item CLEANSING_CHARM = null;
-    public static final ItemBow BONE_BOW = null;
-    public static final Item PRIMAL_ARROW = null;
     public static final Item PRIMORDIAL_GRAIN = null;
     public static final Item SHIMMERLEAF_SEED = null;
     public static final Item CINDERPEARL_SEED = null;
@@ -32,4 +30,7 @@ public class ItemsTW {
     public static final Item PANACEA = null;
     public static final Item LETHE_WATER = null;
     public static final Item SHARING_TOME = null;
+    public static final Item VOIDCALLER_HELM = null;
+    public static final Item VOIDCALLER_CHEST = null;
+    public static final Item VOIDCALLER_LEGS = null;
 }

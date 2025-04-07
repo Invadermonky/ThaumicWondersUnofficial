@@ -5,10 +5,10 @@
             "name": "thaumicwonders.research.everburning_urn.title",
             "icons": ["thaumicwonders:everburning_urn"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_NETHER_HEDGE", "~EVERFULLURN", "~INFUSION"],
+            "parents": ["TWOND_DIMENSIONAL_HEDGE", "~EVERFULLURN", "~INFUSION"],
             "siblings": [],
             "meta": [],
-            "location": [-2, 2],
+            "location": [-2, 4],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -51,7 +51,7 @@
             "name": "thaumicwonders.research.timewinder.title",
             "icons": ["thaumicwonders:timewinder"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_END_HEDGE", "~CELESTIALSCANNING", "~RECHARGEPEDESTAL"],
+            "parents": ["TWOND_DIMENSIONAL_HEDGE", "~CELESTIALSCANNING", "~RECHARGEPEDESTAL"],
             "siblings": [],
             "meta": [],
             "location": [2, 4],
@@ -63,7 +63,7 @@
                     "required_knowledge":["THEORY;INFUSION;1","THEORY;AUROMANCY;1","OBSERVATION;ELDRITCH;1"]
                 },
                 {
-                    "text": "thaumicwonders.research.timewinder.text.stage.2", 
+                    "text": "thaumicwonders.research.timewinder.text.stage.2",
                     "recipes": ["thaumicwonders:timewinder"]
                 }
             ],
@@ -86,7 +86,7 @@
                     "required_knowledge":["THEORY;INFUSION;1","THEORY;AUROMANCY;1","OBSERVATION;ELDRITCH;1"]
                 },
                 {
-                    "text": "thaumicwonders.research.meteorb.text.stage.2", 
+                    "text": "thaumicwonders.research.meteorb.text.stage.2",
                     "recipes": ["thaumicwonders:meteorb"]
                 }
             ],

@@ -3,6 +3,7 @@ package com.verdantartifice.thaumicwonders.common.entities.monsters;
 import com.google.common.base.Predicate;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFluxFireball;
 import com.verdantartifice.thaumicwonders.common.entities.LootTablesTW;
+import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.misc.FluxExplosion;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketAvatarZapFx;
@@ -11,11 +12,14 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -23,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.api.entities.ITaintedMob;
+import thaumcraft.api.items.ItemsTC;
 import thaumcraft.api.potions.PotionFluxTaint;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
@@ -86,6 +91,21 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(300.0D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0D);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(6.0D);
+    }
+
+    @Override
+    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
+        this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(ItemsTW.VOIDCALLER_HELM));
+        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(ItemsTW.VOIDCALLER_CHEST));
+        this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(ItemsTW.VOIDCALLER_LEGS));
+        this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(ItemsTC.voidBoots));
+    }
+
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance diff, IEntityLivingData data) {
+        this.setEquipmentBasedOnDifficulty(diff);
+        this.setEnchantmentBasedOnDifficulty(diff);
+        return super.onInitialSpawn(diff, data);
     }
 
     @Override

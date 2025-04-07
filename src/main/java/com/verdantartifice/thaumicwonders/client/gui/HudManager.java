@@ -25,6 +25,8 @@ public class HudManager {
     private static final ResourceLocation HUD = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/hud.png");
 
     public void renderHuds(Minecraft mc, float renderTickTime, EntityPlayer player, long time) {
+    	if (!ConfigHandlerTW.client.huds) return;
+
         GL11.glPushMatrix();
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         GL11.glClear(GL11.GL_ACCUM);

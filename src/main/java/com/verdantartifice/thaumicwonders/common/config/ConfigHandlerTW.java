@@ -13,6 +13,8 @@ public class ConfigHandlerTW {
     public static CatalystStoneCategory catalyst_stones = new CatalystStoneCategory();
     @Config.Name("Cleansing Charm")
     public static CleansingCharmCategory cleansing_charm = new CleansingCharmCategory();
+    @Config.Name("Client")
+    public static ClientCategory client = new ClientCategory();
     @Config.Name("Flying Carpet")
     public static FlyingCarpetCategory flying_carpet = new FlyingCarpetCategory();
     @Config.Name("Meaty Orb")
@@ -86,6 +88,13 @@ public class ConfigHandlerTW {
         @Config.Comment("The amount of time, in ticks, it takes for polluting Flux to dissipate into the aura while the activated Cleansing Charm is worn. [default: 600]")
         @Config.RequiresMcRestart
         public int fluxTime = 600;
+    }
+
+    public static class ClientCategory {
+        @Config.Name("HUDs")
+        @Config.Comment("Whether or not to enable the HUDs displayed from the Magic Carpet and the Primal Destroyer. [default: true]")
+        @Config.RequiresMcRestart
+        public boolean huds = true;
     }
 
     public static class FlyingCarpetCategory {

@@ -93,7 +93,7 @@ public class ConfigHandlerTW {
     public static class ClientCategory {
         @Config.Name("HUDs")
         @Config.Comment("Whether or not to enable the HUDs displayed from the Magic Carpet and the Primal Destroyer. [default: true]")
-        @Config.RequiresMcRestart
+        @Config.RequiresWorldRestart
         public boolean huds = true;
     }
 

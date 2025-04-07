@@ -6,6 +6,7 @@ import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.items.tools.ItemPrimalDestroyer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -36,7 +37,7 @@ public class HudManager {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glLoadIdentity();
         GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
-        GL11.glEnable(GL11.GL_BLEND);
+        GlStateManager.enableBlend();
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         if (mc.inGameHasFocus && Minecraft.isGuiEnabled()) {
@@ -85,14 +86,14 @@ public class HudManager {
             }
         }
 
-        GL11.glDisable(GL11.GL_BLEND);
+        GlStateManager.disableBlend();
         GL11.glPopMatrix();
     }
 
     private void renderPrimalDestroyerHud(Minecraft mc, float partialTicks, EntityPlayer player, ItemStack itemStack, long time, int yStart) {
         // Draw background bars
         GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
+        GlStateManager.enableBlend();
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glTranslated(0.0D, yStart, 0.0D);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -122,7 +123,7 @@ public class HudManager {
     private void renderCarpetHud(Minecraft mc, float partialTicks, EntityPlayer player, EntityFlyingCarpet carpet, long time, int yStart) {
         // Draw background bars
         GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
+        GlStateManager.enableBlend();
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glTranslated(0.0D, yStart, 0.0D);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

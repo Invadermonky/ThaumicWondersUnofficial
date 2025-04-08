@@ -800,7 +800,7 @@ public class InitRecipes {
     }
 
     public static void initPrimordialAcceleratorRecipes() {
-        int maxSize = ItemsTC.primordialPearl.getDefaultInstance().getMaxDamage();
+        int maxSize = new ItemStack(ItemsTC.primordialPearl).getMaxDamage();
         for (int size = 0; size < maxSize - 1; size++) {
             int outputCount = MathHelper.clamp(maxSize - size, 0, 8);
             AcceleratorRecipeRegistry.addRecipe(

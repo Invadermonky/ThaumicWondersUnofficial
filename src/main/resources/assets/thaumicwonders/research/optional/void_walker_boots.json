@@ -1,0 +1,29 @@
+{
+  "entries": [
+    {
+      "key": "TWOND_VOID_WALKER_BOOTS",
+      "name": "thaumicwonders.research.void_walker_boots.title",
+      "icons": ["thaumicwonders:void_walker_boots"],
+      "category": "THAUMIC_WONDERS",
+      "parents": ["TWOND_VOID_FORTRESS_ARMOR","~ARMORFORTRESS"],
+      "siblings": [],
+      "meta": [],
+      "location": [-6, 3],
+      "reward_item": [],
+      "reward_knowledge": [],
+      "stages": [
+        {
+          "text": "thaumicwonders.research.void_walker_boots.text.stage.1",
+          "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ELDRITCH;1", "THEORY;INFUSION;1"],
+          "required_craft": ["thaumcraft:traveller_boots"],
+          "warp": 2
+        },
+        {
+          "text": "thaumicwonders.research.void_walker_boots.text.stage.2",
+          "recipes": ["thaumicwonders:void_walker_boots"]
+        }
+      ],
+      "addenda": []
+    }
+  ]
+}

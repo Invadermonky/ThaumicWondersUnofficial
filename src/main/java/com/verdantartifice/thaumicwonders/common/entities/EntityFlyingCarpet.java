@@ -6,7 +6,6 @@ import com.verdantartifice.thaumicwonders.common.items.entities.ItemFlyingCarpet
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -147,7 +146,7 @@ public class EntityFlyingCarpet extends Entity {
 
     @Override
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-        if (!this.world.isRemote) {
+        if (!this.world.isRemote && !this.isDead) {
             if (player.isSneaking()) {
                 ItemStack itemStack = new ItemStack(ItemsTW.FLYING_CARPET, 1, 0);
                 EnumDyeColor color = this.getDyeColor();
@@ -253,25 +252,11 @@ public class EntityFlyingCarpet extends Entity {
      * Update the carpet's speed, based on momentum
      */
     private void updateMotion() {
-        Entity rider = this.getControllingPassenger();
-        if (rider != null) {
-            double multiplier = ConfigHandlerTW.flying_carpet.maxSpeed;
-            double maxSpeed = SharedMonsterAttributes.MOVEMENT_SPEED.getDefaultValue() * multiplier;
-            float acceleration = (float) multiplier * 0.75F;
-            float friction = 0.9F;
-            this.motionX = (this.motionX + rider.motionX * acceleration) * friction;
-            this.motionZ = (this.motionZ + rider.motionZ * acceleration) * friction;
-            this.motionY = this.motionY * 0.9F + (this.hasNoGravity() ? 0.0D : -0.04D);
-
-            this.motionX = MathHelper.clamp(this.motionX, -maxSpeed, +maxSpeed);
-            this.motionZ = MathHelper.clamp(this.motionZ, -maxSpeed, +maxSpeed);
-        } else {
-            this.momentum = 0.9F;
-            this.motionX *= this.momentum;
-            this.motionY *= this.momentum;
-            this.motionZ *= this.momentum;
-            this.motionY += (this.hasNoGravity() ? 0.0D : -0.04D);
-        }
+        this.momentum = 0.9F;
+        this.motionX *= this.momentum;
+        this.motionY *= this.momentum;
+        this.motionZ *= this.momentum;
+        this.motionY += (this.hasNoGravity() ? 0.0D : -0.04D);
     }
 
     private void controlCarpet() {
@@ -282,7 +267,7 @@ public class EntityFlyingCarpet extends Entity {
 
             float f = 0.0F;
             if (this.forwardInputDown) {
-                f += 0.03F;
+                f += (float) (ConfigHandlerTW.flying_carpet.maxSpeed / 100.0);
             }
             if (this.backInputDown) {
                 f -= 0.005F;

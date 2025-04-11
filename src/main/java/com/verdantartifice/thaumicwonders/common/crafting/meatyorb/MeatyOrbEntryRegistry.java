@@ -16,6 +16,11 @@ public class MeatyOrbEntryRegistry {
         return MEAT_ENTRIES;
     }
 
+    public static int getTotalWeight() {
+        initializeWeight();
+        return totalWeight > 0 ? totalWeight : 1;
+    }
+
     public static void addEntry(ItemStack meatStack, int weight) {
         if (meatStack.isEmpty()) {
             ThaumicWonders.LOGGER.error("Error adding Meaty Orb entry. ItemStack cannot be empty.");

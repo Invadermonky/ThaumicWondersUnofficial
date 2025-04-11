@@ -17,6 +17,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchCategories;
@@ -92,8 +93,7 @@ public class ItemLetheWater extends ItemTW {
     }
 
     @Override
-    @Nonnull
-    public EnumRarity getRarity(ItemStack stack) {
+    public IRarity getForgeRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 
@@ -106,7 +106,7 @@ public class ItemLetheWater extends ItemTW {
                 selectionList.add(new CategoryEntry(category, count));
             }
         }
-        if (selectionList.size() <= 0) {
+        if (selectionList.isEmpty()) {
             return null;
         } else {
             RandomItemChooser ric = new RandomItemChooser();

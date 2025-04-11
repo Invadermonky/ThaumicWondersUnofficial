@@ -27,12 +27,10 @@ public class VoidBeaconEntryRegistry {
      */
     public static ImmutableMap<Aspect, List<ItemStack>> getEntriesByAspect() {
         Map<Aspect, List<ItemStack>> aspectMap = new THashMap<>();
-        getEntries().forEach(entry -> {
-            Arrays.stream(AspectHelper.getObjectAspects(entry.getStack()).getAspects()).forEach(aspect -> {
-                aspectMap.putIfAbsent(aspect, new ArrayList<>());
-                aspectMap.get(aspect).add(entry.getStack());
-            });
-        });
+        getEntries().forEach(entry -> Arrays.stream(AspectHelper.getObjectAspects(entry.getStack()).getAspects()).forEach(aspect -> {
+            aspectMap.putIfAbsent(aspect, new ArrayList<>());
+            aspectMap.get(aspect).add(entry.getStack());
+        }));
         return ImmutableMap.copyOf(aspectMap);
     }
 

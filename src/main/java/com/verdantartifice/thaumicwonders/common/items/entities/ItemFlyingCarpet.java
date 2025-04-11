@@ -12,35 +12,30 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.items.IRechargable;
 import thaumcraft.api.items.RechargeHelper;
-
-import javax.annotation.Nullable;
 
 public class ItemFlyingCarpet extends ItemTW implements IRechargable {
     public ItemFlyingCarpet() {
         super("flying_carpet");
 
-        this.addPropertyOverride(new ResourceLocation(ThaumicWonders.MODID, "color"), new IItemPropertyGetter() {
-            @Override
-            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
-                EnumDyeColor color = null;
-                if (stack != null && stack.getItem() instanceof ItemFlyingCarpet) {
-                    color = ((ItemFlyingCarpet) stack.getItem()).getDyeColor(stack);
-                }
-                if (color == null) {
-                    // Default to red if no dye color is applied
-                    color = EnumDyeColor.RED;
-                }
-                return ((float) color.getMetadata() / 16.0F);
+        this.addPropertyOverride(new ResourceLocation(ThaumicWonders.MODID, "color"), (stack, worldIn, entityIn) -> {
+            EnumDyeColor color = null;
+            if (stack != null && stack.getItem() instanceof ItemFlyingCarpet) {
+                color = ((ItemFlyingCarpet) stack.getItem()).getDyeColor(stack);
             }
+            if (color == null) {
+                // Default to red if no dye color is applied
+                color = EnumDyeColor.RED;
+            }
+            return ((float) color.getMetadata() / 16.0F);
         });
     }
 
@@ -90,11 +85,6 @@ public class ItemFlyingCarpet extends ItemTW implements IRechargable {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
-    }
-
-    @Override
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         IBlockState state = world.getBlockState(pos);
         if (!world.isRemote && state.getBlock() == Blocks.CAULDRON) {
@@ -127,5 +117,10 @@ public class ItemFlyingCarpet extends ItemTW implements IRechargable {
         } else {
             return EnumActionResult.PASS;
         }
+    }
+
+    @Override
+    public IRarity getForgeRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
     }
 }

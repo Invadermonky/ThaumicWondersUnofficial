@@ -1,11 +1,13 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
+import com.verdantartifice.thaumicwonders.common.items.armor.ItemBootsVoidWalker;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemNightVisionGoggles;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
 import com.verdantartifice.thaumicwonders.common.items.base.IVariantItem;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import com.verdantartifice.thaumicwonders.common.items.baubles.ItemCleansingCharm;
+import com.verdantartifice.thaumicwonders.common.items.baubles.ItemWarpRing;
 import com.verdantartifice.thaumicwonders.common.items.catalysts.ItemAlchemistStone;
 import com.verdantartifice.thaumicwonders.common.items.catalysts.ItemAlienistStone;
 import com.verdantartifice.thaumicwonders.common.items.catalysts.ItemTransmuterStone;
@@ -45,8 +47,10 @@ public class InitItems {
         registerItem(forgeRegistry, new ItemVoidFortressArmor("void_fortress_helm", ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.HEAD));
         registerItem(forgeRegistry, new ItemVoidFortressArmor("void_fortress_chest", ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.CHEST));
         registerItem(forgeRegistry, new ItemVoidFortressArmor("void_fortress_legs", ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.LEGS));
+        registerItem(forgeRegistry, new ItemBootsVoidWalker(), ConfigHandlerTW.void_walker_boots.enableBoots);
         registerItem(forgeRegistry, new ItemStructureDiviner());
         registerItem(forgeRegistry, new ItemNightVisionGoggles());
+        registerItem(forgeRegistry, new ItemWarpRing(), ConfigHandlerTW.warp_ring.enableRing);
         registerItem(forgeRegistry, new ItemCleansingCharm());
         registerItem(forgeRegistry, new ItemBoneBow());
         registerItem(forgeRegistry, new ItemPrimalArrow());
@@ -56,17 +60,21 @@ public class InitItems {
         registerItem(forgeRegistry, new ItemVishroomSpore());
         registerItem(forgeRegistry, new ItemPanacea());
         registerItem(forgeRegistry, new ItemLetheWater());
-        if (ConfigHandlerTW.sharing_tome.enableTome) {
-            registerItem(forgeRegistry, new ItemSharingTome());
+        registerItem(forgeRegistry, new ItemSharingTome(), ConfigHandlerTW.sharing_tome.enableTome);
+    }
+
+    private static void registerItem(IForgeRegistry<Item> forgeRegistry, Item item, boolean enabled) {
+        if (enabled) {
+            forgeRegistry.register(item);
+            if (item.getHasSubtypes() && item instanceof IVariantItem) {
+                InitItems.ITEM_VARIANT_HOLDERS.add((IVariantItem) item);
+            } else {
+                InitItems.ITEMS.add(item);
+            }
         }
     }
 
     private static void registerItem(IForgeRegistry<Item> forgeRegistry, Item item) {
-        forgeRegistry.register(item);
-        if (item.getHasSubtypes() && item instanceof IVariantItem) {
-            InitItems.ITEM_VARIANT_HOLDERS.add((IVariantItem) item);
-        } else {
-            InitItems.ITEMS.add(item);
-        }
+        registerItem(forgeRegistry, item, true);
     }
 }

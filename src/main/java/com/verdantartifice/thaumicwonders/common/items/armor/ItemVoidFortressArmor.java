@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -106,7 +107,7 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
         int armorRating = 0;
         for (EntityEquipmentSlot equipmentSlot : slots) {
             ItemStack piece = player.getItemStackFromSlot(equipmentSlot);
-            if (piece != null && piece.getItem() instanceof ItemVoidFortressArmor) {
+            if (!piece.isEmpty() && piece.getItem() instanceof ItemVoidFortressArmor) {
                 set++;
             }
         }
@@ -139,11 +140,6 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
-    }
-
-    @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
         super.onArmorTick(world, player, itemStack);
         if (!world.isRemote && itemStack.getItemDamage() > 0 && player.ticksExisted % 20 == 0) {
@@ -168,6 +164,11 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
         EntityEquipmentSlot type = ((ItemArmor) itemStack.getItem()).armorType;
         ModelBiped model = (type == EntityEquipmentSlot.LEGS) ? this.model1 : this.model2;
         return CustomArmorHelper.getCustomArmorModel(entityLiving, itemStack, armorSlot, model);
+    }
+
+    @Override
+    public IRarity getForgeRarity(ItemStack stack) {
+        return EnumRarity.EPIC;
     }
 
     @Override

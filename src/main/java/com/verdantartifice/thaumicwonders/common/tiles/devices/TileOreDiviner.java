@@ -22,7 +22,7 @@ import java.util.Map;
 public class TileOreDiviner extends TileTW implements ITickable {
     public static final int SCAN_RANGE = 20;
 
-    protected static final Map<String, Color> ORE_COLORS = new HashMap<String, Color>();
+    protected static final Map<String, Color> ORE_COLORS = new HashMap<>();
     protected static final Color DEFAULT_ORE_COLOR = new Color(0xC0C0C0);
     /**
      * Whether any client has activated this tile

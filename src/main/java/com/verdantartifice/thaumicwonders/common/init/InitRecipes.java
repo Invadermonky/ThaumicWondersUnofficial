@@ -812,6 +812,35 @@ public class InitRecipes {
                     CraftingHelper.getIngredient(ItemsTW.LETHE_WATER),
                     CraftingHelper.getIngredient(ItemsTC.amber)));
         }
+
+        if (ConfigHandlerTW.void_walker_boots.enableBoots) {
+            ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "void_walker_boots"), new InfusionRecipe(
+                    "TWOND_VOID_WALKER_BOOTS",
+                    new ItemStack(ItemsTW.VOID_WALKER_BOOTS),
+                    8,
+                    new AspectList().add(Aspect.MOTION, 150).add(Aspect.FLIGHT, 150).add(Aspect.VOID, 50).add(Aspect.ELDRITCH, 50).add(Aspect.FLUX, 50),
+                    CraftingHelper.getIngredient(new ItemStack(ItemsTC.travellerBoots)),
+                    Ingredient.fromItem(ItemsTC.primordialPearl),
+                    "plateVoid",
+                    "plateVoid",
+                    "plateVoid",
+                    new ItemStack(ItemsTC.salisMundus),
+                    "leather"));
+        }
+
+        if (ConfigHandlerTW.warp_ring.enableRing) {
+            ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "warp_ring"), new InfusionRecipe(
+                    "TWOND_WARP_RING",
+                    new ItemStack(ItemsTW.WARP_RING),
+                    6,
+                    new AspectList().add(Aspect.LIFE, 50).add(Aspect.DARKNESS, 50).add(Aspect.VOID, 50).add(Aspect.FLUX, 10),
+                    CraftingHelper.getIngredient(new ItemStack(ItemsTC.baubles, 1, 1)),
+                    CraftingHelper.getIngredient(Items.SPIDER_EYE),
+                    CraftingHelper.getIngredient(ThaumcraftApiHelper.makeCrystal(Aspect.FLUX)),
+                    CraftingHelper.getIngredient(Items.MILK_BUCKET),
+                    CraftingHelper.getIngredient(ThaumcraftApiHelper.makeCrystal(Aspect.VOID))
+            ));
+        }
     }
 
     private static void initSmelting() {
@@ -927,7 +956,7 @@ public class InitRecipes {
             int outputCount = MathHelper.clamp(maxSize - size, 0, 8);
             AcceleratorRecipeRegistry.addRecipe(
                     CraftingHelper.getIngredient(new ItemStack(ItemsTC.primordialPearl, 1, size)),
-                    new ItemStack(ItemsTW.PRIMORDIAL_GRAIN, 1, outputCount)
+                    new ItemStack(ItemsTW.PRIMORDIAL_GRAIN, outputCount)
             );
         }
     }

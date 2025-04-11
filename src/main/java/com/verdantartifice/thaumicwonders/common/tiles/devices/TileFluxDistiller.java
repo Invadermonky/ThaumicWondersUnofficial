@@ -69,7 +69,7 @@ public class TileFluxDistiller extends TileTW implements IAspectContainer, IEsse
     protected void setCharge(int charge) {
         IBlockState state = this.world.getBlockState(this.pos);
         if (state.getBlock() == BlocksTW.FLUX_DISTILLER) {
-            this.world.setBlockState(this.pos, state.withProperty(BlockFluxDistiller.CHARGE, Integer.valueOf(charge)));
+            this.world.setBlockState(this.pos, state.withProperty(BlockFluxDistiller.CHARGE, charge));
         }
     }
 

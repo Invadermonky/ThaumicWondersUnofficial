@@ -19,6 +19,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -98,11 +99,6 @@ public class ItemPrimalDestroyer extends ItemSword implements IWarpingGear {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
-    }
-
-    @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         if (oldStack.getItem() == newStack.getItem() && !slotChanged) {
             // Suppress the re-equip animation if only the NBT data has changed
@@ -110,6 +106,11 @@ public class ItemPrimalDestroyer extends ItemSword implements IWarpingGear {
         } else {
             return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
         }
+    }
+
+    @Override
+    public IRarity getForgeRarity(ItemStack stack) {
+        return EnumRarity.EPIC;
     }
 
     @Override

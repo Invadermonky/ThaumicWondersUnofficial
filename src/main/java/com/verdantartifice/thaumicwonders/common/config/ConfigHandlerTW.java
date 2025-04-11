@@ -23,10 +23,6 @@ public class ConfigHandlerTW {
     public static SharingTomeCategory sharing_tome = new SharingTomeCategory();
     @Config.Name("Void Beacon")
     public static VoidBeaconCategory void_beacon = new VoidBeaconCategory();
-    @Config.Name("Void Walker Boots")
-    public static VoidWalkerBootsCategory void_walker_boots = new VoidWalkerBootsCategory();
-    @Config.Name("Initiate's Band of Cleansing")
-    public static WarpRingCategory warp_ring = new WarpRingCategory();
 
     public static class CatalystStoneCategory {
         @Config.Name("Alchemist Stone")
@@ -78,7 +74,7 @@ public class ConfigHandlerTW {
         @Config.RangeDouble(min = 0, max = 20.0)
         @Config.Name("Max Speed")
         @Config.Comment("Magic Carpet maximum speed")
-        public double maxSpeed = 6.0;
+        public double maxSpeed = 5.0;
 
         @Config.RangeInt(min = 1, max = 10000)
         @Config.Name("Energy Per Vis")
@@ -146,104 +142,12 @@ public class ConfigHandlerTW {
         public int baseEssentiaCost = 20;
     }
 
-    public static class VoidWalkerBootsCategory {
-        @Config.RequiresMcRestart
-        @Config.Name("Enable Void Walker Boots")
-        @Config.Comment("Enables the Void Walker Boots, a higher armor version of the Traveler's Boots")
-        public boolean enableBoots = true;
-
-        @Config.RangeInt(min = 1, max = 10000)
-        @Config.Name("Energy Per Vis")
-        @Config.Comment("The energy gained per point of Vis consumed. Each point of energy translates to 1 second of increased movement.")
-        public int visCapacity = 240;
-
-        @Config.RangeInt(min = 1, max = 10000)
-        @Config.Name("Vis Capacity")
-        @Config.Comment("The maximum Vis that can be stored in the Void Walker Boots")
-        public int energyPerVis = 60;
-
-        @Config.RangeDouble(min = 0, max = 10.0)
-        @Config.Name("Jump Boost")
-        @Config.Comment("The amount added to the base jump height of the player")
-        public double jumpBoost = 0.27;
-
-        @Config.RangeDouble(min = 0, max = 10.0)
-        @Config.Name("Jump Factor")
-        @Config.Comment("The amount of forward momentum gained when the player jumps into the air when moving")
-        public double jumpFactor = 0.03;
-
-        @Config.RangeDouble(min = 0, max = 10.0)
-        @Config.Name("Land Speed Boost")
-        @Config.Comment("The speed boost applied to the player when they are on the ground")
-        public double landSpeedBoost = 0.05;
-
-        @Config.RangeDouble(min = 1.0, max = 10.0)
-        @Config.Name("Sneak Slowdown")
-        @Config.Comment("Any boosts will be divided by this value when sneaking")
-        public double sneakReduction = 4.0;
-
-        @Config.RangeDouble(min = 0, max = 10.0)
-        @Config.Name("Step Height")
-        @Config.Comment("Boost applied to the player's step height while not sneaking")
-        public double stepHeight = 0.67;
-
-        @Config.RangeDouble(min = 0, max = 10.0)
-        @Config.Name("Swim Speed Boost")
-        @Config.Comment("The boost applied to the player while they are swimming or wading through water")
-        public double waterSpeedBoost = 0.03;
-    }
-
-    public static class WarpRingCategory {
-        @Config.RequiresMcRestart
-        @Config.Name("Enable Initiate's Band of Cleansing")
-        @Config.Comment("Enables the Initiate's Band of Cleansing")
-        public boolean enableRing = true;
-
-        @Config.Name("Effect Removals")
-        @Config.Comment
-                ({
-                        "Negative effects that can be removed by the Initiate's Band of Cleansing. The ring removes different",
-                        "effects based on the current warp level of the ring.",
-                        " Format: potion;warplevel;effectvalue",
-                        "  potion - the potion identifier",
-                        "  warplevel - the required ring warp level to allow removing this effect",
-                        "  effectvalue - the buffer value of this potion when removed",
-                        "It is advised to not add Mining Fatigue as a potion removal, as being near an ocean monument will",
-                        "level the ring to max warp in a matter of seconds."
-                })
-        public String[] removalRanks = new String[]{
-                "minecraft:hunger;0;30",
-                "minecraft:poison;0;20",
-                "minecraft:wither;0;50",
-
-                "minecraft:blindness;1;50",
-                "minecraft:levitation;1;30",
-                "thaumcraft:unnaturalhunger;1;50",
-
-                "thaumcraft:visexhaust;2;80",
-                "thaumcraft:infectiousvisexhaust;2;80",
-                "thaumcraft:thaumarhia;2;100",
-
-                "thaumcraft:blurredvision;3;50",
-                "thaumcraft:sunscorned;3;50",
-
-                "thaumcraft:deathgaze;4;100",
-                "thaumcraft:fluxtaint;4;200"
-        };
-
-        @Config.RangeInt(min = 1, max = 10000)
-        @Config.Name("Buffer Size")
-        @Config.Comment("The amount of removed potion value required for the ring to increase Warp level")
-        public int bufferSize = 250;
-    }
-
     @Mod.EventBusSubscriber(modid = ThaumicWonders.MODID)
     public static class ConfigChangeListener {
         @SubscribeEvent
         public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
             if (event.getModID().equals(ThaumicWonders.MODID)) {
                 ConfigManager.sync(ThaumicWonders.MODID, Config.Type.INSTANCE);
-                ConfigTags.syncConfig();
             }
         }
     }

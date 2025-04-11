@@ -1,5 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.compat.crafttweaker;
 
+import com.verdantartifice.thaumicwonders.common.compat.IModPlugin;
 import com.verdantartifice.thaumicwonders.common.crafting.accelerator.AcceleratorRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.accretionchamber.AccretionChamberRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
@@ -8,9 +9,15 @@ import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconE
 import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import com.verdantartifice.thaumicwonders.common.init.InitVoidBeacon;
 import crafttweaker.mc1120.events.ScriptRunEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class CTIntegration {
+public class CTPlugin implements IModPlugin {
+    @Override
+    public void init() {
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
     @SubscribeEvent
     public void onScriptReloading(ScriptRunEvent.Pre event) {
         AcceleratorRecipeRegistry.removeAll();
@@ -28,4 +35,5 @@ public class CTIntegration {
         InitRecipes.initMeatyOrb();
         InitVoidBeacon.registerDefaultEntries();
     }
+
 }

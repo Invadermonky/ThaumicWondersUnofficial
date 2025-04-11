@@ -1,8 +1,7 @@
 package com.verdantartifice.thaumicwonders.proxy;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-import com.verdantartifice.thaumicwonders.common.compat.crafttweaker.CTIntegration;
-import com.verdantartifice.thaumicwonders.common.compat.theoneprobe.TOPCompat;
+import com.verdantartifice.thaumicwonders.common.compat.ModPlugins;
 import com.verdantartifice.thaumicwonders.common.init.InitAspects;
 import com.verdantartifice.thaumicwonders.common.init.InitResearch;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
@@ -11,8 +10,6 @@ import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -24,6 +21,7 @@ public class CommonProxy implements IProxyTW, IGuiHandler {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
+        ModPlugins.preInit(event);
     }
 
     @Override
@@ -32,18 +30,13 @@ public class CommonProxy implements IProxyTW, IGuiHandler {
         InitResearch.initResearch();
         NetworkRegistry.INSTANCE.registerGuiHandler(ThaumicWonders.INSTANCE, this);
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemsTW.PRIMAL_ARROW, new BehaviorDispensePrimalArrow());
-
-        if (Loader.isModLoaded("crafttweaker")) {
-            MinecraftForge.EVENT_BUS.register(new CTIntegration());
-        }
-        if (Loader.isModLoaded("theoneprobe")) {
-            TOPCompat.init();
-        }
+        ModPlugins.init(event);
     }
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         InitAspects.initAspects();
+        ModPlugins.postInit(event);
     }
 
     @Override

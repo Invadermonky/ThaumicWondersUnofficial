@@ -1,9 +1,9 @@
 package com.verdantartifice.thaumicwonders.proxy;
 
 import com.verdantartifice.thaumicwonders.client.config.KeyBindings;
-import com.verdantartifice.thaumicwonders.common.compat.jer.JERPlugin;
-import net.minecraftforge.fml.common.Loader;
+import com.verdantartifice.thaumicwonders.common.compat.ModPlugins;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy extends CommonProxy {
@@ -14,6 +14,7 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         this.proxyEntities.setupEntityRenderers();
+        ModPlugins.preInitClient(event);
     }
 
     @Override
@@ -21,8 +22,11 @@ public class ClientProxy extends CommonProxy {
         super.init(event);
         KeyBindings.init();
         this.proxyTESR.setupTESR();
-        if (Loader.isModLoaded("jeresources")) {
-            JERPlugin.init();
-        }
+        ModPlugins.initClient(event);
+    }
+
+    @Override
+    public void postInit(FMLPostInitializationEvent event) {
+        ModPlugins.postInitClient(event);
     }
 }

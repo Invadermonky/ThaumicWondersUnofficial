@@ -1,9 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
-import com.mr208.ea.common.ModContent;
-import com.mr208.ea.common.items.ItemCluster;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
+import com.verdantartifice.thaumicwonders.common.compat.ModPlugins;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
 import com.verdantartifice.thaumicwonders.common.crafting.accelerator.AcceleratorRecipeRegistry;
@@ -27,7 +26,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -46,7 +44,6 @@ import thaumcraft.common.lib.enchantment.EnumInfusionEnchantment;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +63,7 @@ public class InitRecipes {
         initPrimordialAcceleratorRecipes();
         initPrimordialAccretionChamberRecipes();
         InitVoidBeacon.init();
+        ModPlugins.registerRecipes(forgeRegistry);
     }
 
     private static void initMultiblockRecipes() {
@@ -890,19 +888,6 @@ public class InitRecipes {
         CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreSilver", new ItemStack(ItemsTC.clusters, 1, 4));
         CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreLead", new ItemStack(ItemsTC.clusters, 1, 5));
         CatalyzationChamberRecipeRegistry.addAlchemistRecipe("oreCinnabar", new ItemStack(ItemsTC.clusters, 1, 6));
-        try {
-            if (Loader.isModLoaded("ea")) {
-                Field oreNameField = ItemCluster.class.getDeclaredField("oreName");
-                oreNameField.setAccessible(true);
-                ModContent.modClusters.forEach(cluster -> {
-                    try {
-                        CatalyzationChamberRecipeRegistry.addAlchemistRecipe((String) oreNameField.get(cluster), new ItemStack(cluster));
-                    } catch (Exception ignored) {
-                    }
-                });
-            }
-        } catch (Exception ignored) {
-        }
 
         //Alienist Stone
         CatalyzationChamberRecipeRegistry.addAlienistRecipe("oreIron", new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0));

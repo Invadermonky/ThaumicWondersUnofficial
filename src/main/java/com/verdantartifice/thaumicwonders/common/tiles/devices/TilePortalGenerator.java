@@ -42,9 +42,9 @@ import java.util.List;
 
 public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDisplayExtended {
     protected static DecimalFormat decFormatter = new DecimalFormat("#######.##");
-    protected static List<RandomItemChooser.Item> instabilityEvents = new ArrayList<RandomItemChooser.Item>();
-    protected static List<RandomItemChooser.Item> spawnEvents = new ArrayList<RandomItemChooser.Item>();
-    protected static List<RandomItemChooser.Item> subvertEvents = new ArrayList<RandomItemChooser.Item>();
+    protected static List<RandomItemChooser.Item> instabilityEvents = new ArrayList<>();
+    protected static List<RandomItemChooser.Item> spawnEvents = new ArrayList<>();
+    protected static List<RandomItemChooser.Item> subvertEvents = new ArrayList<>();
     protected int linkX = 0;
     protected int linkY = 0;
     protected int linkZ = 0;
@@ -226,7 +226,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
     }
 
     protected void executeInstabilityEvent() {
-        if (instabilityEvents.size() <= 0) {
+        if (instabilityEvents.isEmpty()) {
             return;
         }
         RandomItemChooser ric = new RandomItemChooser();
@@ -258,7 +258,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
     }
 
     protected void spawnInvader() {
-        if (spawnEvents.size() <= 0) {
+        if (spawnEvents.isEmpty()) {
             return;
         }
         RandomItemChooser ric = new RandomItemChooser();
@@ -331,7 +331,7 @@ public class TilePortalGenerator extends TileTW implements ITickable, IGogglesDi
     }
 
     protected void subvertPortal() {
-        if (subvertEvents.size() <= 0) {
+        if (subvertEvents.isEmpty()) {
             return;
         }
         RandomItemChooser ric = new RandomItemChooser();

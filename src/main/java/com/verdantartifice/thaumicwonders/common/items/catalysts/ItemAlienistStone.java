@@ -4,6 +4,7 @@ import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.IRarity;
 
 public class ItemAlienistStone extends ItemTW {
     public ItemAlienistStone() {
@@ -11,11 +12,6 @@ public class ItemAlienistStone extends ItemTW {
         this.setMaxDamage(ConfigHandlerTW.catalyst_stones.alienist_stone.durability - 1);  // Gets one last use at durability 0
         this.setMaxStackSize(1);
         this.setNoRepair();
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
     }
 
     @Override
@@ -31,5 +27,10 @@ public class ItemAlienistStone extends ItemTW {
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
         return false;
+    }
+
+    @Override
+    public IRarity getForgeRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
     }
 }

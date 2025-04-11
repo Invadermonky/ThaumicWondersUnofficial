@@ -26,7 +26,7 @@ public class CardInducedInspiration extends AbstractResearchEngineCard {
 
     @Override
     public String getLocalizedText() {
-        return new TextComponentTranslation("card.induced_inspiration.text", Integer.valueOf(this.amount), TextFormatting.BOLD + new TextComponentTranslation(new StringBuilder().append("tc.research_category.").append(this.category).toString()).getFormattedText() + TextFormatting.RESET).getUnformattedText();
+        return new TextComponentTranslation("card.induced_inspiration.text", this.amount, TextFormatting.BOLD + new TextComponentTranslation("tc.research_category." + this.category).getFormattedText() + TextFormatting.RESET).getUnformattedText();
     }
 
     @Override

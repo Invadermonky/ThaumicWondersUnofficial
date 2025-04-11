@@ -14,6 +14,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import thaumcraft.common.lib.potions.PotionWarpWard;
 
 import java.util.ArrayList;
@@ -56,11 +57,6 @@ public class ItemPanacea extends ItemFood implements IVariantItem {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return stack.getMetadata() == 0 ? EnumRarity.RARE : EnumRarity.EPIC;
-    }
-
-    @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (tab == ThaumicWonders.CREATIVE_TAB || tab == CreativeTabs.SEARCH) {
             if (!this.getHasSubtypes()) {
@@ -71,6 +67,11 @@ public class ItemPanacea extends ItemFood implements IVariantItem {
                 }
             }
         }
+    }
+
+    @Override
+    public IRarity getForgeRarity(ItemStack stack) {
+        return stack.getMetadata() == 0 ? EnumRarity.RARE : EnumRarity.EPIC;
     }
 
     @Override

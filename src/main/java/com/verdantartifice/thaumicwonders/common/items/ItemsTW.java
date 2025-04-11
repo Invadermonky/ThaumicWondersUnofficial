@@ -20,8 +20,10 @@ public class ItemsTW {
     public static final ItemArmor VOID_FORTRESS_HELM = null;
     public static final ItemArmor VOID_FORTRESS_CHEST = null;
     public static final ItemArmor VOID_FORTRESS_LEGS = null;
+    public static final ItemArmor VOID_WALKER_BOOTS = null;
     public static final Item STRUCTURE_DIVINER = null;
     public static final ItemArmor NIGHT_VISION_GOGGLES = null;
+    public static final Item WARP_RING = null;
     public static final Item CLEANSING_CHARM = null;
     public static final ItemBow BONE_BOW = null;
     public static final Item PRIMAL_ARROW = null;

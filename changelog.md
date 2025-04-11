@@ -2,6 +2,11 @@
 
 ## v2.0.0
 ------
+### New
+- Added Initiate's Band of Cleansing, a ring debuff cleansing ring with a few unique properties
+- Added Sharing Tome with a few more features and a config disable option
+- Added Void Walker Boots, upgraded Traveller's Boots (includes config disable)
+
 ### Added
 - Added config options for Catalyst Stone durability, enchantabliity, and default flux chance
 - Added config options for Cleansing Charm flux removal amount and processing time
@@ -15,8 +20,12 @@
 - Added Crafttweaker and GroovyScript methods Primordial Accretion Chamber recipes
 - Added Crafttweaker and GroovyScript methods Void Beacon entries
 - Added Expanded Arcanum compat for Catalyzation Chamber
-- Added JER integration
-- Added Sharing Tome with a few more features and a config disable option
+- Added JEI integration for Catalyzation Chamber
+- Added JEI integration for Meaty Orb
+- Added JEI integration for Primordial Accelerator
+- Added JEI integration for Primordial Accretion Chamber
+- Added JEI integration for Void Beacon
+- Added JER integration for Avatar of Corruption
 - Added tooltip to Void Fortress Helm indicating it includes Goggles of Revealing and Sipping Fiend mask
 - Added TOP tooltip for Flux Capacitor flux storage
 
@@ -25,11 +34,12 @@
 - Fixed mod registering several fake blocks
 - Fixed several dupe bugs [#77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
 - Fixed Flux Capacitor losing flux charge when broken by non-players
+- Fixed Flying Carpet interaction duplication bug
+- Fixed Flying Carpet entity losing stored vis on world/chunk reload
 - Fixed Catalization Chamber voiding inventory when broken
 - Fixed Primordial Accelerator voiding inventory when broken
 - Fixed Primordial Accretion Chamber voiding inventory when broken
 - Fixed Primordial Accretion Chamber depleting chunk Vis on world/chunk reload
-- Fixed Flying Carpet entity losing stored vis on world/chunk reload
 
 ### Changed
 - Avatar of Corruption now uses a loot table to generate drops
@@ -38,6 +48,8 @@
 - Cinderpearl Seed recipe now produces 1 Cinderpearl Seed Stalk. Each stalk can be used to plant 8 Cinderpearl plants before being consumed.
 - Creative Essentia Jars now display full when filled with essentia
 - Creative Essentia Jars no longer pollute the aura when emptied
+- Everburning Urn can now have fluid extracted from its base
+- Flux Distiller now has a tighter hitbox
 - Meaty Orb now uses recipe entry structure to generate drops
 - Night Vision Goggles now have an adaptive on/off based on what the player is looking at (configurable)
 - Primordial Accelerator now uses recipe structure

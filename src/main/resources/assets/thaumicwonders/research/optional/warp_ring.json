@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "key": "TWOND_WARP_RING",
+      "name": "thaumicwonders.research.warp_ring.title",
+      "icons": ["thaumicwonders:warp_ring"],
+      "category": "THAUMIC_WONDERS",
+      "parents": ["TWOND_NV_GOGGLES", "~VERDANTCHARMS"],
+      "siblings": [],
+      "meta": [],
+      "location": [0, -6],
+      "reward_item": [],
+      "reward_knowledge": [],
+      "stages": [
+        {
+          "text": "thaumicwonders.research.warp_ring.text.stage.1",
+          "required_knowledge":["THEORY;ELDRITCH;1","THEORY;INFUSION;1"],
+          "warp": 4
+        },
+        {
+          "text": "thaumicwonders.research.warp_ring.text.stage.2",
+          "recipes": ["thaumicwonders:warp_ring"]
+        }
+      ],
+      "addenda": []
+    }
+  ]
+}

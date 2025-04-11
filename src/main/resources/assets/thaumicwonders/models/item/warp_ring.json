@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "thaumicwonders:items/warp_ring"
+  },
+  "overrides": [
+    { "predicate": { "thaumicwonders:warp": 1 }, "model": "thaumicwonders:item/overrides/warp_ring/warp_ring_1" },
+    { "predicate": { "thaumicwonders:warp": 2 }, "model": "thaumicwonders:item/overrides/warp_ring/warp_ring_2" },
+    { "predicate": { "thaumicwonders:warp": 3 }, "model": "thaumicwonders:item/overrides/warp_ring/warp_ring_3" },
+    { "predicate": { "thaumicwonders:warp": 4 }, "model": "thaumicwonders:item/overrides/warp_ring/warp_ring_4" },
+    { "predicate": { "thaumicwonders:warp": 5 }, "model": "thaumicwonders:item/overrides/warp_ring/warp_ring_5" }
+  ]
+}

@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -108,7 +109,7 @@ public class ItemStructureDiviner extends ItemTW {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
+    public IRarity getForgeRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 }

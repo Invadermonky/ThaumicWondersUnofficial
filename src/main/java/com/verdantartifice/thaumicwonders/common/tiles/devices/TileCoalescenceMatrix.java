@@ -88,6 +88,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
                     performZap(pillarPos.up(2), this.getPos().up(), Aspect.ELDRITCH);
                 }
 
+                //TODO: Redo the effects using TC's jacobs sound + zap and the fx dispatcher. See Thaumic Tinkerer's enchanter
                 //Pillar Arcs
                 if ((this.spawnTime + 5) % 30 == 0) {
                     BlockPos pillar1 = pillars.get(this.world.rand.nextInt(pillars.size()));
@@ -97,7 +98,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
             } else {
                 this.spawnTime++;
                 if (this.spawnTime % (MAX_SPAWN_TIME / 8) == 0) {
-                    this.world.playSound(null, this.getPos(), SoundsTC.zap, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                    this.world.playSound(this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundsTC.jacobs, SoundCategory.BLOCKS, 0.5f, 1.0f, true);
                     this.nextPillar++;
                 }
                 this.syncTile(false);
@@ -184,7 +185,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
     public void setCharge(int amount) {
         IBlockState state = this.world.getBlockState(this.pos);
         if (state.getBlock() == BlocksTW.COALESCENCE_MATRIX) {
-            this.world.setBlockState(this.pos, state.withProperty(BlockCoalescenceMatrix.CHARGE, Integer.valueOf(amount)));
+            this.world.setBlockState(this.pos, state.withProperty(BlockCoalescenceMatrix.CHARGE, amount));
         }
     }
 

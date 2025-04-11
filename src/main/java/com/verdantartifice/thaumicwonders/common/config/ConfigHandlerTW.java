@@ -23,6 +23,8 @@ public class ConfigHandlerTW {
     public static SharingTomeCategory sharing_tome = new SharingTomeCategory();
     @Config.Name("Void Beacon")
     public static VoidBeaconCategory void_beacon = new VoidBeaconCategory();
+    @Config.Name("Initiate's Ring of Cleansing")
+    public static WarpRingCategory warp_ring = new WarpRingCategory();
 
     public static class CatalystStoneCategory {
         @Config.Name("Alchemist Stone")
@@ -140,6 +142,48 @@ public class ConfigHandlerTW {
         @Config.Name("Essentia Cost")
         @Config.Comment("The amount of essentia required to generate a drop from the Void Beacon. Each beacon tier will reduce this amount by half.")
         public int baseEssentiaCost = 20;
+    }
+
+    public static class WarpRingCategory {
+        @Config.RequiresMcRestart
+        @Config.Name("Enable Initiate's Ring of Cleansing")
+        @Config.Comment("Enables the Initiate's Ring of Cleansing")
+        public boolean enableRing = true;
+
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Remove Value Per Warp")
+        @Config.Comment("The removal value required for the ring to reach the next Warp level")
+        public int bufferSize = 250;
+
+        @Config.Name("Removal Values")
+        @Config.Comment
+                ({
+                        "Potions the Initiate's Ring of Cleansing can remove. Potions can be restricted to only be removed",
+                        "once the ring reaches a certain warp level.",
+                        " Format: potion;warplevel;removevalue",
+                        "  potion - the potion registry name",
+                        "  warplevel - the required warp level to remove this effect",
+                        "  removevalue - the value of each removal of this effect, this counts towards the ring warp level"
+                })
+        public String[] removalRanks = new String[] {
+                "minecraft:hunger;0;30",
+                "minecraft:poison;0;20",
+                "minecraft:wither;0;50",
+
+                "minecraft:blindness;1;50",
+                "minecraft:levitation;1;30",
+                "thaumcraft:unnaturalhunger;1;50",
+
+                "thaumcraft:visexhaust;2;80",
+                "thaumcraft:infectiousvisexhaust;2;80",
+                "thaumcraft:thaumarhia;2;100",
+
+                "thaumcraft:blurredvision;3;50",
+                "thaumcraft:sunscorned;3;50",
+
+                "thaumcraft:deathgaze;4;100",
+                "thaumcraft:fluxtaint;4;200"
+        };
     }
 
     @Mod.EventBusSubscriber(modid = ThaumicWonders.MODID)

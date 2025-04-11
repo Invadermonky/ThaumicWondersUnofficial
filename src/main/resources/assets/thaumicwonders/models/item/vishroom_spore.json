@@ -8,43 +8,43 @@
             "predicate": {
                 "thaumicwonders:seeds": 1
             },
-            "model": "thaumicwonders:item/overrides/vishroom_spore_1"
+            "model": "thaumicwonders:item/overrides/seeds/vishroom_spore_1"
         },
         {
             "predicate": {
                 "thaumicwonders:seeds": 2
             },
-            "model": "thaumicwonders:item/overrides/vishroom_spore_2"
+            "model": "thaumicwonders:item/overrides/seeds/vishroom_spore_2"
         },
         {
             "predicate": {
                 "thaumicwonders:seeds": 3
             },
-            "model": "thaumicwonders:item/overrides/vishroom_spore_3"
+            "model": "thaumicwonders:item/overrides/seeds/vishroom_spore_3"
         },
         {
             "predicate": {
                 "thaumicwonders:seeds": 4
             },
-            "model": "thaumicwonders:item/overrides/vishroom_spore_4"
+            "model": "thaumicwonders:item/overrides/seeds/vishroom_spore_4"
         },
         {
             "predicate": {
                 "thaumicwonders:seeds": 5
             },
-            "model": "thaumicwonders:item/overrides/vishroom_spore_5"
+            "model": "thaumicwonders:item/overrides/seeds/vishroom_spore_5"
         },
         {
             "predicate": {
                 "thaumicwonders:seeds": 6
             },
-            "model": "thaumicwonders:item/overrides/vishroom_spore_6"
+            "model": "thaumicwonders:item/overrides/seeds/vishroom_spore_6"
         },
         {
             "predicate": {
                 "thaumicwonders:seeds": 7
             },
-            "model": "thaumicwonders:item/overrides/vishroom_spore_7"
+            "model": "thaumicwonders:item/overrides/seeds/vishroom_spore_7"
         }
     ]
 }

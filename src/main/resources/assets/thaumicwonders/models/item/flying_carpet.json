@@ -4,21 +4,21 @@
         "layer0": "thaumicwonders:items/flying_carpet_red"
     },
     "overrides": [
-        { "predicate": { "thaumicwonders:color": 0.0000 }, "model": "thaumicwonders:item/flying_carpet_white" },
-        { "predicate": { "thaumicwonders:color": 0.0625 }, "model": "thaumicwonders:item/flying_carpet_orange" },
-        { "predicate": { "thaumicwonders:color": 0.1250 }, "model": "thaumicwonders:item/flying_carpet_magenta" },
-        { "predicate": { "thaumicwonders:color": 0.1875 }, "model": "thaumicwonders:item/flying_carpet_light_blue" },
-        { "predicate": { "thaumicwonders:color": 0.2500 }, "model": "thaumicwonders:item/flying_carpet_yellow" },
-        { "predicate": { "thaumicwonders:color": 0.3125 }, "model": "thaumicwonders:item/flying_carpet_lime" },
-        { "predicate": { "thaumicwonders:color": 0.3750 }, "model": "thaumicwonders:item/flying_carpet_pink" },
-        { "predicate": { "thaumicwonders:color": 0.4375 }, "model": "thaumicwonders:item/flying_carpet_gray" },
-        { "predicate": { "thaumicwonders:color": 0.5000 }, "model": "thaumicwonders:item/flying_carpet_silver" },
-        { "predicate": { "thaumicwonders:color": 0.5625 }, "model": "thaumicwonders:item/flying_carpet_cyan" },
-        { "predicate": { "thaumicwonders:color": 0.6250 }, "model": "thaumicwonders:item/flying_carpet_purple" },
-        { "predicate": { "thaumicwonders:color": 0.6875 }, "model": "thaumicwonders:item/flying_carpet_blue" },
-        { "predicate": { "thaumicwonders:color": 0.7500 }, "model": "thaumicwonders:item/flying_carpet_brown" },
-        { "predicate": { "thaumicwonders:color": 0.8125 }, "model": "thaumicwonders:item/flying_carpet_green" },
+        { "predicate": { "thaumicwonders:color": 0.0000 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_white" },
+        { "predicate": { "thaumicwonders:color": 0.0625 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_orange" },
+        { "predicate": { "thaumicwonders:color": 0.1250 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_magenta" },
+        { "predicate": { "thaumicwonders:color": 0.1875 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_light_blue" },
+        { "predicate": { "thaumicwonders:color": 0.2500 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_yellow" },
+        { "predicate": { "thaumicwonders:color": 0.3125 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_lime" },
+        { "predicate": { "thaumicwonders:color": 0.3750 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_pink" },
+        { "predicate": { "thaumicwonders:color": 0.4375 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_gray" },
+        { "predicate": { "thaumicwonders:color": 0.5000 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_silver" },
+        { "predicate": { "thaumicwonders:color": 0.5625 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_cyan" },
+        { "predicate": { "thaumicwonders:color": 0.6250 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_purple" },
+        { "predicate": { "thaumicwonders:color": 0.6875 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_blue" },
+        { "predicate": { "thaumicwonders:color": 0.7500 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_brown" },
+        { "predicate": { "thaumicwonders:color": 0.8125 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_green" },
         { "predicate": { "thaumicwonders:color": 0.8750 }, "model": "thaumicwonders:item/flying_carpet" },
-        { "predicate": { "thaumicwonders:color": 0.9375 }, "model": "thaumicwonders:item/flying_carpet_black" }
+        { "predicate": { "thaumicwonders:color": 0.9375 }, "model": "thaumicwonders:item/overrides/flying_carpet/flying_carpet_black" }
     ]
 }

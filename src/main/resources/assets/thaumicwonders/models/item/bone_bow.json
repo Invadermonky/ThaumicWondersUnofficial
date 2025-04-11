@@ -30,21 +30,21 @@
             "predicate": {
                 "pulling": 1
             },
-            "model": "thaumicwonders:item/bone_bow_pulling_0"
+            "model": "thaumicwonders:item/overrides/bone_bow/bone_bow_pulling_0"
         },
         {
             "predicate": {
                 "pulling": 1,
                 "thaumicwonders:pull": 0.5
             },
-            "model": "thaumicwonders:item/bone_bow_pulling_1"
+            "model": "thaumicwonders:item/overrides/bone_bow/bone_bow_pulling_1"
         },
         {
             "predicate": {
                 "pulling": 1,
                 "thaumicwonders:pull": 0.75
             },
-            "model": "thaumicwonders:item/bone_bow_pulling_2"
+            "model": "thaumicwonders:item/overrides/bone_bow/bone_bow_pulling_2"
         }
     ]
 }

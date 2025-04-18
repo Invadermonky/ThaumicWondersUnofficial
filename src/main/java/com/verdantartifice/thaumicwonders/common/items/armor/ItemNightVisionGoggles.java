@@ -19,6 +19,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -111,7 +112,7 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
         if (playerLight <= 7) {
             return true;
         } else {
-            RayTraceResult trace = entityLiving.rayTrace(24, 0);
+            RayTraceResult trace = rayTrace(entityLiving, 24, 0);
             if (trace != null) {
                 switch (trace.typeOfHit) {
                     case BLOCK:
@@ -123,6 +124,14 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
             }
             return false;
         }
+    }
+
+    public RayTraceResult rayTrace(Entity rst, double blockReachDistance, float partialTicks)
+    {
+        Vec3d vec3d = rst.getPositionEyes(partialTicks);
+        Vec3d vec3d1 = rst.getLook(partialTicks);
+        Vec3d vec3d2 = vec3d.add(vec3d1.x * blockReachDistance, vec3d1.y * blockReachDistance, vec3d1.z * blockReachDistance);
+        return rst.world.rayTraceBlocks(vec3d, vec3d2, false, false, true);
     }
 
     protected void cancelNightVision(EntityLivingBase player, boolean forceDisable) {

@@ -33,15 +33,16 @@
             "stages": [
                 {
                     "text": "thaumicwonders.research.primordial_siphon.text.stage.1",
-                    "required_knowledge": ["THEORY;ELDRITCH;1", "THEORY;AUROMANCY;1", "THEORY;ALCHEMY;2"]
+                    "required_knowledge": ["THEORY;ELDRITCH;1", "THEORY;AUROMANCY;1"]
                 },
                 {
                     "text": "thaumicwonders.research.primordial_siphon.text.stage.2",
+                    "required_knowledge": ["THEORY;ALCHEMY;2"],
+                    "required_research": ["!TWOND_PRIMORDIAL_GRAIN"],
                     "recipes": ["thaumicwonders:primordial_siphon"]
                 },
                 {
                     "text": "thaumicwonders.research.primordial_siphon.text.stage.3",
-                    "required_research": ["!TWOND_PRIMORDIAL_GRAIN"],
                     "recipes": ["thaumicwonders:primordial_siphon", "thaumicwonders:primordial_pearl_reconstitution"]
                 }
             ]
@@ -77,7 +78,8 @@
             "location": [-4, 2],
             "stages": [
                 {
-                    "text": "thaumicwonders.research.primordial_pearl_growth.text.stage.1"
+                    "text": "thaumicwonders.research.primordial_pearl_growth.text.stage.1",
+                    "required_knowledge":["THEORY;ALCHEMY;1","THEORY;INFUSION;2"]
                 },
                 {
                     "text": "thaumicwonders.research.primordial_pearl_growth.text.stage.2",
@@ -91,6 +93,7 @@
             "icons": ["thaumicwonders:portal_generator"],
             "category": "THAUMIC_WONDERS",
             "parents": ["TWOND_PRIMORDIAL_SIPHON", "~MIRROR"],
+            "meta": ["HIDDEN"],
             "location": [-6, -1],
             "stages": [
                 {
@@ -123,11 +126,11 @@
                 {
                     "text": "thaumicwonders.research.primal_destroyer.text.stage.1",
                     "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ELDRITCH;1", "THEORY;INFUSION;1"],
-                    "warp": 3
+                    "warp": 2
                 },
                 {
                     "text": "thaumicwonders.research.primal_destroyer.text.stage.2",
-                    "required_knowledge": ["THEORY;ELDRITCH;1", "THEORY;INFUSION;2"],
+                    "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;INFUSION;1"],
                     "recipes": ["thaumicwonders:primal_destroyer"]
                 },
                 {
@@ -176,7 +179,7 @@
             "category": "THAUMIC_WONDERS",
             "parents": ["TWOND_PRIMORDIAL_SIPHON","~ARMORFORTRESS", "~FORTRESSMASK", "~PRIMPEARL"],
             "siblings": [],
-            "meta": [],
+            "meta": ["HIDDEN"],
             "location": [-6, 1],
             "reward_item": [],
             "reward_knowledge": [],

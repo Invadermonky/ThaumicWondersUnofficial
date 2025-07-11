@@ -35,7 +35,7 @@ public class TileOreDiviner extends TileTW implements ITickable {
     protected static final Map<String, Color> ORE_COLORS = new HashMap<>();
     protected static final Color DEFAULT_ORE_COLOR = new Color(0xC0C0C0);
     protected EntityPlayer player;
-    protected String searchString = "";
+    protected String[] searchStrings = new String[0];
     protected int searchTime = 0;
     protected List<BlockPos> targets = new ArrayList<>();
 
@@ -47,8 +47,8 @@ public class TileOreDiviner extends TileTW implements ITickable {
      */
     public void onInteract(EntityPlayer player, ItemStack stack) {
         this.player = player;
-        this.searchString = this.getSearchString(stack);
-        if (!searchString.isEmpty()) {
+        this.searchStrings = this.getSearchString(stack);
+        if (searchStrings.length != 0) {
             this.beginNewSearchTimer();
         } else {
             this.sendMessageToPlayer(new TextComponentTranslation("event.ore_diviner.invalid_item"));
@@ -76,7 +76,7 @@ public class TileOreDiviner extends TileTW implements ITickable {
     public void stopSearching() {
         this.player = null;
         this.searchTime = 0;
-        this.searchString = "";
+        this.searchStrings = new String[0];
         this.targets.clear();
         this.markDirty();
         this.syncTile(false);
@@ -150,13 +150,15 @@ public class TileOreDiviner extends TileTW implements ITickable {
     }
 
     public boolean isBlockValid(BlockPos checkPos) {
-        if (this.searchString != null && !this.searchString.isEmpty()) {
+        if (this.searchStrings != null && this.searchStrings.length > 0) {
             ItemStack stack = getStackAtPos(checkPos);
             if (!stack.isEmpty()) {
                 for (int i : OreDictionary.getOreIDs(stack)) {
                     String oreDict = OreDictionary.getOreName(i);
-                    if (oreDict.matches(this.searchString)) {
-                        return true;
+                    for(String searchString : this.searchStrings) {
+                        if(oreDict.matches(searchString)) {
+                            return true;
+                        }
                     }
                 }
                 return false;
@@ -175,24 +177,26 @@ public class TileOreDiviner extends TileTW implements ITickable {
         return stack;
     }
 
-    protected String getSearchString(ItemStack stack) {
+    protected String[] getSearchString(ItemStack stack) {
+        List<String> searchStrings = new ArrayList<>();
         if (stack.isEmpty()) {
-            return "^ore[\\w]+$";
+            searchStrings.add("^ore[\\w]+$");
+            return searchStrings.toArray(new String[0]);
         } else {
             int[] oreIds = OreDictionary.getOreIDs(stack);
             for (int oreId : oreIds) {
                 String oreName = OreDictionary.getOreName(oreId);
                 if (oreName.startsWith("ore")) {
-                    return oreName;
+                    searchStrings.add(oreName);
                 } else {
                     for (String oreType : ConfigHandlerTW.ore_diviner.oreAssociations) {
                         if (oreName.startsWith(oreType)) {
-                            return oreName.replaceFirst(oreType, "ore");
+                            searchStrings.add(oreName.replaceFirst(oreType, "ore"));
                         }
                     }
                 }
             }
-            return "";
+            return searchStrings.toArray(new String[0]);
         }
     }
 
@@ -207,7 +211,13 @@ public class TileOreDiviner extends TileTW implements ITickable {
         if (compound.hasKey("player")) {
             this.player = PlayerHelper.getPlayerFromUUID(compound.getUniqueId("player"));
         }
-        this.searchString = compound.getString("searchString");
+
+        List<String> searchList = new ArrayList<>();
+        NBTTagCompound searchTag = compound.getCompoundTag("searchStrings");
+        for(String key : searchTag.getKeySet()) {
+            searchList.add(searchTag.getString(key));
+        }
+        this.searchStrings = searchList.toArray(new String[0]);
         this.searchTime = compound.getInteger("searchTime");
         this.targets.clear();
         NBTTagCompound targetsTag = compound.getCompoundTag("targets");
@@ -223,7 +233,12 @@ public class TileOreDiviner extends TileTW implements ITickable {
         if (this.player != null) {
             compound.setUniqueId("player", PlayerHelper.getUUIDFromPlayer(this.player));
         }
-        compound.setString("searchString", this.searchString);
+
+        NBTTagCompound searchList = new NBTTagCompound();
+        for(int i = 0; i < this.searchStrings.length; i++) {
+            searchList.setString(Integer.toString(i), this.searchStrings[i]);
+        }
+        compound.setTag("searchStrings", searchList);
         compound.setInteger("searchTime", this.searchTime);
         NBTTagCompound targetsTag = new NBTTagCompound();
         for (int i = 0; i < this.targets.size(); i++) {

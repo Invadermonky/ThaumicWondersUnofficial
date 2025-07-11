@@ -441,7 +441,7 @@ public class InitRecipes {
         EnumInfusionEnchantment.addInfusionEnchantment(destroyer, EnumInfusionEnchantment.ESSENCE, 3);
         EnumInfusionEnchantment.addInfusionEnchantment(destroyer, InfusionEnchantmentsTW.VOIDFLAME, 2);
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "primal_destroyer"), new InfusionRecipe(
-                "TWOND_PRIMAL_DESTROYER",
+                "TWOND_PRIMAL_DESTROYER@2",
                 destroyer,
                 8,
                 new AspectList().add(Aspect.FIRE, 100).add(Aspect.ENTROPY, 50).add(Aspect.VOID, 50).add(Aspect.AVERSION, 100).add(Aspect.ELDRITCH, 75).add(Aspect.DARKNESS, 75).add(Aspect.DEATH, 100),
@@ -743,7 +743,7 @@ public class InitRecipes {
         ));
 
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "primordial_pearl_growth"), new InfusionRecipe(
-                "TWOND_PRIMORDIAL_PEARL_GROWTH",
+                "TWOND_PRIMORDIAL_SIPHON",
                 new ItemStack(ItemsTC.primordialPearl, 1, 6),
                 10,
                 new AspectList().add(Aspect.AIR, 150).add(Aspect.FIRE, 150).add(Aspect.WATER, 150).add(Aspect.EARTH, 150).add(Aspect.ORDER, 150).add(Aspect.ENTROPY, 150),
@@ -759,7 +759,7 @@ public class InitRecipes {
         ));
 
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "primordial_siphon"), new InfusionRecipe(
-                "TWOND_PRIMORDIAL_SIPHON",
+                "TWOND_PRIMORDIAL_SIPHON@2",
                 new ItemStack(BlocksTW.PRIMORDIAL_SIPHON),
                 7,
                 new AspectList().add(Aspect.AIR, 75).add(Aspect.FIRE, 75).add(Aspect.WATER, 75).add(Aspect.EARTH, 75).add(Aspect.ORDER, 75).add(Aspect.ENTROPY, 75),

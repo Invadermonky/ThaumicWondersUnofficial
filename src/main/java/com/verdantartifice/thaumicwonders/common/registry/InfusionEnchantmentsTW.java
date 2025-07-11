@@ -15,7 +15,7 @@ public class InfusionEnchantmentsTW {
     public static EnumInfusionEnchantment VOIDFLAME = EnumHelper.addEnum(
             EnumInfusionEnchantment.class, "VOIDFLAME",
             new Class<?>[]{Set.class, int.class, String.class},
-            ImmutableSet.of("weapon"), 3, "TWOND_VOIDFLAMEINFUSION"
+            ImmutableSet.of("weapon"), 3, "TWOND_PRIMAL_DESTROYER"
     );
 
     public static void handleVoidflameAttack(LivingHurtEvent event) {

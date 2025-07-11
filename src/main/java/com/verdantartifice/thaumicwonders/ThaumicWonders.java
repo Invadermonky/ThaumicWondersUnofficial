@@ -57,11 +57,13 @@ public class ThaumicWonders {
 
     //TODO: Future Release
     //  Thauma Llama
+    //  Check out Gadomancy to see if any additions can be made to TW (specifically the Infusion Claw for infusion automation)
     //  Portal Generator instability events and custom summons
     //  New Dimensional Ripper model
-    //  Improved Madness Engine model + animation
-    //  Improved Inspiration Engine model + animation
-    //  Rework Timewinder to be machine with new model
+    //  Improved Madness Engine model
+    //  Improved Inspiration Engine model
+    //  Rework Timewinder to be block machine with new model
+    //  Make the Meteorb into a handheld device (maybe use the timewinder compass model)
     //  Flux distiller model
     //  JEI Support
     //      Void Beacon

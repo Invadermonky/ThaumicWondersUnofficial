@@ -9,6 +9,7 @@ import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
+import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipe;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
@@ -18,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import thaumcraft.api.aspects.Aspect;
 
+@RegistryDescription(linkGenerator = ThaumicWonders.MODID)
 public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamberRecipe> {
     @GroovyBlacklist
     @Override
@@ -70,18 +72,6 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
     @MethodDescription(
             type = MethodDescription.Type.ADDITION,
             example = {
-                    @Example("item('minecraft:iron_ore'), item('thaumicwonders:eldritch_cluster:0')"),
-                    @Example("ore('oreIron'), item('thaumicwonders:eldritch_cluster:0')")
-            },
-            priority = 1002
-    )
-    public void addAlienistRecipe(IIngredient input, ItemStack output) {
-        addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.ALIENIST_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.catalyst_stones.alienist_stone.defaultFluxChance, new AspectStack(Aspect.FLUX));
-    }
-
-    @MethodDescription(
-            type = MethodDescription.Type.ADDITION,
-            example = {
                     @Example("item('minecraft:iron_ingot'), item('minecraft:gold_ingot')"),
                     @Example("ore('ingotIron'), item('minecraft:gold_ingot')")
             },
@@ -89,6 +79,18 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
     )
     public void addTransmuterRecipe(IIngredient input, ItemStack output) {
         addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.TRANSMUTER_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.catalyst_stones.transmuter_stone.defaultFluxChance, new AspectStack(Aspect.EXCHANGE));
+    }
+
+    @MethodDescription(
+            type = MethodDescription.Type.ADDITION,
+            example = {
+                    @Example("item('minecraft:iron_ore'), item('thaumicwonders:eldritch_cluster:0')"),
+                    @Example("ore('oreIron'), item('thaumicwonders:eldritch_cluster:0')")
+            },
+            priority = 1003
+    )
+    public void addAlienistRecipe(IIngredient input, ItemStack output) {
+        addRecipe(input, IngredientHelper.toIIngredient(new ItemStack(ItemsTW.ALIENIST_STONE, 1, Short.MAX_VALUE)), output, ConfigHandlerTW.catalyst_stones.alienist_stone.defaultFluxChance, new AspectStack(Aspect.FLUX));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)
@@ -176,19 +178,19 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
             return this;
         }
 
-        @RecipeBuilderMethodDescription(field = "output")
+        @RecipeBuilderMethodDescription(field = "output", priority = 1001)
         public RecipeBuilder setOutput(ItemStack output) {
             this.output = output;
             return this;
         }
 
-        @RecipeBuilderMethodDescription(field = "fluxChance")
+        @RecipeBuilderMethodDescription(field = "fluxChance", priority = 1002)
         public RecipeBuilder setFluxChance(int fluxChance) {
             this.fluxChance = fluxChance;
             return this;
         }
 
-        @RecipeBuilderMethodDescription(field = "sparkleColor")
+        @RecipeBuilderMethodDescription(field = "sparkleColor", priority = 1003)
         public RecipeBuilder setParticleColor(AspectStack aspect) {
             this.particleColor = aspect;
             return this;

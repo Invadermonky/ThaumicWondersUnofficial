@@ -9,7 +9,9 @@ public class ItemAlchemistStone extends ItemTW {
         super("alchemist_stone");
         this.setMaxDamage(ConfigHandlerTW.catalyst_stones.alchemist_stone.durability - 1);  // Gets one last use at durability 0
         this.setMaxStackSize(1);
-        this.setNoRepair();
+        if (!ConfigHandlerTW.catalyst_stones.alchemist_stone.repairable) {
+            this.setNoRepair();
+        }
     }
 
     @Override

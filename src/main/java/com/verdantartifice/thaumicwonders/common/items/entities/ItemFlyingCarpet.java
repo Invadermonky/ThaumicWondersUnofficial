@@ -28,7 +28,7 @@ public class ItemFlyingCarpet extends ItemTW implements IRechargable {
 
         this.addPropertyOverride(new ResourceLocation(ThaumicWonders.MODID, "color"), (stack, worldIn, entityIn) -> {
             EnumDyeColor color = null;
-            if (stack != null && stack.getItem() instanceof ItemFlyingCarpet) {
+            if (stack.getItem() instanceof ItemFlyingCarpet) {
                 color = ((ItemFlyingCarpet) stack.getItem()).getDyeColor(stack);
             }
             if (color == null) {

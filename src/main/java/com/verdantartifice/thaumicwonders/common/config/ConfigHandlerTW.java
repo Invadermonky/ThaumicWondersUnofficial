@@ -9,20 +9,36 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(modid = ThaumicWonders.MODID)
 public class ConfigHandlerTW {
+    @Config.Name("Avatar of Corruption")
+    public static CorruptionAvatarCategory avatar_of_corruption = new CorruptionAvatarCategory();
     @Config.Name("Catalyst Stones")
     public static CatalystStoneCategory catalyst_stones = new CatalystStoneCategory();
     @Config.Name("Cleansing Charm")
     public static CleansingCharmCategory cleansing_charm = new CleansingCharmCategory();
+    @Config.Name("Dimensional Ripper")
+    public static DimensionalRipperCategory dimensional_ripper = new DimensionalRipperCategory();
     @Config.Name("Flying Carpet")
     public static FlyingCarpetCategory flying_carpet = new FlyingCarpetCategory();
     @Config.Name("Meaty Orb")
     public static MeatyOrbCategory meaty_orb = new MeatyOrbCategory();
     @Config.Name("Night Vision Goggles")
     public static NightVisionGogglesCategory night_vision_goggles = new NightVisionGogglesCategory();
+    @Config.Name("Ore Diviner")
+    public static OreDivinerCategory ore_diviner = new OreDivinerCategory();
+    @Config.Name("Portal Network")
+    public static PortalCategory portal_network = new PortalCategory();
+    @Config.Name("Primal Destroyer")
+    public static PrimalDestroyerCategory primal_destroyer = new PrimalDestroyerCategory();
+    @Config.Name("Primordial Siphon")
+    public static PrimordialSiphonCategory primordial_siphon = new PrimordialSiphonCategory();
     @Config.Name("Sharing Tome")
     public static SharingTomeCategory sharing_tome = new SharingTomeCategory();
+    @Config.Name("Vis Capacitor")
+    public static VisCapacitorCategory vis_capacitor = new VisCapacitorCategory();
     @Config.Name("Void Beacon")
     public static VoidBeaconCategory void_beacon = new VoidBeaconCategory();
+    @Config.Name("Void Walker Boots")
+    public static VoidWalkerBootsCategory void_walker_boots = new VoidWalkerBootsCategory();
     @Config.Name("Initiate's Ring of Cleansing")
     public static WarpRingCategory warp_ring = new WarpRingCategory();
 
@@ -43,6 +59,11 @@ public class ConfigHandlerTW {
             @Config.Name("Enable Stone Enchants")
             @Config.Comment("Allows the Catalyst Stone to be enchanted with Unbreaking and Mending")
             public boolean enchantable = true;
+
+            @Config.RequiresMcRestart
+            @Config.Name("Enable Stone Repairing")
+            @Config.Comment("Allows the Catalyst Stones to be repaired")
+            public boolean repairable = false;
 
             @Config.RequiresMcRestart
             @Config.RangeInt(min = 0, max = 10000)
@@ -70,6 +91,48 @@ public class ConfigHandlerTW {
         @Config.Name("Flux Removed")
         @Config.Comment("The amount of 'Sticky' warp removed from the player per full operation.")
         public int fluxRemoved = 1;
+    }
+
+    public static class CorruptionAvatarCategory {
+        @Config.RangeInt(min = 50, max = 2000)
+        @Config.Name("Avatar Health")
+        @Config.Comment("The amount of health the Avatar of Corruption spawns with.")
+        public int entityHealth = 300;
+
+        @Config.RangeInt(min = 0, max = 600)
+        @Config.Name("Pollution Timer")
+        @Config.Comment
+                ({
+                        "The time, in ticks, between each aura pollution that occurs while the Avatar of Corruption is",
+                        "alive. Each pollution action increases the local flux by 1. Setting this value to 0 will disable",
+                        "aura pollution."
+                })
+        public int pollutionTimer = 5;
+
+        @Config.RangeInt(min = 1, max = 30)
+        @Config.Name("Max Regeneration Amplifier")
+        @Config.Comment
+                ({
+                        "The maximum regeneration amplifier that can be gained by the Avatar of Corruption. This amplifier",
+                        "is calculated using the local flux every 2 seconds."
+                })
+        public int maxRegenAmplifier = 10;
+
+        @Config.RangeInt(min = 0, max = 3000)
+        @Config.Name("Taint Seed Timer")
+        @Config.Comment
+                ({
+                        "The amount of time, in ticks, between each Taint Seed spawn while the Avatar of Corruption is",
+                        "alive. Setting this value to 0 will disable this taint seed spawning."
+                })
+        public int taintSeedTimer = 200;
+    }
+
+    public static class DimensionalRipperCategory {
+        @Config.RangeInt(min = 1, max = 250)
+        @Config.Name("Fuel Required")
+        @Config.Comment("The amount of Vitium Essentia required to grow the targeted rift.")
+        public int fuelRequired = 50;
     }
 
     public static class FlyingCarpetCategory {
@@ -117,6 +180,71 @@ public class ConfigHandlerTW {
         public int visCapacity = 100;
     }
 
+    public static class OreDivinerCategory {
+        @Config.RangeInt(min = 1, max = 100)
+        @Config.Name("Ore Diviner Range")
+        @Config.Comment("The horizontal range the Ore Diviner can detect ores.")
+        public int searchRange = 20;
+
+        @Config.Name("Ore Type Associations")
+        @Config.Comment
+                ({
+                        "Associated ore dictionary types that can be used to ping ores of the same type. An item with an",
+                        "ore dictionary entry of 'ingotIron' matches to ores of 'oreIron'."
+                })
+        public String[] oreAssociations = new String[]{
+                "dust",
+                "gem",
+                "ingot"
+        };
+
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Search Duration")
+        @Config.Comment("The duration, in seconds, the Ore Diviner will ping nearby ores per search operation.")
+        public int searchDuration = 180;
+
+        @Config.RangeInt(min = 1, max = 20)
+        @Config.Name("Pinged Ores")
+        @Config.Comment("The number of ores pinged by the Ore Diviner at once.")
+        public int pingedOres = 6;
+
+        @Config.RangeInt(min = 0, max = 1000)
+        @Config.Name("Vis Drain")
+        @Config.Comment("The amount of Vis drained from the aura each time a new search is started. Setting this value to 0 will disable this cost.")
+        public int visDrain = 5;
+    }
+
+    public static class PortalCategory {
+        @Config.RangeDouble(min = 0, max = 1000)
+        @Config.Name("Portal Activation Cost")
+        @Config.Comment("The amount of Vis that is drained from the aura when generating a linked portal.")
+        public double activationVisCost = 20;
+    }
+
+    public static class PrimalDestroyerCategory {
+        @Config.RangeDouble(min = 1.0, max = 100.0)
+        @Config.Name("Hungering Damage")
+        @Config.Comment("The amount of damage done to players once the hunger meter fills.")
+        public double hungeringDamage = 12.0;
+
+        @Config.RequiresMcRestart
+        @Config.RangeDouble(min = 0, max = 100.0)
+        @Config.Name("Void Damage")
+        @Config.Comment
+                ({
+                        "The amount of void damage dealt by the sword on attack. Void damage bypasses all defenses",
+                        "including armor, enchantments and potions."
+                })
+        public double voidDamage = 6.0;
+    }
+
+    public static class PrimordialSiphonCategory {
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Required Rift Power")
+        @Config.Comment("The amount of drained rift power required to form a Primordial Grain.")
+        public int requiredRiftDrain = 2000;
+    }
+
     public static class SharingTomeCategory {
         @Config.RequiresMcRestart
         @Config.Name("Enable Sharing Tome")
@@ -137,11 +265,81 @@ public class ConfigHandlerTW {
         public boolean shareObservations = true;
     }
 
+    public static class VisCapacitorCategory {
+        @Config.RangeDouble(min = 0, max = 1.0)
+        @Config.Name("Discharge Threshold")
+        @Config.Comment
+                ({
+                        "The amount of Vis, as a percentage of base chunk aura, required for the Vis Capacitor to begin",
+                        "discharging its contents in an attempt to replenish the local environment."
+                })
+        public double dischargeThreshold = 0.75;
+
+        @Config.RangeDouble(min = 0, max = 1.0)
+        @Config.Name("Recharge Threshold")
+        @Config.Comment
+                ({
+                        "The amount of Vis, as a percentage of base chunk aura, required to allow the Vis Capacitor to charge.",
+                        "If the chunk aura is above this threshold, it will begin storing vis within the capacitor."
+                })
+        public double rechargeThreshold = 0.9;
+
+        @Config.Name("Vis Storage Capacity")
+        @Config.Comment("The maximum amount of Vis the Vis Capacitor can store.")
+        public int visCapacity = 200;
+    }
+
     public static class VoidBeaconCategory {
         @Config.RangeInt(min = 20, max = 10000)
         @Config.Name("Essentia Cost")
         @Config.Comment("The amount of essentia required to generate a drop from the Void Beacon. Each beacon tier will reduce this amount by half.")
         public int baseEssentiaCost = 20;
+
+        @Config.RangeInt(min = 1, max = 1000)
+        @Config.Name("Required Rift Power")
+        @Config.Comment("The amount of rift power required to create an item using stored essentia.")
+        public int riftPowerRequired = 200;
+    }
+
+    public static class VoidWalkerBootsCategory {
+        @Config.RequiresMcRestart
+        @Config.Name("Enable Void Walker Boots")
+        @Config.Comment("")
+        public boolean enableBoots = true;
+
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Energy Per Vis")
+        @Config.Comment("The amount of energy gained per point of vis drained")
+        public int energyPerVis = 60;
+
+        @Config.RangeDouble(min = 0, max = 10.0)
+        @Config.Name("Land Speed Boost")
+        @Config.Comment("Movement speed increase while on dry land")
+        public double landSpeedBoost = 0.06;
+
+        @Config.RangeDouble(min = 0, max = 10.0)
+        @Config.Name("Water Speed Boost")
+        @Config.Comment("Movement speed increase while in water or swimming")
+        public double waterSpeedBoost = 0.03;
+
+        @Config.RangeDouble(min = 0, max = 10.0)
+        @Config.Name("Jump Height Boost")
+        @Config.Comment("Jump height increase while wearing empowered boots")
+        public double jumpBoost = 0.27;
+
+        @Config.RangeDouble(min = 0, max = 10.0)
+        @Config.Name("Jump Factor")
+        @Config.Comment("Momentum horizontal momentum increase when jumping")
+        public double jumpFactor = 0.03;
+
+        @Config.Name("Step Height Increase")
+        @Config.Comment("The step height increase when wearing empowered boots")
+        public double stepHeight = 0.67;
+
+        @Config.RangeInt(min = 1, max = 10000)
+        @Config.Name("Vis Capacity")
+        @Config.Comment("The maximum vis capacity of the boots")
+        public int visCapacity = 240;
     }
 
     public static class WarpRingCategory {
@@ -150,39 +348,33 @@ public class ConfigHandlerTW {
         @Config.Comment("Enables the Initiate's Ring of Cleansing")
         public boolean enableRing = true;
 
-        @Config.RangeInt(min = 1, max = 10000)
-        @Config.Name("Remove Value Per Warp")
-        @Config.Comment("The removal value required for the ring to reach the next Warp level")
-        public int bufferSize = 250;
-
         @Config.Name("Removal Values")
         @Config.Comment
                 ({
                         "Potions the Initiate's Ring of Cleansing can remove. Potions can be restricted to only be removed",
                         "once the ring reaches a certain warp level.",
-                        " Format: potion;warplevel;removevalue",
+                        " Format: potion=warplevel",
                         "  potion - the potion registry name",
-                        "  warplevel - the required warp level to remove this effect",
-                        "  removevalue - the value of each removal of this effect, this counts towards the ring warp level"
+                        "  warplevel - the required warp level to remove this effect (must be between 0 and 5)"
                 })
-        public String[] removalRanks = new String[] {
-                "minecraft:hunger;0;30",
-                "minecraft:poison;0;20",
-                "minecraft:wither;0;50",
+        public String[] removalRanks = new String[]{
+                "minecraft:hunger=0",
+                "minecraft:poison=0",
+                "minecraft:wither=0",
 
-                "minecraft:blindness;1;50",
-                "minecraft:levitation;1;30",
-                "thaumcraft:unnaturalhunger;1;50",
+                "minecraft:blindness=1",
+                "minecraft:levitation=1",
+                "thaumcraft:unnaturalhunger=1",
 
-                "thaumcraft:visexhaust;2;80",
-                "thaumcraft:infectiousvisexhaust;2;80",
-                "thaumcraft:thaumarhia;2;100",
+                "thaumcraft:visexhaust=2",
+                "thaumcraft:infectiousvisexhaust=2",
+                "thaumcraft:thaumarhia=2",
 
-                "thaumcraft:blurredvision;3;50",
-                "thaumcraft:sunscorned;3;50",
+                "thaumcraft:blurredvision=3",
+                "thaumcraft:sunscorned=3",
 
-                "thaumcraft:deathgaze;4;100",
-                "thaumcraft:fluxtaint;4;200"
+                "thaumcraft:deathgaze=4",
+                "thaumcraft:fluxtaint=4"
         };
     }
 
@@ -192,6 +384,7 @@ public class ConfigHandlerTW {
         public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
             if (event.getModID().equals(ThaumicWonders.MODID)) {
                 ConfigManager.sync(ThaumicWonders.MODID, Config.Type.INSTANCE);
+                ConfigTags.syncConfig();
             }
         }
     }

@@ -1,10 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.entities;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalAnchor;
-import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalGenerator;
+import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import thaumcraft.api.aura.AuraHelper;
+import org.jetbrains.annotations.Nullable;
 import thaumcraft.common.lib.SoundsTC;
 
 public class EntityVoidPortal extends Entity {
@@ -36,7 +34,7 @@ public class EntityVoidPortal extends Entity {
     public EntityVoidPortal(World worldIn) {
         super(worldIn);
         this.preventEntitySpawning = true;
-        this.setSize(1.5F, 3.0F);
+        this.setSize(1.0F, 2.0F);
     }
 
     @Override
@@ -105,26 +103,7 @@ public class EntityVoidPortal extends Entity {
         if (!this.world.isRemote && this.cooldownTicks <= 0) {
             this.cooldownTicks = 3; // Prevent multiple events per click with a short cooldown
 
-            // Compute target variance due to instability
-            int dx = 0;
-            int dz = 0;
-            float stability = this.getGeneratorStability();
-            if (stability < -25.0F) {
-                int max = (int) (12.5F + (0.5F * Math.abs(stability) - 12.5F) * (0.5F * Math.abs(stability) - 12.5F));
-                if (max > 0) {
-                    dx = this.world.rand.nextInt(max) - this.world.rand.nextInt(max);
-                    dz = this.world.rand.nextInt(max) - this.world.rand.nextInt(max);
-                }
-            } else if (stability < 0.0F) {
-                int max = (int) (0.5F * Math.abs(stability));
-                if (max > 0) {
-                    dx = this.world.rand.nextInt(max) - this.world.rand.nextInt(max);
-                    dz = this.world.rand.nextInt(max) - this.world.rand.nextInt(max);
-                }
-            }
-
             BlockPos linkPos = new BlockPos(this.getLinkX(), this.getLinkY(), this.getLinkZ());
-            BlockPos targetPos = linkPos.add(dx, 0, dz);
             World sourceWorld = this.world;
             WorldServer targetWorld = DimensionManager.getWorld(this.getLinkDim());
             if (targetWorld == null) {
@@ -133,37 +112,43 @@ public class EntityVoidPortal extends Entity {
                 targetWorld = DimensionManager.getWorld(this.getLinkDim());
             }
             if (targetWorld != null) {
-                TileEntity tile = targetWorld.getTileEntity(linkPos);
-                if (tile instanceof TilePortalAnchor) {
-                    // Generate source world flux before leaving
-                    AuraHelper.polluteAura(sourceWorld, this.getPosition(), 5.0F, true);
-
+                TilePortalAnchor anchor = this.getPortalAnchor();
+                if (anchor != null && anchor.drainForTeleport()) {
                     if (player.world.provider.getDimension() != this.getLinkDim()) {
                         // Change dimensions without spawning a nether portal at the other end
                         player.changeDimension(this.getLinkDim(), (world, entity, yaw) -> {
                         });
                     }
-                    player.setPositionAndUpdate(targetPos.getX() + 0.5D, targetPos.getY() + 1.0D, targetPos.getZ() + 0.5D);
+                    player.setPositionAndUpdate(linkPos.getX() + 0.5D, linkPos.getY() + 1.0D, linkPos.getZ() + 0.5D);
                     if (player.world.provider.getDimension() == this.getLinkDim()) {
                         // Only play the portal sound at the target location if not changing dimensions; it will be played automatically otherwise
-                        player.world.playSound(null, targetPos.up(), SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.NEUTRAL, 0.25F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-                    }
-
-                    // Generate target world flux after leaving
-                    AuraHelper.polluteAura(targetWorld, targetPos.up(), 5.0F, true);
-                } else {
-                    if (player instanceof EntityPlayerMP) {
-                        PacketHandler.INSTANCE.sendTo(new PacketLocalizedMessage("event.void_portal.no_anchor"), (EntityPlayerMP) player);
+                        player.world.playSound(null, linkPos.up(), SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.NEUTRAL, 0.6F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
                     }
                 }
             } else {
                 if (player instanceof EntityPlayerMP) {
-                    PacketHandler.INSTANCE.sendTo(new PacketLocalizedMessage("event.void_portal.no_world"), (EntityPlayerMP) player);
+                    player.sendStatusMessage(StringHelper.getTranslatedTextComponent("void_portal", "chat", "no_world"), true);
                 }
                 ThaumicWonders.LOGGER.error("Target dimension {} not found!", this.getLinkDim());
             }
         }
         return super.processInitialInteract(player, hand);
+    }
+
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        if (this.world.isRemote) {
+            TilePortalAnchor anchor = this.getPortalAnchor();
+            if (anchor != null) {
+                anchor.doPortalSpawnEffect();
+            }
+        }
+    }
+
+    public @Nullable TilePortalAnchor getPortalAnchor() {
+        TileEntity tile = this.world.getTileEntity(this.getPosition().down());
+        return tile instanceof TilePortalAnchor ? (TilePortalAnchor) tile : null;
     }
 
     public int getLinkX() {
@@ -198,12 +183,13 @@ public class EntityVoidPortal extends Entity {
         this.dataManager.set(LINK_DIM, linkDim);
     }
 
-    public float getGeneratorStability() {
-        TileEntity generatorTile = this.world.getTileEntity(this.getPosition().down());
-        if (generatorTile instanceof TilePortalGenerator) {
-            return ((TilePortalGenerator) generatorTile).getStability();
-        } else {
-            return 0.0F;
-        }
+    public BlockPos getLinkPos() {
+        return new BlockPos(this.getLinkX(), this.getLinkY(), this.getLinkZ());
+    }
+
+    public void setLinkPos(BlockPos pos) {
+        this.setLinkX(pos.getX());
+        this.setLinkY(pos.getY());
+        this.setLinkZ(pos.getZ());
     }
 }

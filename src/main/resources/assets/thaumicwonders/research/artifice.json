@@ -42,8 +42,7 @@
                     "text": "thaumicwonders.research.hexamite.text.stage.1",
                     "required_knowledge": ["THEORY;BASICS;1","OBSERVATION;ALCHEMY;1","OBSERVATION;ARTIFICE;1"],
                     "required_research": ["!vitium"],
-                    "required_item": ["minecraft:tnt"],
-                    "warp": 1
+                    "required_item": ["minecraft:tnt"]
                 },
                 {
                     "text": "thaumicwonders.research.hexamite.text.stage.2",
@@ -62,7 +61,7 @@
             "parents": ["TWOND_FLYING_CARPET"],
             "siblings": [],
             "meta": [],
-            "location": [2, -4],
+            "location": [1, -3],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -96,13 +95,13 @@
             "parents": ["TWOND_BONE_BOW"],
             "siblings": [],
             "meta": [],
-            "location": [2, -6],
+            "location": [1, -5],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
                 {
                     "text": "thaumicwonders.research.primal_arrow.text.stage.1",
-                    "required_knowledge": ["THEORY;ARTIFICE;1","OBSERVATION;BASICS;1"],
+                    "required_knowledge": ["THEORY;ARTIFICE;1","OBSERVATION;AUROMANCY;1"],
                     "required_item": [
                         "thaumcraft:crystal_essence;1;0;{Aspects:[{amount:1,key:'aer'}]}",
                         "thaumcraft:crystal_essence;1;0;{Aspects:[{amount:1,key:'terra'}]}",
@@ -139,7 +138,7 @@
             "parents": ["TWOND_FLUX_CAPACITOR"],
             "siblings": [],
             "meta": [],
-            "location": [-6, -5],
+            "location": [-4, -4],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [

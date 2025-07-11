@@ -37,7 +37,7 @@ public class ItemBlockFluxDistiller extends ItemBlock {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         int charge = this.getCharge(stack);
-        tooltip.add(TextFormatting.YELLOW + I18n.format("tile.thaumicwonders.flux_distiller.tooltip.flux", charge));
+        tooltip.add(TextFormatting.YELLOW + I18n.format("tooltip.thaumicwonders:flux_distiller.flux", charge));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 

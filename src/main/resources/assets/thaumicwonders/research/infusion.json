@@ -8,7 +8,7 @@
             "parents": ["TWOND_NETHER_HEDGE", "~EVERFULLURN", "~INFUSION"],
             "siblings": [],
             "meta": [],
-            "location": [-2, 2],
+            "location": [-2, 3],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -147,7 +147,7 @@
             "parents": ["TWOND_FLYING_CARPET"],
             "siblings": [],
             "meta": [],
-            "location": [0, -4],
+            "location": [-1, -3],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -171,7 +171,7 @@
             "parents": ["TWOND_FLYING_CARPET", "~SANESOAP", "~PRIMPEARL", "~WARP"],
             "siblings": [],
             "meta": ["HIDDEN"],
-            "location": [-2, -4],
+            "location": [0, -4],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [

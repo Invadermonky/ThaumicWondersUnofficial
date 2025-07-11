@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block" ,
+    "model": "cube_all" ,
+    "textures": {
+      "all": "thaumicwonders:blocks/vis_capacitor_0"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{"model": "thuamicwonders:item/vis_capacitor"}],
+    "charge=0": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_0"}},
+    "charge=1": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_1"}},
+    "charge=2": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_1"}},
+    "charge=3": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_1"}},
+    "charge=4": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_2"}},
+    "charge=5": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_2"}},
+    "charge=6": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_2"}},
+    "charge=7": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_3"}},
+    "charge=8": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_3"}},
+    "charge=9": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_3"}},
+    "charge=10": { "model": "cube_all", "textures": {"all": "thaumicwonders:blocks/vis_capacitor_4"}}
+  }
+}

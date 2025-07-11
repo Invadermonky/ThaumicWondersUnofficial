@@ -108,8 +108,8 @@ public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
         super.onEntityCollision(worldIn, pos, state, entityIn);
     }
 
-    protected void releaseVis(World worldIn, BlockPos pos, ItemStack stack) {
-        if (stack != null && !stack.isEmpty()) {
+    public void releaseVis(World worldIn, BlockPos pos, ItemStack stack) {
+        if (!stack.isEmpty()) {
             ItemStack tempStack = stack.copy();
             tempStack.setCount(1);
             float toRelease = stack.getCount() * 0.01F * MathHelper.sqrt(AspectHelper.getObjectAspects(tempStack).visSize());
@@ -119,7 +119,7 @@ public class BlockAlkahestVat extends BlockDeviceTW<TileAlkahestVat> {
         }
     }
 
-    protected void playHissSound(World worldIn, BlockPos pos) {
+    public void playHissSound(World worldIn, BlockPos pos) {
         worldIn.playSound(null, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2.0F + worldIn.rand.nextFloat() * 0.4F);
     }
 }

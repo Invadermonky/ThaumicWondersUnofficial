@@ -37,7 +37,8 @@ public class MeatyOrbEntryRegistry {
     }
 
     public static void removeEntry(ItemStack toRemove) {
-        if (toRemove.isEmpty()) return;
+        if (toRemove.isEmpty())
+            return;
 
         toRemove.setCount(1);
         MEAT_ENTRIES.removeIf(entry -> entry.equals(toRemove));
@@ -49,7 +50,7 @@ public class MeatyOrbEntryRegistry {
     }
 
     private static void initializeWeight() {
-        if (totalWeight < 0) {
+        if (totalWeight <= 0) {
             totalWeight = 0;
             MEAT_ENTRIES.forEach(entry -> totalWeight += entry.getWeight());
         }

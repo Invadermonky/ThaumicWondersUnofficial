@@ -6,8 +6,8 @@ import net.minecraft.item.ItemStack;
 import java.util.Objects;
 
 public class WeightedEntry {
-    protected final ItemStack stack;
-    protected final int weight;
+    protected ItemStack stack;
+    protected int weight;
 
     public WeightedEntry(ItemStack stack, int weight) throws IllegalArgumentException {
         Preconditions.checkArgument(!stack.isEmpty(), "Meat ItemStack cannot be empty");
@@ -21,8 +21,16 @@ public class WeightedEntry {
         return stack.copy();
     }
 
+    public void setStack(ItemStack stack) {
+        this.stack = stack;
+    }
+
     public int getWeight() {
         return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public boolean equals(ItemStack stack) {
@@ -36,7 +44,8 @@ public class WeightedEntry {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof WeightedEntry)) return false;
+        if (!(o instanceof WeightedEntry))
+            return false;
         WeightedEntry that = (WeightedEntry) o;
         return ItemStack.areItemStacksEqual(getStack(), that.getStack());
     }

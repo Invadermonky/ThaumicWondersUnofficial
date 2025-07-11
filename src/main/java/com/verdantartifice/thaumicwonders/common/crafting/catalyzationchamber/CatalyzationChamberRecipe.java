@@ -11,11 +11,11 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class CatalyzationChamberRecipe {
-    private final Ingredient ingredient;
-    private final Ingredient catalyst;
-    private final ItemStack output;
-    private final int fluxChance;
-    private final int sparkleColor;
+    private Ingredient ingredient;
+    private Ingredient catalyst;
+    private ItemStack output;
+    private int fluxChance;
+    private int sparkleColor;
 
     public CatalyzationChamberRecipe(@Nonnull Ingredient ingredient, @Nonnull Ingredient catalyst, @Nonnull ItemStack output, int fluxChance, @Nullable Aspect sparkle) throws IllegalArgumentException {
         Preconditions.checkArgument(ingredient != Ingredient.EMPTY, "Ingredient cannot be empty");
@@ -42,6 +42,10 @@ public class CatalyzationChamberRecipe {
         this(ingredient, catalyst, output, 10);
     }
 
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
+
     public Ingredient getInput() {
         return ingredient;
     }
@@ -50,16 +54,32 @@ public class CatalyzationChamberRecipe {
         return catalyst;
     }
 
+    public void setCatalyst(Ingredient catalyst) {
+        this.catalyst = catalyst;
+    }
+
     public ItemStack getOutput() {
         return output.copy();
+    }
+
+    public void setOutput(ItemStack output) {
+        this.output = output;
     }
 
     public int getFluxChance() {
         return fluxChance;
     }
 
+    public void setFluxChance(int fluxChance) {
+        this.fluxChance = fluxChance;
+    }
+
     public int getSparkleColor() {
         return sparkleColor;
+    }
+
+    public void setSparkleColor(int sparkleColor) {
+        this.sparkleColor = sparkleColor;
     }
 
     public boolean matches(ItemStack input, ItemStack catalyst) {
@@ -73,7 +93,8 @@ public class CatalyzationChamberRecipe {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof CatalyzationChamberRecipe)) return false;
+        if (!(o instanceof CatalyzationChamberRecipe))
+            return false;
         CatalyzationChamberRecipe that = (CatalyzationChamberRecipe) o;
         return IngredientHelper.areIngredientsEqual(getInput(), that.getInput()) && IngredientHelper.areIngredientsEqual(getCatalyst(), that.getCatalyst());
     }

@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,7 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 public class ModelRegistrationEvents {
     @SubscribeEvent
     public static void registerAllModels(ModelRegistryEvent event) {
+        OBJLoader.INSTANCE.addDomain(ThaumicWonders.MODID);
         registerItemBlockModels();
+        registerStateMappers();
         registerItemModels();
         registerVariantModels();
     }
@@ -26,6 +29,10 @@ public class ModelRegistrationEvents {
         for (ItemBlock itemBlock : InitBlocks.ITEM_BLOCKS) {
             registerItemModel(itemBlock);
         }
+    }
+
+    private static void registerStateMappers() {
+
     }
 
     private static void registerItemModels() {

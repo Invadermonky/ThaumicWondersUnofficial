@@ -4,10 +4,8 @@ import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockTileTW<T extends TileEntity> extends BlockTW implements ITileEntityProvider {
@@ -16,8 +14,8 @@ public class BlockTileTW<T extends TileEntity> extends BlockTW implements ITileE
 
     public BlockTileTW(Material mat, Class<T> tileClass, String name) {
         super(mat, name);
-        setHardness(2.0f);
-        setResistance(20.0f);
+        this.setHardness(2.0f);
+        this.setResistance(20.0f);
         this.tileClass = tileClass;
     }
 
@@ -37,11 +35,6 @@ public class BlockTileTW<T extends TileEntity> extends BlockTW implements ITileE
     }
 
     @Override
-    public boolean hasTileEntity() {
-        return true;
-    }
-
-    @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         super.breakBlock(worldIn, pos, state);
         worldIn.removeTileEntity(pos);
@@ -56,7 +49,7 @@ public class BlockTileTW<T extends TileEntity> extends BlockTW implements ITileE
     }
 
     @Override
-    public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
+    public boolean hasTileEntity(IBlockState state) {
         return true;
     }
 

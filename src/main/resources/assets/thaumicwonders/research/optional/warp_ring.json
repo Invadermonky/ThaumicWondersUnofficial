@@ -5,10 +5,10 @@
       "name": "thaumicwonders.research.warp_ring.title",
       "icons": ["thaumicwonders:warp_ring"],
       "category": "THAUMIC_WONDERS",
-      "parents": ["TWOND_NV_GOGGLES", "~VERDANTCHARMS"],
+      "parents": ["TWOND_NV_GOGGLES", "~CrimsonCultist", "~VERDANTCHARMS"],
       "siblings": [],
       "meta": [],
-      "location": [0, -6],
+      "location": [-1, -5],
       "reward_item": [],
       "reward_knowledge": [],
       "stages": [

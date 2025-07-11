@@ -5,37 +5,120 @@
             "name": "thaumicwonders.research.dimensional_ripper.title",
             "icons": ["thaumicwonders:dimensional_ripper"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_BASE", "~FLUX", "~ARCANEBORE", "~BASEELDRITCH", "~PRIMPEARL"],
+            "parents": ["TWOND_BASE", "~FLUXRIFT", "~BASEELDRITCH"],
             "siblings": [],
-            "meta": ["SPIKY", "HIDDEN"],
-            "location": [-4, -1],
-            "reward_item": [],
-            "reward_knowledge": [],
+            "meta": ["HIDDEN"],
+            "location": [-2, 0],
             "stages": [
                 {
                     "text": "thaumicwonders.research.dimensional_ripper.text.stage.1",
-                    "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ELDRITCH;1", "THEORY;ARTIFICE;1"],
+                    "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ELDRITCH;1", "THEORY;AUROMANCY;1"],
                     "required_research":["!vitium"],
-                    "warp": 4
+                    "warp": 1
                 },
                 {
                     "text": "thaumicwonders.research.dimensional_ripper.text.stage.2",
                     "recipes": ["thaumicwonders:dimensional_ripper"]
                 }
+            ]
+        },
+        {
+            "key": "TWOND_PRIMORDIAL_SIPHON",
+            "name": "thaumicwonders.research.primordial_siphon.title",
+            "icons": ["thaumicwonders:primordial_siphon"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_DIMENSIONAL_RIPPER", "~VOIDSIPHON"],
+            "meta": ["HIDDEN"],
+            "location": [-4, 0],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.primordial_siphon.text.stage.1",
+                    "required_knowledge": ["THEORY;ELDRITCH;1", "THEORY;AUROMANCY;1", "THEORY;ALCHEMY;2"]
+                },
+                {
+                    "text": "thaumicwonders.research.primordial_siphon.text.stage.2",
+                    "recipes": ["thaumicwonders:primordial_siphon"]
+                },
+                {
+                    "text": "thaumicwonders.research.primordial_siphon.text.stage.3",
+                    "required_research": ["!TWOND_PRIMORDIAL_GRAIN"],
+                    "recipes": ["thaumicwonders:primordial_siphon", "thaumicwonders:primordial_pearl_reconstitution"]
+                }
+            ]
+        },
+        {
+            "key": "TWOND_FLUX_CAPACITOR",
+            "name": "thaumicwonders.research.flux_capacitor.title",
+            "icons": ["thaumicwonders:flux_capacitor"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_PRIMORDIAL_SIPHON", "~VISBATTERY", "~FLUXCLEANUP"],
+            "siblings": [],
+            "meta": [],
+            "location": [-4, -2],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.flux_capacitor.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;AUROMANCY;1", "THEORY;ELDRITCH;1", "THEORY;AUROMANCY;1", "THEORY;INFUSION;1"]
+                },
+                {
+                    "text": "thaumicwonders.research.flux_capacitor.text.stage.2",
+                    "recipes": ["thaumicwonders:flux_capacitor"]
+                }
             ],
             "addenda": []
+        },
+        {
+            "key": "TWOND_PRIMORDIAL_PEARL_GROWTH",
+            "name": "thaumicwonders.research.primordial_pearl_growth.title",
+            "icons": ["thaumicwonders:primordial_grain", "thaumcraft:primordial_pearl"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_PRIMORDIAL_SIPHON", "~PRIMPEARL"],
+            "meta": ["HIDDEN"],
+            "location": [-4, 2],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.primordial_pearl_growth.text.stage.1"
+                },
+                {
+                    "text": "thaumicwonders.research.primordial_pearl_growth.text.stage.2",
+                    "recipes": ["thaumicwonders:primordial_pearl_growth"]
+                }
+            ]
+        },
+        {
+            "key": "TWOND_VOID_PORTAL",
+            "name": "thaumicwonders.research.void_portal.title",
+            "icons": ["thaumicwonders:portal_generator"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_PRIMORDIAL_SIPHON", "~MIRROR"],
+            "location": [-6, -1],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.void_portal.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ARTIFICE;1"],
+                    "required_research":["f_TELEPORT"],
+                    "warp": 2
+                },
+                {
+                    "text": "thaumicwonders.research.void_portal.text.stage.2",
+                    "required_knowledge": ["THEORY;ELDRITCH;1", "THEORY;INFUSION;1"],
+                    "required_craft": ["thaumicwonders:portal_anchor"],
+                    "recipes": ["thaumicwonders:portal_anchor"]
+                },
+                {
+                    "text": "thaumicwonders.research.void_portal.text.stage.3",
+                    "recipes": ["thaumicwonders:portal_anchor", "thaumicwonders:portal_generator", "thaumicwonders:portal_linker"]
+                }
+            ]
         },
         {
             "key": "TWOND_PRIMAL_DESTROYER",
             "name": "thaumicwonders.research.primal_destroyer.title",
             "icons": ["thaumicwonders:primal_destroyer"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_BASE", "~BASEELDRITCH", "~PRIMPEARL"],
-            "siblings": [],
+            "parents": ["TWOND_PRIMORDIAL_SIPHON","~BASEELDRITCH", "~PRIMPEARL"],
             "meta": ["HIDDEN"],
-            "location": [-4, 1],
-            "reward_item": [],
-            "reward_knowledge": [],
+            "location": [-7, 0],
             "stages": [
                 {
                     "text": "thaumicwonders.research.primal_destroyer.text.stage.1",
@@ -44,15 +127,98 @@
                 },
                 {
                     "text": "thaumicwonders.research.primal_destroyer.text.stage.2",
+                    "required_knowledge": ["THEORY;ELDRITCH;1", "THEORY;INFUSION;2"],
                     "recipes": ["thaumicwonders:primal_destroyer"]
+                },
+                {
+                    "text": "thaumicwonders.research.primal_destroyer.text.stage.2",
+                    "recipes": ["thaumicwonders:primal_destroyer", "thaumicwonders:voidflame_infusion_fake"]
                 }
             ],
             "addenda": [
                 {
                     "text": "thaumicwonders.research.primal_destroyer.text.addenda.1",
+                    "required_research": ["TWOND_PRIMAL_DESTROYER@3"]
+                },
+                {
+                    "text": "thaumicwonders.research.primal_destroyer.text.addenda.2",
                     "required_research": ["f_thevoidhungers"]
                 }
             ]
+        },
+        {
+            "key": "TWOND_VOID_BEACON",
+            "name": "thaumicwonders.research.void_beacon.title",
+            "icons": ["thaumicwonders:void_beacon"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_VOID_PORTAL", "~VOIDSIPHON"],
+            "siblings": [],
+            "meta": [],
+            "location": [-8, -2],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.void_beacon.text.stage.1",
+                    "required_knowledge":["THEORY;AUROMANCY;2","THEORY;INFUSION;2","THEORY;ELDRITCH;2"]
+                },
+                {
+                    "text": "thaumicwonders.research.void_beacon.text.stage.2",
+                    "recipes": ["thaumicwonders:void_beacon"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "TWOND_VOID_FORTRESS_ARMOR",
+            "name": "thaumicwonders.research.void_fortress_armor.title",
+            "icons": ["thaumicwonders:void_fortress_helm"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_PRIMORDIAL_SIPHON","~ARMORFORTRESS", "~FORTRESSMASK", "~PRIMPEARL"],
+            "siblings": [],
+            "meta": [],
+            "location": [-6, 1],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.void_fortress_armor.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ELDRITCH;1", "THEORY;INFUSION;1"],
+                    "warp": 1
+                },
+                {
+                    "text": "thaumicwonders.research.void_fortress_armor.text.stage.2",
+                    "recipes": ["thaumicwonders:void_fortress_helm", "thaumicwonders:void_fortress_chest", "thaumicwonders:void_fortress_legs"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "TWOND_COALESCENCE_MATRIX",
+            "name": "thaumicwonders.research.coalescence_matrix.title",
+            "icons": ["thaumicwonders:coalescence_matrix"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_VOID_PORTAL", "TWOND_VOID_FORTRESS_ARMOR", "TWOND_PRIMAL_DESTROYER"],
+            "siblings": [],
+            "meta": ["SPIKY"],
+            "location": [-9, 0],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.coalescence_matrix.text.stage.1",
+                    "required_knowledge":["THEORY;ELDRITCH;3"],
+                    "warp": 2
+                },
+                {
+                    "text": "thaumicwonders.research.coalescence_matrix.text.stage.2",
+                    "recipes": [
+                        "thaumicwonders:coalescence_matrix",
+                        "thaumicwonders:coalescence_platform"
+                    ]
+                }
+            ],
+            "addenda": []
         },
         {
             "key": "TWOND_MADNESS_ENGINE",
@@ -70,73 +236,13 @@
                     "text": "thaumicwonders.research.madness_engine.text.stage.1",
                     "required_knowledge": ["THEORY;BASICS;2", "THEORY;INFUSION;1", "OBSERVATION;ELDRITCH;1"],
                     "required_research": ["!alienis"],
-                    "warp": 3
+                    "warp": 2
                 },
                 {
                     "text": "thaumicwonders.research.madness_engine.text.stage.2",
                     "recipes": [
                         "thaumicwonders:madness_engine"
                     ]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_VOID_PORTAL",
-            "name": "thaumicwonders.research.void_portal.title",
-            "icons": ["thaumicwonders:portal_generator"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_DIMENSIONAL_RIPPER", "~MIRROR"],
-            "siblings": [],
-            "meta": [],
-            "location": [-6, -1],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.void_portal.text.stage.1",
-                    "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ARTIFICE;1"],
-                    "required_research":["f_TELEPORT"],
-                    "warp": 2
-                },
-                {
-                    "text": "thaumicwonders.research.void_portal.text.stage.2",
-                    "required_knowledge": ["THEORY;ELDRITCH;1", "THEORY;INFUSION;1"],
-                    "required_craft": ["thaumicwonders:portal_anchor"],
-                    "recipes": ["thaumicwonders:portal_anchor"]
-                },
-                {
-                    "text": "thaumicwonders.research.void_portal.text.stage.3",
-                    "recipes": ["thaumicwonders:portal_anchor", "thaumicwonders:portal_generator"]
-                }
-            ],
-            "addenda": [
-                {
-                    "text": "thaumicwonders.research.void_portal.text.addenda.1",
-                    "required_research": ["INFUSIONSTABLE"]
-                }
-            ]
-        },
-        {
-            "key": "TWOND_FLUX_CAPACITOR",
-            "name": "thaumicwonders.research.flux_capacitor.title",
-            "icons": ["thaumicwonders:flux_capacitor"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_DIMENSIONAL_RIPPER", "~VISBATTERY", "~FLUXCLEANUP"],
-            "siblings": [],
-            "meta": [],
-            "location": [-6, -3],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.flux_capacitor.text.stage.1",
-                    "required_knowledge": ["OBSERVATION;AUROMANCY;1", "THEORY;ELDRITCH;1", "THEORY;AUROMANCY;1", "THEORY;INFUSION;1"],
-                    "warp": 1
-                },
-                {
-                    "text": "thaumicwonders.research.flux_capacitor.text.stage.2",
-                    "recipes": ["thaumicwonders:flux_capacitor"]
                 }
             ],
             "addenda": []
@@ -157,37 +263,13 @@
                     "text": "thaumicwonders.research.alienist_stone.text.stage.1",
                     "required_knowledge": ["THEORY;ALCHEMY;2", "THEORY;ELDRITCH;1"],
                     "required_research": ["!vitium"],
-                    "warp": 2
+                    "warp": 1
                 },
                 {
                     "text": "thaumicwonders.research.alienist_stone.text.stage.2",
                     "recipes": [
                         "thaumicwonders:alienist_stone"
                     ]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_VOID_FORTRESS_ARMOR",
-            "name": "thaumicwonders.research.void_fortress_armor.title",
-            "icons": ["thaumicwonders:void_fortress_helm"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_PRIMAL_DESTROYER", "~ARMORFORTRESS", "~FORTRESSMASK", "~PRIMPEARL"],
-            "siblings": [],
-            "meta": [],
-            "location": [-6, 1],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.void_fortress_armor.text.stage.1",
-                    "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;ELDRITCH;1", "THEORY;INFUSION;1"],
-                    "warp": 1
-                },
-                {
-                    "text": "thaumicwonders.research.void_fortress_armor.text.stage.2",
-                    "recipes": ["thaumicwonders:void_fortress_helm", "thaumicwonders:void_fortress_chest", "thaumicwonders:void_fortress_legs"]
                 }
             ],
             "addenda": []
@@ -212,115 +294,6 @@
                 {
                     "text": "thaumicwonders.research.meaty_orb.text.stage.2", 
                     "recipes": ["thaumicwonders:meaty_orb"]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_VOID_BEACON",
-            "name": "thaumicwonders.research.void_beacon.title",
-            "icons": ["thaumicwonders:void_beacon"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_VOID_PORTAL", "TWOND_VOID_FORTRESS_ARMOR", "~VOIDSIPHON"],
-            "siblings": [],
-            "meta": ["SPIKY"],
-            "location": [-8, 0],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.void_beacon.text.stage.1",
-                    "required_knowledge":["THEORY;AUROMANCY;2","THEORY;INFUSION;2","THEORY;ELDRITCH;2"],
-                    "warp": 4
-                },
-                {
-                    "text": "thaumicwonders.research.void_beacon.text.stage.2", 
-                    "recipes": ["thaumicwonders:void_beacon"]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_PRIMORDIAL_ACCELERATOR",
-            "name": "thaumicwonders.research.primordial_accelerator.title",
-            "icons": ["thaumicwonders:primordial_accelerator"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_FLUX_CAPACITOR", "~ESSENTIASMELTERVOID@1"],
-            "siblings": [],
-            "meta": ["SPIKY"],
-            "location": [-8, -3],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.primordial_accelerator.text.stage.1",
-                    "required_knowledge":["THEORY;ARTIFICE;2","THEORY;ELDRITCH;2"],
-                    "warp": 3
-                },
-                {
-                    "text": "thaumicwonders.research.primordial_accelerator.text.stage.2", 
-                    "recipes": [
-                        "thaumicwonders:primordial_accelerator",
-                        "thaumicwonders:primordial_accelerator_tunnel",
-                        "thaumicwonders:primordial_accelerator_terminus"
-                    ]
-                }
-            ],
-            "addenda": [
-                {
-                    "text": "thaumicwonders.research.primordial_accelerator.text.addenda.1",
-                    "required_research": ["!TWOND_PRIMORDIAL_GRAIN"],
-                    "recipes": ["thaumicwonders:primordial_pearl_reconstitution"]
-                }
-            ]
-        },
-        {
-            "key": "TWOND_PRIMORDIAL_ACCRETION_CHAMBER",
-            "name": "thaumicwonders.research.primordial_accretion_chamber.title",
-            "icons": ["thaumicwonders:primordial_accretion_chamber"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_PRIMORDIAL_ACCELERATOR", "~!TWOND_PRIMORDIAL_GRAIN"],
-            "siblings": [],
-            "meta": ["HIDDEN"],
-            "location": [-10, -3],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.primordial_accretion_chamber.text.stage.1",
-                    "required_knowledge":["THEORY;ALCHEMY;2","THEORY;ELDRITCH;2"],
-                    "warp": 3
-                },
-                {
-                    "text": "thaumicwonders.research.primordial_accretion_chamber.text.stage.2", 
-                    "recipes": [ "thaumicwonders:primordial_accretion_chamber" ]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_COALESCENCE_MATRIX",
-            "name": "thaumicwonders.research.coalescence_matrix.title",
-            "icons": ["thaumicwonders:coalescence_matrix"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_VOID_BEACON"],
-            "siblings": [],
-            "meta": ["SPIKY"],
-            "location": [-10, 0],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.coalescence_matrix.text.stage.1",
-                    "required_knowledge":["THEORY;ELDRITCH;3"],
-                    "warp": 4
-                },
-                {
-                    "text": "thaumicwonders.research.coalescence_matrix.text.stage.2", 
-                    "recipes": [
-                        "thaumicwonders:coalescence_matrix",
-                        "thaumicwonders:coalescence_platform"
-                    ]
                 }
             ],
             "addenda": []

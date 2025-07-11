@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketDimensionalRipperFx;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
@@ -30,7 +31,6 @@ import java.util.List;
 
 public class TileDimensionalRipper extends TileTW implements IAspectContainer, IEssentiaTransport, ITickable {
     private static final int CAPACITY = 250;
-    private static final int MIN_FUEL = 50;
     private static final int DISTANCE = 10;
 
     private static final int PLAY_LINK_EFFECTS = 5;
@@ -263,7 +263,8 @@ public class TileDimensionalRipper extends TileTW implements IAspectContainer, I
                 this.world.addBlockEvent(this.getPos(), BlocksTW.DIMENSIONAL_RIPPER, PLAY_LINK_EFFECTS, 0);
 
                 // If both rippers are enabled and fueled, commence the reaction
-                if (blockEnabled && otherBlockEnabled && this.amount >= MIN_FUEL && otherTile.getAmount() >= MIN_FUEL) {
+                int minFuel = ConfigHandlerTW.dimensional_ripper.fuelRequired;
+                if (blockEnabled && otherBlockEnabled && this.amount >= minFuel && otherTile.getAmount() >= minFuel) {
                     BlockPos targetPos = new BlockPos(
                             (this.pos.getX() + otherPos.getX()) / 2,
                             (this.pos.getY() + otherPos.getY()) / 2,

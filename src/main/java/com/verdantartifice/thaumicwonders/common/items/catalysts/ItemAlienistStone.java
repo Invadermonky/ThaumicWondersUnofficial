@@ -11,7 +11,9 @@ public class ItemAlienistStone extends ItemTW {
         super("alienist_stone");
         this.setMaxDamage(ConfigHandlerTW.catalyst_stones.alienist_stone.durability - 1);  // Gets one last use at durability 0
         this.setMaxStackSize(1);
-        this.setNoRepair();
+        if (!ConfigHandlerTW.catalyst_stones.alienist_stone.repairable) {
+            this.setNoRepair();
+        }
     }
 
     @Override

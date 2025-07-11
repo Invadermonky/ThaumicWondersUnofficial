@@ -1,0 +1,8 @@
+{
+  "forge_marker": 1,
+  "parent": "thaumcraft:block/void_siphon",
+  "textures": {
+    "side": "thaumicwonders:blocks/primordial_siphon",
+    "particle": "thaumicwonders:blocks/primordial_siphon"
+  }
+}

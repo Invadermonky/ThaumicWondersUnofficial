@@ -13,8 +13,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.items.RechargeHelper;
 
-import javax.annotation.Nullable;
-
 public class PacketTimewinderAction implements IMessage {
     private int targetPhase;
 
@@ -50,7 +48,7 @@ public class PacketTimewinderAction implements IMessage {
             long currentTime = world.getWorldTime();
             long dayStart = currentTime - (currentTime % 24000L);
 
-            if (timewinderStack == null) {
+            if (timewinderStack.isEmpty()) {
                 return;
             }
 
@@ -75,7 +73,6 @@ public class PacketTimewinderAction implements IMessage {
             }
         }
 
-        @Nullable
         private ItemStack getTimewinderStack(EntityPlayerMP entityPlayer) {
             ItemStack stack = entityPlayer.getHeldItemMainhand();
             if (!stack.isEmpty() && stack.getItem() instanceof ItemTimewinder) {
@@ -85,7 +82,7 @@ public class PacketTimewinderAction implements IMessage {
                 if (!stack.isEmpty() && stack.getItem() instanceof ItemTimewinder) {
                     return stack;
                 } else {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             }
         }

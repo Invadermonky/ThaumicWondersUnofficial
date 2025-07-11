@@ -48,7 +48,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
     }
 
     public boolean setEquippedStone(ItemStack stack) {
-        if (stack != null && !stack.isEmpty()) {
+        if (!stack.isEmpty()) {
             if (CatalyzationChamberRecipeRegistry.isValidCatalyst(stack)) {
                 this.equippedStone = stack;
                 return true;

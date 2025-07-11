@@ -58,9 +58,17 @@ public class InitVoidBeacon {
         VoidBeaconEntryRegistry.addEntry("obsidian");
 
         for (meta = 0; meta < 6; meta++) {
+            VoidBeaconEntryRegistry.addEntry(new ItemStack(Blocks.SAPLING, 1, meta));
+        }
+
+        for (meta = 0; meta < 4; meta++) {
             VoidBeaconEntryRegistry.addEntry(new ItemStack(Blocks.LOG, 1, meta));
             VoidBeaconEntryRegistry.addEntry(new ItemStack(Blocks.LEAVES, 1, meta));
-            VoidBeaconEntryRegistry.addEntry(new ItemStack(Blocks.SAPLING, 1, meta));
+        }
+
+        for (meta = 0; meta < 2; meta++) {
+            VoidBeaconEntryRegistry.addEntry(new ItemStack(Blocks.LOG2, 1, meta));
+            VoidBeaconEntryRegistry.addEntry(new ItemStack(Blocks.LEAVES2, 1, meta));
         }
 
         VoidBeaconEntryRegistry.addEntry(new ItemStack(Blocks.TALLGRASS));

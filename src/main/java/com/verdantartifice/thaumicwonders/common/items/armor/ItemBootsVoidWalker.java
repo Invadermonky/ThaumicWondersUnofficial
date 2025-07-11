@@ -2,8 +2,10 @@ package com.verdantartifice.thaumicwonders.common.items.armor;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
+import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.misc.PlayerMovementAbilityManager;
 import com.verdantartifice.thaumicwonders.common.misc.PlayerMovementAbilityManager.MovementType;
+import net.minecraft.block.BlockSoulSand;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,6 +20,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -59,7 +62,7 @@ public class ItemBootsVoidWalker extends ItemArmor implements IWarpingGear, IRec
             player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() instanceof ItemBootsVoidWalker;
 
     public ItemBootsVoidWalker() {
-        super(ItemVoidFortressArmor.MATERIAL, 4, EntityEquipmentSlot.FEET);
+        super(ItemVoidcallerArmor.MATERIAL, 4, EntityEquipmentSlot.FEET);
         this.setRegistryName(new ResourceLocation(ThaumicWonders.MODID, "void_walker_boots"));
         this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
@@ -118,13 +121,27 @@ public class ItemBootsVoidWalker extends ItemArmor implements IWarpingGear, IRec
     public boolean handleVoidWalk(World world, EntityLivingBase player, ItemStack stack) {
         int energy = this.getEnergy(stack);
         if (energy > 0) {
+            //Removing tainted effects
             PotionEffect effect = player.getActivePotionEffect(PotionFluxTaint.instance);
             if (effect != null && effect.getDuration() <= 200 && effect.getAmplifier() == 0) {
                 player.removeActivePotionEffect(PotionFluxTaint.instance);
                 return true;
             }
+
+            //Soul Sand speedup
+            if (world.getBlockState(new BlockPos(player.posX, player.getEntityBoundingBox().minY, player.posZ)).getBlock() instanceof BlockSoulSand) {
+                player.motionX /= 0.4f;
+                player.motionZ /= 0.4f;
+            }
         }
         return false;
+    }
+
+    public float getAdjustedFallDamage(ItemStack bootStack, float damage) {
+        if (bootStack.getItem() == ItemsTW.VOID_WALKER_BOOTS && RechargeHelper.getCharge(bootStack) > 0) {
+            damage = Math.max(0, damage / 2.0f - 1.0f);
+        }
+        return damage;
     }
 
     @Override

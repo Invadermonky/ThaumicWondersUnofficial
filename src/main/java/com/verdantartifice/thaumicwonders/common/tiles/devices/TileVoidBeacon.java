@@ -38,7 +38,6 @@ import java.util.List;
 
 public class TileVoidBeacon extends TileTW implements ITickable, IAspectContainer, IEssentiaTransport {
     private static final int CAPACITY = 100;
-    private static final int PROGRESS_REQUIRED = 200;
     private static final int PLAY_EFFECTS = 4;
 
     protected final List<TileVoidBeacon.BeamSegment> beamSegments = new ArrayList<>();
@@ -114,7 +113,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             }
             while (this.canConjureItem()) {
                 this.eject(this.getConjuredItem(this.essentiaType));
-                this.progress -= PROGRESS_REQUIRED;
+                this.progress -= ConfigHandlerTW.void_beacon.riftPowerRequired;
                 this.essentiaAmount -= this.getRequiredEssentia();
                 if (this.essentiaAmount <= 0) {
                     this.essentiaType = null;
@@ -129,7 +128,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         return this.validPlacement &&
                 BlockStateUtils.isEnabled(this.getBlockMetadata()) &&
                 this.hasEnoughEssentia() &&
-                this.progress < PROGRESS_REQUIRED;
+                this.progress < ConfigHandlerTW.void_beacon.riftPowerRequired;
     }
 
     protected boolean canConjureItem() {
@@ -137,7 +136,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
                 BlockStateUtils.isEnabled(this.getBlockMetadata()) &&
                 this.hasEnoughEssentia() &&
                 this.canEject() &&
-                this.progress >= PROGRESS_REQUIRED;
+                this.progress >= ConfigHandlerTW.void_beacon.riftPowerRequired;
     }
 
     protected boolean hasEnoughEssentia() {
@@ -293,11 +292,12 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
                     continue;
                 }
                 Aspect type = otherTile.getEssentiaType(face.getOpposite());
-                if (type != null &&
-                        otherTile.getEssentiaAmount(face.getOpposite()) > 0 &&
-                        (this.getEssentiaType(face) == null || type == this.getEssentiaType(face)) &&
-                        this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite()) &&
-                        this.getSuctionAmount(face) >= otherTile.getMinimumSuction()) {
+
+                if (type != null && otherTile.getEssentiaAmount(face.getOpposite()) > 0
+                        && (this.getEssentiaType(face) == null || type == this.getEssentiaType(face))
+                        && this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite())
+                        && this.getSuctionAmount(face) >= otherTile.getMinimumSuction()
+                ) {
                     int taken = otherTile.takeEssentia(type, 1, face.getOpposite());
                     int leftover = this.addToContainer(type, taken);
                     if (leftover > 0) {

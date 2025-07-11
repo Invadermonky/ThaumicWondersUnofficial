@@ -7,9 +7,11 @@ import net.minecraft.item.ItemStack;
 public class ItemTransmuterStone extends ItemTW {
     public ItemTransmuterStone() {
         super("transmuter_stone");
-        this.setMaxDamage(ConfigHandlerTW.catalyst_stones.alchemist_stone.durability - 1);  // Gets one last use at durability 0
+        this.setMaxDamage(ConfigHandlerTW.catalyst_stones.transmuter_stone.durability - 1);  // Gets one last use at durability 0
         this.setMaxStackSize(1);
-        this.setNoRepair();
+        if (!ConfigHandlerTW.catalyst_stones.transmuter_stone.repairable) {
+            this.setNoRepair();
+        }
     }
 
     @Override

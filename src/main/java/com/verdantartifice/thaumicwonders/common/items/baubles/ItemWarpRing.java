@@ -4,7 +4,6 @@ import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
-import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.config.ConfigTags;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import net.minecraft.client.resources.I18n;
@@ -31,19 +30,17 @@ import thaumcraft.api.items.IVisDiscountGear;
 import thaumcraft.api.items.IWarpingGear;
 import thaumcraft.common.lib.SoundsTC;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemWarpRing extends ItemTW implements IWarpingGear, IVisDiscountGear, IBauble {
+    public static int[] rankThresholds = {0, 4, 10, 16, 24, 32};
+
     public ItemWarpRing() {
         super("warp_ring");
         this.setMaxStackSize(1);
         this.addPropertyOverride(new ResourceLocation(ThaumicWonders.MODID, "warp"), (stack, worldIn, entityIn) -> this.getWarp(stack));
     }
-
-    //TODO:
-    //  Research
-    //  Textures
-
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
@@ -90,12 +87,12 @@ public class ItemWarpRing extends ItemTW implements IWarpingGear, IVisDiscountGe
     public void onWornTick(ItemStack stack, EntityLivingBase entityLiving) {
         if (entityLiving instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entityLiving;
-            for (PotionEffect effect : player.getActivePotionEffects()) {
+            List<PotionEffect> effects = new ArrayList<>(player.getActivePotionEffects());
+            for (PotionEffect effect : effects) {
                 if (ConfigTags.WARP_RING_REMOVALS.containsKey(effect.getPotion())) {
-                    if (ConfigTags.WARP_RING_REMOVALS.get(effect.getPotion()).getFirst() <= this.getWarp(stack)) {
-                        int amplifier = 1 + effect.getAmplifier();
-                        int bufferValue = ConfigTags.WARP_RING_REMOVALS.get(effect.getPotion()).getSecond();
-                        this.incrementBuffer(stack, bufferValue * amplifier);
+                    if (ConfigTags.WARP_RING_REMOVALS.get(effect.getPotion()) <= this.getWarp(stack)) {
+                        entityLiving.removePotionEffect(effect.getPotion());
+                        this.incrementBuffer(stack);
                     }
                 }
             }
@@ -108,12 +105,10 @@ public class ItemWarpRing extends ItemTW implements IWarpingGear, IVisDiscountGe
             int warp = this.getWarp(stack);
             if (warp > 0) {
                 entityLiving.world.playSound(null, entityLiving.getPosition(), SoundsTC.whispers, SoundCategory.HOSTILE, 0.6f, 1.0f);
-                entityLiving.sendMessage(new TextComponentTranslation("item.thaumicwonders:warp_ring.chat"));
+                entityLiving.sendMessage(new TextComponentTranslation("chat.thaumicwonders:warp_ring.warp"));
                 ThaumcraftCapabilities.getWarp((EntityPlayer) entityLiving).add(IPlayerWarp.EnumWarpType.TEMPORARY, warp);
                 this.setWarp(stack, 0);
-            }
-            if (this.getBuffer(stack) >= ConfigHandlerTW.warp_ring.bufferSize) {
-                this.incrementBuffer(stack, 0);
+                this.setBuffer(stack, 0);
             }
         }
     }
@@ -132,31 +127,36 @@ public class ItemWarpRing extends ItemTW implements IWarpingGear, IVisDiscountGe
         return getTag(stack).getInteger("buffer");
     }
 
-    public void setBuffer(ItemStack stack, int buffer) {
-        getTag(stack).setInteger("buffer", buffer);
+    public void setBuffer(ItemStack stack, int bufferValue) {
+        int warp = 0;
+        for (int i = 1; i < rankThresholds.length; i++) {
+            if (bufferValue >= rankThresholds[i]) {
+                warp++;
+            } else {
+                break;
+            }
+        }
+        this.getTag(stack).setInteger("buffer", bufferValue);
+        this.setWarp(stack, warp);
     }
 
-    public void incrementBuffer(ItemStack stack, int increment) {
+    public void incrementBuffer(ItemStack stack) {
         int warp = this.getWarp(stack);
         if (warp < 5) {
-            int bufferSize = ConfigHandlerTW.warp_ring.bufferSize;
-            int buffer = this.getBuffer(stack);
-            buffer += increment;
-            if (buffer >= bufferSize) {
-                warp += buffer / bufferSize;
-                this.setWarp(stack, warp);
-                buffer = warp >= 5 ? 0 : buffer % bufferSize;
+            int buffer = this.getBuffer(stack) + 1;
+            if (buffer >= rankThresholds[warp]) {
+                this.setWarp(stack, warp + 1);
             }
             this.setBuffer(stack, buffer);
         }
     }
 
     public int getWarp(ItemStack stack) {
-        return getTag(stack).getShort("warp");
+        return this.getTag(stack).getShort("warp");
     }
 
     public void setWarp(ItemStack stack, int warp) {
-        getTag(stack).setShort("warp", (short) Math.min(warp, 5));
+        this.getTag(stack).setShort("warp", (short) Math.min(warp, 5));
     }
 
     protected NBTTagCompound getTag(ItemStack stack) {

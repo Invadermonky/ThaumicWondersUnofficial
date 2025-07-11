@@ -5,6 +5,7 @@ import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockCoalescenceMatrix;
 import com.verdantartifice.thaumicwonders.common.entities.monsters.EntityCorruptionAvatar;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,8 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.casters.IInteractWithCaster;
@@ -79,37 +78,45 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
 
     protected void doSpawnCountdown() {
         if (this.spawnTime < MAX_SPAWN_TIME) {
-            if (this.world.isRemote) {
-                List<BlockPos> pillars = this.getPillarList();
-                //Main Effect
-                int sparkingPillars = Math.min(this.nextPillar + 1, pillars.size());
-                for (int i = 0; i < sparkingPillars; i++) {
-                    BlockPos pillarPos = pillars.get(i);
-                    performZap(pillarPos.up(2), this.getPos().up(), Aspect.ELDRITCH);
-                }
-
-                //TODO: Redo the effects using TC's jacobs sound + zap and the fx dispatcher. See Thaumic Tinkerer's enchanter
-                //Pillar Arcs
-                if ((this.spawnTime + 5) % 30 == 0) {
-                    BlockPos pillar1 = pillars.get(this.world.rand.nextInt(pillars.size()));
-                    BlockPos pillar2 = pillars.get(this.world.rand.nextInt(pillars.size()));
-                    performZap(pillar1.up(2), pillar2.up(2), Aspect.FLUX);
-                }
-            } else {
-                this.spawnTime++;
-                if (this.spawnTime % (MAX_SPAWN_TIME / 8) == 0) {
-                    this.world.playSound(this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundsTC.jacobs, SoundCategory.BLOCKS, 0.5f, 1.0f, true);
-                    this.nextPillar++;
-                }
-                this.syncTile(false);
-                this.markDirty();
+            List<BlockPos> pillars = this.getPillarList();
+            //Main Effect
+            int sparkingPillars = Math.min(this.nextPillar + 1, pillars.size());
+            for (int i = 0; i < sparkingPillars; i++) {
+                BlockPos pillarPos = pillars.get(i);
+                performTesla(pillarPos.up(2), this.getPos().up(), Aspect.ELDRITCH);
+                this.world.playSound(this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundsTC.jacobs, SoundCategory.BLOCKS, 0.5f, 1.0f, true);
             }
+
+            //Pillar Arcs
+            if ((this.spawnTime + 5) % 30 == 0) {
+                BlockPos pillar1 = pillars.get(this.world.rand.nextInt(pillars.size()));
+                BlockPos pillar2 = pillars.get(this.world.rand.nextInt(pillars.size()));
+                performZap(pillar1.up(2), pillar2.up(2), Aspect.FLUX);
+                this.world.playSound(this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundsTC.zap, SoundCategory.BLOCKS, 0.5f, 1.0f, true);
+            }
+
+            this.spawnTime++;
+            if (this.spawnTime % (MAX_SPAWN_TIME / 8) == 0) {
+                this.nextPillar++;
+            }
+            this.syncTile(false);
+            this.markDirty();
         } else {
             spawnAvatar();
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    protected void performTesla(BlockPos start, BlockPos end, Aspect aspect) {
+        Color color = new Color(aspect.getColor());
+        float r = color.getRed() / 255.0F;
+        float g = color.getGreen() / 255.0F;
+        float b = color.getBlue() / 255.0F;
+        FXDispatcher.INSTANCE.arcLightning(
+                start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
+                end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
+                r, g, b, 0.6F);
+    }
+
     protected void performZap(BlockPos start, BlockPos end, Aspect aspect) {
         Color color = new Color(aspect.getColor());
         float r = color.getRed() / 255.0F;
@@ -232,45 +239,75 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
         int i, k;
 
         // Check main void metal blocks
-        for (i = -2; i <= 2; i++) {
-            for (k = -3; k <= 3; k++) {
-                if (this.world.getBlockState(this.pos.add(i, -1, k)).getBlock() != BlocksTC.metalBlockVoid) {
+        for (i = -1; i <= 1; i += 2) {
+            for (k = -1; k <= 1; k += 2) {
+                if (!this.checkStructureBlock(1 * i, -1, 1 * k, BlocksTC.metalBlockVoid)) {
+                    return false;
+                }
+                if (!this.checkStructureBlock(1 * i, -1, 3 * k, BlocksTC.metalBlockVoid)) {
+                    return false;
+                }
+                if (!this.checkStructureBlock(2 * i, -1, 2 * k, BlocksTC.metalBlockVoid)) {
+                    return false;
+                }
+                if (!this.checkStructureBlock(2 * i, -1, 3 * k, BlocksTC.metalBlockVoid)) {
+                    return false;
+                }
+                if (!this.checkStructureBlock(3 * i, -1, 1 * k, BlocksTC.metalBlockVoid)) {
+                    return false;
+                }
+                if (!this.checkStructureBlock(3 * i, -1, 2 * k, BlocksTC.metalBlockVoid)) {
                     return false;
                 }
             }
-            if (this.world.getBlockState(this.pos.add(-3, -1, i)).getBlock() != BlocksTC.metalBlockVoid) {
-                return false;
-            }
-            if (this.world.getBlockState(this.pos.add(3, -1, i)).getBlock() != BlocksTC.metalBlockVoid) {
-                return false;
+        }
+
+        // Check arcane stone blocks
+        if (!this.checkStructureBlock(0, -1, 0, BlocksTC.stoneArcane)) {
+            return false;
+        }
+        for (i = -1; i <= 1; i += 2) {
+            for (k = -1; k <= 1; k += 2) {
+                if (!this.checkStructureBlock(0, -1, 2 * k, BlocksTC.stoneArcane)) {
+                    return false;
+                }
+                if (!this.checkStructureBlock(0, -1, 3 * k, BlocksTC.stoneArcane)) {
+                    return false;
+                }
+                if (!this.checkStructureBlock(1 * i, -1, 2 * k, BlocksTC.stoneArcane)) {
+                    return false;
+                }
+                if (!this.checkStructureBlock(2 * i, -1, 1 * k, BlocksTC.stoneArcane)) {
+                    return false;
+                }
             }
         }
 
         // Check arcane brick blocks
         for (i = -2; i <= 2; i++) {
-            if (this.world.getBlockState(this.pos.add(i, -1, -4)).getBlock() != BlocksTC.stoneArcaneBrick) {
+            if (!this.checkStructureBlock(i, -1, -4, BlocksTC.stoneArcaneBrick)) {
                 return false;
             }
-            if (this.world.getBlockState(this.pos.add(i, -1, 4)).getBlock() != BlocksTC.stoneArcaneBrick) {
+            if (!this.checkStructureBlock(i, -1, 4, BlocksTC.stoneArcaneBrick)) {
                 return false;
             }
-            if (this.world.getBlockState(this.pos.add(-4, -1, i)).getBlock() != BlocksTC.stoneArcaneBrick) {
+            if (!this.checkStructureBlock(-4, -1, i, BlocksTC.stoneArcaneBrick)) {
                 return false;
             }
-            if (this.world.getBlockState(this.pos.add(4, -1, i)).getBlock() != BlocksTC.stoneArcaneBrick) {
+            if (!this.checkStructureBlock(4, -1, i, BlocksTC.stoneArcaneBrick)) {
                 return false;
             }
         }
-        if (this.world.getBlockState(this.pos.add(-3, -1, -3)).getBlock() != BlocksTC.stoneArcaneBrick) {
+        if (!this.checkStructureBlock(-3, -1, -3, BlocksTC.stoneArcaneBrick)) {
             return false;
         }
-        if (this.world.getBlockState(this.pos.add(-3, -1, 3)).getBlock() != BlocksTC.stoneArcaneBrick) {
+        if (!this.checkStructureBlock(-3, -1, 3, BlocksTC.stoneArcaneBrick)) {
             return false;
         }
-        if (this.world.getBlockState(this.pos.add(3, -1, -3)).getBlock() != BlocksTC.stoneArcaneBrick) {
+        if (!this.checkStructureBlock(3, -1, -3, BlocksTC.stoneArcaneBrick)) {
             return false;
         }
-        if (this.world.getBlockState(this.pos.add(3, -1, 3)).getBlock() != BlocksTC.stoneArcaneBrick) {
+        if (!this.checkStructureBlock(3, -1, 3, BlocksTC.stoneArcaneBrick)) {
             return false;
         }
 
@@ -301,6 +338,10 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
         }
 
         return true;
+    }
+
+    public boolean checkStructureBlock(int xOffset, int yOffset, int zOffset, Block expectedBlock) {
+        return this.world.getBlockState(this.pos.add(xOffset, yOffset, zOffset)).getBlock() == expectedBlock;
     }
 
     protected List<BlockPos> getPillarList() {

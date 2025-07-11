@@ -27,7 +27,7 @@ public class CustomArmorHelper {
 
             ItemStack stackMain = entityLiving.getHeldItemMainhand();
             ModelBiped.ArmPose armPoseMain = ModelBiped.ArmPose.EMPTY;
-            if (stackMain != null && !stackMain.isEmpty()) {
+            if (!stackMain.isEmpty()) {
                 armPoseMain = ModelBiped.ArmPose.ITEM;
                 if (entityLiving.getItemInUseCount() > 0) {
                     EnumAction actionMain = stackMain.getItemUseAction();
@@ -41,7 +41,7 @@ public class CustomArmorHelper {
 
             ItemStack stackOff = entityLiving.getHeldItemOffhand();
             ModelBiped.ArmPose armPoseOff = ModelBiped.ArmPose.EMPTY;
-            if (stackOff != null && !stackOff.isEmpty()) {
+            if (!stackOff.isEmpty()) {
                 armPoseOff = ModelBiped.ArmPose.ITEM;
                 if (entityLiving.getItemInUseCount() > 0) {
                     EnumAction actionOff = stackOff.getItemUseAction();

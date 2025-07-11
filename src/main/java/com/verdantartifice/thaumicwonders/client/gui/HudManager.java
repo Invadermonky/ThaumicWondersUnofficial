@@ -6,6 +6,7 @@ import com.verdantartifice.thaumicwonders.common.entities.EntityFlyingCarpet;
 import com.verdantartifice.thaumicwonders.common.items.tools.ItemPrimalDestroyer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -25,29 +26,29 @@ public class HudManager {
     private static final ResourceLocation HUD = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/hud.png");
 
     public void renderHuds(Minecraft mc, float renderTickTime, EntityPlayer player, long time) {
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        GL11.glClear(GL11.GL_ACCUM);
-        GL11.glMatrixMode(GL11.GL_PROJECTION);
-        GL11.glLoadIdentity();
-        GL11.glOrtho(0.0D, sr.getScaledWidth_double(), sr.getScaledHeight_double(), 0.0D, 1000.0D, 3000.0D);
-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        GL11.glLoadIdentity();
-        GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.clear(GL11.GL_ACCUM);
+        GlStateManager.matrixMode(GL11.GL_PROJECTION);
+        GlStateManager.loadIdentity();
+        GlStateManager.ortho(0.0D, sr.getScaledWidth_double(), sr.getScaledHeight_double(), 0.0D, 1000.0D, 3000.0D);
+        GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+        GlStateManager.loadIdentity();
+        GlStateManager.translate(0.0F, 0.0F, -2000.0F);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
         if (mc.inGameHasFocus && Minecraft.isGuiEnabled()) {
             mc.renderEngine.bindTexture(HUD);
 
             ItemStack mhStack = player.getHeldItemMainhand();
-            Item mhStackItem = null;
-            if (mhStack != null && !mhStack.isEmpty()) {
+            Item mhStackItem = mhStack.getItem();
+            if (!mhStack.isEmpty() && !mhStack.isEmpty()) {
                 mhStackItem = mhStack.getItem();
             }
             ItemStack ohStack = player.getHeldItemOffhand();
-            Item ohStackItem = null;
-            if (ohStack != null && !ohStack.isEmpty()) {
+            Item ohStackItem = ohStack.getItem();
+            if (!ohStack.isEmpty() && !ohStack.isEmpty()) {
                 ohStackItem = ohStack.getItem();
             }
 
@@ -83,17 +84,17 @@ public class HudManager {
             }
         }
 
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glPopMatrix();
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
     }
 
     private void renderPrimalDestroyerHud(Minecraft mc, float partialTicks, EntityPlayer player, ItemStack itemStack, long time, int yStart) {
         // Draw background bars
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glTranslated(0.0D, yStart, 0.0D);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.translate(0.0D, yStart, 0.0D);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 152.0F, 0.0F, 20.0F, 78.0F, -90.0D);
 
         int hunger = itemStack.hasTagCompound() ? itemStack.getTagCompound().getInteger("hunger") : 0;
@@ -101,29 +102,29 @@ public class HudManager {
 
         // Draw hunger level
         if (hunger > 0) {
-            GL11.glPushMatrix();
-            GL11.glColor4f(0.5F, 0.0F, 0.5F, 1.0F);
+            GlStateManager.pushMatrix();
+            GlStateManager.color(0.5F, 0.0F, 0.5F, 1.0F);
             UtilsFX.drawTexturedQuad(7.0F, 23 + gap, 200.0F, gap, 8.0F, 48.0F, -90.0D);
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
         }
 
         // Draw foreground meter
-        GL11.glPushMatrix();
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.pushMatrix();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 128.0F, 0.0F, 20.0F, 78.0F, -90.0D);
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
 
         // Pop initially pushed matrix
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
     private void renderCarpetHud(Minecraft mc, float partialTicks, EntityPlayer player, EntityFlyingCarpet carpet, long time, int yStart) {
         // Draw background bars
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glTranslated(0.0D, yStart, 0.0D);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.translate(0.0D, yStart, 0.0D);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 152.0F, 0.0F, 20.0F, 78.0F, -90.0D);
 
         int vis = carpet.getVisCharge();
@@ -132,19 +133,19 @@ public class HudManager {
 
         // Draw vis level
         if (vis > 0) {
-            GL11.glPushMatrix();
-            GL11.glColor4f(1.0F, 0.5F, 1.0F, 1.0F);
+            GlStateManager.pushMatrix();
+            GlStateManager.color(1.0F, 0.5F, 1.0F, 1.0F);
             UtilsFX.drawTexturedQuad(7.0F, 23 + gap, 200.0F, gap, 8.0F, 48.0F, -90.0D);
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
         }
 
         // Draw foreground meter
-        GL11.glPushMatrix();
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.pushMatrix();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         UtilsFX.drawTexturedQuad(1.0F, 1.0F, 176.0F, 0.0F, 20.0F, 78.0F, -90.0D);
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
 
         // Pop initially pushed matrix
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 }

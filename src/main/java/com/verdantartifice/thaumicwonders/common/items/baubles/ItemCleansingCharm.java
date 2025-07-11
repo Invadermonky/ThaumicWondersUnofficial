@@ -116,7 +116,7 @@ public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable 
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         int percent = (int) (((double) this.getProgress(stack) / (double) ConfigHandlerTW.cleansing_charm.timeToRemoveFlux) * 100);
-        tooltip.add(I18n.format("item.thaumicwonders.cleansing_charm.tooltip.progress", percent));
+        tooltip.add(I18n.format("tooltip.thaumicwonders:cleansing_charm.progress", percent));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 

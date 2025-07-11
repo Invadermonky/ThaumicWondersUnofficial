@@ -48,7 +48,7 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
     @SideOnly(Side.CLIENT)
     public void onPlayerBaubleRender(ItemStack stack, EntityPlayer player, RenderType type, float partialTicks) {
         if (type == RenderType.HEAD) {
-            boolean wearingHelm = (player.getItemStackFromSlot(EntityEquipmentSlot.HEAD) != null);
+            boolean wearingHelm = !player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).isEmpty();
             Minecraft.getMinecraft().renderEngine.bindTexture(BAUBLE_TEXTURE);
             IRenderBauble.Helper.translateToHeadLevel(player);
             IRenderBauble.Helper.translateToFace();

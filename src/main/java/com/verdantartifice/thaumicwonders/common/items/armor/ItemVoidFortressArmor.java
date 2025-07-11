@@ -20,8 +20,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 import thaumcraft.api.capabilities.IPlayerWarp;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.items.IGoggles;
@@ -31,7 +33,7 @@ import thaumcraft.api.items.ItemsTC;
 import java.util.List;
 
 public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, IWarpingGear, IGoggles {
-    public static ItemArmor.ArmorMaterial MATERIAL = EnumHelper.addArmorMaterial("VOID_FORTRESS", "VOID_FORTRESS", 50, new int[]{4, 7, 9, 4}, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.0F);
+    public static ItemArmor.ArmorMaterial MATERIAL = EnumHelper.addArmorMaterial("VOID_FORTRESS", "VOID_FORTRESS", 50, new int[]{5, 8, 10, 5}, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.0F);
     ModelBiped model1 = null;
     ModelBiped model2 = null;
 
@@ -40,6 +42,18 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
         this.setRegistryName(ThaumicWonders.MODID, name);
         this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
+    }
+
+    public static void handleSippingFiendLeech(LivingHurtEvent event) {
+        if (event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof EntityPlayer) {
+            EntityPlayer leecher = (EntityPlayer) event.getSource().getTrueSource();
+            ItemStack helm = leecher.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+            if (!helm.isEmpty() && helm.getItem() instanceof ItemVoidFortressArmor) {
+                if (leecher.world.rand.nextFloat() < (event.getAmount() / 12.0F)) {
+                    leecher.heal(1.0F);
+                }
+            }
+        }
     }
 
     @Override
@@ -54,27 +68,14 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
 
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
-        int priority = 0;
-        double ratio = this.damageReduceAmount / 25.0D;
-        if (source.isMagicDamage()) {
-            priority = 1;
-            ratio = this.damageReduceAmount / 35.0D;
-        } else if (source.isFireDamage() || source.isExplosion()) {
-            priority = 1;
-            ratio = this.damageReduceAmount / 20.0D;
-        } else if (source.isUnblockable()) {
-            priority = 0;
-            ratio = 0.0D;
-        }
-
-        ArmorProperties ap = new ArmorProperties(priority, ratio, armor.getMaxDamage() - armor.getItemDamage() + 1);
+        ArmorProperties ap = getArmorProperties(armor, source);
 
         // Compute set bonus
         EntityEquipmentSlot[] slots = new EntityEquipmentSlot[]{EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.HEAD};
         int set = 0;
         for (EntityEquipmentSlot equipmentSlot : slots) {
             ItemStack piece = player.getItemStackFromSlot(equipmentSlot);
-            if (piece != null && piece.getItem() instanceof ItemVoidFortressArmor) {
+            if (!piece.isEmpty() && piece.getItem() instanceof ItemVoidFortressArmor) {
                 set++;
             }
         }
@@ -128,6 +129,21 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
         }
     }
 
+    private @NotNull ArmorProperties getArmorProperties(ItemStack armor, DamageSource source) {
+        int priority = 0;
+        double ratio = this.damageReduceAmount / 25.0D;
+        if (source.isMagicDamage()) {
+            priority = 1;
+            ratio = this.damageReduceAmount / 35.0D;
+        } else if (source.isFireDamage() || source.isExplosion()) {
+            priority = 1;
+            ratio = this.damageReduceAmount / 20.0D;
+        } else if (source.isUnblockable()) {
+            ratio = 0.0D;
+        }
+        return new ArmorProperties(priority, ratio, armor.getMaxDamage() - armor.getItemDamage() + 1);
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
@@ -173,7 +189,7 @@ public class ItemVoidFortressArmor extends ItemArmor implements ISpecialArmor, I
 
     @Override
     public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player) {
-        if (itemstack != null && itemstack.getItem() instanceof ItemArmor) {
+        if (!itemstack.isEmpty() && itemstack.getItem() instanceof ItemArmor) {
             ItemArmor armor = (ItemArmor) itemstack.getItem();
             return armor.armorType == EntityEquipmentSlot.HEAD;
         } else {

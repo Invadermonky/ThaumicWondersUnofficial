@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "thaumicwonders:blocks/vis_capacitor_0"
+  },
+  "overrides": [
+    {"predicate": {"thaumicwonders:charge": 1}, "model": "thaumicwonders:item/overrides/vis_capacitor/vis_capacitor_1"},
+    {"predicate": {"thaumicwonders:charge": 2}, "model": "thaumicwonders:item/overrides/vis_capacitor/vis_capacitor_2"},
+    {"predicate": {"thaumicwonders:charge": 3}, "model": "thaumicwonders:item/overrides/vis_capacitor/vis_capacitor_3"},
+    {"predicate": {"thaumicwonders:charge": 4}, "model": "thaumicwonders:item/overrides/vis_capacitor/vis_capacitor_4"}
+  ]
+}

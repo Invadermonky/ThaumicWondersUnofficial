@@ -1,0 +1,9 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "thaumicwonders:items/portal_linker"
+  },
+  "overrides": [
+    {"predicate": { "thaumicwonders:linked": 1 }, "model": "thaumicwonders:item/overrides/portal_linker/portal_linker_linked"}
+  ]
+}

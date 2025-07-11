@@ -3,6 +3,7 @@ package com.verdantartifice.thaumicwonders.common.entities;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
+import com.verdantartifice.thaumicwonders.common.items.consumables.ItemPrimalArrow.PrimalArrowVariant;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class EntityPrimalArrow extends EntityArrow {
     @SuppressWarnings("unchecked")
-    private static final Predicate<Entity> ARROW_TARGETS = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, entity -> entity.canBeCollidedWith());
+    private static final Predicate<Entity> ARROW_TARGETS = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, Entity::canBeCollidedWith);
 
     private static final DataParameter<Integer> ARROW_TYPE = EntityDataManager.createKey(EntityPrimalArrow.class, DataSerializers.VARINT);
 
@@ -192,7 +193,8 @@ public class EntityPrimalArrow extends EntityArrow {
                 for (int i = 0; i < 4; ++i) {
                     this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * 0.25D, this.posY - this.motionY * 0.25D, this.posZ - this.motionZ * 0.25D, this.motionX, this.motionY, this.motionZ);
                 }
-                if (this.getArrowType() != 3) {
+                PrimalArrowVariant variant = this.getArrowType();
+                if (variant != PrimalArrowVariant.WATER && variant != PrimalArrowVariant.AIR) {
                     // Water arrows fly normally underwater
                     motionMultiplier = 0.6F;
                 }
@@ -311,17 +313,17 @@ public class EntityPrimalArrow extends EntityArrow {
     protected void arrowHit(EntityLivingBase living) {
         super.arrowHit(living);
         switch (this.getArrowType()) {
-            case 3:
+            case WATER:
                 // Water arrows apply a slowing effect
                 living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 4));
                 break;
-            case 4:
+            case ORDER:
                 // Order arrows apply a weakening effect
                 living.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 4));
                 break;
-            case 5:
+            case ENTROPY:
                 // Entropy arrows apply a withering effect
-                living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 100));
+                living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 200, 2));
                 break;
         }
     }
@@ -379,16 +381,22 @@ public class EntityPrimalArrow extends EntityArrow {
 
     @Override
     protected ItemStack getArrowStack() {
-        return new ItemStack(ItemsTW.PRIMAL_ARROW, 1, this.getArrowType());
+        return new ItemStack(ItemsTW.PRIMAL_ARROW, 1, this.getArrowType().ordinal());
     }
 
     @Override
     public void setKnockbackStrength(int knockbackStrength) {
-        this.knockbackStrength = knockbackStrength;
+        if (this.knockbackStrength < knockbackStrength) {
+            this.knockbackStrength = knockbackStrength;
+        }
     }
 
-    public int getArrowType() {
-        return this.dataManager.get(ARROW_TYPE);
+    public PrimalArrowVariant getArrowType() {
+        return PrimalArrowVariant.values()[this.dataManager.get(ARROW_TYPE)];
+    }
+
+    public void setArrowType(PrimalArrowVariant type) {
+        this.setArrowType(type.ordinal());
     }
 
     public void setArrowType(int type) {
@@ -403,14 +411,14 @@ public class EntityPrimalArrow extends EntityArrow {
         }
         double retVal = baseDamage;
         switch (this.getArrowType()) {
-            case 1:
-                // Earth arrows do more damage than normal
-                retVal = retVal * 1.5D;
+            case FIRE:
+                //Fire Arrows deal additional damage
+                retVal *= 1.25;
                 break;
-            case 4:
-            case 5:
-                // Order and entropy arrows do less damage than normal
-                retVal = retVal * 0.8D;
+            case ORDER:
+            case ENTROPY:
+                //Reduced Damage - Entropy/Order
+                retVal *= 0.8;
                 break;
         }
         return (float) retVal;
@@ -420,30 +428,32 @@ public class EntityPrimalArrow extends EntityArrow {
         Entity shooter = (this.shootingEntity == null) ? this : this.shootingEntity;
         DamageSource damageSource = new EntityDamageSourceIndirect("arrow", this, shooter);
         switch (this.getArrowType()) {
-            case 0:
-            case 4:
-                // Air and order arrows ignore armor
-                damageSource = damageSource.setProjectile().setDamageBypassesArmor();
-                break;
-            case 2:
-                // Fire arrows do fire damage
+            case FIRE:
+                // Fire Damage - Fire
                 damageSource = damageSource.setProjectile().setFireDamage();
                 break;
-            default:
-                // Water, earth, and entropy arrows do normal damage
-                damageSource = damageSource.setProjectile();
+            case EARTH:
+                // Ignore Armor - Earth
+                damageSource = damageSource.setProjectile().setDamageBypassesArmor();
                 break;
+            case AIR:
+            case WATER:
+            case ORDER:
+            case ENTROPY:
+            default:
+                // Default Damage - Air, water, order, and earth
+                damageSource = damageSource.setProjectile();
         }
         return damageSource;
     }
 
     protected int getFireDuration() {
         int duration = 0;
-        if (this.isBurning() && this.getArrowType() != 3) {
+        if (this.isBurning() && this.getArrowType() != PrimalArrowVariant.WATER) {
             // Water arrows can't light targets on fire, even if burning
             duration += 5;
         }
-        if (this.getArrowType() == 2) {
+        if (this.getArrowType() == PrimalArrowVariant.FIRE) {
             // Fire arrows always light the target on fire, extending duration if the arrow is burning
             duration += 5;
         }

@@ -3,19 +3,22 @@
     "defaults":
     {
         "transform": "forge:default-block",
-        "model": "thaumicwonders:flux_capacitor_0"
+        "model": "cube_all",
+        "textures": { "all": "thaumicwonders:blocks/flux_capacitor_0" }
     },
     "variants": {
-        "charge=0":  { "model": "thaumicwonders:flux_capacitor_0" },
-        "charge=1":  { "model": "thaumicwonders:flux_capacitor_1" },
-        "charge=2":  { "model": "thaumicwonders:flux_capacitor_1" },
-        "charge=3":  { "model": "thaumicwonders:flux_capacitor_1" },
-        "charge=4":  { "model": "thaumicwonders:flux_capacitor_2" },
-        "charge=5":  { "model": "thaumicwonders:flux_capacitor_2" },
-        "charge=6":  { "model": "thaumicwonders:flux_capacitor_2" },
-        "charge=7":  { "model": "thaumicwonders:flux_capacitor_3" },
-        "charge=8":  { "model": "thaumicwonders:flux_capacitor_3" },
-        "charge=9":  { "model": "thaumicwonders:flux_capacitor_3" },
-        "charge=10": { "model": "thaumicwonders:flux_capacitor_4" }
+        "normal": [{}],
+        "inventory": [{"model": "thaumicwonders:item/flux_capacitor"}],
+        "charge=0": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_0" } },
+        "charge=1": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_1" } },
+        "charge=2": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_1" } },
+        "charge=3": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_1" } },
+        "charge=4": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_2" } },
+        "charge=5": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_2" } },
+        "charge=6": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_2" } },
+        "charge=7": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_3" } },
+        "charge=8": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_3" } },
+        "charge=9": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_3" } },
+        "charge=10": { "model": "cube_all", "textures": { "all": "thaumicwonders:blocks/flux_capacitor_4" } }
     }
 }

@@ -19,6 +19,8 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import javax.annotation.Nullable;
 
 public class TileTWInventory extends TileTW implements ISidedInventory {
+    //TODO: The Capability for this tile is kinda f'd. It needs to be rewritten.
+
     protected int[] syncedSlots = new int[0];
     protected String customName;
     protected IItemHandler handlerTop = new SidedInvWrapper(this, EnumFacing.UP);
@@ -27,8 +29,8 @@ public class TileTWInventory extends TileTW implements ISidedInventory {
     protected IItemHandler handlerEast = new SidedInvWrapper(this, EnumFacing.EAST);
     protected IItemHandler handlerNorth = new SidedInvWrapper(this, EnumFacing.NORTH);
     protected IItemHandler handlerSouth = new SidedInvWrapper(this, EnumFacing.SOUTH);
-    private NonNullList<ItemStack> stacks = NonNullList.withSize(1, ItemStack.EMPTY);
-    private NonNullList<ItemStack> syncedStacks = NonNullList.withSize(1, ItemStack.EMPTY);
+    private NonNullList<ItemStack> stacks;
+    private NonNullList<ItemStack> syncedStacks;
     private int[] faceSlots;
 
     public TileTWInventory(int size) {

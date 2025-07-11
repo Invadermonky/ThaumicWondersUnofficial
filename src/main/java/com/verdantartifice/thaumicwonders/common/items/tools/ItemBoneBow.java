@@ -9,12 +9,14 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import thaumcraft.api.items.IRechargable;
 import thaumcraft.api.items.RechargeHelper;
 
@@ -71,6 +73,11 @@ public class ItemBoneBow extends ItemBow implements IRechargable {
         } else {
             return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
         }
+    }
+
+    @Override
+    public IRarity getForgeRarity(ItemStack stack) {
+        return EnumRarity.RARE;
     }
 
     protected ItemStack findAmmo(EntityPlayer player) {

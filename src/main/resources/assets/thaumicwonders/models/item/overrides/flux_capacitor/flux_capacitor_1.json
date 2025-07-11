@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all" ,
+  "textures": {
+    "all": "thaumicwonders:blocks/flux_capacitor_1"
+  }
+}

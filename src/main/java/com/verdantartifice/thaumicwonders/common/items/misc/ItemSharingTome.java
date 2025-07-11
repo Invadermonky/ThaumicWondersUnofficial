@@ -2,6 +2,8 @@ package com.verdantartifice.thaumicwonders.common.items.misc;
 
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
+import com.verdantartifice.thaumicwonders.common.utils.NBTHelper;
+import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,7 +47,7 @@ public class ItemSharingTome extends ItemTW {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        String message = "item.thaumicwonders.sharing_tome.chat.";
+        String message = "chat.thaumicwonders:sharing_tome.";
         knowledge:
         if (!player.isSneaking()) {
             String name = this.getPlayerName(stack);
@@ -129,9 +131,9 @@ public class ItemSharingTome extends ItemTW {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         String name = this.getPlayerName(stack);
         if (name.equals(NON_ASSIGNED)) {
-            tooltip.add(I18n.format("item.thaumicwonders.sharing_tome.tooltip.blank"));
+            tooltip.add(StringHelper.getLocalizedString("sharing_tome", "tooltip", "blank"));
         } else {
-            tooltip.add(I18n.format("item.thaumicwonders.sharing_tome.tooltip.player", name));
+            tooltip.add(I18n.format(StringHelper.getTranslationKey("sharing_tome", "tooltip", "player"), name));
         }
     }
 
@@ -200,9 +202,7 @@ public class ItemSharingTome extends ItemTW {
     }
 
     protected NBTTagCompound getItemTag(ItemStack stack) {
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
+        NBTHelper.initNBT(stack);
         return stack.getTagCompound();
     }
 

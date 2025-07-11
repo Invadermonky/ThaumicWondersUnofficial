@@ -2,61 +2,92 @@
 
 ## v2.0.0
 ------
-### New
-- Added Initiate's Band of Cleansing, a ring debuff cleansing ring with a few unique properties
-- Added Sharing Tome with a few more features and a config disable option
+### New Features
+- Added Initiate's Band of Cleansing, a debuff cleansing ring with a few unique properties
+- Added Sharing Tome with a few more features (includes config disable)
+- Added Vis Capacitor, a high capacity vis storage and discharge block (texture courtesy of [IcarussOne](https://www.curseforge.com/members/icarussone/projects))
 - Added Void Walker Boots, upgraded Traveller's Boots (includes config disable)
+- Added Voidflame potion effect, dealing 1 true damage every second and reducing healing received by 50%
+- Added Voidcaller Armor, a powerful new set of casting robes
+- Added Primordial Siphon, a rift siphon that creates Primordial Grains
 
 ### Added
+- Added config options to adjust several Avatar of Corruption effects
 - Added config options for Catalyst Stone durability, enchantabliity, and default flux chance
 - Added config options for Cleansing Charm flux removal amount and processing time
 - Added config options for Flying Carpet Vis storage/consumption and max flight speed
 - Added config options for Meaty Orb cost and duration
 - Added config options for Night Vision Goggles Vis storage/consumption and adaptive setting
 - Added config options for Void Beacon base essentia cost
+- Added config option to adjust vitium cost for Dimension Ripper effect
 - Added Crafttweaker and GroovyScript methods for Catalyzation Chamber recipes
 - Added Crafttweaker and GroovyScript methods for Meaty Orb entries
-- Added Crafttweaker and GroovyScript methods for Primordial Accelerator recipes
-- Added Crafttweaker and GroovyScript methods Primordial Accretion Chamber recipes
 - Added Crafttweaker and GroovyScript methods Void Beacon entries
 - Added Expanded Arcanum compat for Catalyzation Chamber
+- Added Infusion Enchantment for Voidflame effect
 - Added JEI integration for Catalyzation Chamber
 - Added JEI integration for Meaty Orb
-- Added JEI integration for Primordial Accelerator
-- Added JEI integration for Primordial Accretion Chamber
-- Added JEI integration for Void Beacon
 - Added JER integration for Avatar of Corruption
+- Added Potion Effect for Voidflame, dealing unavoidable damage over its duration
 - Added tooltip to Void Fortress Helm indicating it includes Goggles of Revealing and Sipping Fiend mask
 - Added TOP tooltip for Flux Capacitor flux storage
+- Added Primordial Siphon, a rift siphon that creates Primordial Grains
+
+### Removed
+- Removed Primordial Accelerator and all associated blocks, this has been replaced by a the new Primordial Siphon
+- Removed Primordial Accretion Chamber and all associated blocks, this has been replaced by a new Primordial Pearl growth Infusion recipe
 
 ### Fixed
-- Fixed rare Disjunction Cloth crafting table recipe crash
-- Fixed mod registering several fake blocks
-- Fixed several dupe bugs [#77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
+- Fixed Catalization Chamber voiding inventory when broken
+- Fixed Disjunction Cloth crafting table recipe crash
 - Fixed Flux Capacitor losing flux charge when broken by non-players
 - Fixed Flying Carpet interaction duplication bug
 - Fixed Flying Carpet entity losing stored vis on world/chunk reload
-- Fixed Catalization Chamber voiding inventory when broken
-- Fixed Primordial Accelerator voiding inventory when broken
-- Fixed Primordial Accretion Chamber voiding inventory when broken
-- Fixed Primordial Accretion Chamber depleting chunk Vis on world/chunk reload
+- Fixed Primal Destroyer missing infusion enchants when pulled from JEI or creative menu
+- Fixed several dupe bugs [#77](https://github.com/daedalus4096/ThaumicWonders/pull/77)
+- Fixed Void Beacon sometimes generating error items
 
 ### Changed
+- Adjusted the position of several GUI's for more consistent appearance
 - Avatar of Corruption now uses a loot table to generate drops
-- Avatar of Corruption how has a fancy summoning animation
+- Avatar of Corruption summon is no longer instant and now has a fancy animation
+- Avatar of Corruption drops more experience on death
+- Avatar of Corruption summoning platform has been modified to reduce the number of Void Metal Blocks required
+- Avatar of Corruption spawns equipped with a new set of powerful armor
+- Avatar of Corruption spawns has reduced base armor to adjust for new armor set
 - Catalyzation Chamber now uses recipe structure
 - Cinderpearl Seed recipe now produces 1 Cinderpearl Seed Stalk. Each stalk can be used to plant 8 Cinderpearl plants before being consumed.
+- Shimmerleaf Seed recipe now produces 1 Shimmerleaft Seed Bulb. Each bulb can be used to plant 8 Shimmerleaf plants before being consumed.
+- Vishroom Spore recipe now produces 1 Vishroom Spore Cluster. Each spore custer can be used to plant 8 Vishroom plants before being consumed.
 - Creative Essentia Jars now display full when filled with essentia
 - Creative Essentia Jars no longer pollute the aura when emptied
 - Everburning Urn can now have fluid extracted from its base
 - Flux Distiller now has a tighter hitbox
 - Meaty Orb now uses recipe entry structure to generate drops
 - Night Vision Goggles now have an adaptive on/off based on what the player is looking at (configurable)
-- Primordial Accelerator now uses recipe structure
-- Primordial Accretion Chamber now uses recipe structure
-- Shimmerleaf Seed recipe now produces 1 Shimmerleaft Seed Bulb. Each bulb can be used to plant 8 Shimmerleaf plants before being consumed.
-- Vishroom Spore recipe now produces 1 Vishroom Spore Cluster. Each spore custer can be used to plant 8 Vishroom plants before being consumed.
+- Primal Destroyer has been rebalanced to deal physical and void damage. Void damage bypasses armor and can not be mitigated by armor or potions
+- Primal Destroyer Voidflame effect is now an infusion enchant that applies the Voidflame potion effect
+- Updated Gui's to use updated GLStateMapper
 - Void Beacon now uses recipe entry structure to generate drops
+- Void Fortress Armor has 1 additional armor on all pieces
+- New texture for Alkahest fluid
+- New texture for Panacea
+- New texture for Primal Destroyer
+- New texture for Quicksilver fluid
+- New texture and model for Ore Diviner
+- Cleaned up numerous unneeded model files
+- Significantly reduced the crafting cost of the Alienist Stone
+- Increased the crafting cost of the Bow of Bone to match New Crimson Revelations
+- Bow of Bone has been renamed to Empowered Bow of Bone to differentiate it from New Crimson Revelations Bow of Bone
+- Primal Arrow recipes will now craft New Crimson Revelation arrows when NCR is loaded
+- Primal Arrows have had their effects modified to match New Crimson Revelations, research entries have been adjusted to match
+- Void Fortress Armor has been renamed to Warped Fortress Armor (item id's remain unchanged)
+- Nearly every research entry has been rewritten, courtesy of [IcarussOne](https://www.curseforge.com/members/icarussone/projects)
+- Ore Diviner logic has been completely overhauled, making it much more user-friendly
+- Alkahest Vat can now connect directly to pipes and hoppers, fixing a few automation issues
+- Changed the layout of the Eldritch portion of the research tree (left side)
+- Reduced the crafting cost of several recipes to better match the new research layout and Thaumic Augmentation's balance
+- New model and texture for the Portal Anchor
 
 ## v1.8.4
 ------

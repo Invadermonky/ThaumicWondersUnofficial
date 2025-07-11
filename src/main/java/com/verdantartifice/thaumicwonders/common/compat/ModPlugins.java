@@ -19,10 +19,14 @@ public class ModPlugins {
     private static final Set<IModPlugin> plugins = new HashSet<>();
 
     private static void buildPlugins() {
-        if (ModIds.crafttweaker.isLoaded) plugins.add(new CTPlugin());
-        if (ModIds.expanded_arcanum.isLoaded) plugins.add(new ExpandedArcanumPlugin());
-        if (ModIds.jeresources.isLoaded) plugins.add(new JERPlugin());
-        if (ModIds.the_one_probe.isLoaded) plugins.add(new TOPPlugin());
+        if (ModIds.crafttweaker.isLoaded)
+            plugins.add(new CTPlugin());
+        if (ModIds.expanded_arcanum.isLoaded)
+            plugins.add(new ExpandedArcanumPlugin());
+        if (ModIds.jeresources.isLoaded)
+            plugins.add(new JERPlugin());
+        if (ModIds.the_one_probe.isLoaded)
+            plugins.add(new TOPPlugin());
     }
 
     public static void preInit(FMLPreInitializationEvent event) {

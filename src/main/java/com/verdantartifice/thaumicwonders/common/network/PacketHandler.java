@@ -21,8 +21,6 @@ public class PacketHandler {
         INSTANCE.registerMessage(PacketTileToClient.Handler.class, PacketTileToClient.class, nextId(), Side.CLIENT);
         INSTANCE.registerMessage(PacketLocalizedMessage.Handler.class, PacketLocalizedMessage.class, nextId(), Side.CLIENT);
         INSTANCE.registerMessage(PacketMeteorbAction.Handler.class, PacketMeteorbAction.class, nextId(), Side.SERVER);
-        INSTANCE.registerMessage(PacketOreDivinerSearch.Handler.class, PacketOreDivinerSearch.class, nextId(), Side.CLIENT);
-        INSTANCE.registerMessage(PacketOreDivinerStop.Handler.class, PacketOreDivinerStop.class, nextId(), Side.CLIENT);
         INSTANCE.registerMessage(PacketDimensionalRipperFx.Handler.class, PacketDimensionalRipperFx.class, nextId(), Side.CLIENT);
         INSTANCE.registerMessage(PacketMeteorbFx.Handler.class, PacketMeteorbFx.class, nextId(), Side.CLIENT);
         INSTANCE.registerMessage(PacketMeatyOrbAction.Handler.class, PacketMeatyOrbAction.class, nextId(), Side.SERVER);

@@ -5,7 +5,8 @@
         "transform": "forge:default-block"
      },
     "variants": {
-        "normal": [{}], "inventory": [{}],        
+        "normal": [{}],
+        "inventory": [{}],
         "enabled=false,facing=down":    { "model": "thaumicwonders:dimensional_ripper","x": 180 },
         "enabled=false,facing=up":      { "model": "thaumicwonders:dimensional_ripper"},
         "enabled=false,facing=north":   { "model": "thaumicwonders:dimensional_ripper","x": 90 },

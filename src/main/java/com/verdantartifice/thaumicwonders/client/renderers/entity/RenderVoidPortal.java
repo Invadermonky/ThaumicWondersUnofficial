@@ -1,8 +1,10 @@
 package com.verdantartifice.thaumicwonders.client.renderers.entity;
 
+import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.entities.EntityVoidPortal;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -12,12 +14,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 
 @SideOnly(Side.CLIENT)
 public class RenderVoidPortal extends Render<EntityVoidPortal> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("thaumcraft", "textures/misc/eldritch_portal.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(ThaumicWonders.MODID, "textures/misc/void_portal.png");
 
     public RenderVoidPortal(RenderManager renderManager) {
         super(renderManager);
@@ -34,8 +35,7 @@ public class RenderVoidPortal extends Render<EntityVoidPortal> {
         float scale = e / 50.0F * 1.25F;
 
         y += portal.height / 2.0F;
-
-        float stability = portal.getGeneratorStability();
+        float stability = 50F;
         float m = (1.0F - MathHelper.clamp((stability + 100.0F) / 100.0F, 0.0F, 1.0F)) / 3.0F;
         float bobY = MathHelper.sin(portal.ticksExisted / (5.0F - 12.0F * m)) * m + m;
         float bobXZ = MathHelper.sin(portal.ticksExisted / (6.0F - 15.0F * m)) * m + m;
@@ -44,14 +44,14 @@ public class RenderVoidPortal extends Render<EntityVoidPortal> {
         scale -= bobXZ / 3.0F;
 
         this.bindTexture(TEXTURE);
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
 
         if (Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityPlayer) {
-            GL11.glDepthMask(false);
+            GlStateManager.depthMask(false);
             Tessellator tessellator = Tessellator.getInstance();
             float arX = ActiveRenderInfo.getRotationX();
             float arZ = ActiveRenderInfo.getRotationZ();
@@ -77,11 +77,10 @@ public class RenderVoidPortal extends Render<EntityVoidPortal> {
             tessellator.getBuffer().pos(x + v3.x * scale, y + v3.y * scaley, z + v3.z * scale).tex(f2, f5).color(1.0F, 1.0F, 1.0F, alpha).lightmap(j, k).normal(0.0F, 0.0F, -1.0F).endVertex();
             tessellator.getBuffer().pos(x + v4.x * scale, y + v4.y * scaley, z + v4.z * scale).tex(f2, f4).color(1.0F, 1.0F, 1.0F, alpha).lightmap(j, k).normal(0.0F, 0.0F, -1.0F).endVertex();
             tessellator.draw();
-            GL11.glDepthMask(true);
+            GlStateManager.depthMask(true);
         }
-        GL11.glDisable(32826);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glPopMatrix();
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
     }
 
     @Override

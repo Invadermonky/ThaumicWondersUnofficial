@@ -1,8 +1,10 @@
 package com.verdantartifice.thaumicwonders.common.entities.monsters;
 
 import com.google.common.base.Predicate;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.entities.EntityFluxFireball;
 import com.verdantartifice.thaumicwonders.common.entities.LootTablesTW;
+import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.misc.FluxExplosion;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketAvatarZapFx;
@@ -11,11 +13,14 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -23,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.api.entities.ITaintedMob;
+import thaumcraft.api.items.ItemsTC;
 import thaumcraft.api.potions.PotionFluxTaint;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
@@ -43,7 +49,7 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
     public EntityCorruptionAvatar(World world) {
         super(world);
         this.setSize(0.75F, 2.25F);
-        this.experienceValue = 50;
+        this.experienceValue = 200;
     }
 
     @Override
@@ -80,26 +86,36 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
     }
 
     @Override
+    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
+        this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(ItemsTW.VOIDCALLER_HELM));
+        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(ItemsTW.VOIDCALLER_CHEST));
+        this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(ItemsTW.VOIDCALLER_LEGS));
+        this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(ItemsTC.voidBoots));
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.32D);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(300.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(6.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.32);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ConfigHandlerTW.avatar_of_corruption.entityHealth);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(-7.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(-10.0);
     }
 
     @Override
     protected void updateAITasks() {
         if (!this.world.isRemote) {
             // Generate flux, 4/sec
-            if (this.ticksExisted % 5 == 0) {
+            int timer = ConfigHandlerTW.avatar_of_corruption.pollutionTimer;
+            if (timer != 0 && this.ticksExisted % timer == 0) {
                 AuraHelper.polluteAura(this.world, this.getPosition().up(), 1.0F, true);
             }
 
             // Regenerate based on local flux
             if (this.ticksExisted % 40 == 0) {
                 float flux = Math.min(100.0F, AuraHelper.getFlux(this.world, this.getPosition()));
-                int amp = (int) (0.5F * MathHelper.sqrt(flux));
+                int amp = Math.min((int) (0.5F * MathHelper.sqrt(flux)), ConfigHandlerTW.avatar_of_corruption.maxRegenAmplifier);
                 this.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 40, amp, false, false));
             }
 
@@ -113,7 +129,8 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
             }
 
             // Spawn taint seeds
-            if (++this.seedCooldown >= 200) {
+            timer = ConfigHandlerTW.avatar_of_corruption.taintSeedTimer;
+            if (timer != 0 && ++this.seedCooldown >= timer) {
                 EnumDifficulty diff = this.world.getDifficulty();
                 int maxSeeds = diff == EnumDifficulty.EASY ? 1 : (diff == EnumDifficulty.HARD ? 4 : 2);
                 List<EntityTaintSeed> seedsNearby = EntityUtils.getEntitiesInRange(this.world, this.getPosition(), this, EntityTaintSeed.class, 16.0);
@@ -169,12 +186,15 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
     }
 
     @Override
-    public boolean isOnSameTeam(Entity el) {
-        return (el instanceof IEldritchMob) || (el instanceof ITaintedMob) || super.isOnSameTeam(el);
+    public IEntityLivingData onInitialSpawn(DifficultyInstance diff, IEntityLivingData data) {
+        this.setEquipmentBasedOnDifficulty(diff);
+        this.setEnchantmentBasedOnDifficulty(diff);
+        return super.onInitialSpawn(diff, data);
     }
 
     @Override
-    protected void dropFewItems(boolean flag, int fortune) {
+    public boolean isOnSameTeam(Entity el) {
+        return (el instanceof IEldritchMob) || (el instanceof ITaintedMob) || super.isOnSameTeam(el);
     }
 
     @Override

@@ -43,6 +43,7 @@ public class InitResearch {
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/misc"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/alchemy"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/artifice"));
+        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/auromancy"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/infusion"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/eldritch"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/scans"));
@@ -61,14 +62,14 @@ public class InitResearch {
     }
 
     private static void initOptionals() {
-        if (ConfigHandlerTW.sharing_tome.enableTome) {
-            ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/sharing_tome"));
-        }
         if (ConfigHandlerTW.void_walker_boots.enableBoots) {
             ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/void_walker_boots"));
         }
         if (ConfigHandlerTW.warp_ring.enableRing) {
             ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/warp_ring"));
+        }
+        if (ConfigHandlerTW.sharing_tome.enableTome) {
+            ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/sharing_tome"));
         }
     }
 }

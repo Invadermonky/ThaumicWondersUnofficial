@@ -16,14 +16,14 @@ public class ContainerCatalyzationChamber extends Container {
         this.inventoryPlayer = inventoryPlayer;
         this.tileEntity = chamberTile;
 
-        this.addSlotToContainer(new SlotCatalyzationStone(this.tileEntity, 0, 80, 29));
+        this.addSlotToContainer(new SlotCatalyzationStone(this.tileEntity, 0, 80, 62));
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(this.inventoryPlayer, j + (i * 9) + 9, 8 + (j * 18), 84 + (i * 18)));
+                this.addSlotToContainer(new Slot(this.inventoryPlayer, j + (i * 9) + 9, 8 + (j * 18), 117 + (i * 18)));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(this.inventoryPlayer, i, 8 + (i * 18), 142));
+            this.addSlotToContainer(new Slot(this.inventoryPlayer, i, 8 + (i * 18), 175));
         }
     }
 

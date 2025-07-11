@@ -26,8 +26,14 @@ public class ItemPrimalArrow extends ItemArrow implements IVariantItem {
         this.setRegistryName(ThaumicWonders.MODID, this.baseName);
         this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
-
-        this.variants = new String[]{"air", "earth", "fire", "water", "order", "entropy"};
+        this.variants = new String[]{
+                PrimalArrowVariant.AIR.toString(),
+                PrimalArrowVariant.EARTH.toString(),
+                PrimalArrowVariant.FIRE.toString(),
+                PrimalArrowVariant.WATER.toString(),
+                PrimalArrowVariant.ORDER.toString(),
+                PrimalArrowVariant.ENTROPY.toString()
+        };
         this.setHasSubtypes(true);
         this.variantsMeta = new int[this.variants.length];
         for (int index = 0; index < this.variants.length; index++) {
@@ -84,7 +90,11 @@ public class ItemPrimalArrow extends ItemArrow implements IVariantItem {
     @Override
     public EntityArrow createArrow(World worldIn, ItemStack stack, EntityLivingBase shooter) {
         EntityPrimalArrow entity = new EntityPrimalArrow(worldIn, shooter);
-        entity.setArrowType(stack.getMetadata());
+        PrimalArrowVariant variant = PrimalArrowVariant.values()[stack.getMetadata()];
+        entity.setArrowType(variant);
+        if (variant == PrimalArrowVariant.AIR) {
+            entity.setKnockbackStrength(2);
+        }
         return entity;
     }
 
@@ -96,6 +106,20 @@ public class ItemPrimalArrow extends ItemArrow implements IVariantItem {
         } else {
             // Primal arrows have only a 1-in-3 chance of being affected by an Infinity enchant
             return (player.world.rand.nextInt(3) == 0);
+        }
+    }
+
+    public enum PrimalArrowVariant {
+        AIR,
+        EARTH,
+        FIRE,
+        WATER,
+        ORDER,
+        ENTROPY;
+
+        @Override
+        public String toString() {
+            return super.toString().toLowerCase();
         }
     }
 }

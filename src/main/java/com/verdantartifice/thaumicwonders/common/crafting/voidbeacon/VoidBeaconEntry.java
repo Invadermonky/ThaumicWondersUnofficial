@@ -20,7 +20,8 @@ public class VoidBeaconEntry extends WeightedEntry {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof VoidBeaconEntry)) return false;
+        if (!(o instanceof VoidBeaconEntry))
+            return false;
         VoidBeaconEntry that = (VoidBeaconEntry) o;
         return ItemStack.areItemStacksEqual(this.getStack(), that.getStack());
     }

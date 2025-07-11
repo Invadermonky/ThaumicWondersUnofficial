@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.proxy;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.compat.ModIds;
 import com.verdantartifice.thaumicwonders.common.compat.ModPlugins;
 import com.verdantartifice.thaumicwonders.common.init.InitAspects;
 import com.verdantartifice.thaumicwonders.common.init.InitResearch;
@@ -29,7 +30,9 @@ public class CommonProxy implements IProxyTW, IGuiHandler {
         PacketHandler.registerMessages();
         InitResearch.initResearch();
         NetworkRegistry.INSTANCE.registerGuiHandler(ThaumicWonders.INSTANCE, this);
-        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemsTW.PRIMAL_ARROW, new BehaviorDispensePrimalArrow());
+        if (!ModIds.new_crimson_revelations.isLoaded) {
+            BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemsTW.PRIMAL_ARROW, new BehaviorDispensePrimalArrow());
+        }
         ModPlugins.init(event);
     }
 

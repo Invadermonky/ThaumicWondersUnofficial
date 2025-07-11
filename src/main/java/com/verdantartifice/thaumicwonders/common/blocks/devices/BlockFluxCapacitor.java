@@ -2,21 +2,27 @@ package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockTW;
+import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.Nullable;
 import thaumcraft.api.aura.AuraHelper;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockFluxCapacitor extends BlockTW {
@@ -91,6 +97,13 @@ public class BlockFluxCapacitor extends BlockTW {
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, CHARGE);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        int charge = stack.hasTagCompound() ? stack.getTagCompound().getInteger("charge") : 0;
+        tooltip.add(TextFormatting.YELLOW + I18n.format(StringHelper.getTranslationKey("flux_capacitor", "tooltip", "flux"), charge));
     }
 
     @Override

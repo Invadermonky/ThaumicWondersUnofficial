@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "thaumicwonders:items/warp_ring"
+    "layer0": "thaumicwonders:items/warp_ring_5"
   }
 }

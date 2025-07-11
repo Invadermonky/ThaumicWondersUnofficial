@@ -6,5 +6,6 @@ public class GuiIds {
     public static final int METEORB = 3;
     public static final int MEATY_ORB = 4;
     public static final int STRUCTURE_DIVINER = 5;
-    public static final int PRIMORDIAL_ACCELERATOR = 6;
+    public static final int PRIMORDIAL_SYPHON = 6;
+    public static final int PORTAL_ANCHOR = 7;
 }

@@ -1,0 +1,26 @@
+{
+  "entries": [
+    {
+      "key": "TWOND_VIS_CAPACITOR",
+      "name": "thaumicwonders.research.vis_capacitor.title",
+      "icons": ["thaumicwonders:vis_capacitor"],
+      "category": "THAUMIC_WONDERS",
+      "parents": ["TWOND_FLUX_CAPACITOR", "~VISBATTERY"],
+      "siblings": [],
+      "meta": [],
+      "location": [-5, -3],
+      "reward_item": [],
+      "reward_knowledge": [],
+      "stages": [
+        {
+          "text": "thaumicwonders.research.vis_capacitor.text.stage.1",
+          "required_knowledge": ["THEORY;AUROMANCY;2", "THEORY;INFUSION;1"]
+        },
+        {
+          "text": "thaumicwonders.research.vis_capacitor.text.stage.2",
+          "recipes": ["thaumicwonders:vis_capacitor"]
+        }
+      ]
+    }
+  ]
+}

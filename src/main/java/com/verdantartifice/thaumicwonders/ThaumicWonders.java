@@ -12,22 +12,26 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = ThaumicWonders.MODID, name = ThaumicWonders.NAME, version = ThaumicWonders.VERSION, dependencies = ThaumicWonders.DEPENDENCIES, updateJSON = ThaumicWonders.UPDATE_URL)
+@Mod(
+        modid = ThaumicWonders.MODID,
+        name = ThaumicWonders.NAME,
+        version = ThaumicWonders.VERSION,
+        dependencies = ThaumicWonders.DEPENDENCIES
+)
 public class ThaumicWonders {
     public static final String MODID = "thaumicwonders";
-    public static final String NAME = "Thaumic Wonders";
-    public static final String VERSION = "1.8.4";
+    public static final String NAME = "Thaumic Wonders Unofficial";
+    public static final String VERSION = "2.0.0";
     public static final String DEPENDENCIES = "required-after:thaumcraft";
-    public static final String UPDATE_URL = "https://pastebin.com/raw/7QELk9HJ";
 
     public static final CreativeTabs CREATIVE_TAB = new CreativeTabTW(CreativeTabs.getNextID(), ThaumicWonders.MODID);
 
     public static Logger LOGGER;
-    
+
     @Mod.Instance(ThaumicWonders.MODID)
     public static ThaumicWonders INSTANCE;
-    
-    @SidedProxy(clientSide="com.verdantartifice.thaumicwonders.proxy.ClientProxy", serverSide="com.verdantartifice.thaumicwonders.proxy.ServerProxy")
+
+    @SidedProxy(clientSide = "com.verdantartifice.thaumicwonders.proxy.ClientProxy", serverSide = "com.verdantartifice.thaumicwonders.proxy.ServerProxy")
     public static IProxyTW proxy;
 
     @EventHandler
@@ -40,13 +44,34 @@ public class ThaumicWonders {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
     }
-    
+
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
     }
-    
+
     static {
         FluidRegistry.enableUniversalBucket();
     }
+
+
+    //TODO: Future Release
+    //  Thauma Llama
+    //  Portal Generator instability events and custom summons
+    //  New Dimensional Ripper model
+    //  Improved Madness Engine model + animation
+    //  Improved Inspiration Engine model + animation
+    //  Rework Timewinder to be machine with new model
+    //  Flux distiller model
+    //  JEI Support
+    //      Void Beacon
+    //  Enchanter Multiblock (disablable)
+    //      Mutltiblock enchanter, use crafttweaker for additional enchants
+    //      Offshoot of Disjunction Cloth
+    //  Bosses:
+    //      crimson_cult_models - cult golem
+    //          See about getting permission to use one of these hammers https://github.com/TheCodex6824/ThaumicAugmentation/issues/170#issuecomment-875600063
+    //      crimson_cult_models - taintabomination5 (floating one)
+
+
 }

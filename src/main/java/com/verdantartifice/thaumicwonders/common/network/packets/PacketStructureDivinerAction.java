@@ -45,7 +45,7 @@ public class PacketStructureDivinerAction implements IMessage {
         private void handle(PacketStructureDivinerAction message, MessageContext ctx) {
             EntityPlayerMP entityPlayer = ctx.getServerHandler().player;
             ItemStack divinerStack = this.getDivinerStack(entityPlayer);
-            if (divinerStack == null) {
+            if (divinerStack.isEmpty()) {
                 return;
             }
 
@@ -86,7 +86,6 @@ public class PacketStructureDivinerAction implements IMessage {
             }
         }
 
-        @Nullable
         private ItemStack getDivinerStack(EntityPlayerMP entityPlayer) {
             ItemStack stack = entityPlayer.getHeldItemMainhand();
             if (!stack.isEmpty() && stack.getItem() instanceof ItemStructureDiviner) {
@@ -96,7 +95,7 @@ public class PacketStructureDivinerAction implements IMessage {
                 if (!stack.isEmpty() && stack.getItem() instanceof ItemStructureDiviner) {
                     return stack;
                 } else {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             }
         }

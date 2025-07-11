@@ -1,6 +1,0 @@
-{
-    "parent": "block/cross",
-    "textures": {
-        "cross": "thaumicwonders:blocks/cinderpearl_crop_stage_2"
-    }
-}

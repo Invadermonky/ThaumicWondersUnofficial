@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.compat.ModIds;
 import com.verdantartifice.thaumicwonders.common.entities.*;
 import com.verdantartifice.thaumicwonders.common.entities.monsters.EntityCorruptionAvatar;
 import net.minecraft.util.ResourceLocation;
@@ -37,13 +38,15 @@ public class InitEntities {
                 .build();
         iForgeRegistry.register(hexamitePrimedEntry);
 
-        EntityEntry primalArrowEntry = EntityEntryBuilder.create()
-                .entity(EntityPrimalArrow.class)
-                .id(new ResourceLocation(ThaumicWonders.MODID, "primal_arrow"), id++)
-                .name("primal_arrow")
-                .tracker(64, 1, true)
-                .build();
-        iForgeRegistry.register(primalArrowEntry);
+        if (!ModIds.new_crimson_revelations.isLoaded) {
+            EntityEntry primalArrowEntry = EntityEntryBuilder.create()
+                    .entity(EntityPrimalArrow.class)
+                    .id(new ResourceLocation(ThaumicWonders.MODID, "primal_arrow"), id++)
+                    .name("primal_arrow")
+                    .tracker(64, 1, true)
+                    .build();
+            iForgeRegistry.register(primalArrowEntry);
+        }
 
         EntityEntry corruptionAvatarEntry = EntityEntryBuilder.create()
                 .entity(EntityCorruptionAvatar.class)

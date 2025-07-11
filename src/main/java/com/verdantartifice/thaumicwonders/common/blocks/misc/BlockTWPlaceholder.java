@@ -64,6 +64,11 @@ public class BlockTWPlaceholder extends BlockTW {
     }
 
     @Override
+    public int damageDropped(IBlockState state) {
+        return 0;
+    }
+
+    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {
             return true;
@@ -93,11 +98,6 @@ public class BlockTWPlaceholder extends BlockTW {
     @Override
     public EnumPushReaction getPushReaction(IBlockState state) {
         return EnumPushReaction.BLOCK;
-    }
-
-    @Override
-    public int damageDropped(IBlockState state) {
-        return 0;
     }
 
     private void destroyCatalyzer(World worldIn, BlockPos pos) {

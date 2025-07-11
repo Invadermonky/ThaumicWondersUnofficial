@@ -1,19 +1,21 @@
 package com.verdantartifice.thaumicwonders.common.events;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.effects.infusion.PotionVoidflame;
+import com.verdantartifice.thaumicwonders.common.init.InitAttributes;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemBootsVoidWalker;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
 import com.verdantartifice.thaumicwonders.common.misc.PlayerMovementAbilityManager;
+import com.verdantartifice.thaumicwonders.common.registry.AttributesTW;
+import com.verdantartifice.thaumicwonders.common.registry.InfusionEnchantmentsTW;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -23,15 +25,25 @@ import thaumcraft.api.damagesource.DamageSourceThaumcraft;
 public class EntityEvents {
     @SubscribeEvent
     public static void entityHurt(LivingHurtEvent event) {
-        if (event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof EntityPlayer) {
-            EntityPlayer leecher = (EntityPlayer) event.getSource().getTrueSource();
-            ItemStack helm = leecher.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            if (!helm.isEmpty() && helm.getItem() instanceof ItemVoidFortressArmor) {
-                if (leecher.world.rand.nextFloat() < (event.getAmount() / 12.0F)) {
-                    leecher.heal(1.0F);
+        AttributesTW.handleAttackDamageVoid(event);
+        InfusionEnchantmentsTW.handleVoidflameAttack(event);
+        ItemVoidFortressArmor.handleSippingFiendLeech(event);
+
+        if (event.getSource() == DamageSource.FALL) {
+            ItemStack boots = event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET);
+            if (boots.getItem() instanceof ItemBootsVoidWalker) {
+                float damage = ((ItemBootsVoidWalker) boots.getItem()).getAdjustedFallDamage(boots, event.getAmount());
+                event.setAmount(damage);
+                if (damage == 0) {
+                    event.setCanceled(true);
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onEntityHeal(LivingHealEvent event) {
+        AttributesTW.handleHealingReduction(event);
     }
 
     @SubscribeEvent
@@ -42,6 +54,8 @@ public class EntityEvents {
             if (event.getSource() == DamageSource.HOT_FLOOR) {
                 event.setCanceled(true);
             } else if (event.getSource() == DamageSourceThaumcraft.taint && ((ItemBootsVoidWalker) boots.getItem()).handleVoidWalk(entity.world, entity, boots)) {
+                event.setCanceled(true);
+            } else if (event.getSource() == DamageSource.FALL && ((ItemBootsVoidWalker) boots.getItem()).getAdjustedFallDamage(boots, event.getAmount()) <= 0) {
                 event.setCanceled(true);
             }
         }
@@ -56,6 +70,9 @@ public class EntityEvents {
                 event.setAmount(0);
                 event.setCanceled(true);
             } else if (event.getSource() == DamageSourceThaumcraft.taint && ((ItemBootsVoidWalker) boots.getItem()).handleVoidWalk(entity.world, entity, boots)) {
+                event.setAmount(0);
+                event.setCanceled(true);
+            } else if (event.getSource() == DamageSource.FALL && ((ItemBootsVoidWalker) boots.getItem()).getAdjustedFallDamage(boots, event.getAmount()) <= 0) {
                 event.setAmount(0);
                 event.setCanceled(true);
             }
@@ -80,9 +97,19 @@ public class EntityEvents {
     }
 
     @SubscribeEvent
-    public static void onPlayerSpawn(EntityJoinWorldEvent event) {
+    public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
         if (event.getEntity() instanceof EntityPlayer && PlayerMovementAbilityManager.isValidSideForMovement((EntityPlayer) event.getEntity())) {
             PlayerMovementAbilityManager.onPlayerRecreation((EntityPlayer) event.getEntity());
         }
+    }
+
+    @SubscribeEvent
+    public static void onEntityConstructed(EntityEvent.EntityConstructing event) {
+        InitAttributes.onEntityconstructEvent(event);
+    }
+
+    @SubscribeEvent
+    public static void onPotionRemoval(PotionEvent.PotionRemoveEvent event) {
+        PotionVoidflame.onPotionRemoval(event);
     }
 }

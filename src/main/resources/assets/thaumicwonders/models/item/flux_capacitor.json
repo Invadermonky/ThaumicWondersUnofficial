@@ -1,25 +1,12 @@
 {
-    "parent": "thaumicwonders:block/flux_capacitor_0",
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "thaumicwonders:blocks/flux_capacitor_0"
+    },
     "overrides": [
-        {
-            "predicate": { "thaumicwonders:flux": 0 },
-            "model": "thaumicwonders:block/flux_capacitor_0"
-        },
-        {
-            "predicate": { "thaumicwonders:flux": 1 },
-            "model": "thaumicwonders:block/flux_capacitor_1"
-        },
-        {
-            "predicate": { "thaumicwonders:flux": 2 },
-            "model": "thaumicwonders:block/flux_capacitor_2"
-        },
-        {
-            "predicate": { "thaumicwonders:flux": 3 },
-            "model": "thaumicwonders:block/flux_capacitor_3"
-        },
-        {
-            "predicate": { "thaumicwonders:flux": 4 },
-            "model": "thaumicwonders:block/flux_capacitor_4"
-        }
+        {"predicate": { "thaumicwonders:flux": 1 }, "model": "thaumicwonders:item/overrides/flux_capacitor/flux_capacitor_1"},
+        {"predicate": { "thaumicwonders:flux": 2 }, "model": "thaumicwonders:item/overrides/flux_capacitor/flux_capacitor_2"},
+        {"predicate": { "thaumicwonders:flux": 3 }, "model": "thaumicwonders:item/overrides/flux_capacitor/flux_capacitor_3"},
+        {"predicate": { "thaumicwonders:flux": 4 }, "model": "thaumicwonders:item/overrides/flux_capacitor/flux_capacitor_4"}
     ]
 }

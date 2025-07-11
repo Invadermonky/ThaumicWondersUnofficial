@@ -2,11 +2,14 @@ package com.verdantartifice.thaumicwonders.common.blocks.essentia;
 
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockTileTW;
 import com.verdantartifice.thaumicwonders.common.tiles.essentia.TileCreativeEssentiaJar;
+import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,17 +24,22 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.Nullable;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import thaumcraft.api.blocks.ILabelable;
 import thaumcraft.api.items.ItemsTC;
+import thaumcraft.common.blocks.essentia.BlockJarItem;
 import thaumcraft.common.items.consumables.ItemPhial;
 import thaumcraft.common.lib.SoundsTC;
+
+import java.util.List;
 
 public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJar> implements ILabelable {
     private static final int CAPACITY = 250;
@@ -211,10 +219,18 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
         return SoundsTC.JAR;
     }
 
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(TextFormatting.DARK_PURPLE + I18n.format("item.creative_only"));
+        tooltip.add(StringHelper.getLocalizedString("creative_essentia_jar", "tooltip", "desc"));
+        tooltip.add(StringHelper.getLocalizedString("creative_essentia_jar", "tooltip", "info"));
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+    }
+
     private void spawnFilledJar(World world, BlockPos pos, IBlockState state, TileCreativeEssentiaJar te) {
         ItemStack drop = new ItemStack(this, 1, this.getMetaFromState(state));
         if (te.amount > 0) {
-            ((ItemBlockCreativeEssentiaJar) drop.getItem()).setAspects(drop, new AspectList().add(te.aspect, te.amount));
+            ((BlockJarItem) drop.getItem()).setAspects(drop, new AspectList().add(te.aspect, te.amount));
         }
         if (te.aspectFilter != null) {
             if (!drop.hasTagCompound()) {

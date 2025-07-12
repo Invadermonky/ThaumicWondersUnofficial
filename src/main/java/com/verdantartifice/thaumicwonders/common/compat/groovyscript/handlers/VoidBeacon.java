@@ -31,15 +31,6 @@ public class VoidBeacon extends VirtualizedRegistry<VoidBeaconEntry> {
         new RecipeBuilder().setDrop(stack).setWeight(weight).register();
     }
 
-    @MethodDescription(
-            type = MethodDescription.Type.ADDITION,
-            example = @Example("ore('stone'), 10"),
-            priority = 1001
-    )
-    public void add(OreDictIngredient ingredient, int weight) {
-        new RecipeBuilder().setDrop(ingredient).setWeight(weight).register();
-    }
-
     @MethodDescription(type = MethodDescription.Type.QUERY)
     public SimpleObjectStream<VoidBeaconEntry> getRecipes() {
         return new SimpleObjectStream<>(VoidBeaconEntryRegistry.getEntries());

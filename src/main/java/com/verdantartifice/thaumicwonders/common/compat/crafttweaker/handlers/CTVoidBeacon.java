@@ -8,7 +8,6 @@ import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -22,18 +21,6 @@ public class CTVoidBeacon {
             CraftTweakerAPI.logError("Failure adding void beacon entry, IItemStack cannot be empty");
         } else {
             VoidBeaconEntryRegistry.addEntry(itemStack, Math.max(weight, 1));
-        }
-    }
-
-    @ZenMethod
-    public static void add(IOreDictEntry oreDictEntry, int weight) {
-        if (OreDictionary.getOres(oreDictEntry.getName()).isEmpty()) {
-            CraftTweakerAPI.logError("There are no items registered to the Ore Dictionary " + oreDictEntry.getName());
-        }
-        if (weight <= 0) {
-            CraftTweakerAPI.logError("Error adding Void Beacon entry. Weight must be greater than 0.");
-        } else {
-            VoidBeaconEntryRegistry.addEntry(oreDictEntry.getName(), weight);
         }
     }
 

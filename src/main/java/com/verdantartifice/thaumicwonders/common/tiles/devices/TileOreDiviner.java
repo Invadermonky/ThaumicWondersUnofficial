@@ -155,8 +155,8 @@ public class TileOreDiviner extends TileTW implements ITickable {
             if (!stack.isEmpty()) {
                 for (int i : OreDictionary.getOreIDs(stack)) {
                     String oreDict = OreDictionary.getOreName(i);
-                    for(String searchString : this.searchStrings) {
-                        if(oreDict.matches(searchString)) {
+                    for (String searchString : this.searchStrings) {
+                        if (oreDict.matches(searchString)) {
                             return true;
                         }
                     }
@@ -214,7 +214,7 @@ public class TileOreDiviner extends TileTW implements ITickable {
 
         List<String> searchList = new ArrayList<>();
         NBTTagCompound searchTag = compound.getCompoundTag("searchStrings");
-        for(String key : searchTag.getKeySet()) {
+        for (String key : searchTag.getKeySet()) {
             searchList.add(searchTag.getString(key));
         }
         this.searchStrings = searchList.toArray(new String[0]);
@@ -235,7 +235,7 @@ public class TileOreDiviner extends TileTW implements ITickable {
         }
 
         NBTTagCompound searchList = new NBTTagCompound();
-        for(int i = 0; i < this.searchStrings.length; i++) {
+        for (int i = 0; i < this.searchStrings.length; i++) {
             searchList.setString(Integer.toString(i), this.searchStrings[i]);
         }
         compound.setTag("searchStrings", searchList);

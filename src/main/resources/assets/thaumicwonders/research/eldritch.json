@@ -201,7 +201,7 @@
             "name": "thaumicwonders.research.coalescence_matrix.title",
             "icons": ["thaumicwonders:coalescence_matrix"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_VOID_PORTAL", "TWOND_VOID_FORTRESS_ARMOR", "TWOND_PRIMAL_DESTROYER"],
+            "parents": ["TWOND_VOID_PORTAL", "TWOND_VOID_FORTRESS_ARMOR", "TWOND_PRIMAL_DESTROYER@2"],
             "siblings": [],
             "meta": ["SPIKY"],
             "location": [-9, 0],
@@ -211,7 +211,7 @@
                 {
                     "text": "thaumicwonders.research.coalescence_matrix.text.stage.1",
                     "required_knowledge":["THEORY;ELDRITCH;3"],
-                    "warp": 2
+                    "warp": 4
                 },
                 {
                     "text": "thaumicwonders.research.coalescence_matrix.text.stage.2",
@@ -255,7 +255,7 @@
             "name": "thaumicwonders.research.alienist_stone.title",
             "icons": ["thaumicwonders:alienist_stone"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_CATALYZATION_CHAMBER", "~BASEELDRITCH", "~PRIMPEARL"],
+            "parents": ["TWOND_CATALYZATION_CHAMBER", "~BASEELDRITCH"],
             "siblings": [],
             "meta": ["HIDDEN"],
             "location": [-2, 8],

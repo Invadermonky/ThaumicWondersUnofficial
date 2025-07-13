@@ -59,6 +59,8 @@ public class ThaumicWonders {
     //  Thauma Llama
     //  Check out Gadomancy to see if any additions can be made to TW (specifically the Infusion Claw for infusion automation)
     //  Heximite explosion converts blocks into tainted variants (add CrT/GS integration for additional conversions)
+    //  Goggles of Revealing to any helm infusion enchantment (possibly an MI addition)
+    //  Teleport Home focus effect
     //  Portal Generator instability events and custom summons
     //  New Dimensional Ripper model
     //  Improved Madness Engine model

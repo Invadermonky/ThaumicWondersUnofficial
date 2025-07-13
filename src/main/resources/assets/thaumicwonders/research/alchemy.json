@@ -86,7 +86,7 @@
         {
             "key": "TWOND_CATALYZATION_CHAMBER",
             "name": "thaumicwonders.research.catalyzation_chamber.title",
-            "icons": ["thaumicwonders:catalyzation_chamber"],
+            "icons": ["thaumicwonders:textures/research/r_catalyzation_chamber.png"],
             "category": "THAUMIC_WONDERS",
             "parents": ["TWOND_EVERBURNING_URN", "TWOND_END_HEDGE", "~METALPURIFICATION", "~INFERNALFURNACE"],
             "siblings": [],

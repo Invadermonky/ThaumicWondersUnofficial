@@ -32,6 +32,7 @@
 - Added tooltip to Void Fortress Helm indicating it includes Goggles of Revealing and Sipping Fiend mask
 - Added TOP tooltip for Flux Capacitor flux storage
 - Added Primordial Siphon, a rift siphon that creates Primordial Grains
+- Added config options to adjust the amount of lava produced and the vis drain per Everburning Urn fill operation
 
 ### Removed
 - Removed Primordial Accelerator and all associated blocks, this has been replaced by a the new Primordial Siphon

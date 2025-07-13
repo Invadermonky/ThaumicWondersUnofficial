@@ -17,6 +17,8 @@ public class ConfigHandlerTW {
     public static CleansingCharmCategory cleansing_charm = new CleansingCharmCategory();
     @Config.Name("Dimensional Ripper")
     public static DimensionalRipperCategory dimensional_ripper = new DimensionalRipperCategory();
+    @Config.Name("Everburning Urn")
+    public static EverburningUrnCategory everburning_urn = new EverburningUrnCategory();
     @Config.Name("Flying Carpet")
     public static FlyingCarpetCategory flying_carpet = new FlyingCarpetCategory();
     @Config.Name("Meaty Orb")
@@ -90,7 +92,7 @@ public class ConfigHandlerTW {
         @Config.RangeInt(min = 1, max = 100)
         @Config.Name("Flux Removed")
         @Config.Comment("The amount of 'Sticky' warp removed from the player per full operation.")
-        public int fluxRemoved = 1;
+        public int fluxRemoved = 3;
     }
 
     public static class CorruptionAvatarCategory {
@@ -133,6 +135,18 @@ public class ConfigHandlerTW {
         @Config.Name("Fuel Required")
         @Config.Comment("The amount of Vitium Essentia required to grow the targeted rift.")
         public int fuelRequired = 50;
+    }
+
+    public static class EverburningUrnCategory {
+        @Config.RangeInt(min = 1, max = 1000)
+        @Config.Name("Fill Per Operation")
+        @Config.Comment("The amount of lava generated per fill operation. Fill operations occur twice per second.")
+        public int fillPerOperation = 20;
+
+        @Config.RangeDouble(min = 0, max = 100)
+        @Config.Name("Vis Per Operation")
+        @Config.Comment("The amount of Vis drained from the aura each time a lava fill operation occurs. Fill operations occur twice per second.")
+        public double visDrainPerOperation = 0.1;
     }
 
     public static class FlyingCarpetCategory {

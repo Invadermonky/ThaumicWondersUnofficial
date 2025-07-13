@@ -1,5 +1,6 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -30,14 +31,10 @@ public class TileEverburningUrn extends TileTW implements ITickable, IFluidHandl
     @Override
     public void update() {
         this.counter++;
-        if (!this.world.isRemote && this.counter % 5 == 0 && this.tank.getFluidAmount() < CAPACITY) {
-            float visToDrain = (CAPACITY - this.tank.getFluidAmount()) / (float) MAX_PER_FILL;     // A full tank costs 25 vis
-            if (visToDrain > 0.1F) {
-                // Cap drain per op at 0.1 vis
-                visToDrain = 0.1F;
-            }
+        if (!this.world.isRemote && this.counter % 10 == 0 && this.tank.getFluidAmount() < CAPACITY) {
+            float visToDrain = (float) ConfigHandlerTW.everburning_urn.visDrainPerOperation;
             float actualVisDrain = AuraHelper.drainVis(getWorld(), getPos(), visToDrain, false);
-            int mbToAdd = (int) ((float) MAX_PER_FILL * actualVisDrain);
+            int mbToAdd = (int) ((float) ConfigHandlerTW.everburning_urn.fillPerOperation * (actualVisDrain / visToDrain));
             if (mbToAdd > 0) {
                 this.tank.fill(new FluidStack(FluidRegistry.LAVA, mbToAdd), true);
                 this.markDirty();

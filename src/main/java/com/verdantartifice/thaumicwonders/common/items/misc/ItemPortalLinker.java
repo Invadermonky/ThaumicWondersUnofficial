@@ -17,6 +17,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,7 +50,7 @@ public class ItemPortalLinker extends ItemTW {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        if (GuiScreen.isShiftKeyDown()) {
+        if(GuiScreen.isShiftKeyDown()) {
             tooltip.add(StringHelper.getLocalizedString("portal_linker", "tooltip", "info1"));
             tooltip.add(StringHelper.getLocalizedString("portal_linker", "tooltip", "info2"));
         }

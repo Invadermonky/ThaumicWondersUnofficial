@@ -89,6 +89,7 @@
 - Changed the layout of the Eldritch portion of the research tree (left side)
 - Reduced the crafting cost of several recipes to better match the new research layout and Thaumic Augmentation's balance
 - New model and texture for the Portal Anchor
+- Improved Disjunction Cloth onCrafted logic
 
 ## v1.8.4
 ------

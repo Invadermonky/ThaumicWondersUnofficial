@@ -180,24 +180,34 @@ public class TileOreDiviner extends TileTW implements ITickable {
     protected String[] getSearchString(ItemStack stack) {
         List<String> searchStrings = new ArrayList<>();
         if (stack.isEmpty()) {
-            searchStrings.add("^ore[\\w]+$");
-            return searchStrings.toArray(new String[0]);
+            for(String types : ConfigHandlerTW.ore_diviner.oreTypes) {
+                searchStrings.add("^" + types + "[\\w]+$");
+            }
         } else {
             int[] oreIds = OreDictionary.getOreIDs(stack);
             for (int oreId : oreIds) {
                 String oreName = OreDictionary.getOreName(oreId);
                 if (oreName.startsWith("ore")) {
-                    searchStrings.add(oreName);
+                    for(String type : ConfigHandlerTW.ore_diviner.oreTypes) {
+                        searchStrings.add(oreName.startsWith(type) ? oreName : oreName.replaceFirst("^ore", type));
+                    }
                 } else {
-                    for (String oreType : ConfigHandlerTW.ore_diviner.oreAssociations) {
-                        if (oreName.startsWith(oreType)) {
-                            searchStrings.add(oreName.replaceFirst(oreType, "ore"));
+                    for (String oreAssociation : ConfigHandlerTW.ore_diviner.oreAssociations) {
+                        if (oreName.startsWith(oreAssociation)) {
+                            for(String type : ConfigHandlerTW.ore_diviner.oreTypes) {
+                                searchStrings.add(oreName.replaceFirst(oreAssociation, type));
+                            }
                         }
                     }
                 }
             }
-            return searchStrings.toArray(new String[0]);
         }
+        for(String oreType : ConfigHandlerTW.ore_diviner.oreTypes) {
+            for(int i = 0; i < searchStrings.size(); i++) {
+
+            }
+        }
+        return searchStrings.toArray(new String[0]);
     }
 
     protected void sendMessageToPlayer(ITextComponent message) {

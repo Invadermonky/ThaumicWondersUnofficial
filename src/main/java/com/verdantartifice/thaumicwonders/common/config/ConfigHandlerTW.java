@@ -200,7 +200,7 @@ public class ConfigHandlerTW {
         @Config.Comment("The horizontal range the Ore Diviner can detect ores.")
         public int searchRange = 20;
 
-        @Config.Name("Ore Type Associations")
+        @Config.Name("Ore Associations")
         @Config.Comment
                 ({
                         "Associated ore dictionary types that can be used to ping ores of the same type. An item with an",
@@ -210,6 +210,14 @@ public class ConfigHandlerTW {
                 "dust",
                 "gem",
                 "ingot"
+        };
+
+        @Config.Name("Additional Ore Types")
+        @Config.Comment("Different ore types that are related to this material. Searching for 'Iron' would be related to 'oreIron', 'oreNetherIron', or 'oreEndIron'.")
+        public String[] oreTypes = new String[] {
+                "ore",
+                "oreNether",
+                "oreEnd"
         };
 
         @Config.RangeInt(min = 1, max = 10000)

@@ -3,6 +3,7 @@ package com.verdantartifice.thaumicwonders.common.events;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeDisjunctionClothUse;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -20,11 +21,9 @@ public class CraftingEvents {
             for (int index = 0; index < event.craftMatrix.getSizeInventory(); index++) {
                 ItemStack stack = event.craftMatrix.getStackInSlot(index);
                 if (!stack.isEmpty() && stack.getItem() != ItemsTW.DISJUNCTION_CLOTH && stack.isItemEnchanted()) {
-                    NBTTagList tagList = stack.getEnchantmentTagList();
                     int totalLevels = 0;
-                    for (int tagIndex = 0; tagIndex < tagList.tagCount(); tagIndex++) {
-                        NBTTagCompound tag = tagList.getCompoundTagAt(tagIndex);
-                        totalLevels += tag.getInteger("lvl");
+                    for(int level : EnchantmentHelper.getEnchantments(stack).values()) {
+                        totalLevels += level;
                     }
                     if (totalLevels > 0) {
                         AuraHelper.addVis(event.player.world, event.player.getPosition(), (totalLevels * 5.0F));

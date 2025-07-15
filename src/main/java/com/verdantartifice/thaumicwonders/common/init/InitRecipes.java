@@ -149,9 +149,9 @@ public class InitRecipes {
         ThaumcraftApi.addMultiblockRecipeToCatalog(new ResourceLocation(ThaumicWonders.MODID, "coalescence_platform"), new ThaumcraftApi.BluePrint(
                 "TWOND_COALESCENCE_MATRIX",
                 coalescencePlatformBlueprint,
-                new ItemStack(BlocksTC.metalBlockVoid, 45),
+                new ItemStack(BlocksTC.metalBlockVoid, 24),
                 new ItemStack(BlocksTC.stoneArcaneBrick, 24),
-                new ItemStack(BlocksTC.stoneArcane, 16),
+                new ItemStack(BlocksTC.stoneArcane, 37),
                 new ItemStack(BlocksTW.COALESCENCE_MATRIX_PRECURSOR)));
     }
 

@@ -99,8 +99,8 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.32);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ConfigHandlerTW.avatar_of_corruption.entityHealth);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(-7.0);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(-10.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(0);
     }
 
     @Override

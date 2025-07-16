@@ -5,7 +5,7 @@
 ### New Features
 - Added Initiate's Band of Cleansing, a debuff cleansing ring with a few unique properties
 - Added Sharing Tome with a few more features (includes config disable)
-- Added Vis Capacitor, a high capacity vis storage and discharge block (texture courtesy of [IcarussOne](https://www.curseforge.com/members/icarussone/projects))
+- Added Vis Capacitor, a high capacity vis storage and discharge block
 - Added Void Walker Boots, upgraded Traveller's Boots (includes config disable)
 - Added Voidflame potion effect, dealing 1 true damage every second and reducing healing received by 50%
 - Added Voidcaller Armor, a powerful new set of casting robes

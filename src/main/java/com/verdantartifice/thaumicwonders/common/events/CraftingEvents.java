@@ -5,8 +5,6 @@ import com.verdantartifice.thaumicwonders.common.crafting.recipes.RecipeDisjunct
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -22,7 +20,7 @@ public class CraftingEvents {
                 ItemStack stack = event.craftMatrix.getStackInSlot(index);
                 if (!stack.isEmpty() && stack.getItem() != ItemsTW.DISJUNCTION_CLOTH && stack.isItemEnchanted()) {
                     int totalLevels = 0;
-                    for(int level : EnchantmentHelper.getEnchantments(stack).values()) {
+                    for (int level : EnchantmentHelper.getEnchantments(stack).values()) {
                         totalLevels += level;
                     }
                     if (totalLevels > 0) {

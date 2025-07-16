@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.google.common.collect.Lists;
+import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockCoalescenceMatrix;
 import com.verdantartifice.thaumicwonders.common.entities.monsters.EntityCorruptionAvatar;
@@ -17,6 +18,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.blocks.BlocksTC;
@@ -107,25 +109,35 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
     }
 
     protected void performTesla(BlockPos start, BlockPos end, Aspect aspect) {
-        Color color = new Color(aspect.getColor());
-        float r = color.getRed() / 255.0F;
-        float g = color.getGreen() / 255.0F;
-        float b = color.getBlue() / 255.0F;
-        FXDispatcher.INSTANCE.arcLightning(
-                start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
-                end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
-                r, g, b, 0.6F);
+        try {
+            Color color = new Color(aspect.getColor());
+            float r = color.getRed() / 255.0F;
+            float g = color.getGreen() / 255.0F;
+            float b = color.getBlue() / 255.0F;
+            FXDispatcher.INSTANCE.arcLightning(
+                    start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
+                    end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
+                    r, g, b, 0.6F);
+        } catch (NullPointerException e) {
+            ThaumicWonders.LOGGER.error("Failed to load Thaumcraft FXDispatcher.");
+            e.printStackTrace(System.err);
+        }
     }
 
     protected void performZap(BlockPos start, BlockPos end, Aspect aspect) {
-        Color color = new Color(aspect.getColor());
-        float r = color.getRed() / 255.0F;
-        float g = color.getGreen() / 255.0F;
-        float b = color.getBlue() / 255.0F;
-        FXDispatcher.INSTANCE.arcBolt(
-                start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
-                end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
-                r, g, b, 0.6F);
+        try {
+            Color color = new Color(aspect.getColor());
+            float r = color.getRed() / 255.0F;
+            float g = color.getGreen() / 255.0F;
+            float b = color.getBlue() / 255.0F;
+            FXDispatcher.INSTANCE.arcBolt(
+                    start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
+                    end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
+                    r, g, b, 0.6F);
+        } catch (NullPointerException e) {
+            ThaumicWonders.LOGGER.error("Failed to load Thaumcraft FXDispatcher.");
+            e.printStackTrace(System.err);
+        }
     }
 
     protected void spawnAvatar() {
@@ -140,6 +152,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
             // Summon the avatar
             EntityCorruptionAvatar avatar = new EntityCorruptionAvatar(this.world);
             avatar.setLocationAndAngles(this.getPos().getX() + 0.5D, this.getPos().getY(), this.getPos().getZ() + 0.5D, (float) this.world.rand.nextInt(360), 0.0F);
+            avatar.onInitialSpawn(this.world.getDifficultyForLocation(new BlockPos(avatar)), null);
             this.world.spawnEntity(avatar);
         }
     }
@@ -366,7 +379,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
 
     @Override
     public boolean onCasterRightClick(World world, ItemStack stack, EntityPlayer player, BlockPos pos, EnumFacing facing, EnumHand hand) {
-        if (this.getCharge() >= MAX_CHARGE && !this.world.isRemote) {
+        if (this.getCharge() >= MAX_CHARGE && !this.world.isRemote && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
             this.isSpawning = true;
             this.world.playSound(null, this.getPos(), SoundsTC.zap, SoundCategory.BLOCKS, 1.0f, 1.0f);
             this.shufflePillars();

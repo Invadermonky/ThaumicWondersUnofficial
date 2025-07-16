@@ -22,9 +22,9 @@ public class TOPPrimordialSiphon implements Function<ITheOneProbe, Void> {
 
             @Override
             public void addProbeInfo(ProbeMode mode, IProbeInfo info, EntityPlayer player, World world, IBlockState state, IProbeHitData hitData) {
-                if(mode == ProbeMode.EXTENDED) {
+                if (mode == ProbeMode.EXTENDED) {
                     TileEntity tile = world.getTileEntity(hitData.getPos());
-                    if(tile instanceof TilePrimordialSiphon) {
+                    if (tile instanceof TilePrimordialSiphon) {
                         int progress = ((TilePrimordialSiphon) tile).progress;
                         int maxProgress = ConfigHandlerTW.primordial_siphon.requiredRiftDrain;
                         int percent = (int) ((float) progress / maxProgress * 100);

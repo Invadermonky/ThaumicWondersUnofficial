@@ -69,8 +69,14 @@ public class ThaumicWonders {
     //  Improved Madness Engine model
     //  Improved Inspiration Engine model
     //  Rework Timewinder to be block machine with new model
+    //  Sneaking causes the voidcaller's armor to desync from the player
     //  Make the Meteorb into a handheld device (maybe use the timewinder compass model)
     //  Flux distiller model
+    //  Merge NCR Crucible crushing recipes (Erythurgy research) (disablable)
+    //  Void Beacon Rework
+    //      Uses Essentia and Impetus (rift power) to generate vis rapidly
+    //      Each additional level increases the amount of vis produced
+    //      Possibly make it an infinite range beacon
     //  JEI Support
     //      Void Beacon
     //  Enchanter Multiblock (disablable)

@@ -214,7 +214,7 @@ public class ConfigHandlerTW {
 
         @Config.Name("Additional Ore Types")
         @Config.Comment("Different ore types that are related to this material. Searching for 'Iron' would be related to 'oreIron', 'oreNetherIron', or 'oreEndIron'.")
-        public String[] oreTypes = new String[] {
+        public String[] oreTypes = new String[]{
                 "ore",
                 "oreNether",
                 "oreEnd"

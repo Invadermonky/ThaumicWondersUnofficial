@@ -180,7 +180,7 @@ public class TileOreDiviner extends TileTW implements ITickable {
     protected String[] getSearchString(ItemStack stack) {
         List<String> searchStrings = new ArrayList<>();
         if (stack.isEmpty()) {
-            for(String types : ConfigHandlerTW.ore_diviner.oreTypes) {
+            for (String types : ConfigHandlerTW.ore_diviner.oreTypes) {
                 searchStrings.add("^" + types + "[\\w]+$");
             }
         } else {
@@ -188,13 +188,13 @@ public class TileOreDiviner extends TileTW implements ITickable {
             for (int oreId : oreIds) {
                 String oreName = OreDictionary.getOreName(oreId);
                 if (oreName.startsWith("ore")) {
-                    for(String type : ConfigHandlerTW.ore_diviner.oreTypes) {
+                    for (String type : ConfigHandlerTW.ore_diviner.oreTypes) {
                         searchStrings.add(oreName.startsWith(type) ? oreName : oreName.replaceFirst("^ore", type));
                     }
                 } else {
                     for (String oreAssociation : ConfigHandlerTW.ore_diviner.oreAssociations) {
                         if (oreName.startsWith(oreAssociation)) {
-                            for(String type : ConfigHandlerTW.ore_diviner.oreTypes) {
+                            for (String type : ConfigHandlerTW.ore_diviner.oreTypes) {
                                 searchStrings.add(oreName.replaceFirst(oreAssociation, type));
                             }
                         }
@@ -202,8 +202,8 @@ public class TileOreDiviner extends TileTW implements ITickable {
                 }
             }
         }
-        for(String oreType : ConfigHandlerTW.ore_diviner.oreTypes) {
-            for(int i = 0; i < searchStrings.size(); i++) {
+        for (String oreType : ConfigHandlerTW.ore_diviner.oreTypes) {
+            for (int i = 0; i < searchStrings.size(); i++) {
 
             }
         }

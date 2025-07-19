@@ -377,7 +377,9 @@ public class ConfigHandlerTW {
                         "once the ring reaches a certain warp level.",
                         " Format: potion=warplevel",
                         "  potion - the potion registry name",
-                        "  warplevel - the required warp level to remove this effect (must be between 0 and 5)"
+                        "  warplevel - the required warp level to remove this effect (must be between 0 and 5)",
+                        "Note: It is advised to not have the ring remove mining fatigue as this can easily be exploited to rapidly",
+                        "gain ring levels."
                 })
         public String[] removalRanks = new String[]{
                 "minecraft:hunger=0",

@@ -122,12 +122,6 @@
                         "thaumicwonders:primal_arrow_entropy"
                     ]
                 }
-            ],
-            "addenda": [
-                {
-                    "text": "thaumicwonders.research.primal_arrow.text.addenda.1",
-                    "required_research": ["BASICTURRET"]
-                }
             ]
         },
         {

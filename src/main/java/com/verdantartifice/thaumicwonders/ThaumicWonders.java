@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class ThaumicWonders {
     public static final String MODID = "thaumicwonders";
     public static final String NAME = "Thaumic Wonders Unofficial";
-    public static final String VERSION = "2.0.0";
+    public static final String VERSION = "2.1.0";
     public static final String DEPENDENCIES = "required-after:thaumcraft";
 
     public static final CreativeTabs CREATIVE_TAB = new CreativeTabTW(CreativeTabs.getNextID(), ThaumicWonders.MODID);
@@ -73,6 +73,7 @@ public class ThaumicWonders {
     //  Make the Meteorb into a handheld device (maybe use the timewinder compass model)
     //  Flux distiller model
     //  Merge NCR Crucible crushing recipes (Erythurgy research) (disablable)
+    //  Shattered portal linker - random teleport portal
     //  Void Beacon Rework
     //      Uses Essentia and Impetus (rift power) to generate vis rapidly
     //      Each additional level increases the amount of vis produced

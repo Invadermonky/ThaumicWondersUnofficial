@@ -4,6 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.items.consumables.ItemPrimalArrow.PrimalArrowVariant;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,10 +30,11 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 import java.util.List;
 
-public class EntityPrimalArrow extends EntityArrow {
+public class EntityPrimalArrow extends EntityArrow implements IEntityAdditionalSpawnData {
     @SuppressWarnings("unchecked")
     private static final Predicate<Entity> ARROW_TARGETS = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, Entity::canBeCollidedWith);
 
@@ -388,6 +390,19 @@ public class EntityPrimalArrow extends EntityArrow {
     public void setKnockbackStrength(int knockbackStrength) {
         if (this.knockbackStrength < knockbackStrength) {
             this.knockbackStrength = knockbackStrength;
+        }
+    }
+
+    @Override
+    public void writeSpawnData(ByteBuf buffer) {
+        buffer.writeInt(this.shootingEntity != null ? this.shootingEntity.getEntityId() : -1);
+    }
+
+    @Override
+    public void readSpawnData(ByteBuf additionalData) {
+        Entity shooter = world.getEntityByID(additionalData.readInt());
+        if (shooter instanceof EntityLivingBase) {
+            this.shootingEntity = shooter;
         }
     }
 

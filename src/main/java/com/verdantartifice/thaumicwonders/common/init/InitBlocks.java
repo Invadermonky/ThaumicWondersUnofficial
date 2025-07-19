@@ -39,7 +39,7 @@ public class InitBlocks {
         registerBlock(forgeRegistry, new BlockMadnessEngine());
         registerBlock(forgeRegistry, new BlockPortalAnchor());
         registerBlock(forgeRegistry, new BlockVisCapacitor(), ItemBlockCapacitor.class);
-        registerBlock(forgeRegistry, new BlockPortalGenerator(), ItemBlockPortalGenerator.class);
+        registerBlock(forgeRegistry, new BlockPortalGenerator());
         registerBlock(forgeRegistry, new BlockCatalyzationChamber());
         registerBlock(forgeRegistry, new BlockHexamite());
         registerBlock(forgeRegistry, new BlockFluxCapacitor(), ItemBlockCapacitor.class);

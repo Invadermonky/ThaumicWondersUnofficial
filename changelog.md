@@ -1,5 +1,21 @@
 # Changelog
 
+## v2.1.0
+------
+### Changed
+- Added new Disjunction Cloth texture
+- Added new Lethe Water texture
+- Improved Primal Destroyer texture
+
+### Removed
+- Removed Primal Arrows research note about them not working in the Automated Crossbow as it has been fixed externally in [Thaumcraft Fix](https://www.curseforge.com/minecraft/mc-mods/thaumcraftfix)
+
+### Fixed
+- Fixed portal anchor right-click sometimes placing ghost blocks
+- Fixed orphaned tooltip on Portal Generator that sometimes appeared
+- Fixed Empowered Bow of Bone spamming re-equip animation when being recharged by the Amulet of Vis
+- Fixed rare Primal Arrow client desync issue
+
 ## v2.0.0
 ------
 ### New Features

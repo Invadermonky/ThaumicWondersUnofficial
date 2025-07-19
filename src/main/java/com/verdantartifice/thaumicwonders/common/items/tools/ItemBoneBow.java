@@ -3,6 +3,7 @@ package com.verdantartifice.thaumicwonders.common.items.tools;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -13,6 +14,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -53,6 +55,13 @@ public class ItemBoneBow extends ItemBow implements IRechargable {
     }
 
     @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (entityIn instanceof EntityLivingBase && !this.isCharged(stack) && RechargeHelper.getCharge(stack) > 0) {
+            this.setCharged(stack, RechargeHelper.consumeCharge(stack, (EntityLivingBase) entityIn, 1));
+        }
+    }
+
+    @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
         return repair.isItemEqual(new ItemStack(Items.BONE)) || super.getIsRepairable(toRepair, repair);
     }
@@ -60,7 +69,7 @@ public class ItemBoneBow extends ItemBow implements IRechargable {
     @Override
     public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
         int ticks = this.getMaxItemUseDuration(stack) - count;
-        if (ticks >= POWERED_CHARGE_TIME && RechargeHelper.getCharge(stack) > 0) {
+        if (ticks >= POWERED_CHARGE_TIME && this.isCharged(stack)) {
             player.stopActiveHand();
         }
     }
@@ -171,5 +180,16 @@ public class ItemBoneBow extends ItemBow implements IRechargable {
     @Override
     public EnumChargeDisplay showInHud(ItemStack stack, EntityLivingBase player) {
         return IRechargable.EnumChargeDisplay.NORMAL;
+    }
+
+    public boolean isCharged(ItemStack stack) {
+        return stack.hasTagCompound() && stack.getTagCompound().getBoolean("charged");
+    }
+
+    public void setCharged(ItemStack stack, boolean isCharged) {
+        if (!stack.hasTagCompound()) {
+            stack.setTagCompound(new NBTTagCompound());
+        }
+        stack.getTagCompound().setBoolean("charged", isCharged);
     }
 }

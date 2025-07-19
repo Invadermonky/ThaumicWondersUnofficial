@@ -59,14 +59,12 @@ public class BlockPortalAnchor extends BlockDeviceTW<TilePortalAnchor> implement
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!worldIn.isRemote) {
-            ItemStack stack = playerIn.getHeldItemMainhand();
-            if (!(stack.getItem() instanceof ItemCaster)) {
-                playerIn.openGui(ThaumicWonders.INSTANCE, GuiIds.PORTAL_ANCHOR, worldIn, pos.getX(), pos.getY(), pos.getZ());
-            }
+        ItemStack stack = playerIn.getHeldItemMainhand();
+        if (!(stack.getItem() instanceof ItemCaster)) {
+            playerIn.openGui(ThaumicWonders.INSTANCE, GuiIds.PORTAL_ANCHOR, worldIn, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
-        return false;
+        return true;
     }
 
     @Override

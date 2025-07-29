@@ -74,12 +74,6 @@ public class ThaumicWonders {
     //  Flux distiller model
     //  Merge NCR Crucible crushing recipes (Erythurgy research) (disablable)
     //  Shattered portal linker - random teleport portal
-    //  Void Beacon Rework
-    //      Uses Essentia and Impetus (rift power) to generate vis rapidly
-    //      Each additional level increases the amount of vis produced
-    //      Possibly make it an infinite range beacon
-    //  JEI Support
-    //      Void Beacon
     //  Enchanter Multiblock (disablable)
     //      Mutltiblock enchanter, use crafttweaker for additional enchants
     //      Offshoot of Disjunction Cloth

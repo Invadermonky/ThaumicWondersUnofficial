@@ -1,0 +1,33 @@
+{
+  "avatar_ambient": {
+    "sounds": [
+      "thaumicwonders:avatar1",
+      "thaumicwonders:avatar2",
+      "thaumicwonders:avatar3"
+    ],
+    "subtitle": "subtitle.thaumicwonders:avatar.ambient"
+  },
+  "avatar_death": {
+    "sounds": [
+      "thaumicwonders:avatar_death"
+    ],
+    "subtitle": "subtitle.thaumicwonders:avatar.death"
+  },
+  "vb_activate": {
+    "sounds": [
+      "thaumicwonders:void_beacon_activate"
+    ],
+    "subtitle": "subtitle.thaumicwonders:void_beacon.activate"
+  },
+  "vb_ambient": {
+    "sounds": [
+      "thaumicwonders:void_beacon_ambient"
+    ]
+  },
+  "vb_deactivate": {
+    "sounds": [
+      "thaumicwonders:void_beacon_deactivate"
+    ],
+    "subtitle": "subtitle.thaumicwonders:void_beacon.deactivate"
+  }
+}

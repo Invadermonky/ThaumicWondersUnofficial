@@ -9,7 +9,7 @@ import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class GsPlugin implements GroovyPlugin {
+public class GSPlugin implements GroovyPlugin {
     @GroovyBlacklist
     public static GSContainer instance;
 

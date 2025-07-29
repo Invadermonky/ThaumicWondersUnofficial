@@ -12,6 +12,7 @@ This support includes new configuration options, added Crafttweaker and GroovySc
 - The Primal Destroyer damage and effects have been overhauled, making it a much stronger weapon.
 - The Primordial Accretion Chamber and Primordial Accelerator (and their associated blocks) have been removed in favor of a new block, the Primordial Siphon (see below).
 - The Void Portal system has been rewritten, allowing two-way transport between Portal Anchors.
+- The Void Beacon has been rewritten, it now uses Auram and Rift Power to generate Vis in a large area.
 - Numerous bugfixes and new configuration options.
 - For a full list of changes, check out the [changelog](https://github.com/Invadermonky/ThaumicWondersUnofficial/blob/master/changelog.md)
 

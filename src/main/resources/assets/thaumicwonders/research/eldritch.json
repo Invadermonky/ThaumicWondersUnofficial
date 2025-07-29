@@ -170,7 +170,12 @@
                     "recipes": ["thaumicwonders:void_beacon"]
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "thaumicwonders.research.void_beacon.text.addenda.1",
+                    "required_research": ["TWOND_VOID_BEACON@2"]
+                }
+            ]
         },
         {
             "key": "TWOND_VOID_FORTRESS_ARMOR",

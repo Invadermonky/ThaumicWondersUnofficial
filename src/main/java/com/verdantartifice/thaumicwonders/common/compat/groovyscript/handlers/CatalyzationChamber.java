@@ -33,7 +33,8 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
             example = {
                     @Example("item('minecraft:iron_ore'), item('thaumicwonders:alchemist_stone'), item('thaumcraft:cluster:0'), 50, aspect('ordo')"),
                     @Example("ore('oreIron'), item('thaumicwonders:alchemist_stone'), item('thaumcraft:cluster:0', 50), aspect('ordo')")
-            }
+            },
+            description = "groovyscript.wiki.thaumicwonders.catalyzation_chamber.addRecipe1"
     )
     public void addRecipe(IIngredient input, IIngredient catalyst, ItemStack output, int fluxChance, @Nullable AspectStack color) {
         this.recipeBuilder()
@@ -51,6 +52,7 @@ public class CatalyzationChamber extends VirtualizedRegistry<CatalyzationChamber
                     @Example("item('minecraft:iron_ore'), item('thaumicwonders:alchemist_stone'), item('thaumcraft:cluster:0'), 50"),
                     @Example("ore('oreIron'), item('thaumicwonders:alchemist_stone'), item('thaumcraft:cluster:0', 50)")
             },
+            description = "groovyscript.wiki.thaumicwonders.catalyzation_chamber.addRecipe2",
             priority = 1001
     )
     public void addRecipe(IIngredient input, IIngredient catalyst, ItemStack output, int fluxChance) {

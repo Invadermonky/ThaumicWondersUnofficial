@@ -8,11 +8,12 @@ import net.minecraftforge.fml.common.versioning.VersionRange;
 import org.jetbrains.annotations.Nullable;
 
 public enum ModIds {
-    crafttweaker("crafttweaker"),
-    expanded_arcanum("ea"),
-    jeresources("jeresources"),
-    new_crimson_revelations("crimsonrevelations", "1.0.0"),
-    the_one_probe("theoneprobe");
+    crafttweaker(ConstIds.crafttweaker),
+    expanded_arcanum(ConstIds.expanded_arcanum),
+    jeresources(ConstIds.jeresources),
+    new_crimson_revelations(ConstIds.new_crimson_revelations, "1.0.0"),
+    thaumic_augmentation(ConstIds.thaumic_augmentation),
+    the_one_probe(ConstIds.the_one_probe);
 
     public final String modId;
     public final boolean isLoaded;
@@ -67,5 +68,14 @@ public enum ModIds {
         versionStr += isMinVersion ? "," : "";
         versionStr += isMaxVersion ? "]" : ")";
         return versionStr;
+    }
+
+    public static class ConstIds {
+        public static final String crafttweaker = "crafttweaker";
+        public static final String expanded_arcanum = "ea";
+        public static final String jeresources = "jeresources";
+        public static final String new_crimson_revelations = "crimsonrevelations";
+        public static final String thaumic_augmentation = "thaumicaugmentation";
+        public static final String the_one_probe = "theoneprobe";
     }
 }

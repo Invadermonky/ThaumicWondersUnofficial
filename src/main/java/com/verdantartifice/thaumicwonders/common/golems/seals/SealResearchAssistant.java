@@ -24,8 +24,9 @@ public class SealResearchAssistant implements ISeal, ISealConfigArea, ISealConfi
             from the golem seal. The exact injection point will be before the return statement in the card.getRequiredItems() loop.
             If the method call is going to return false, it needs to request the required items from the golem.
             -
-            Should the seal just request items and wait for the golem to put them in the player's inventory or should the
-            research be instant if the golem is nearby and can obtain the required items?
+            The seal will request items and wait for the golem to put them in the player's inventory.
+            -
+            Maybe add toggles for restocking paper and refilling the scribing tools.
      */
 
     @Override

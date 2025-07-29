@@ -59,7 +59,6 @@ public class InitRecipes {
         initSmelting();
         initCatalyzationChamberRecipes();
         initMeatyOrb();
-        InitVoidBeacon.init();
         ModPlugins.registerRecipes(forgeRegistry);
     }
 
@@ -642,7 +641,7 @@ public class InitRecipes {
                 new ItemStack(Items.ENDER_EYE),
                 new ItemStack(Blocks.NETHER_BRICK),
                 new ItemStack(Items.ENDER_EYE),
-                new ItemStack(Items.PRISMARINE_CRYSTALS)
+                new ItemStack(ItemsTC.nuggets, 1, 10)
         ));
 
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "night_vision_goggles"), new InfusionRecipe(

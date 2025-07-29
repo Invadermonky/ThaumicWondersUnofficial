@@ -46,6 +46,11 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
     protected int seedCooldown = 0;
     protected boolean isSuffocating = false;
 
+    //TODO: Give Avatar a death animation. (See about reusing dragon death animation)
+    //  https://github.com/Lykrast/DefiledLands/blob/f4909ea8aeb14a7b460a7a0239110ec01db0850b/src/main/java/lykrast/defiledlands/common/entity/boss/EntityDestroyer.java#L217
+    //  https://github.com/Lykrast/DefiledLands/blob/master/src/main/java/lykrast/defiledlands/client/render/entity/RenderDestroyer.java
+    //  https://github.com/Lykrast/DefiledLands/blob/master/src/main/resources/assets/defiledlands/textures/entity/the_destroyer_explosion.png
+
     public EntityCorruptionAvatar(World world) {
         super(world);
         this.setSize(0.75F, 2.25F);

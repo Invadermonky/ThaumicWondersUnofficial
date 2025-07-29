@@ -3,16 +3,12 @@ package com.verdantartifice.thaumicwonders.common.compat.jei;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.compat.jei.category.CatalyzationChamberCategory;
 import com.verdantartifice.thaumicwonders.common.compat.jei.category.MeatyOrbCategory;
-import com.verdantartifice.thaumicwonders.common.compat.jei.category.VoidBeaconCategory;
 import com.verdantartifice.thaumicwonders.common.compat.jei.wrapper.CatalyzationChamberRecipeWrapper;
 import com.verdantartifice.thaumicwonders.common.compat.jei.wrapper.MeatyOrbWrapper;
-import com.verdantartifice.thaumicwonders.common.compat.jei.wrapper.VoidBeaconWrapper;
 import com.verdantartifice.thaumicwonders.common.crafting.WeightedEntry;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipe;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbEntryRegistry;
-import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconEntry;
-import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconEntryRegistry;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IIngredientType;
@@ -34,7 +30,6 @@ public class JEIPlugin implements IModPlugin {
 
     public static CatalyzationChamberCategory catalyzationChamber;
     public static MeatyOrbCategory meatyOrb;
-    public static VoidBeaconCategory voidBeacon;
 
     public static IJeiRuntime runtime;
     public static HashMap<IRecipeWrapper, String> recipes;
@@ -51,8 +46,7 @@ public class JEIPlugin implements IModPlugin {
         IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
         registry.addRecipeCategories(
                 catalyzationChamber = new CatalyzationChamberCategory(guiHelper),
-                meatyOrb = new MeatyOrbCategory(guiHelper),
-                voidBeacon = new VoidBeaconCategory(guiHelper)
+                meatyOrb = new MeatyOrbCategory(guiHelper)
         );
     }
 
@@ -80,16 +74,9 @@ public class JEIPlugin implements IModPlugin {
     }
 
     private void initMeatyOrb(IModRegistry registry) {
-        //TODO: Gather all Weighted Entries into a list then populate a single page with them.
         registry.handleRecipes(WeightedEntry.class, MeatyOrbWrapper::new, MeatyOrbCategory.UID);
         registry.addRecipeCatalyst(Item.getItemFromBlock(BlocksTW.MEATY_ORB).getDefaultInstance(), meatyOrb.getUid());
         registry.addRecipes(MeatyOrbEntryRegistry.getEntries(), MeatyOrbCategory.UID);
-    }
-
-    private void initVoidBeacon(IModRegistry registry) {
-        registry.handleRecipes(VoidBeaconEntry.class, VoidBeaconWrapper::new, VoidBeaconCategory.UID);
-        registry.addRecipeCatalyst(Item.getItemFromBlock(BlocksTW.VOID_BEACON).getDefaultInstance(), voidBeacon.getUid());
-        registry.addRecipes(VoidBeaconEntryRegistry.getEntries(), VoidBeaconCategory.UID);
     }
 
     private class AspectCache {

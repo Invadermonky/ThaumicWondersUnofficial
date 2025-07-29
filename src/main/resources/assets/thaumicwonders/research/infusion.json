@@ -137,7 +137,12 @@
                     "recipes": ["thaumicwonders:structure_diviner"]
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "thaumicwonders.research.structure_diviner.text.addenda.1",
+                    "required_research": ["TWOND_STRUCTURE_DIVINER@2"]
+                }
+            ]
         },
         {
             "key": "TWOND_NV_GOGGLES",

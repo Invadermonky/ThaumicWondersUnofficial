@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.blocks.devices;
 
 import com.verdantartifice.thaumicwonders.common.blocks.base.BlockDeviceTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileVoidBeacon;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,5 +57,26 @@ public class BlockVoidBeacon extends BlockDeviceTW<TileVoidBeacon> implements IB
             }
         }
         return true;
+    }
+
+    @Override
+    protected void updateState(World worldIn, BlockPos pos, IBlockState state) {
+        boolean flag = !worldIn.isBlockPowered(pos);
+        if (flag != state.getValue(IBlockEnabled.ENABLED)) {
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if (tile instanceof TileVoidBeacon) {
+                if (flag) {
+                    ((TileVoidBeacon) tile).playActivateSound();
+                } else {
+                    ((TileVoidBeacon) tile).playDeactivateSound();
+                }
+            }
+            worldIn.setBlockState(pos, state.withProperty(IBlockEnabled.ENABLED, flag), 0x3);
+        }
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     }
 }

@@ -55,7 +55,7 @@ public class PacketStructureDivinerAction implements IMessage {
                     divinerStack.getTagCompound().removeTag("targetPoint");
                 }
             } else {
-                BlockPos targetPos = entityPlayer.getEntityWorld().findNearestStructure(targetStr, entityPlayer.getPosition(), false);
+                BlockPos targetPos = entityPlayer.getEntityWorld().findNearestStructure(targetStr, entityPlayer.getPosition(), true);
                 if (targetPos == null) {
                     if (divinerStack.hasTagCompound()) {
                         divinerStack.getTagCompound().removeTag("targetPoint");

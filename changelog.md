@@ -2,19 +2,28 @@
 
 ## v2.1.0
 ------
+### Added
+- The Void Beacon now has sound effects when it activates, deactivates and is running (courtesy of IcarussOne)
+
 ### Changed
-- Added new Disjunction Cloth texture
-- Added new Lethe Water texture
-- Improved Primal Destroyer texture
+- Added new Disjunction Cloth texture (courtesy of IcarussOne)
+- Added new Lethe Water texture (courtesy of IcarussOne)
+- Improved Primal Destroyer texture (courtesy of IcarussOne)
+- Heximite now uses the same placement and break sounds as TNT
+- Structure Diviner no longer points to previously explored structures
+- Structure Diviner recipe uses a Rare Earth in the place of Prismarine Crystals
+- Void Beacon effect has been overhauled. It no longer produces items, but instead uses Auram and Rift Power to regenerate vis.
 
 ### Removed
 - Removed Primal Arrows research note about them not working in the Automated Crossbow as it has been fixed externally in [Thaumcraft Fix](https://www.curseforge.com/minecraft/mc-mods/thaumcraftfix)
+- Removed Void Beacon CraftTweaker and GroovyScript methods as they are no longer being used
 
 ### Fixed
 - Fixed portal anchor right-click sometimes placing ghost blocks
 - Fixed orphaned tooltip on Portal Generator that sometimes appeared
 - Fixed Empowered Bow of Bone spamming re-equip animation when being recharged by the Amulet of Vis
 - Fixed rare Primal Arrow client desync issue
+- Fixed a few typos in the GroovyScript generated examples and wiki
 
 ## v2.0.0
 ------

@@ -57,6 +57,7 @@ public class ItemCleansingCharm extends ItemTW implements IBauble, IRechargable 
                 if (this.hasEnergy(itemstack)) {
                     this.incrementProgress(itemstack);
                     int progress = this.getProgress(itemstack);
+                    //TODO: Adjust flux pushed into aura. Make it random or increase the delay.
                     if (progress % 60 == 0) {
                         AuraHelper.polluteAura(player.world, player.getPosition(), 0.1F, true);
                     }

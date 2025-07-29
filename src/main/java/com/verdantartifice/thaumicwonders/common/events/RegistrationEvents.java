@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -48,5 +49,10 @@ public class RegistrationEvents {
     @SubscribeEvent
     public static void registerPotions(RegistryEvent.Register<Potion> event) {
         InitPotions.initPotions(event.getRegistry());
+    }
+
+    @SubscribeEvent
+    public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
+        InitSounds.initSounds(event.getRegistry());
     }
 }

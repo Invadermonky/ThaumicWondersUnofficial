@@ -3,6 +3,7 @@ package com.verdantartifice.thaumicwonders.common.blocks.misc;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.entities.EntityHexamitePrimed;
 import net.minecraft.block.BlockTNT;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
@@ -17,6 +18,7 @@ public class BlockHexamite extends BlockTNT {
         this.setRegistryName(ThaumicWonders.MODID, "hexamite");
         this.setTranslationKey(this.getRegistryName().toString());
         this.setCreativeTab(ThaumicWonders.CREATIVE_TAB);
+        this.setSoundType(SoundType.PLANT);
     }
 
     @Override

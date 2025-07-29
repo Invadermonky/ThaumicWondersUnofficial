@@ -2,22 +2,22 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
-import com.verdantartifice.thaumicwonders.common.crafting.voidbeacon.VoidBeaconEntryRegistry;
+import com.verdantartifice.thaumicwonders.common.registry.SoundsTW;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -30,23 +30,23 @@ import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.lib.utils.EntityUtils;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TileVoidBeacon extends TileTW implements ITickable, IAspectContainer, IEssentiaTransport {
-    private static final int CAPACITY = 100;
+    private static final int ESSENTIA_CAPACITY = 100;
+    private static final int RIFT_POWER_CAPACITY = 1000;
     private static final int PLAY_EFFECTS = 4;
 
     protected final List<TileVoidBeacon.BeamSegment> beamSegments = new ArrayList<>();
 
-    protected Aspect essentiaType = null;
-    protected int essentiaAmount = 0;
+    protected VoidBeaconTier tier = VoidBeaconTier.ZERO;
     protected int tickCounter = 0;
-    protected boolean validPlacement = false;
-    protected int levels = -1;
+    protected int essentiaAmount = 0;
+    protected int riftPower = 0;
+
     protected int progress = 0;
 
     @SideOnly(Side.CLIENT)
@@ -56,7 +56,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
     @Nullable
     public Aspect getEssentiaType() {
-        return this.essentiaType;
+        return this.essentiaAmount > 0 ? Aspect.AURA : null;
     }
 
     public int getEssentiaAmount() {
@@ -64,142 +64,152 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
 
     public void clearEssentia() {
-        this.essentiaType = null;
         this.essentiaAmount = 0;
         this.markDirty();
         this.syncTile(false);
     }
 
-    public int getLevels() {
-        return this.levels;
-    }
-
-    public int getProgress() {
-        return this.progress;
-    }
-
-    @Override
-    protected void readFromTileNBT(NBTTagCompound compound) {
-        this.essentiaType = Aspect.getAspect(compound.getString("essentiaType"));
-        this.essentiaAmount = compound.getShort("essentiaAmount");
-        this.levels = compound.getShort("levels");
-        this.progress = compound.getShort("progress");
-    }
-
-    @Override
-    protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
-        if (this.essentiaType != null) {
-            compound.setString("essentiaType", this.essentiaType.getTag());
-            compound.setShort("essentiaAmount", (short) this.essentiaAmount);
-        }
-        compound.setShort("levels", (short) this.levels);
-        compound.setShort("progress", (short) this.progress);
-        return compound;
+    public VoidBeaconTier getTier() {
+        return this.tier;
     }
 
     @Override
     public void update() {
+        boolean did = false;
         this.tickCounter++;
-        if (!this.world.isRemote && (this.tickCounter % 5 == 0)) {
-            this.fill();
-        }
         if (this.tickCounter % 80 == 0) {
             this.updateBeam();
-            this.updateLevels();
-        }
-        if (!this.world.isRemote && this.tickCounter % 20 == 0) {
-            if (this.canMakeProgress()) {
-                this.drainRifts();
-            }
-            while (this.canConjureItem()) {
-                this.eject(this.getConjuredItem(this.essentiaType));
-                this.progress -= ConfigHandlerTW.void_beacon.riftPowerRequired;
-                this.essentiaAmount -= this.getRequiredEssentia();
-                if (this.essentiaAmount <= 0) {
-                    this.essentiaType = null;
+            VoidBeaconTier checkTier = this.checkTier();
+            if (this.tier != checkTier) {
+                if (this.isBeaconEnabled()) {
+                    if (checkTier == VoidBeaconTier.ZERO) {
+                        this.playDeactivateSound();
+                    } else if (this.tier == VoidBeaconTier.ZERO) {
+                        this.playActivateSound();
+                    }
                 }
-                this.markDirty();
-                this.syncTile(false);
+                this.tier = checkTier;
+                did = true;
             }
         }
+
+        if (this.tickCounter % 60 == 0) {
+            this.playAmbientSound();
+        }
+
+        if (!this.world.isRemote) {
+            if (this.canMakeProgress()) {
+                if (this.tickCounter % 5 == 0) {
+                    int essentiaToAdd = this.fill();
+                    if (essentiaToAdd > 0) {
+                        this.essentiaAmount += essentiaToAdd;
+                        did = true;
+                    }
+                }
+
+                if (this.tickCounter % 20 == 0) {
+                    int riftPowerToAdd = this.drainRifts();
+                    if (riftPowerToAdd > 0) {
+                        this.riftPower += riftPowerToAdd;
+                        did = true;
+                    }
+                }
+
+                if (this.tickCounter % 200 == 0 && this.hasEnoughEssentia() && this.hasEnoughRiftPower()) {
+                    if (this.addVisToAura()) {
+                        this.essentiaAmount -= this.getRequiredEssentia();
+                        this.riftPower -= this.getRequiredRiftPower();
+                        did = true;
+                    }
+                }
+            }
+        }
+
+        if (did) {
+            this.markDirty();
+            this.syncTile(false);
+        }
+    }
+
+    @Override
+    protected void readFromTileNBT(NBTTagCompound compound) {
+        this.tier = VoidBeaconTier.values()[compound.getShort("beaconTier")];
+        this.essentiaAmount = compound.getShort("essentiaAmount");
+        this.riftPower = compound.getShort("riftPower");
+    }
+
+    @Override
+    protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
+        compound.setShort("beaconTier", (short) this.tier.ordinal());
+        compound.setShort("essentiaAmount", (short) this.essentiaAmount);
+        compound.setShort("riftPower", (short) this.riftPower);
+        return compound;
     }
 
     protected boolean canMakeProgress() {
-        return this.validPlacement &&
-                BlockStateUtils.isEnabled(this.getBlockMetadata()) &&
-                this.hasEnoughEssentia() &&
-                this.progress < ConfigHandlerTW.void_beacon.riftPowerRequired;
-    }
-
-    protected boolean canConjureItem() {
-        return this.validPlacement &&
-                BlockStateUtils.isEnabled(this.getBlockMetadata()) &&
-                this.hasEnoughEssentia() &&
-                this.canEject() &&
-                this.progress >= ConfigHandlerTW.void_beacon.riftPowerRequired;
-    }
-
-    protected boolean hasEnoughEssentia() {
-        if (this.essentiaType == null || this.levels < 0) {
-            return false;
-        } else {
-            return (this.essentiaAmount >= this.getRequiredEssentia());
-        }
+        return this.isBeaconEnabled() && this.isValidTier();
     }
 
     protected int getRequiredEssentia() {
-        return ConfigHandlerTW.void_beacon.baseEssentiaCost / (int) (Math.pow(2, this.levels));
+        return ConfigHandlerTW.void_beacon.essentiaCost;
     }
 
-    protected void eject(@Nonnull ItemStack stack) {
-        if (stack.isEmpty()) {
-            return;
-        }
+    protected boolean hasEnoughEssentia() {
+        return this.essentiaAmount >= this.getRequiredEssentia();
+    }
+
+    protected int getRequiredRiftPower() {
+        return ConfigHandlerTW.void_beacon.riftPowerRequired;
+    }
+
+    protected boolean hasEnoughRiftPower() {
+        return this.riftPower >= this.getRequiredRiftPower();
+    }
+
+    protected int fill() {
+        if (this.essentiaAmount >= ESSENTIA_CAPACITY)
+            return 0;
+
         for (EnumFacing face : EnumFacing.HORIZONTALS) {
-            BlockPos otherPos = this.pos.offset(face);
-            TileEntity te = this.world.getTileEntity(otherPos);
-            if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face.getOpposite())) {
-                IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face.getOpposite());
-                for (int slot = 0; slot < handler.getSlots(); slot++) {
-                    stack = handler.insertItem(slot, stack, false);
-                    if (stack.isEmpty()) {
-                        return;
+            if (!this.canInputFrom(face)) {
+                continue;
+            }
+            TileEntity tile = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
+            if (tile instanceof IEssentiaTransport) {
+                IEssentiaTransport otherTile = (IEssentiaTransport) tile;
+                if (!otherTile.canOutputTo(face.getOpposite())) {
+                    continue;
+                }
+                Aspect type = otherTile.getEssentiaType(face.getOpposite());
+
+                if (type != null && otherTile.getEssentiaAmount(face.getOpposite()) > 0
+                        && (this.getEssentiaType(face) == null || type == this.getEssentiaType(face))
+                        && this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite())
+                        && this.getSuctionAmount(face) >= otherTile.getMinimumSuction()
+                ) {
+                    int taken = otherTile.takeEssentia(type, 1, face.getOpposite());
+                    int leftover = this.addToContainer(type, taken);
+                    if (leftover > 0) {
+                        ThaumicWonders.LOGGER.info("Void beacon spilling {} essentia on fill", leftover);
+                        AuraHelper.polluteAura(this.world, this.pos, leftover, true);
                     }
+                    return taken - leftover;
                 }
             }
         }
-        if (!stack.isEmpty()) {
-            ThaumicWonders.LOGGER.warn("Void beacon failed to eject {}!", stack);
+        return 0;
+    }
+
+    protected int drainRifts() {
+        if (this.riftPower >= RIFT_POWER_CAPACITY) {
+            return 0;
         }
-    }
 
-    @Nonnull
-    protected ItemStack getConjuredItem(Aspect aspect) {
-        return VoidBeaconEntryRegistry.getDropForAspect(this.world.rand, aspect);
-    }
-
-    protected boolean canEject() {
-        for (EnumFacing face : EnumFacing.HORIZONTALS) {
-            BlockPos otherPos = this.pos.offset(face);
-            TileEntity te = this.world.getTileEntity(otherPos);
-            if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face.getOpposite())) {
-                IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face.getOpposite());
-                for (int slot = 0; slot < handler.getSlots(); slot++) {
-                    if (handler.getStackInSlot(slot).isEmpty()) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    protected void drainRifts() {
         List<EntityFluxRift> riftList = this.getValidRifts();
+        double drained = 0;
         boolean found = false;
         for (EntityFluxRift rift : riftList) {
-            double drained = Math.sqrt(rift.getRiftSize());
-            this.progress += (int) drained;
+            drained = Math.sqrt(rift.getRiftSize());
             rift.setRiftStability(rift.getRiftStability() - (float) (drained / 15.0D));
             if (this.world.rand.nextInt(33) == 0) {
                 rift.setRiftSize(rift.getRiftSize() - 1);
@@ -209,12 +219,11 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
             }
         }
         if (found) {
-            this.syncTile(false);
-            this.markDirty();
             if (this.tickCounter % 40 == 0) {
                 this.world.addBlockEvent(this.pos, this.getBlockType(), PLAY_EFFECTS, this.tickCounter);
             }
         }
+        return (int) Math.ceil(drained);
     }
 
     protected List<EntityFluxRift> getValidRifts() {
@@ -233,83 +242,151 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         return retVal;
     }
 
-    protected void updateBeam() {
-        this.beamSegments.clear();
-        this.validPlacement = true;
-        Color beamColor = new Color(Aspect.ELDRITCH.getColor());
-        TileVoidBeacon.BeamSegment segment = new TileVoidBeacon.BeamSegment(beamColor.getRGBColorComponents(null));
-        this.beamSegments.add(segment);
-        BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
+    protected VoidBeaconTier checkTier() {
+        return VoidBeaconTier.getVoidBeaconTier(this.world, this.pos);
+    }
 
-        for (int y = this.pos.getY() + 1; y < this.world.getActualHeight(); y++) {
-            mbp.setPos(this.pos.getX(), y, this.pos.getZ());
-            IBlockState blockState = this.world.getBlockState(mbp);
-            if (blockState.getLightOpacity(this.world, mbp) >= 15 && blockState.getBlock() != Blocks.BEDROCK) {
-                this.validPlacement = false;
-                this.beamSegments.clear();
-                break;
-            } else {
-                segment.incrementHeight();
-            }
+    protected float getVisAdded() {
+        switch (this.tier) {
+            case ONE:
+                return (float) ConfigHandlerTW.void_beacon.tierOneVisGenerated;
+            case TWO:
+                return (float) ConfigHandlerTW.void_beacon.tierTwoVisGenerated;
+            case THREE:
+                return (float) ConfigHandlerTW.void_beacon.tierThreeVisGenerated;
+            case FOUR:
+                return (float) ConfigHandlerTW.void_beacon.tierFourVisGenerated;
+            default:
+                return 0;
         }
     }
 
-    protected void updateLevels() {
-        this.levels = 0;
-        if (this.validPlacement) {
-            for (int yOffset = 1; yOffset <= 4; yOffset++) {
-                if (this.isLevelComplete(yOffset)) {
-                    this.levels++;
-                } else {
-                    break;
-                }
-            }
+    protected int getChunkRange() {
+        switch (this.tier) {
+            case ZERO:
+                return -1;
+            case ONE:
+                return ConfigHandlerTW.void_beacon.tierOneRange;
+            case TWO:
+                return ConfigHandlerTW.void_beacon.tierTwoRange;
+            case THREE:
+                return ConfigHandlerTW.void_beacon.tierThreeRange;
+            case FOUR:
+                return ConfigHandlerTW.void_beacon.tierFourRange;
         }
+        return 0;
     }
 
-    protected boolean isLevelComplete(int yOffset) {
-        for (int x = this.pos.getX() - yOffset; x <= this.pos.getX() + yOffset; x++) {
-            for (int z = this.pos.getZ() - yOffset; z <= this.pos.getZ() + yOffset; z++) {
-                int y = this.pos.getY() - yOffset;
-                IBlockState state = this.world.getBlockState(new BlockPos(x, y, z));
-                if (state.getBlock() != BlocksTC.metalBlockVoid) {
-                    return false;
+    protected boolean addVisToAura() {
+        boolean did = false;
+        if (this.isValidTier()) {
+            int chunkRange = this.getChunkRange();
+            float visAdded = this.getVisAdded();
+            if (visAdded > 0 && chunkRange >= 0) {
+                for (int x = -chunkRange; x <= chunkRange; x++) {
+                    for (int z = -chunkRange; z <= chunkRange; z++) {
+                        BlockPos chunkPos = this.pos.add((x << 4), 0, (z << 4));
+                        int baseAura = AuraHelper.getAuraBase(this.world, chunkPos);
+                        float currFlux = AuraHelper.getFlux(this.world, chunkPos);
+                        float currAura = AuraHelper.getVis(this.world, chunkPos);
+                        float overflow = MathHelper.clamp(((float) baseAura * 0.1f), 10.0f, 20.0f);
+                        if ((currAura + currFlux) < ((float) baseAura + overflow)) {
+                            AuraHelper.addVis(this.world, chunkPos, visAdded);
+                            did = true;
+                        }
+                    }
                 }
             }
         }
+        return did;
+    }
+
+    //##################################################
+    //  IAspectContainer
+
+    @Override
+    public AspectList getAspects() {
+        return new AspectList().add(Aspect.AURA, this.essentiaAmount);
+    }
+
+    @Override
+    public void setAspects(AspectList aspectList) {
+        this.essentiaAmount = aspectList != null ? aspectList.getAmount(Aspect.AURA) : 0;
+        this.markDirty();
+        this.syncTile(false);
+    }
+
+    @Override
+    public boolean doesContainerAccept(Aspect aspect) {
         return true;
     }
 
-    protected void fill() {
-        for (EnumFacing face : EnumFacing.HORIZONTALS) {
-            if (!this.canInputFrom(face) || this.getEssentiaAmount(face) >= CAPACITY) {
-                continue;
-            }
-            TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.world, this.pos, face);
-            if (te instanceof IEssentiaTransport) {
-                IEssentiaTransport otherTile = (IEssentiaTransport) te;
-                if (!otherTile.canOutputTo(face.getOpposite())) {
-                    continue;
-                }
-                Aspect type = otherTile.getEssentiaType(face.getOpposite());
+    @Override
+    public int addToContainer(Aspect aspect, int toAdd) {
+        int retVal;
+        if (toAdd == 0) {
+            return 0;
+        } else if (this.essentiaAmount < ESSENTIA_CAPACITY && aspect == Aspect.AURA) {
+            // Add as much as possible and return the remainder
+            int added = Math.min(toAdd, ESSENTIA_CAPACITY - this.essentiaAmount);
+            this.essentiaAmount += added;
+            retVal = (toAdd - added);
+        } else {
+            retVal = toAdd;
+        }
 
-                if (type != null && otherTile.getEssentiaAmount(face.getOpposite()) > 0
-                        && (this.getEssentiaType(face) == null || type == this.getEssentiaType(face))
-                        && this.getSuctionAmount(face) > otherTile.getSuctionAmount(face.getOpposite())
-                        && this.getSuctionAmount(face) >= otherTile.getMinimumSuction()
-                ) {
-                    int taken = otherTile.takeEssentia(type, 1, face.getOpposite());
-                    int leftover = this.addToContainer(type, taken);
-                    if (leftover > 0) {
-                        ThaumicWonders.LOGGER.info("Void beacon spilling {} essentia on fill", leftover);
-                        AuraHelper.polluteAura(this.world, this.pos, leftover, true);
-                    }
-                    this.syncTile(false);
-                    this.markDirty();
-                }
-            }
+        this.markDirty();
+        this.syncTile(false);
+        return retVal;
+    }
+
+    @Override
+    public boolean takeFromContainer(Aspect aspect, int amt) {
+        if (aspect == Aspect.AURA && this.essentiaAmount >= amt) {
+            this.essentiaAmount -= amt;
+            this.markDirty();
+            this.syncTile(false);
+            return true;
+        } else {
+            return false;
         }
     }
+
+    @Override
+    public boolean takeFromContainer(AspectList aspectList) {
+        if (!this.doesContainerContain(aspectList)) {
+            return false;
+        } else {
+            boolean satisfied = true;
+            for (Aspect aspect : aspectList.getAspects()) {
+                satisfied = satisfied && this.takeFromContainer(aspect, aspectList.getAmount(aspect));
+            }
+            return satisfied;
+        }
+    }
+
+    @Override
+    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
+        return aspect == Aspect.AURA && this.essentiaAmount >= amt;
+    }
+
+    @Override
+    public boolean doesContainerContain(AspectList aspectList) {
+        boolean satisfied = true;
+        for (Aspect aspect : aspectList.getAspects()) {
+            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
+        }
+        return satisfied;
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        return aspect == Aspect.AURA ? this.essentiaAmount : 0;
+    }
+
+
+    //##################################################
+    //  IEssentiaTransport
 
     @Override
     public boolean isConnectable(EnumFacing face) {
@@ -338,7 +415,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
     @Override
     public int getSuctionAmount(EnumFacing face) {
-        return (this.getEssentiaAmount(face) >= CAPACITY) ? 0 : 128;
+        return (this.getEssentiaAmount(face) >= ESSENTIA_CAPACITY) ? 0 : 128;
     }
 
     @Override
@@ -349,7 +426,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
     @Override
     public int addEssentia(Aspect aspect, int amt, EnumFacing face) {
-        if (this.canInputFrom(face) && (this.getEssentiaType(face) == null || aspect == this.getEssentiaType(face))) {
+        if (this.canInputFrom(face) && aspect == Aspect.AURA) {
             return (amt - this.addToContainer(aspect, amt));
         } else {
             return 0;
@@ -358,7 +435,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
     @Override
     public Aspect getEssentiaType(EnumFacing face) {
-        return this.essentiaType;
+        return Aspect.AURA;
     }
 
     @Override
@@ -372,95 +449,48 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         return 0;
     }
 
-    @Override
-    public AspectList getAspects() {
-        AspectList list = new AspectList();
-        if (this.essentiaType != null) {
-            list.add(this.essentiaType, this.essentiaAmount);
+    //##################################################
+    //  Beacon Stuff
+
+    public boolean isValidTier() {
+        return this.tier != VoidBeaconTier.ZERO;
+    }
+
+    public boolean isBeaconEnabled() {
+        return BlockStateUtils.isEnabled(this.getBlockMetadata());
+    }
+
+    public void playActivateSound() {
+        this.world.playSound(null, this.pos, SoundsTW.VOID_BEACON_ACTIVATE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+    }
+
+    public void playAmbientSound() {
+        if (!ConfigHandlerTW.void_beacon.disableAmbient && this.isValidTier() && this.isBeaconEnabled()) {
+            this.world.playSound(null, this.pos, SoundsTW.VOID_BEACON_AMBIENT, SoundCategory.BLOCKS, 0.6f, 1.0f);
         }
-        return list;
     }
 
-    @Override
-    public void setAspects(AspectList aspectList) {
-        if (aspectList != null && aspectList.size() > 0) {
-            this.essentiaType = aspectList.getAspectsSortedByAmount()[0];
-            this.essentiaAmount = aspectList.getAmount(this.essentiaType);
-            this.markDirty();
-            this.syncTile(false);
-        }
+    public void playDeactivateSound() {
+        this.world.playSound(null, this.pos, SoundsTW.VOID_BEACON_DEACTIVATE, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
-    @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        return true;
-    }
+    protected void updateBeam() {
+        this.beamSegments.clear();
+        Color beamColor = new Color(Aspect.ELDRITCH.getColor());
+        TileVoidBeacon.BeamSegment segment = new TileVoidBeacon.BeamSegment(beamColor.getRGBColorComponents(null));
+        this.beamSegments.add(segment);
+        BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
 
-    @Override
-    public int addToContainer(Aspect aspect, int toAdd) {
-        int retVal;
-        if (toAdd == 0) {
-            return 0;
-        } else if (this.essentiaAmount < CAPACITY && (this.essentiaType == null || this.essentiaType == aspect)) {
-            // Add as much as possible and return the remainder
-            int added = Math.min(toAdd, CAPACITY - this.essentiaAmount);
-            this.essentiaAmount += added;
-            this.essentiaType = aspect;
-            retVal = (toAdd - added);
-        } else {
-            retVal = toAdd;
-        }
-
-        this.markDirty();
-        this.syncTile(false);
-        return retVal;
-    }
-
-    @Override
-    public boolean takeFromContainer(Aspect aspect, int amt) {
-        if (this.essentiaType == aspect && this.essentiaAmount >= amt) {
-            this.essentiaAmount -= amt;
-            if (this.essentiaAmount <= 0) {
-                this.essentiaType = null;
+        for (int y = this.pos.getY() + 1; y < this.world.getActualHeight(); y++) {
+            mbp.setPos(this.pos.getX(), y, this.pos.getZ());
+            IBlockState blockState = this.world.getBlockState(mbp);
+            if (blockState.getLightOpacity(this.world, mbp) >= 15 && blockState.getBlock() != Blocks.BEDROCK) {
+                this.beamSegments.clear();
+                break;
+            } else {
+                segment.incrementHeight();
             }
-            this.markDirty();
-            this.syncTile(false);
-            return true;
-        } else {
-            return false;
         }
-    }
-
-    @Override
-    public boolean takeFromContainer(AspectList aspectList) {
-        if (!this.doesContainerContain(aspectList)) {
-            return false;
-        } else {
-            boolean satisfied = true;
-            for (Aspect aspect : aspectList.getAspects()) {
-                satisfied = satisfied && this.takeFromContainer(aspect, aspectList.getAmount(aspect));
-            }
-            return satisfied;
-        }
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amt) {
-        return (this.essentiaType == aspect && this.essentiaAmount >= amt);
-    }
-
-    @Override
-    public boolean doesContainerContain(AspectList aspectList) {
-        boolean satisfied = true;
-        for (Aspect aspect : aspectList.getAspects()) {
-            satisfied = satisfied && this.doesContainerContainAmount(aspect, aspectList.getAmount(aspect));
-        }
-        return satisfied;
-    }
-
-    @Override
-    public int containerContains(Aspect aspect) {
-        return (this.essentiaType == aspect) ? this.essentiaAmount : 0;
     }
 
     @SideOnly(Side.CLIENT)
@@ -470,7 +500,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
     @SideOnly(Side.CLIENT)
     public float shouldBeamRender() {
-        if (!this.validPlacement || !BlockStateUtils.isEnabled(this.getBlockMetadata())) {
+        if (!this.isValidTier() || !this.isBeaconEnabled()) {
             return 0.0F;
         } else {
             int i = (int) (this.world.getTotalWorldTime() - this.beamRenderCounter);
@@ -526,6 +556,42 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
         return INFINITE_EXTENT_AABB;
+    }
+
+    public enum VoidBeaconTier {
+        ZERO,
+        ONE,
+        TWO,
+        THREE,
+        FOUR;
+
+        public static VoidBeaconTier getVoidBeaconTier(World world, BlockPos beaconPos) {
+            VoidBeaconTier tier = ZERO;
+            TileEntity tile = world.getTileEntity(beaconPos);
+            if (tile instanceof TileVoidBeacon) {
+                BlockPos searchPos;
+                int tierRadius = 1;
+                checkLoop:
+                for (int y = -1; y >= -4; y--) {
+                    for (int x = -tierRadius; x <= tierRadius; x++) {
+                        for (int z = -tierRadius; z <= tierRadius; z++) {
+                            BlockPos checkPos = beaconPos.add(x, y, z);
+                            IBlockState checkState = world.getBlockState(checkPos);
+                            if (checkState.getBlock() != BlocksTC.metalBlockVoid) {
+                                break checkLoop;
+                            }
+                        }
+                    }
+                    tierRadius++;
+                    tier = tier.next();
+                }
+            }
+            return tier;
+        }
+
+        public VoidBeaconTier next() {
+            return VoidBeaconTier.values()[(this.ordinal() + 1) % VoidBeaconTier.values().length];
+        }
     }
 
     public static class BeamSegment {

@@ -172,12 +172,11 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
     protected void addWarpWardToPlayers() {
         int level = this.tier.ordinal();
-        double range = level * 10 + 10;
-        int duration = (9 + level * 2) * 20;
+        int duration = this.tier.getEffectDuration();
         int x = this.pos.getX();
         int y = this.pos.getY();
         int z = this.pos.getZ();
-        AxisAlignedBB searchArea = new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).grow(range).expand(0, this.world.getHeight(), 0);
+        AxisAlignedBB searchArea = new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).grow(this.tier.getEffectRange()).expand(0, this.world.getHeight(), 0);
         for (EntityPlayer player : this.world.getEntitiesWithinAABB(EntityPlayer.class, searchArea)) {
             if (!player.isPotionActive(PotionWarpWard.instance) || player.getActivePotionEffect(PotionWarpWard.instance).getDuration() < (duration - 80)) {
                 player.addPotionEffect(new PotionEffect(PotionWarpWard.instance, duration, 0, true, false));
@@ -578,11 +577,28 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
 
     public enum VoidBeaconTier {
-        ZERO,
-        ONE,
-        TWO,
-        THREE,
-        FOUR;
+        ZERO(0,0),
+        ONE(20, 220),
+        TWO(30, 260),
+        THREE(40,300),
+        FOUR(50, 340);
+
+        private final int effectRange;
+        private final int effectDuration;
+
+        VoidBeaconTier(int effectRange, int effectDuration) {
+            this.effectRange = effectRange;
+            this.effectDuration = effectDuration;
+        }
+
+
+        public int getEffectRange() {
+            return this.effectRange;
+        }
+
+        public int getEffectDuration() {
+            return this.effectDuration;
+        }
 
         public static VoidBeaconTier getVoidBeaconTier(World world, BlockPos beaconPos) {
             VoidBeaconTier tier = ZERO;

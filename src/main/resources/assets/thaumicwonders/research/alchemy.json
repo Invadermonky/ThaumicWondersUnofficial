@@ -184,7 +184,9 @@
                     "recipes": [
                         "thaumicwonders:hedge_end_stone",
                         "thaumicwonders:hedge_chorus_fruit",
-                        "thaumicwonders:hedge_ender_pearl"
+                        "thaumicwonders:hedge_ender_pearl",
+                        "thaumicwonders:hedge_shulker_shell",
+                        "thaumicwonders:hedge_dragons_breath"
                     ]
                 }
             ],

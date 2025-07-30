@@ -6,6 +6,7 @@
 - Added Void Beacon sound effects when it activates, deactivates and is running (courtesy of IcarussOne)
 - Added Erythurgy crucible deconstruction recipes ported from NCR (courtesy of IcarussOne)
 - Added Erythurgy gemstone ore refining
+- Added Shulker Shell duplication recipe to End Hedge Alchemy
 
 ### Changed
 - Added new Disjunction Cloth texture (courtesy of IcarussOne)

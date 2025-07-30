@@ -5,8 +5,10 @@ import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.registry.SoundsTW;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -24,9 +26,9 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.aura.AuraHelper;
-import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.EntityFluxRift;
+import thaumcraft.common.lib.potions.PotionWarpWard;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.lib.utils.EntityUtils;
 
@@ -53,6 +55,8 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     private long beamRenderCounter;
     @SideOnly(Side.CLIENT)
     private float beamRenderScale;
+
+    //TODO: Fix Void Beacon research
 
     @Nullable
     public Aspect getEssentiaType() {
@@ -99,6 +103,8 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
         if (!this.world.isRemote) {
             if (this.canMakeProgress()) {
+                this.addWarpWardToPlayers();
+
                 if (this.tickCounter % 5 == 0) {
                     int essentiaToAdd = this.fill();
                     if (essentiaToAdd > 0) {
@@ -164,6 +170,21 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
 
     protected boolean hasEnoughRiftPower() {
         return this.riftPower >= this.getRequiredRiftPower();
+    }
+
+    protected void addWarpWardToPlayers() {
+        int level = this.tier.ordinal();
+        double range = level * 10 + 10;
+        int duration = (9 + level * 2) * 20;
+        int x = this.pos.getX();
+        int y = this.pos.getY();
+        int z = this.pos.getZ();
+        AxisAlignedBB searchArea = new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).grow(range).expand(0, this.world.getHeight(), 0);
+        for (EntityPlayer player : this.world.getEntitiesWithinAABB(EntityPlayer.class, searchArea)) {
+            if (!player.isPotionActive(PotionWarpWard.instance) || player.getActivePotionEffect(PotionWarpWard.instance).getDuration() < (duration - 80)) {
+                player.addPotionEffect(new PotionEffect(PotionWarpWard.instance, duration, 0, true, false));
+            }
+        }
     }
 
     protected int fill() {
@@ -577,7 +598,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
                         for (int z = -tierRadius; z <= tierRadius; z++) {
                             BlockPos checkPos = beaconPos.add(x, y, z);
                             IBlockState checkState = world.getBlockState(checkPos);
-                            if (checkState.getBlock() != BlocksTC.metalBlockVoid) {
+                            if (!checkState.getBlock().isBeaconBase(world, checkPos, beaconPos)) {
                                 break checkLoop;
                             }
                         }

@@ -56,8 +56,6 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     @SideOnly(Side.CLIENT)
     private float beamRenderScale;
 
-    //TODO: Fix Void Beacon research
-
     @Nullable
     public Aspect getEssentiaType() {
         return this.essentiaAmount > 0 ? Aspect.AURA : null;

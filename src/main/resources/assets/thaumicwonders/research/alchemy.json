@@ -1,6 +1,140 @@
 {
     "entries": [
         {
+            "key": "TWOND_ERYTHURGY",
+            "name": "thaumicwonders.research.erythurgy.title",
+            "icons": ["thaumicwonders:textures/research/r_erythurgy.png"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_BASE"],
+            "siblings": ["TWOND_ENTROPIC_PROCESSING", "TWOND_ORDERED_DECONSTRUCTION"],
+            "meta": ["ROUND", "HIDDEN"],
+            "location": [-2, 2],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.erythurgy.stage.0",
+                    "required_knowledge": ["THEORY;ALCHEMY;1", "OBSERVATION;BASICS;2"],
+                    "required_item": [
+                        "thaumcraft:phial;1;1;{Aspects:[{amount:10,key:'aer'}]}",
+                        "thaumcraft:phial;1;1;{Aspects:[{amount:10,key:'terra'}]}",
+                        "thaumcraft:phial;1;1;{Aspects:[{amount:10,key:'ignis'}]}",
+                        "thaumcraft:phial;1;1;{Aspects:[{amount:10,key:'aqua'}]}",
+                        "thaumcraft:phial;1;1;{Aspects:[{amount:10,key:'ordo'}]}",
+                        "thaumcraft:phial;1;1;{Aspects:[{amount:10,key:'perditio'}]}"
+                    ]
+                },
+                {
+                    "text": "thaumicwonders.research.erythurgy.stage.1"
+                }
+            ]
+        },
+        {
+            "key": "TWOND_ENTROPIC_PROCESSING",
+            "name": "thaumicwonders.research.entropic_processing.title",
+            "icons": ["thaumicwonders:textures/research/r_entropic_processing.png"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_ERYTHURGY"],
+            "siblings": [],
+            "meta": [],
+            "location": [-3, 3],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.entropic_processing.stage.0",
+                    "recipes": [
+                        "thaumicwonders:entropyblazepowder",
+                        "thaumicwonders:entropybonemeal",
+                        "thaumicwonders:entropysunflower",
+                        "thaumicwonders:entropylilac",
+                        "thaumicwonders:entropyrose",
+                        "thaumicwonders:entropypeony",
+                        "thaumicwonders:entropysugar"
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "TWOND_ORDERED_DECONSTRUCTION",
+            "name": "thaumicwonders.research.ordered_deconstruction.title",
+            "icons": ["thaumicwonders:textures/research/r_ordered_deconstruction.png"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_ERYTHURGY"],
+            "siblings": [],
+            "meta": [],
+            "location": [-1, 3],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.ordered_deconstruction.stage.0",
+                    "recipes": [
+                        "thaumicwonders:orderwool",
+                        "thaumicwonders:orderglowstone",
+                        "thaumicwonders:ordermagma",
+                        "thaumicwonders:orderquartz",
+                        "thaumicwonders:ordersandstone",
+                        "thaumicwonders:orderprismarine",
+                        "thaumicwonders:orderchorus"
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "TWOND_AVARIC_DECONSTRUCTION",
+            "name": "thaumicwonders.research.avaric_deconstruction.title",
+            "icons": ["thaumicwonders:textures/research/r_avaric_deconstruction.png"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_ERYTHURGY"],
+            "siblings": [],
+            "meta": [],
+            "location": [-2, 4],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.avaric_deconstruction.stage.0",
+                    "required_knowledge": ["THEORY;ALCHEMY;1"]
+                },
+                {
+                    "text": "thaumicwonders.research.avaric_deconstruction.stage.1",
+                    "recipes": [
+                        "thaumicwonders:avariccoal",
+                        "thaumicwonders:avaricdiamond",
+                        "thaumicwonders:avaricemerald",
+                        "thaumicwonders:avaricquartz",
+                        "thaumicwonders:avaricamber"
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "TWOND_ALKAHEST",
+            "name": "thaumicwonders.research.alkahest.title",
+            "icons": ["thaumicwonders:alkahest_vat"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_AVARIC_DECONSTRUCTION"],
+            "siblings": [],
+            "meta": [],
+            "location": [-2, 6],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.alkahest.text.stage.1",
+                    "required_knowledge": ["THEORY;ALCHEMY;1"]
+                },
+                {
+                    "text": "thaumicwonders.research.alkahest.text.stage.2",
+                    "recipes": [
+                        "thaumicwonders:alkahest_vat"
+                    ]
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "TWOND_NETHER_HEDGE",
             "name": "thaumicwonders.research.nether_hedge.title",
             "icons": ["minecraft:soul_sand"],
@@ -33,10 +167,10 @@
             "name": "thaumicwonders.research.end_hedge.title",
             "icons": ["minecraft:end_stone"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_NETHER_HEDGE"],
+            "parents": ["TWOND_BASE"],
             "siblings": [],
             "meta": [],
-            "location": [0, 4],
+            "location": [2, 2],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -61,10 +195,10 @@
             "name": "thaumicwonders.research.disjunction_cloth.title",
             "icons": ["thaumicwonders:disjunction_cloth"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_BASE"],
+            "parents": ["TWOND_INSPIRATION_ENGINE"],
             "siblings": [],
             "meta": [],
-            "location": [2, 0],
+            "location": [3, -1],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -84,14 +218,65 @@
             "addenda": []
         },
         {
+            "key": "TWOND_LETHE_WATER",
+            "name": "thaumicwonders.research.lethe_water.title",
+            "icons": ["thaumicwonders:lethe_water"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_DISJUNCTION_CLOTH"],
+            "siblings": [],
+            "meta": [],
+            "location": [5, -1],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.lethe_water.text.stage.1",
+                    "required_knowledge": ["THEORY;ALCHEMY;1","THEORY;AUROMANCY;1"]
+                },
+                {
+                    "text": "thaumicwonders.research.lethe_water.text.stage.2",
+                    "recipes": [
+                        "thaumicwonders:lethe_water"
+                    ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "TWOND_PANACEA",
+            "name": "thaumicwonders.research.panacea.title",
+            "icons": ["thaumicwonders:panacea"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_LETHE_WATER"],
+            "siblings": [],
+            "meta": [],
+            "location": [7, -1],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.panacea.text.stage.1",
+                    "required_knowledge": ["THEORY;ALCHEMY;1"]
+                },
+                {
+                    "text": "thaumicwonders.research.panacea.text.stage.2",
+                    "recipes": [
+                        "thaumicwonders:panacea",
+                        "thaumicwonders:enchanted_panacea"
+                    ]
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "TWOND_CATALYZATION_CHAMBER",
             "name": "thaumicwonders.research.catalyzation_chamber.title",
             "icons": ["thaumicwonders:textures/research/r_catalyzation_chamber.png"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_EVERBURNING_URN", "TWOND_END_HEDGE", "~METALPURIFICATION", "~INFERNALFURNACE"],
+            "parents": ["TWOND_EVERBURNING_URN", "~METALPURIFICATION", "~INFERNALFURNACE"],
             "siblings": [],
             "meta": ["SPIKY"],
-            "location": [-2, 6],
+            "location": [0, 6],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -136,7 +321,7 @@
             "parents": ["TWOND_CATALYZATION_CHAMBER"],
             "siblings": [],
             "meta": [],
-            "location": [-4, 6],
+            "location": [-1, 7],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -154,81 +339,5 @@
             ],
             "addenda": []
         },
-        {
-            "key": "TWOND_PANACEA",
-            "name": "thaumicwonders.research.panacea.title",
-            "icons": ["thaumicwonders:panacea"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_END_HEDGE"],
-            "siblings": [],
-            "meta": [],
-            "location": [0, 6],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.panacea.text.stage.1",
-                    "required_knowledge": ["THEORY;ALCHEMY;1"]
-                },
-                {
-                    "text": "thaumicwonders.research.panacea.text.stage.2",
-                    "recipes": [
-                        "thaumicwonders:panacea",
-                        "thaumicwonders:enchanted_panacea"
-                    ]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_ALKAHEST",
-            "name": "thaumicwonders.research.alkahest.title",
-            "icons": ["thaumicwonders:alkahest_vat"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_PANACEA"],
-            "siblings": [],
-            "meta": [],
-            "location": [0, 8],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.alkahest.text.stage.1",
-                    "required_knowledge": ["THEORY;ALCHEMY;1"]
-                },
-                {
-                    "text": "thaumicwonders.research.alkahest.text.stage.2",
-                    "recipes": [
-                        "thaumicwonders:alkahest_vat"
-                    ]
-                }
-            ],
-            "addenda": []
-        },
-        {
-            "key": "TWOND_LETHE_WATER",
-            "name": "thaumicwonders.research.lethe_water.title",
-            "icons": ["thaumicwonders:lethe_water"],
-            "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_DISJUNCTION_CLOTH"],
-            "siblings": [],
-            "meta": [],
-            "location": [4, 0],
-            "reward_item": [],
-            "reward_knowledge": [],
-            "stages": [
-                {
-                    "text": "thaumicwonders.research.lethe_water.text.stage.1",
-                    "required_knowledge": ["THEORY;ALCHEMY;1","THEORY;AUROMANCY;1"]
-                },
-                {
-                    "text": "thaumicwonders.research.lethe_water.text.stage.2",
-                    "recipes": [
-                        "thaumicwonders:lethe_water"
-                    ]
-                }
-            ],
-            "addenda": []
-        }
     ]
 }

@@ -8,7 +8,7 @@
             "parents": ["TWOND_NETHER_HEDGE", "~EVERFULLURN", "~INFUSION"],
             "siblings": [],
             "meta": [],
-            "location": [-2, 3],
+            "location": [0, 4],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -100,7 +100,7 @@
             "parents": ["TWOND_INSPIRATION_ENGINE", "~ELEMENTALTOOLS"],
             "siblings": [],
             "meta": [],
-            "location": [4, 4],
+            "location": [4, 0],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -124,7 +124,7 @@
             "parents": ["TWOND_ORE_DIVINER"],
             "siblings": [],
             "meta": [],
-            "location": [6, 4],
+            "location": [6, 0],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [

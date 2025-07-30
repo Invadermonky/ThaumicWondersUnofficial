@@ -3,7 +3,9 @@
 ## v2.1.0
 ------
 ### Added
-- The Void Beacon now has sound effects when it activates, deactivates and is running (courtesy of IcarussOne)
+- Added Void Beacon sound effects when it activates, deactivates and is running (courtesy of IcarussOne)
+- Added Erythurgy crucible deconstruction recipes ported from NCR (courtesy of IcarussOne)
+- Added Erythurgy gemstone ore refining
 
 ### Changed
 - Added new Disjunction Cloth texture (courtesy of IcarussOne)
@@ -12,7 +14,10 @@
 - Heximite now uses the same placement and break sounds as TNT
 - Structure Diviner no longer points to previously explored structures
 - Structure Diviner recipe uses a Rare Earth in the place of Prismarine Crystals
-- Void Beacon effect has been overhauled. It no longer produces items, but instead uses Auram and Rift Power to regenerate vis.
+- Void Beacon effect has been overhauled. It no longer produces items, but instead uses Auram and Rift Power to regenerate vis
+- Cleansing Charm flux pollution has been changed to have a 5% chance every 3 seconds (~2-3 flux per removal operation)
+- Increased Quartz Eldritch Cluster smelting yield from 3 quartz to 4 quartz
+- Changed the location of several research nodes for improved progression
 
 ### Removed
 - Removed Primal Arrows research note about them not working in the Automated Crossbow as it has been fixed externally in [Thaumcraft Fix](https://www.curseforge.com/minecraft/mc-mods/thaumcraftfix)

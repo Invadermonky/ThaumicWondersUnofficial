@@ -27,6 +27,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -409,6 +410,111 @@ public class InitRecipes {
                 PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER),
                 new AspectList().add(Aspect.MAGIC, 20).add(Aspect.MIND, 20).add(Aspect.VOID, 20)
         ));
+
+
+        //Entropic
+        int perditioCost = ConfigHandlerTW.erythurgy.perditioCost;
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "entropyblazepowder"), new CrucibleRecipe(
+                "TWOND_ENTROPIC_PROCESSING",
+                new ItemStack(Items.BLAZE_POWDER, 4, 0),
+                new ItemStack(Items.BLAZE_ROD),
+                new AspectList().add(Aspect.ENTROPY, perditioCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "entropybonemeal"), new CrucibleRecipe(
+                "TWOND_ENTROPIC_PROCESSING",
+                new ItemStack(Items.DYE, 6, 15),
+                new ItemStack(Items.BONE),
+                new AspectList().add(Aspect.ENTROPY, perditioCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "entropysunflower"), new CrucibleRecipe(
+                "TWOND_ENTROPIC_PROCESSING",
+                new ItemStack(Items.DYE, 4, 11),
+                new ItemStack(Blocks.DOUBLE_PLANT, 1, 0),
+                new AspectList().add(Aspect.ENTROPY, perditioCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "entropylilac"), new CrucibleRecipe(
+                "TWOND_ENTROPIC_PROCESSING",
+                new ItemStack(Items.DYE, 4, 13),
+                new ItemStack(Blocks.DOUBLE_PLANT, 1, 1),
+                new AspectList().add(Aspect.ENTROPY, perditioCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "entropyrose"), new CrucibleRecipe(
+                "TWOND_ENTROPIC_PROCESSING",
+                new ItemStack(Items.DYE, 4, 1),
+                new ItemStack(Blocks.DOUBLE_PLANT, 1, 4),
+                new AspectList().add(Aspect.ENTROPY, perditioCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "entropypeony"), new CrucibleRecipe(
+                "TWOND_ENTROPIC_PROCESSING",
+                new ItemStack(Items.DYE, 4, 9),
+                new ItemStack(Blocks.DOUBLE_PLANT, 1, 5),
+                new AspectList().add(Aspect.ENTROPY, perditioCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "entropysugar"), new CrucibleRecipe(
+                "TWOND_ENTROPIC_PROCESSING",
+                new ItemStack(Items.SUGAR, 2, 0),
+                new ItemStack(Items.REEDS, 1, 0),
+                new AspectList().add(Aspect.ENTROPY, perditioCost)));
+
+        //Ordered
+        int ordoCost = ConfigHandlerTW.erythurgy.ordoCost;
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "orderwool"), new CrucibleRecipe(
+                "TWOND_ORDERED_DECONSTRUCTION",
+                new ItemStack(Items.STRING, 4, 0),
+                new OreIngredient("wool"),
+                new AspectList().add(Aspect.ORDER, ordoCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "orderglowstone"), new CrucibleRecipe(
+                "TWOND_ORDERED_DECONSTRUCTION",
+                new ItemStack(Items.GLOWSTONE_DUST, 4, 0),
+                new OreIngredient("glowstone"),
+                new AspectList().add(Aspect.ORDER, ordoCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "ordermagma"), new CrucibleRecipe(
+                "TWOND_ORDERED_DECONSTRUCTION",
+                new ItemStack(Items.MAGMA_CREAM, 2, 0),
+                new ItemStack(Blocks.MAGMA),
+                new AspectList().add(Aspect.ORDER, ordoCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "orderquartz"), new CrucibleRecipe(
+                "TWOND_ORDERED_DECONSTRUCTION",
+                new ItemStack(Items.QUARTZ, 4, 0),
+                new OreIngredient("blockQuartz"),
+                new AspectList().add(Aspect.ORDER, ordoCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "ordersandstone"), new CrucibleRecipe(
+                "TWOND_ORDERED_DECONSTRUCTION",
+                new ItemStack(Blocks.SAND, 4, 0),
+                new OreIngredient("sandstone"),
+                new AspectList().add(Aspect.ORDER, ordoCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "orderprismarine"), new CrucibleRecipe(
+                "TWOND_ORDERED_DECONSTRUCTION",
+                new ItemStack(Items.PRISMARINE_SHARD, 4, 0),
+                new OreIngredient("blockPrismarine"),
+                new AspectList().add(Aspect.ORDER, ordoCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "orderchorus"), new CrucibleRecipe(
+                "TWOND_ORDERED_DECONSTRUCTION",
+                new ItemStack(Items.CHORUS_FRUIT_POPPED, 4, 0),
+                new ItemStack(Blocks.PURPUR_BLOCK),
+                new AspectList().add(Aspect.ORDER, ordoCost)));
+
+        //Avaric
+        int desireCost = ConfigHandlerTW.erythurgy.desireCost;
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "avariccoal"), new CrucibleRecipe(
+                "TWOND_AVARIC_DECONSTRUCTION",
+                new ItemStack(Items.COAL, 3, 0),
+                new OreIngredient("oreCoal"),
+                new AspectList().add(Aspect.ENTROPY, perditioCost).add(Aspect.DESIRE, desireCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "avaricdiamond"), new CrucibleRecipe(
+                "TWOND_AVARIC_DECONSTRUCTION",
+                new ItemStack(Items.DIAMOND, 3),
+                new OreIngredient("oreDiamond"),
+                new AspectList().add(Aspect.ENTROPY, perditioCost).add(Aspect.DESIRE, desireCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "avaricemerald"), new CrucibleRecipe(
+                "TWOND_AVARIC_DECONSTRUCTION",
+                new ItemStack(Items.EMERALD, 3),
+                new OreIngredient("oreEmerald"),
+                new AspectList().add(Aspect.ENTROPY, perditioCost).add(Aspect.DESIRE, desireCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "avaricquartz"), new CrucibleRecipe(
+                "TWOND_AVARIC_DECONSTRUCTION",
+                new ItemStack(Items.QUARTZ, 3),
+                new OreIngredient("oreQuartz"),
+                new AspectList().add(Aspect.ENTROPY, perditioCost).add(Aspect.DESIRE, desireCost)));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "avaricamber"), new CrucibleRecipe(
+                "TWOND_AVARIC_DECONSTRUCTION",
+                new ItemStack(ItemsTC.amber, 3),
+                new OreIngredient("oreAmber"),
+                new AspectList().add(Aspect.ENTROPY, perditioCost).add(Aspect.DESIRE, desireCost)));
     }
 
     private static void initInfusionRecipes() {
@@ -826,7 +932,7 @@ public class InitRecipes {
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0), new ItemStack(Items.IRON_INGOT, 3, 0), 1.0F);
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 1), new ItemStack(Items.GOLD_INGOT, 3, 0), 1.0F);
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 6), new ItemStack(ItemsTC.quicksilver, 3, 0), 1.0F);
-        GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7), new ItemStack(Items.QUARTZ, 3, 0), 1.0F);
+        GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7), new ItemStack(Items.QUARTZ, 4, 0), 1.0F);
         GameRegistry.addSmelting(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 8), new ItemStack(ItemsTC.ingots, 2, 1), 1.0F);
 
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 0), new ItemStack(Items.IRON_NUGGET, 1, 0));

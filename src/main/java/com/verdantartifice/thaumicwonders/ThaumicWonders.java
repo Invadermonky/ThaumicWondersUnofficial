@@ -72,7 +72,6 @@ public class ThaumicWonders {
     //  Sneaking causes the voidcaller's armor to desync from the player
     //  Make the Meteorb into a handheld device (maybe use the timewinder compass model)
     //  Flux distiller model
-    //  Merge NCR Crucible crushing recipes (Erythurgy research) (disablable)
     //  Shattered portal linker - random teleport portal
     //  Enchanter Multiblock (disablable)
     //      Mutltiblock enchanter, use crafttweaker for additional enchants

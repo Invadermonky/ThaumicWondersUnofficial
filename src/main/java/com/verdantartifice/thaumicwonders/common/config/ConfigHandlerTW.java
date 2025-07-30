@@ -19,6 +19,8 @@ public class ConfigHandlerTW {
     public static DimensionalRipperCategory dimensional_ripper = new DimensionalRipperCategory();
     @Config.Name("Everburning Urn")
     public static EverburningUrnCategory everburning_urn = new EverburningUrnCategory();
+    @Config.Name("Crucible Crushing")
+    public static ErythurgyCategory erythurgy = new ErythurgyCategory();
     @Config.Name("Flying Carpet")
     public static FlyingCarpetCategory flying_carpet = new FlyingCarpetCategory();
     @Config.Name("Meaty Orb")
@@ -135,6 +137,26 @@ public class ConfigHandlerTW {
         @Config.Name("Fuel Required")
         @Config.Comment("The amount of Vitium Essentia required to grow the targeted rift.")
         public int fuelRequired = 50;
+    }
+
+    public static class ErythurgyCategory {
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 1, max = 100)
+        @Config.Name("Ordered Deconstruction Cost")
+        @Config.Comment("The Ordo cost of each ordered deconstruction crucible recipe. (Example: Wool -> String x4)")
+        public int ordoCost = 20;
+
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 1, max = 100)
+        @Config.Name("Entropic Deconstruction Cost")
+        @Config.Comment("The Perditio cost of each entropic deconstruction crucible recipe. (Example: Blaze Rod -> Blaze Powder x6)")
+        public int perditioCost = 20;
+
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 1, max = 100)
+        @Config.Name("Avaric Deconstruction Cost")
+        @Config.Comment("The Desiderium cost of each avaric deconstruction crucible recipe. This amount is in addition to the perditio cost set in Entropic Deconstruction Cost.")
+        public int desireCost = 10;
     }
 
     public static class EverburningUrnCategory {

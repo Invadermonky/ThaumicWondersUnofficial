@@ -236,7 +236,7 @@
             "parents": ["TWOND_INSPIRATION_ENGINE", "~BASEELDRITCH", "~MINDBIOTHAUMIC"],
             "siblings": [],
             "meta": ["SPIKY", "HIDDEN"],
-            "location": [4, 2],
+            "location": [3, 1],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [
@@ -263,7 +263,7 @@
             "parents": ["TWOND_CATALYZATION_CHAMBER", "~BASEELDRITCH"],
             "siblings": [],
             "meta": ["HIDDEN"],
-            "location": [-2, 8],
+            "location": [1, 7],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [

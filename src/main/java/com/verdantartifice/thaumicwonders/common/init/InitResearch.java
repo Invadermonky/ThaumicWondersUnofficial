@@ -62,14 +62,14 @@ public class InitResearch {
     }
 
     private static void initOptionals() {
+        if (ConfigHandlerTW.sharing_tome.enableTome) {
+            ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/sharing_tome"));
+        }
         if (ConfigHandlerTW.void_walker_boots.enableBoots) {
             ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/void_walker_boots"));
         }
         if (ConfigHandlerTW.warp_ring.enableRing) {
             ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/warp_ring"));
-        }
-        if (ConfigHandlerTW.sharing_tome.enableTome) {
-            ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/optional/sharing_tome"));
         }
     }
 }

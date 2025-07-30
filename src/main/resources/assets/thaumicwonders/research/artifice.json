@@ -8,7 +8,7 @@
             "parents": ["TWOND_BASE", "~METALLURGY@2", "~BASEARTIFICE", "~BASEAUROMANCY@1"],
             "siblings": [],
             "meta": [],
-            "location": [2, 2],
+            "location": [2, 0],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [

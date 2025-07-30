@@ -73,6 +73,7 @@ public class ThaumicWonders {
     //  Make the Meteorb into a handheld device (maybe use the timewinder compass model)
     //  Flux distiller model
     //  Shattered portal linker - random teleport portal
+    //  Look into adding a replacement for the original Void Beacon that generates items from raw essentia
     //  Enchanter Multiblock (disablable)
     //      Mutltiblock enchanter, use crafttweaker for additional enchants
     //      Offshoot of Disjunction Cloth

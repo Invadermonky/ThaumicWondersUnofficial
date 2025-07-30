@@ -19,6 +19,7 @@
 - Cleansing Charm flux pollution has been changed to have a 5% chance every 3 seconds (~2-3 flux per removal operation)
 - Increased Quartz Eldritch Cluster smelting yield from 3 quartz to 4 quartz
 - Changed the location of several research nodes for improved progression
+- Dimensional Ripper how has a comparator output based on the amount of stored essentia
 
 ### Removed
 - Removed Primal Arrows research note about them not working in the Automated Crossbow as it has been fixed externally in [Thaumcraft Fix](https://www.curseforge.com/minecraft/mc-mods/thaumcraftfix)

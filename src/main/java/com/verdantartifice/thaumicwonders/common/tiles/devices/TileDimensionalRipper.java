@@ -42,6 +42,10 @@ public class TileDimensionalRipper extends TileTW implements IAspectContainer, I
         return this.amount;
     }
 
+    public int getCapacity() {
+        return CAPACITY;
+    }
+
     @Override
     protected void readFromTileNBT(NBTTagCompound compound) {
         this.amount = compound.getShort("essentia");

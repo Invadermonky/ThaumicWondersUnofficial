@@ -39,6 +39,7 @@ import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.*;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.blocks.basic.BlockPillar;
+import thaumcraft.common.items.consumables.ItemPhial;
 import thaumcraft.common.lib.crafting.DustTriggerMultiblock;
 import thaumcraft.common.lib.crafting.InfusionEnchantmentRecipe;
 import thaumcraft.common.lib.enchantment.EnumInfusionEnchantment;
@@ -362,6 +363,19 @@ public class InitRecipes {
                 new ItemStack(Items.ENDER_PEARL),
                 new AspectList().add(Aspect.MOTION, 15).add(Aspect.ELDRITCH, 10)
         ));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_shulker_shell"), new CrucibleRecipe(
+                "TWOND_END_HEDGE",
+                new ItemStack(Items.SHULKER_SHELL, 2),
+                new ItemStack(Items.SHULKER_SHELL),
+                new AspectList().add(Aspect.PROTECT, 10).add(Aspect.ELDRITCH, 5).add(Aspect.BEAST, 5).add(Aspect.VOID, 5)
+        ));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_dragons_breath"), new CrucibleRecipe(
+                "TWOND_END_HEDGE",
+                new ItemStack(Items.DRAGON_BREATH),
+                ItemPhial.makeFilledPhial(Aspect.AIR),
+                new AspectList().add(Aspect.ELDRITCH, 10).add(Aspect.DARKNESS, 10).add(Aspect.ENTROPY, 10).add(Aspect.FIRE, 10).add(Aspect.ALCHEMY, 10)
+        ));
+
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "disjunction_cloth"), new CrucibleRecipe(
                 "TWOND_DISJUNCTION_CLOTH",
                 new ItemStack(ItemsTW.DISJUNCTION_CLOTH),

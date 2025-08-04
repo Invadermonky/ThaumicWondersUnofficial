@@ -395,7 +395,7 @@ public class InitRecipes {
                 new AspectList().add(Aspect.EXCHANGE, 40).add(Aspect.ALCHEMY, 10)
         ));
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "primordial_pearl_reconstitution"), new CrucibleRecipe(
-                "TWOND_PRIMORDIAL_ACCELERATOR&&!TWOND_PRIMORDIAL_GRAIN",
+                "!TWOND_PRIMORDIAL_GRAIN",
                 new ItemStack(ItemsTC.primordialPearl, 1, 7),
                 new ItemStack(ItemsTW.PRIMORDIAL_GRAIN),
                 new AspectList().add(Aspect.AIR, 250).add(Aspect.EARTH, 250).add(Aspect.FIRE, 250).add(Aspect.WATER, 250).add(Aspect.ORDER, 250).add(Aspect.ENTROPY, 250)

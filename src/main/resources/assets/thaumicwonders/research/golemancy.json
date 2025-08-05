@@ -1,0 +1,32 @@
+{
+  "entries": [
+    {
+      "key": "TWOND_SEAL_RESEARCH_ASSISTANT",
+      "name": "thaumicwonders.research.seal_research_assistant.title",
+      "icons": ["thaumicwonders:textures/items/seal_research_assistant.png"],
+      "category": "THAUMIC_WONDERS",
+      "parents": ["TWOND_INSPIRATION_ENGINE", "!MINDBIOTHAUMIC"],
+      "location": [3, 1],
+      "stages": [
+        {
+          "text": "thaumicwonders.research.seal_research_assistant.text.stage.1",
+          "required_knowledge": ["THEORY;GOLEMANCY;2"]
+        },
+        {
+          "text": "thaumicwonders.research.seal_research_assistant.text.stage.2",
+          "recipes": ["thaumicwonders:seal_research_assistant"]
+        }
+      ],
+      "addenda": [
+        {
+          "text": "thaumicwonders.research.seal_research_assistant.text.addenda.1",
+          "required_research": ["TWOND_SEAL_RESEARCH_ASSISTANT"]
+        },
+        {
+          "text": "thaumicwonders.research.seal_research_assistant.text.addenda.2",
+          "required_research": ["TWOND_SEAL_RESEARCH_ASSISTANT"]
+        }
+      ]
+    }
+  ]
+}

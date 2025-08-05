@@ -233,10 +233,10 @@
             "name": "thaumicwonders.research.madness_engine.title",
             "icons": ["thaumicwonders:madness_engine"],
             "category": "THAUMIC_WONDERS",
-            "parents": ["TWOND_INSPIRATION_ENGINE", "~BASEELDRITCH", "~MINDBIOTHAUMIC"],
+            "parents": ["TWOND_SEAL_RESEARCH_ASSISTANT", "~BASEELDRITCH", "~MINDBIOTHAUMIC"],
             "siblings": [],
             "meta": ["SPIKY", "HIDDEN"],
-            "location": [3, 1],
+            "location": [5, 1],
             "reward_item": [],
             "reward_knowledge": [],
             "stages": [

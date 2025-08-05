@@ -87,6 +87,7 @@ tile.thaumicwonders:shimmerleaf_crop.name=Shimmerleaf
 tile.thaumicwonders:vishroom_crop.name=Vishroom
 
 # Items
+item.seal.research_assistant.name=Control Seal: Research Assistant
 item.thaumicwonders:alchemist_stone.name=Alchemist's Stone
 item.thaumicwonders:alienist_stone.name=Alienist's Stone
 item.thaumicwonders:bone_bow.name=Empowered Bow of Bone
@@ -161,6 +162,9 @@ tooltip.thaumicwonders:sharing_tome.player=Bound to %s's research
 tooltip.thaumicwonders:vis_capacitor.vis=Stored Vis: %d
 
 # GUI
+gui.thaumicwonders:golem_prop.restock_paper=Restock Paper
+gui.thaumicwonders:golem_prop.refill_ink=Refill Ink
+gui.thaumicwonders:golem_prop.provide_materials=Provide Materials
 thaumicwonders.gui.timewinder.0=Full Moon
 thaumicwonders.gui.timewinder.1=Waning Gibbous
 thaumicwonders.gui.timewinder.2=Third Quarter
@@ -358,6 +362,12 @@ thaumicwonders.research.primordial_siphon.text.stage.1=I have detected trace amo
 thaumicwonders.research.primordial_siphon.text.stage.2=I've drawn up the plans for a modified void siphon that will collect trace amounts of primal matter.<BR>If I manage to collect enough, I can perhaps gain some insight into the very birth of this world and the foundations of magic!
 thaumicwonders.research.primordial_siphon.text.stage.3=Fascinating! While the process is slow, the small amounts of primal matter appear to be drawn to one another, and, once it reaches a critical mass, it forms a small grain.<BR>These grains contain the essential, primordial nature of the primal matter without any discernable aspects. I believe that they could be reconstituted into proper Primordial Pearls with exposure to sufficient essentia.
 research.!TWOND_PRIMORDIAL_GRAIN.text=Examine a Primordial Grain
+
+thaumicwonders.research.seal_research_assistant.title=Control Seal: Research Assistant
+thaumicwonders.research.seal_research_assistant.text.stage.1=One of the major frustrations of my research is the constant need for specific materials required to test my theories. Having to search through my storage for specific items is a wasteful expenditure of my time.<BR>While one solution would be to organize my storage so I can actually find the things I'm looking for, who has time for that? Golemancy should provide the solution to my dilemma...
+thaumicwonders.research.seal_research_assistant.text.stage.2=I have a devised a seal that is capable of detecting nearby Research Tables and will provide any needed materials.<BR>Due to the limited intelligence of the golems, some of the logic has to be handled by the seal itself. This means that the seal must be placed on the side of an inventory container.<BR>The seal will automatically detect the amount of paper and the amount of ink in the scribing tools and will restock or refill the items accordingly.<BR>When I select a new research path, any items I am missing will be requested by the seal and will be placed in my inventory, provided they are either in the research assistant seal chest or can be retrieved by a nearby golem.
+thaumicwonders.research.seal_research_assistant.text.addenda.1=Testing has shown that only standard scribing tools can be refilled. Magical variants of the tools interfere with the functionality of the seal.
+thaumicwonders.research.seal_research_assistant.text.addenda.2=In order for the seal to provide me with any research materials I may need, I must stay within the seal range.<BR>If I am outside the range, the seal is unable to detect my presence.
 
 thaumicwonders.research.sharing_tome.title=Sharing Knowledge
 thaumicwonders.research.sharing_tome.text.stage.1=Lethe Water's ability to strip knowledge from my very being makes me wonder about the intricacies of the liquid's mind altering properties.<BR>There is some sort of exchange occurring that grants me magical energy at the expense of previously gained insights.  As this gained magical energy can be imbued directly into books and items, I wonder if I can instead find a way to capture the lost knowledge directly.<BR>This requires further study.

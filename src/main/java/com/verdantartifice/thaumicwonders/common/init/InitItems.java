@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.init;
 
 import com.verdantartifice.thaumicwonders.common.compat.ModIds;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
+import com.verdantartifice.thaumicwonders.common.golems.seals.SealResearchAssistant;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemBootsVoidWalker;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemNightVisionGoggles;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
@@ -26,6 +27,7 @@ import com.verdantartifice.thaumicwonders.common.items.tools.ItemPrimalDestroyer
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
+import thaumcraft.api.golems.GolemHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -64,6 +66,10 @@ public class InitItems {
         registerItem(forgeRegistry, new ItemTransmuterStone());
         registerItem(forgeRegistry, new ItemAlienistStone());
         registerItem(forgeRegistry, new ItemTW("eldritch_cluster", "iron", "gold", "copper", "tin", "silver", "lead", "cinnabar", "quartz", "void"));
+    }
+
+    public static void initSeals() {
+        GolemHelper.registerSeal(new SealResearchAssistant());
     }
 
     private static void registerItem(IForgeRegistry<Item> forgeRegistry, Item item, boolean enabled) {

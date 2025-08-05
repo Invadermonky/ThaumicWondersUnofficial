@@ -44,6 +44,7 @@ public class InitResearch {
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/alchemy"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/artifice"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/auromancy"));
+        ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/golemancy"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/infusion"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/eldritch"));
         ThaumcraftApi.registerResearchLocation(new ResourceLocation(ThaumicWonders.MODID, "research/scans"));

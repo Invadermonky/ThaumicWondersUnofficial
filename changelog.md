@@ -7,6 +7,7 @@
 - Added Erythurgy crucible deconstruction recipes ported from NCR (courtesy of IcarussOne)
 - Added Erythurgy gemstone ore refining
 - Added Shulker Shell duplication recipe to End Hedge Alchemy
+- Added Control Seal: Research Assistant, a golem seal that restocks paper in the Research Table, refills Scribing Tools, and provides needed research materials
 
 ### Changed
 - Added new Disjunction Cloth texture (courtesy of IcarussOne)
@@ -31,6 +32,7 @@
 - Fixed Empowered Bow of Bone spamming re-equip animation when being recharged by the Amulet of Vis
 - Fixed rare Primal Arrow client desync issue
 - Fixed a few typos in the GroovyScript generated examples and wiki
+- Fixed Primordial Pearl crucible reconstitution recipe requiring invalid research
 
 ## v2.0.0
 ------

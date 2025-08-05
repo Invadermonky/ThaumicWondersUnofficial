@@ -577,10 +577,10 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     }
 
     public enum VoidBeaconTier {
-        ZERO(0,0),
+        ZERO(0, 0),
         ONE(20, 220),
         TWO(30, 260),
-        THREE(40,300),
+        THREE(40, 300),
         FOUR(50, 340);
 
         private final int effectRange;
@@ -589,15 +589,6 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
         VoidBeaconTier(int effectRange, int effectDuration) {
             this.effectRange = effectRange;
             this.effectDuration = effectDuration;
-        }
-
-
-        public int getEffectRange() {
-            return this.effectRange;
-        }
-
-        public int getEffectDuration() {
-            return this.effectDuration;
         }
 
         public static VoidBeaconTier getVoidBeaconTier(World world, BlockPos beaconPos) {
@@ -622,6 +613,14 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
                 }
             }
             return tier;
+        }
+
+        public int getEffectRange() {
+            return this.effectRange;
+        }
+
+        public int getEffectDuration() {
+            return this.effectDuration;
         }
 
         public VoidBeaconTier next() {

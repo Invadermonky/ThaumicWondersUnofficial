@@ -12,13 +12,14 @@ This support includes new configuration options, added Crafttweaker and GroovySc
 - The Primal Destroyer damage and effects have been overhauled, making it a much stronger weapon.
 - The Primordial Accretion Chamber and Primordial Accelerator (and their associated blocks) have been removed in favor of a new block, the Primordial Siphon (see below).
 - The Void Portal system has been rewritten, allowing two-way transport between Portal Anchors.
-- The Void Beacon has been rewritten, it now uses Auram and Rift Power to generate Vis in a large area.
+- The Void Beacon has been rewritten, it now uses Auram and Rift Power to generate Vis and passively applies Warp Ward.
 - Numerous bugfixes and new configuration options.
 - For a full list of changes, check out the [changelog](https://github.com/Invadermonky/ThaumicWondersUnofficial/blob/master/changelog.md)
 
 ## New Features
 - **Initiate's Band of Cleansing** - a new ring that can cleanse negative effects and negate some Warp events, for a price...
 - **Primordial Siphon** - a rift siphon similar to Thaumcraft's Void Siphon that uses rift power to create Primordial Grains
+- **Seal: Research Assistant** - a new golem seal that restocks Research Table paper, refills Scribing Tools, and retrieves missing research items from nearby chests
 - **Tome of Sharing** - (Includes config disable) a Tome of Sharing with a lot of options. Check out the configuration to see what it can do!
 - **Vis Capacitor** - a new high-capacity Vis storage block similar to Thaumcraft's Vis Battery
 - **Void Walker Boots** - a new version of the Traveler's Boots that has more armor and provides immunity to magma block damage, tainted soil poison, and soul sand slowdown

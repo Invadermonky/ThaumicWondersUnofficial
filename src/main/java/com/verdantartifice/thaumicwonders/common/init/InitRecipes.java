@@ -37,6 +37,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.*;
+import thaumcraft.api.golems.GolemHelper;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.blocks.basic.BlockPillar;
 import thaumcraft.common.items.consumables.ItemPhial;
@@ -887,6 +888,18 @@ public class InitRecipes {
                 new ItemStack(ItemsTC.mechanismComplex),
                 new ItemStack(BlocksTC.metalAlchemical),
                 new ItemStack(ItemsTC.nuggets, 1, 10)
+        ));
+
+        ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "seal_research_assistant"), new InfusionRecipe(
+                "TWOND_SEAL_RESEARCH_ASSISTANT",
+                GolemHelper.getSealStack("thaumicwonders:research_assistant"),
+                1,
+                new AspectList().add(Aspect.SENSES, 10).add(Aspect.MIND, 10).add(Aspect.DESIRE, 10),
+                new ItemStack(ItemsTC.seals),
+                new OreIngredient("paper"),
+                new ItemStack(Items.WRITABLE_BOOK),
+                new OreIngredient("paper"),
+                new ItemStack(ItemsTC.mind, 1, 1)
         ));
 
         if (ConfigHandlerTW.sharing_tome.enableTome) {

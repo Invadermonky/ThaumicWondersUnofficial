@@ -1,0 +1,13 @@
+{
+	"package": "com.verdantartifice.thaumicwonders.core.mixins",
+	"required": true,
+	"refmap": "mixins.thaumicwonders.refmap.json",
+	"target": "@env(DEFAULT)",
+	"minVersion": "0.8.5",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"ContainerResearchTableMixin"
+	],
+	"server": [],
+	"client": []
+}

@@ -16,7 +16,7 @@
 - Heximite now uses the same placement and break sounds as TNT
 - Structure Diviner no longer points to previously explored structures
 - Structure Diviner recipe uses a Rare Earth in the place of Prismarine Crystals
-- Void Beacon effect has been overhauled. It no longer produces items, but instead uses Auram and Rift Power to regenerate vis
+- Void Beacon effect has been overhauled. It no longer produces items, but instead uses Auram and Rift Power to regenerate vis and provides Warp Ward
 - Cleansing Charm flux pollution has been changed to have a 5% chance every 3 seconds (~2-3 flux per removal operation)
 - Increased Quartz Eldritch Cluster smelting yield from 3 quartz to 4 quartz
 - Changed the location of several research nodes for improved progression

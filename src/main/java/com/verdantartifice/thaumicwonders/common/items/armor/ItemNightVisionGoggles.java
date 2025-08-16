@@ -5,6 +5,7 @@ import baubles.api.IBauble;
 import baubles.api.render.IRenderBauble;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
+import com.verdantartifice.thaumicwonders.common.utils.PlayerHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -111,7 +112,7 @@ public class ItemNightVisionGoggles extends ItemArmor implements IBauble, IRende
         if (playerLight <= 7) {
             return true;
         } else {
-            RayTraceResult trace = entityLiving.rayTrace(24, 0);
+            RayTraceResult trace = PlayerHelper.rayTrace(entityLiving, 24, 0);
             if (trace != null) {
                 switch (trace.typeOfHit) {
                     case BLOCK:

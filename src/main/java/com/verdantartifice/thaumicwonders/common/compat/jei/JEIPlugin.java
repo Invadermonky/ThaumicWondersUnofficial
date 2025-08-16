@@ -11,23 +11,15 @@ import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.Ca
 import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbEntryRegistry;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
-import mezz.jei.api.recipe.IIngredientType;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.Item;
-import thaumcraft.api.aspects.AspectList;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin {
-    public static final String ASPECT_PATH;
-    public static final IIngredientType<AspectList> ASPECT_LIST;
-
     public static CatalyzationChamberCategory catalyzationChamber;
     public static MeatyOrbCategory meatyOrb;
 
@@ -77,25 +69,5 @@ public class JEIPlugin implements IModPlugin {
         registry.handleRecipes(WeightedEntry.class, MeatyOrbWrapper::new, MeatyOrbCategory.UID);
         registry.addRecipeCatalyst(Item.getItemFromBlock(BlocksTW.MEATY_ORB).getDefaultInstance(), meatyOrb.getUid());
         registry.addRecipes(MeatyOrbEntryRegistry.getEntries(), MeatyOrbCategory.UID);
-    }
-
-    private class AspectCache {
-        private String aspect;
-        private List<String> items;
-
-        public AspectCache() {
-            this.items = new ArrayList<>();
-        }
-
-        public AspectCache(String aspect) {
-            this();
-            this.aspect = aspect;
-        }
-    }
-
-    static {
-        ASPECT_PATH = "." + File.separator + "config" + File.separator + "thaumicjei_itemstack_aspects.json";
-        ASPECT_LIST = () -> AspectList.class;
-        recipes = new HashMap<>();
     }
 }

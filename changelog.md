@@ -1,4 +1,11 @@
 # Changelog
+## v2.1.1
+------
+### Changed
+- Modified Research Assistant Seal behavior to be a little bit smarter
+### Fixed
+- Fixed a syntax error resulting in an invalid alchemy research being registered
+- Fixed server disconnect issue when using the Night Vision Goggles
 
 ## v2.1.0
 ------

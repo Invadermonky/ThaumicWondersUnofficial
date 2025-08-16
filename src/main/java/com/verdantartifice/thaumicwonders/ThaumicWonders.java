@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class ThaumicWonders {
     public static final String MODID = "thaumicwonders";
     public static final String NAME = "Thaumic Wonders Unofficial";
-    public static final String VERSION = "2.1.0";
+    public static final String VERSION = "2.1.1";
     public static final String DEPENDENCIES = "required-after:thaumcraft";
 
     public static final CreativeTabs CREATIVE_TAB = new CreativeTabTW(CreativeTabs.getNextID(), ThaumicWonders.MODID);
@@ -71,6 +71,7 @@ public class ThaumicWonders {
     //  Flux distiller model
     //  Shattered portal linker - random teleport portal
     //  Look into adding a replacement for the original Void Beacon that generates items from raw essentia
+    //  Modified ore diviner that infuses essentia into stone and transforms it into ores
     //  Enchanter Multiblock (disablable)
     //      Mutltiblock enchanter, use crafttweaker for additional enchants
     //      Offshoot of Disjunction Cloth

@@ -23,7 +23,6 @@ public class InfusionEnchantmentsTW {
         if (event.getSource().getTrueSource() instanceof EntityLivingBase) {
             EntityLivingBase source = (EntityLivingBase) event.getSource().getTrueSource();
             EntityLivingBase target = event.getEntityLiving();
-            // 某些情况下 getActiveHand 可能为 null，直接查询主/副手可避免 NPE/IAE
             int rankMain = EnumInfusionEnchantment.getInfusionEnchantmentLevel(source.getHeldItem(EnumHand.MAIN_HAND), VOIDFLAME);
             int rankOff = EnumInfusionEnchantment.getInfusionEnchantmentLevel(source.getHeldItem(EnumHand.OFF_HAND), VOIDFLAME);
             int rank = Math.max(rankMain, rankOff);

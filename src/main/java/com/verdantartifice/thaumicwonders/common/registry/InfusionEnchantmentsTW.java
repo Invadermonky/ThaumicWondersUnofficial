@@ -5,6 +5,7 @@ import com.verdantartifice.thaumicwonders.common.effects.PotionsTW;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import thaumcraft.common.lib.enchantment.EnumInfusionEnchantment;
@@ -22,8 +23,10 @@ public class InfusionEnchantmentsTW {
         if (event.getSource().getTrueSource() instanceof EntityLivingBase) {
             EntityLivingBase source = (EntityLivingBase) event.getSource().getTrueSource();
             EntityLivingBase target = event.getEntityLiving();
-            ItemStack heldStack = source.getHeldItem(source.getActiveHand());
-            int rank = EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldStack, VOIDFLAME);
+            // 某些情况下 getActiveHand 可能为 null，直接查询主/副手可避免 NPE/IAE
+            int rankMain = EnumInfusionEnchantment.getInfusionEnchantmentLevel(source.getHeldItem(EnumHand.MAIN_HAND), VOIDFLAME);
+            int rankOff = EnumInfusionEnchantment.getInfusionEnchantmentLevel(source.getHeldItem(EnumHand.OFF_HAND), VOIDFLAME);
+            int rank = Math.max(rankMain, rankOff);
             if (rank > 0) {
                 target.addPotionEffect(new PotionEffect(PotionsTW.VOIDFLAME, 60 + 60 * rank, 1, true, false));
             }

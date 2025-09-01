@@ -1,4 +1,12 @@
 # Changelog
+## v2.1.2
+------
+### Fixed
+- Fixed an issue that caused Eldritch Cluster aspects to not register correctly
+- Fixed a serialization issue with the Portal Linker, Ore Diviner, and Portal Anchor. Existing Portal Anchors and Linkers will need to be reset after updating.
+- Fixed a crash with the Coalescence Matrix caused by Thaumcraft not checking for null values
+- Fixed Portal Linker sometimes desyncing on servers
+
 ## v2.1.1
 ------
 ### Changed

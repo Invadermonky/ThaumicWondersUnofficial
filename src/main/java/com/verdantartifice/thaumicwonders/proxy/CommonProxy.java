@@ -40,7 +40,6 @@ public class CommonProxy implements IProxyTW, IGuiHandler {
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
-        InitAspects.initAspects();
         ModPlugins.postInit(event);
     }
 

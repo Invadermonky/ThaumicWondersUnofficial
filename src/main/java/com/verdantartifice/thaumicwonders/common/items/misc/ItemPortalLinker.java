@@ -3,6 +3,8 @@ package com.verdantartifice.thaumicwonders.common.items.misc;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
+import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
+import com.verdantartifice.thaumicwonders.common.network.packets.PacketUpdateHeldItem;
 import com.verdantartifice.thaumicwonders.common.utils.NBTHelper;
 import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,6 +19,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,8 +72,9 @@ public class ItemPortalLinker extends ItemTW {
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (player.isSneaking() && stack.getItem() == this && world.getBlockState(pos).getBlock() == BlocksTW.PORTAL_ANCHOR) {
-            this.setLinkPosition(stack, world, pos);
             if (world.isRemote) {
+                this.setLinkPosition(stack, world, pos);
+                PacketHandler.INSTANCE.sendToServer(new PacketUpdateHeldItem(stack, hand));
                 player.sendMessage(new TextComponentTranslation(StringHelper.getTranslationKey("portal_linker", "chat", "bound"), this.getAnchorDimensionName(stack), pos.getX(), pos.getY(), pos.getZ()));
             }
             return EnumActionResult.SUCCESS;
@@ -88,33 +93,22 @@ public class ItemPortalLinker extends ItemTW {
 
     public String getAnchorDimensionName(ItemStack stack) {
         int dim = this.getAnchorDimension(stack);
-        if (!DimensionManager.isDimensionRegistered(dim)) {
-            return Integer.toString(dim);
-        }
-        DimensionType type = DimensionManager.getProviderType(dim);
-        if (type == null) {
-            return Integer.toString(dim);
-        }
-        String name = type.getName();
-        int[] dims = DimensionManager.getDimensions(type);
-        if (dims != null && dims.length > 1) {
-            name += " " + dim;
-        }
-        return name;
+        return StringHelper.getDimensionName(dim);
     }
 
     public BlockPos getAnchorPosition(ItemStack stack) {
         NBTHelper.initNBT(stack);
-        return NBTHelper.deserializeBlockPos(stack.getTagCompound().getCompoundTag("position"));
+        return BlockPos.fromLong(stack.getTagCompound().getLong("position"));
     }
 
+    @SideOnly(Side.CLIENT)
     public void setLinkPosition(ItemStack stack, World world, BlockPos pos) {
         int dimId = world.provider.getDimension();
         String dimName = world.getProviderName();
-        NBTTagCompound posTag = NBTHelper.serializeBlockPos(pos);
+        long posLong = pos.toLong();
         NBTHelper.initNBT(stack);
         stack.getTagCompound().setInteger("dimension", dimId);
-        stack.getTagCompound().setTag("position", posTag);
+        stack.getTagCompound().setLong("position", posLong);
     }
 
     public void removeLinkPosition(ItemStack stack) {

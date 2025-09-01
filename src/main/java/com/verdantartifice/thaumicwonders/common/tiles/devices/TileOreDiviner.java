@@ -232,8 +232,8 @@ public class TileOreDiviner extends TileTW implements ITickable {
         this.targets.clear();
         NBTTagCompound targetsTag = compound.getCompoundTag("targets");
         for (String key : targetsTag.getKeySet()) {
-            NBTTagCompound tag = targetsTag.getCompoundTag(key);
-            this.targets.add(NBTHelper.deserializeBlockPos(tag));
+            long posLong = targetsTag.getLong(key);
+            this.targets.add(BlockPos.fromLong(posLong));
         }
     }
 
@@ -252,7 +252,7 @@ public class TileOreDiviner extends TileTW implements ITickable {
         compound.setInteger("searchTime", this.searchTime);
         NBTTagCompound targetsTag = new NBTTagCompound();
         for (int i = 0; i < this.targets.size(); i++) {
-            targetsTag.setTag("target" + i, NBTHelper.serializeBlockPos(this.targets.get(i)));
+            targetsTag.setLong("target" + i, this.targets.get(i).toLong());
         }
         compound.setTag("targets", targetsTag);
         return compound;

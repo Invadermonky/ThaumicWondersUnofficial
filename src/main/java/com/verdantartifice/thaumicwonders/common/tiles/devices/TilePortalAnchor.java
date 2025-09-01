@@ -65,7 +65,7 @@ public class TilePortalAnchor extends TileTWInventory implements IInteractWithCa
     @Override
     protected void readFromTileNBT(NBTTagCompound compound) {
         if (compound.hasKey("generator")) {
-            this.generatorPos = NBTHelper.deserializeBlockPos(compound.getCompoundTag("generator"));
+            this.generatorPos = BlockPos.fromLong(compound.getLong("generator"));
         }
         this.isPrimaryAnchor = compound.getBoolean("primary");
     }
@@ -73,7 +73,7 @@ public class TilePortalAnchor extends TileTWInventory implements IInteractWithCa
     @Override
     protected NBTTagCompound writeToTileNBT(NBTTagCompound compound) {
         if (this.generatorPos != null) {
-            compound.setTag("generator", NBTHelper.serializeBlockPos(this.generatorPos));
+            compound.setLong("generator", this.generatorPos.toLong());
         }
         compound.setBoolean("primary", this.isPrimaryAnchor);
         return compound;

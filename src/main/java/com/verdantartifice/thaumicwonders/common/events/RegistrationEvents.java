@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import thaumcraft.api.aspects.AspectRegistryEvent;
 
 @Mod.EventBusSubscriber(modid = ThaumicWonders.MODID)
 public class RegistrationEvents {
@@ -54,5 +55,10 @@ public class RegistrationEvents {
     @SubscribeEvent
     public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
         InitSounds.initSounds(event.getRegistry());
+    }
+
+    @SubscribeEvent
+    public static void registerAspects(AspectRegistryEvent event) {
+        InitAspects.initAspects(event.register);
     }
 }

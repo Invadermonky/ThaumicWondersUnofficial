@@ -118,7 +118,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
                     start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
                     end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
                     r, g, b, 0.6F);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | NoClassDefFoundError e) {
             ThaumicWonders.LOGGER.error("Failed to load Thaumcraft FXDispatcher.");
             e.printStackTrace(System.err);
         }

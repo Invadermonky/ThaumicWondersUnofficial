@@ -22,7 +22,7 @@ public class InfusionEnchantmentsTW {
         if (event.getSource().getTrueSource() instanceof EntityLivingBase) {
             EntityLivingBase source = (EntityLivingBase) event.getSource().getTrueSource();
             EntityLivingBase target = event.getEntityLiving();
-            ItemStack heldStack = source.getHeldItem(source.getActiveHand());
+            ItemStack heldStack = source.getHeldItemMainhand();
             int rank = EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldStack, VOIDFLAME);
             if (rank > 0) {
                 target.addPotionEffect(new PotionEffect(PotionsTW.VOIDFLAME, 60 + 60 * rank, 1, true, false));

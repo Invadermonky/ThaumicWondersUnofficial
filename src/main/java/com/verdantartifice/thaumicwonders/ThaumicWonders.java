@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class ThaumicWonders {
     public static final String MODID = "thaumicwonders";
     public static final String NAME = "Thaumic Wonders Unofficial";
-    public static final String VERSION = "2.2.0";
+    public static final String VERSION = "2.1.2";
     public static final String DEPENDENCIES = "required-after:thaumcraft";
 
     public static final CreativeTabs CREATIVE_TAB = new CreativeTabTW(CreativeTabs.getNextID(), ThaumicWonders.MODID);
@@ -62,7 +62,7 @@ public class ThaumicWonders {
     //  Crafting golem seal
     //  Eldritch cluster harvest infusion enchantment (or just a single pickaxe that does it
     //  Register for eldritch cluster harvesting
-    //  Item retriveal golem seal (like corporea crystal)
+    //  Item retrieval golem seal (like corporea crystal)
     //  Heximite explosion converts blocks into tainted variants (add CrT/GS integration for additional conversions)
     //  Research Brews + Crucible addon - create brews that randomly grant research after being consumed.
     //  Teleport Home focus effect

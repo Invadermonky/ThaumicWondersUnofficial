@@ -12,7 +12,9 @@ public enum ModIds {
     expanded_arcanum(ConstIds.expanded_arcanum),
     jeresources(ConstIds.jeresources),
     new_crimson_revelations(ConstIds.new_crimson_revelations, "1.0.0"),
+    tc4research(ConstIds.tc4research),
     thaumic_augmentation(ConstIds.thaumic_augmentation),
+    thaumtweaks(ConstIds.thaumtweaks),
     the_one_probe(ConstIds.the_one_probe);
 
     public final String modId;
@@ -75,7 +77,9 @@ public enum ModIds {
         public static final String expanded_arcanum = "ea";
         public static final String jeresources = "jeresources";
         public static final String new_crimson_revelations = "crimsonrevelations";
+        public static final String tc4research = "oldresearch";
         public static final String thaumic_augmentation = "thaumicaugmentation";
+        public static final String thaumtweaks = "thaumtweaks";
         public static final String the_one_probe = "theoneprobe";
     }
 }

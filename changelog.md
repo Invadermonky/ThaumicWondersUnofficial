@@ -7,6 +7,7 @@
 - Fixed a crash with the Coalescence Matrix caused by Thaumcraft not checking for null values
 - Fixed Portal Linker sometimes desyncing on servers
 - Fixed crash when attacking with Voidflame weapon
+- Fixed crash when ThaumTweaks or TC4 Research Port is loaded
 
 ## v2.1.1
 ------

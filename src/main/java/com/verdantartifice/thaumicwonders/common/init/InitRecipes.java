@@ -65,6 +65,10 @@ public class InitRecipes {
         ModPlugins.registerRecipes(forgeRegistry);
     }
 
+    public static void initPostAspectRecipes() {
+        initPostAspectCrucibleRecipes();
+    }
+
     private static void initMultiblockRecipes() {
         initCatalyzationChamber();
         initCoalescencePlatform();
@@ -514,7 +518,7 @@ public class InitRecipes {
                 new AspectList().add(Aspect.ENTROPY, perditioCost).add(Aspect.DESIRE, desireCost)));
     }
 
-    public static void initCompatCrucibleRecipes(){
+    public static void initPostAspectCrucibleRecipes(){
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_ghast_tear"), new CrucibleRecipe(
                 "TWOND_NETHER_HEDGE",
                 new ItemStack(Items.GHAST_TEAR, 2),

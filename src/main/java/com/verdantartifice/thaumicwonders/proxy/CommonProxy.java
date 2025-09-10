@@ -5,6 +5,7 @@ import com.verdantartifice.thaumicwonders.common.compat.ModIds;
 import com.verdantartifice.thaumicwonders.common.compat.ModPlugins;
 import com.verdantartifice.thaumicwonders.common.init.InitAspects;
 import com.verdantartifice.thaumicwonders.common.init.InitItems;
+import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import com.verdantartifice.thaumicwonders.common.init.InitResearch;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
 import com.verdantartifice.thaumicwonders.common.misc.BehaviorDispensePrimalArrow;
@@ -40,6 +41,7 @@ public class CommonProxy implements IProxyTW, IGuiHandler {
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
+        InitRecipes.initPostAspectCrucibleRecipes();
         ModPlugins.postInit(event);
     }
 

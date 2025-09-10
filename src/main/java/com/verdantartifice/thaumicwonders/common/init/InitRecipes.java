@@ -334,12 +334,6 @@ public class InitRecipes {
                 new ItemStack(Blocks.SAND),
                 new AspectList().add(Aspect.SOUL, 3).add(Aspect.EARTH, 3).add(Aspect.TRAP, 1)
         ));
-        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_ghast_tear"), new CrucibleRecipe(
-                "TWOND_NETHER_HEDGE",
-                new ItemStack(Items.GHAST_TEAR, 2),
-                new ItemStack(Items.GHAST_TEAR),
-                new AspectList().add(Aspect.SOUL, 10).add(Aspect.ALCHEMY, 10).add(Aspect.UNDEAD, 5)
-        ));
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_wither_skull"), new CrucibleRecipe(
                 "TWOND_NETHER_HEDGE",
                 new ItemStack(Items.SKULL, 1, 1),
@@ -357,18 +351,6 @@ public class InitRecipes {
                 new ItemStack(Items.CHORUS_FRUIT),
                 new ItemStack(Items.APPLE),
                 new AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.SENSES, 5).add(Aspect.PLANT, 5)
-        ));
-        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_ender_pearl"), new CrucibleRecipe(
-                "TWOND_END_HEDGE",
-                new ItemStack(Items.ENDER_PEARL, 2),
-                new ItemStack(Items.ENDER_PEARL),
-                new AspectList().add(Aspect.MOTION, 15).add(Aspect.ELDRITCH, 10)
-        ));
-        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_shulker_shell"), new CrucibleRecipe(
-                "TWOND_END_HEDGE",
-                new ItemStack(Items.SHULKER_SHELL, 2),
-                new ItemStack(Items.SHULKER_SHELL),
-                new AspectList().add(Aspect.PROTECT, 10).add(Aspect.ELDRITCH, 5).add(Aspect.BEAST, 5).add(Aspect.VOID, 5)
         ));
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_dragons_breath"), new CrucibleRecipe(
                 "TWOND_END_HEDGE",
@@ -530,6 +512,27 @@ public class InitRecipes {
                 new ItemStack(ItemsTC.amber, 3),
                 new OreIngredient("oreAmber"),
                 new AspectList().add(Aspect.ENTROPY, perditioCost).add(Aspect.DESIRE, desireCost)));
+    }
+
+    public static void initCompatCrucibleRecipes(){
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_ghast_tear"), new CrucibleRecipe(
+                "TWOND_NETHER_HEDGE",
+                new ItemStack(Items.GHAST_TEAR, 2),
+                new ItemStack(Items.GHAST_TEAR),
+                new AspectList(new ItemStack(Items.GHAST_TEAR))
+        ));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_ender_pearl"), new CrucibleRecipe(
+                "TWOND_END_HEDGE",
+                new ItemStack(Items.ENDER_PEARL, 2),
+                new ItemStack(Items.ENDER_PEARL),
+                new AspectList(new ItemStack(Items.ENDER_PEARL))
+        ));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_shulker_shell"), new CrucibleRecipe(
+                "TWOND_END_HEDGE",
+                new ItemStack(Items.SHULKER_SHELL, 2),
+                new ItemStack(Items.SHULKER_SHELL),
+                new AspectList(new ItemStack(Items.SHULKER_SHELL))
+        ));
     }
 
     private static void initInfusionRecipes() {

@@ -1,5 +1,6 @@
 package com.verdantartifice.thaumicwonders;
 
+import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import com.verdantartifice.thaumicwonders.common.misc.CreativeTabTW;
 import com.verdantartifice.thaumicwonders.proxy.IProxyTW;
 import net.minecraft.creativetab.CreativeTabs;
@@ -48,6 +49,7 @@ public class ThaumicWonders {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+        InitRecipes.initCompatCrucibleRecipes();
     }
 
     static {

@@ -1,6 +1,5 @@
 package com.verdantartifice.thaumicwonders;
 
-import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import com.verdantartifice.thaumicwonders.common.misc.CreativeTabTW;
 import com.verdantartifice.thaumicwonders.proxy.IProxyTW;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,9 +19,9 @@ import org.apache.logging.log4j.Logger;
         dependencies = ThaumicWonders.DEPENDENCIES
 )
 public class ThaumicWonders {
-    public static final String MODID = "thaumicwonders";
-    public static final String NAME = "Thaumic Wonders Unofficial";
-    public static final String VERSION = "2.1.2";
+    public static final String MODID = Tags.MOD_ID;
+    public static final String NAME = Tags.MOD_NAME;
+    public static final String VERSION = Tags.VERSION;
     public static final String DEPENDENCIES = "required-after:thaumcraft";
 
     public static final CreativeTabs CREATIVE_TAB = new CreativeTabTW(CreativeTabs.getNextID(), ThaumicWonders.MODID);
@@ -61,6 +60,7 @@ public class ThaumicWonders {
     //  Shearing golem seal
     //  Fishing golem seal
     //  Crafting golem seal
+    //  Primal Destroyer eat sounds (found in sounds folder)
     //  Eldritch cluster harvest infusion enchantment (or just a single pickaxe that does it
     //  Register for eldritch cluster harvesting
     //  Item retrieval golem seal (like corporea crystal)
@@ -72,7 +72,6 @@ public class ThaumicWonders {
     //  Improved Madness Engine model
     //  Improved Inspiration Engine model
     //  Rework Timewinder to be block machine with new model
-    //  Sneaking causes the voidcaller's armor to desync from the player
     //  Make the Meteorb into a handheld device (maybe use the timewinder compass model)
     //  Flux distiller model
     //  Shattered portal linker - random teleport portal

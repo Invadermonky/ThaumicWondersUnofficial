@@ -1,4 +1,9 @@
 # Changelog
+## v2.1.3
+------
+### Fixed
+- Fixed Voidcaller Armor model desync when crouching
+
 ## v2.1.2
 ------
 ### Fixed
@@ -8,6 +13,7 @@
 - Fixed Portal Linker sometimes desyncing on servers
 - Fixed crash when attacking with Voidflame weapon
 - Fixed crash when ThaumTweaks or TC4 Research Port is loaded
+- Fixed Infernal and End Hedge Alchemy duplication recipe compatibility issues (courtesy of Keleut66666)
 
 ## v2.1.1
 ------

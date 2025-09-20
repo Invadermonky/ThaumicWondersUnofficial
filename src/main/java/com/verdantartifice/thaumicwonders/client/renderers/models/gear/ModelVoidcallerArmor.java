@@ -262,14 +262,11 @@ public class ModelVoidcallerArmor extends ModelCustomArmor {
             bipedRightLeg.render(scale);
             bipedLeftLeg.render(scale);
             bipedHeadwear.render(scale);
+            GlStateManager.popMatrix();
         } else {
             GlStateManager.scale(1.01F, 1.01F, 1.01F);
-
-            if (entity.isSneaking()) {
-                GlStateManager.translate(0.0F, 0.2F, 0.0F);
-            }
-
             bipedHead.render(scale);
+            GlStateManager.popMatrix();
             bipedBody.render(scale);
             bipedRightArm.render(scale);
             bipedLeftArm.render(scale);
@@ -277,8 +274,6 @@ public class ModelVoidcallerArmor extends ModelCustomArmor {
             bipedLeftLeg.render(scale);
             bipedHeadwear.render(scale);
         }
-
-        GlStateManager.popMatrix();
     }
 
     private void setRotation(ModelRenderer model, float x, float y, float z) {

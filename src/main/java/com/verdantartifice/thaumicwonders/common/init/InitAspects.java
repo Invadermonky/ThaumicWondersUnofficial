@@ -9,7 +9,6 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectEventProxy;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.internal.CommonInternals;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 
 @SuppressWarnings("ConstantConditions")

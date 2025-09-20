@@ -2,7 +2,6 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
-import com.verdantartifice.thaumicwonders.common.utils.NBTHelper;
 import com.verdantartifice.thaumicwonders.common.utils.OreHelper;
 import com.verdantartifice.thaumicwonders.common.utils.PlayerHelper;
 import net.minecraft.block.state.IBlockState;

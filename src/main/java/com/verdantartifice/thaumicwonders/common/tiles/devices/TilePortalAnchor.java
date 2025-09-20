@@ -4,7 +4,6 @@ import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.entities.EntityVoidPortal;
 import com.verdantartifice.thaumicwonders.common.items.misc.ItemPortalLinker;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
-import com.verdantartifice.thaumicwonders.common.utils.NBTHelper;
 import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

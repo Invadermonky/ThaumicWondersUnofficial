@@ -1,7 +1,6 @@
 package com.verdantartifice.thaumicwonders.core;
 
 import com.verdantartifice.thaumicwonders.common.compat.ModIds;
-import zone.rong.mixinbooter.Context;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
 import java.util.Collections;

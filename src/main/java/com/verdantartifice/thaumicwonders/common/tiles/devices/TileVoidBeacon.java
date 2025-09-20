@@ -34,8 +34,9 @@ import thaumcraft.common.lib.utils.EntityUtils;
 
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class TileVoidBeacon extends TileTW implements ITickable, IAspectContainer, IEssentiaTransport {
     private static final int ESSENTIA_CAPACITY = 100;
@@ -298,21 +299,35 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
     protected boolean addVisToAura() {
         boolean did = false;
         if (this.isValidTier()) {
+            Map<BlockPos,Float> chunkDeficits = new LinkedHashMap<>();
             int chunkRange = this.getChunkRange();
             float visAdded = this.getVisAdded();
+            float visAddedMax = visAdded * 3.0f;
+            float visAddedTotal = visAdded * chunkRange;
+            float totalMissingVis = 0;
             if (visAdded > 0 && chunkRange >= 0) {
                 for (int x = -chunkRange; x <= chunkRange; x++) {
                     for (int z = -chunkRange; z <= chunkRange; z++) {
                         BlockPos chunkPos = this.pos.add((x << 4), 0, (z << 4));
-                        int baseAura = AuraHelper.getAuraBase(this.world, chunkPos);
+                        float baseAura = AuraHelper.getAuraBase(this.world, chunkPos);
                         float currFlux = AuraHelper.getFlux(this.world, chunkPos);
                         float currAura = AuraHelper.getVis(this.world, chunkPos);
-                        float overflow = MathHelper.clamp(((float) baseAura * 0.1f), 10.0f, 20.0f);
-                        if ((currAura + currFlux) < ((float) baseAura + overflow)) {
-                            AuraHelper.addVis(this.world, chunkPos, visAdded);
-                            did = true;
+                        float overflow = MathHelper.clamp(baseAura * 0.2f, 20.0f, 40.0f);
+                        float missing = (baseAura + overflow) - (currAura + currFlux);
+                        if ((currAura + currFlux) < (baseAura + overflow)) {
+                            totalMissingVis += missing;
+                            chunkDeficits.put(chunkPos, missing);
                         }
                     }
+                }
+
+                for (Map.Entry<BlockPos, Float> entry : chunkDeficits.entrySet()) {
+                    BlockPos chunkPos = entry.getKey();
+                    Float missingVis = entry.getValue();
+                    float toAdd = (missingVis / totalMissingVis) * visAddedTotal;
+                    toAdd = MathHelper.clamp(toAdd, visAdded, visAddedMax);
+                    AuraHelper.addVis(this.world, chunkPos, toAdd);
+                    did = true;
                 }
             }
         }

@@ -3,6 +3,8 @@
 ------
 ### Added
 - Added Primal Destroyer sound effect when it bites the player (courtesy of IcarussOne)
+### Changed
+- Improved Void Beacon Vis regeneration logic to prioritize low-vis chunks (made bacon more smarter)
 ### Fixed
 - Fixed Voidcaller Armor model desync when crouching
 - Fixed Infernal Hedge and End Hedge duplication recipes will now use the correct aspects

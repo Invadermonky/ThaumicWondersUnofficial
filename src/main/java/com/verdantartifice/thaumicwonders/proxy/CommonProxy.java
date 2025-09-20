@@ -3,7 +3,6 @@ package com.verdantartifice.thaumicwonders.proxy;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.compat.ModIds;
 import com.verdantartifice.thaumicwonders.common.compat.ModPlugins;
-import com.verdantartifice.thaumicwonders.common.init.InitAspects;
 import com.verdantartifice.thaumicwonders.common.init.InitItems;
 import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import com.verdantartifice.thaumicwonders.common.init.InitResearch;

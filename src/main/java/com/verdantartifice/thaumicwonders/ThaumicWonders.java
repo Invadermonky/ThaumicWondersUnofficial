@@ -60,7 +60,6 @@ public class ThaumicWonders {
     //  Shearing golem seal
     //  Fishing golem seal
     //  Crafting golem seal
-    //  Primal Destroyer eat sounds (found in sounds folder)
     //  Eldritch cluster harvest infusion enchantment (or just a single pickaxe that does it
     //  Register for eldritch cluster harvesting
     //  Item retrieval golem seal (like corporea crystal)

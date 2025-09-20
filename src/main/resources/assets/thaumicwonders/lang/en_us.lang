@@ -144,6 +144,7 @@ jei.thaumicwonders.chance=Chance: %d%%
 # Subtitle
 subtitle.thaumicwonders:avatar.ambient=Corrupted Avatar Whispers
 subtitle.thaumicwonders:avatar.death=Corrupted Avatar Dies
+subtitle.thaumicwonders:primal_destroyer.angered=Primal Destroyer is Angered
 subtitle.thaumicwonders:void_beacon.activate=Void Beacon Activates
 subtitle.thaumicwonders:void_beacon.deactivate=Void Beacon Deactivates
 

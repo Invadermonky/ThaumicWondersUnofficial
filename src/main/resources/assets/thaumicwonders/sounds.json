@@ -13,6 +13,13 @@
     ],
     "subtitle": "subtitle.thaumicwonders:avatar.death"
   },
+  "primal_destroyer_angered": {
+    "sounds": [
+      "thaumicwonders:primal_destroyer_angered1",
+      "thaumicwonders:primal_destroyer_angered2"
+    ],
+    "subtitle": "subtitle.thaumicwonders:primal_destroyer.angered"
+  },
   "vb_activate": {
     "sounds": [
       "thaumicwonders:void_beacon_activate"

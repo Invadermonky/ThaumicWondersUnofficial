@@ -7,6 +7,7 @@ import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
 import com.verdantartifice.thaumicwonders.common.registry.AttributesTW;
 import com.verdantartifice.thaumicwonders.common.registry.InfusionEnchantmentsTW;
+import com.verdantartifice.thaumicwonders.common.registry.SoundsTW;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,6 +26,7 @@ import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
@@ -79,6 +81,7 @@ public class ItemPrimalDestroyer extends ItemSword implements IWarpingGear {
                     if (entityIn instanceof EntityPlayerMP) {
                         PacketHandler.INSTANCE.sendTo(new PacketLocalizedMessage("event.primal_destroyer.hunger_full"), (EntityPlayerMP) entityIn);
                     }
+                    worldIn.playSound(null, entityPlayer.getPosition(), SoundsTW.PRIMAL_DESTROYER_ANGERED, SoundCategory.HOSTILE, 0.8f, 1.0f);
                     entityPlayer.attackEntityFrom(new DamageSource("primalDestroyerHunger"), (float) ConfigHandlerTW.primal_destroyer.hungeringDamage);
                     entityPlayer.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 60));
                     entityPlayer.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 120));

@@ -2,7 +2,10 @@
 ## v2.1.3
 ------
 ### Added
+- Added new Avatar of Corruption ambient and death sound effects (courtesy of IcarussOne)
 - Added Primal Destroyer sound effect when it bites the player (courtesy of IcarussOne)
+- Added Inspiration Engine ambient sound effect (courtesy of IcarussOne)
+- Added Madness Engine ambient sound effect (courtesy of IcarussOne)
 ### Changed
 - Improved Void Beacon Vis regeneration logic to prioritize low-vis chunks (made bacon more smarter)
 ### Fixed

@@ -9,6 +9,7 @@ import com.verdantartifice.thaumicwonders.common.misc.FluxExplosion;
 import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketAvatarZapFx;
 import com.verdantartifice.thaumicwonders.common.network.packets.PacketLocalizedMessage;
+import com.verdantartifice.thaumicwonders.common.registry.SoundsTW;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -82,7 +83,7 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsTC.egidle;
+        return SoundsTW.AVATAR_AMBIENT;
     }
 
     @Override
@@ -241,6 +242,6 @@ public class EntityCorruptionAvatar extends EntityThaumcraftBoss implements IRan
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsTC.egdeath;
+        return SoundsTW.AVATAR_DEATH;
     }
 }

@@ -23,6 +23,8 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
 
     public abstract Aspect getAspect();
 
+    public abstract void playAmbientSound();
+
     @Override
     public boolean isFueled() {
         return this.amount >= this.getCost();
@@ -51,6 +53,7 @@ public abstract class AbstractTileResearchEngine extends TileTW implements IAspe
                 this.fill();
             }
         }
+        this.playAmbientSound();
     }
 
     private void fill() {

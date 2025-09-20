@@ -1,39 +1,51 @@
 {
   "avatar_ambient": {
     "sounds": [
-      "thaumicwonders:avatar1",
-      "thaumicwonders:avatar2",
-      "thaumicwonders:avatar3"
+      "thaumicwonders:entities/avatar/avatar1",
+      "thaumicwonders:entities/avatar/avatar2",
+      "thaumicwonders:entities/avatar/avatar3"
     ],
     "subtitle": "subtitle.thaumicwonders:avatar.ambient"
   },
   "avatar_death": {
     "sounds": [
-      "thaumicwonders:avatar_death"
+      "thaumicwonders:entities/avatar/avatar_death"
     ],
     "subtitle": "subtitle.thaumicwonders:avatar.death"
   },
+  "inspiration_engine": {
+    "sounds": [
+      "thaumicwonders:blocks/engines/inspiration_engine"
+    ],
+    "subtitle": "subtitle.thaumicwonders:inspiration_engine.loop"
+  },
+  "madness_engine": {
+    "sounds": [
+      "thaumicwonders:blocks/engines/madness_engine"
+    ],
+    "subtitle": "subtitle.thaumicwonders:madness_engine.loop"
+  },
   "primal_destroyer_angered": {
     "sounds": [
-      "thaumicwonders:primal_destroyer_angered1",
-      "thaumicwonders:primal_destroyer_angered2"
+      "thaumicwonders:items/primal_destroyer/primal_destroyer_angered1",
+      "thaumicwonders:items/primal_destroyer/primal_destroyer_angered2"
     ],
     "subtitle": "subtitle.thaumicwonders:primal_destroyer.angered"
   },
   "vb_activate": {
     "sounds": [
-      "thaumicwonders:void_beacon_activate"
+      "thaumicwonders:blocks/void_beacon/void_beacon_activate"
     ],
     "subtitle": "subtitle.thaumicwonders:void_beacon.activate"
   },
   "vb_ambient": {
     "sounds": [
-      "thaumicwonders:void_beacon_ambient"
+      "thaumicwonders:blocks/void_beacon/void_beacon_ambient"
     ]
   },
   "vb_deactivate": {
     "sounds": [
-      "thaumicwonders:void_beacon_deactivate"
+      "thaumicwonders:blocks/void_beacon/void_beacon_deactivate"
     ],
     "subtitle": "subtitle.thaumicwonders:void_beacon.deactivate"
   }

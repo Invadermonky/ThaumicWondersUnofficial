@@ -1,5 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
+import com.verdantartifice.thaumicwonders.common.registry.SoundsTW;
+import net.minecraft.util.SoundCategory;
 import thaumcraft.api.aspects.Aspect;
 
 public class TileInspirationEngine extends AbstractTileResearchEngine {
@@ -19,5 +21,12 @@ public class TileInspirationEngine extends AbstractTileResearchEngine {
     @Override
     public Aspect getAspect() {
         return Aspect.MIND;
+    }
+
+    @Override
+    public void playAmbientSound() {
+        if(this.tickCounter % 160 == 0) {
+            this.world.playSound(null, this.pos, SoundsTW.INSPIRATION_ENGINE, SoundCategory.BLOCKS, 0.7f, 1.0f);
+        }
     }
 }

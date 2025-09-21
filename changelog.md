@@ -8,6 +8,7 @@
 - Added Madness Engine ambient sound effect (courtesy of IcarussOne)
 ### Changed
 - Improved Void Beacon Vis regeneration logic to prioritize low-vis chunks (made bacon more smarter)
+- Rewrote Control Seal: Research Assistant handling to be much more intuitive 
 ### Fixed
 - Fixed Voidcaller Armor model desync when crouching
 - Fixed crash when wearing Void Walker Boots when Thaumic Augmentation is not installed

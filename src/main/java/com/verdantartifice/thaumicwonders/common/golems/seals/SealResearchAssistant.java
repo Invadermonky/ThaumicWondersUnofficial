@@ -1,11 +1,12 @@
 package com.verdantartifice.thaumicwonders.common.golems.seals;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.golems.seals.utils.ResearchRequest;
+import com.verdantartifice.thaumicwonders.common.utils.GolemHelperTW;
 import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -17,124 +18,47 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import thaumcraft.api.ThaumcraftInvHelper;
-import thaumcraft.api.ThaumcraftInvHelper.InvFilter;
+import org.jetbrains.annotations.Nullable;
 import thaumcraft.api.golems.EnumGolemTrait;
 import thaumcraft.api.golems.GolemHelper;
 import thaumcraft.api.golems.IGolemAPI;
-import thaumcraft.api.golems.seals.*;
+import thaumcraft.api.golems.seals.ISeal;
+import thaumcraft.api.golems.seals.ISealConfigToggles;
+import thaumcraft.api.golems.seals.ISealEntity;
+import thaumcraft.api.golems.seals.ISealGui;
 import thaumcraft.api.golems.tasks.Task;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.golems.client.gui.SealBaseContainer;
 import thaumcraft.common.golems.client.gui.SealBaseGUI;
-import thaumcraft.common.golems.tasks.TaskHandler;
 import thaumcraft.common.lib.utils.InventoryUtils;
 import thaumcraft.common.tiles.crafting.TileResearchTable;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
-public class SealResearchAssistant implements ISeal, ISealConfigArea, ISealConfigToggles, ISealGui {
+public class SealResearchAssistant implements ISeal, ISealConfigToggles, ISealGui {
     public static final ResourceLocation ICON = new ResourceLocation(ThaumicWonders.MODID, "items/seal_research_assistant");
-    final int PROP_PAPER = 0;
-    final int PROP_INK = 1;
-    final int PROP_MATERIALS = 2;
-    private final Map<UUID, NonNullList<ItemStack>> researchRequests = new HashMap<>();
+    private static final ItemStack INK_STACK = new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage());
+    protected final int PROP_PAPER = 0;
+    protected final int PROP_INK = 1;
+    protected final int PROP_MATERIALS = 2;
+    protected final int PLAYER_SEARCH_AREA = 12;
     private final ISealConfigToggles.SealToggle[] props = new ISealConfigToggles.SealToggle[]{
             new ISealConfigToggles.SealToggle(true, "ppaper", StringHelper.getTranslationKey("golem_prop", "gui", "restock_paper")),
             new ISealConfigToggles.SealToggle(true, "pink", StringHelper.getTranslationKey("golem_prop", "gui", "refill_ink")),
             new ISealConfigToggles.SealToggle(true, "pmats", StringHelper.getTranslationKey("golem_prop", "gui", "provide_materials"))
     };
-    protected ItemStackHandler stackHandler = new ItemStackHandler(12);
-    protected Map<Integer, ItemStack> provideTaskCache = new HashMap<>();
-    protected Map<Integer, Integer> emptyTasksCache = new HashMap<>();
-    protected int emptyDelay = 0;
-    private int delay = new Random(System.nanoTime()).nextInt(50);
+    private int restockDelay = new Random(System.nanoTime()).nextInt(50);
+    private int requestDelay = new Random(System.nanoTime()).nextInt(50);
+    private int refillInkTaskId = Integer.MIN_VALUE;
+    private final Set<ResearchRequest> researchRequests = new HashSet<>();
+
 
     @Override
     public String getKey() {
         return "thaumicwonders:research_assistant";
-    }
-
-    @Override
-    public boolean canPlaceAt(World world, BlockPos pos, EnumFacing facing) {
-        IItemHandler inv = ThaumcraftInvHelper.getItemHandlerAt(world, pos, facing);
-        return inv != null;
-    }
-
-    @Override
-    public void tickSeal(World world, ISealEntity seal) {
-        this.delay++;
-        this.handleSealInventory(world, seal);
-        this.cleanProvisionRequests(world);
-
-        if (this.delay % 60 == 0) {
-            AxisAlignedBB area = GolemHelper.getBoundsForArea(seal);
-            List<TileResearchTable> tables = this.getNearbyResearchTables(world, seal, area);
-
-            for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, area)) {
-                this.provideResearchMaterials(world, seal, player);
-            }
-
-            for (TileResearchTable table : tables) {
-                if (this.shouldRefillInk(table)) {
-                    this.refillInk(seal, table);
-                }
-            }
-
-            if (this.delay % 300 == 0) {
-                for (TileResearchTable table : tables) {
-                    if (this.shouldRefillInk(table)) {
-                        this.requestInk(seal, table);
-                    }
-                    if (this.shouldRestockPaper(table)) {
-                        this.restockPaper(seal, table);
-                    }
-                }
-                this.delay = 0;
-            }
-        }
-    }
-
-    @Override
-    public void onTaskStarted(World world, IGolemAPI iGolemAPI, Task task) {}
-
-    @Override
-    public boolean onTaskCompletion(World world, IGolemAPI golem, Task task) {
-        int slot = this.emptyTasksCache.getOrDefault(task.getId(), -1);
-        if (slot != -1) {
-            ItemStack extracted = this.stackHandler.extractItem(slot, this.stackHandler.getSlotLimit(slot), true);
-            int limit = golem.canCarryAmount(extracted);
-            if (limit > 0) {
-                extracted = golem.holdItem(this.stackHandler.extractItem(slot, limit, false));
-                if (!extracted.isEmpty()) {
-                    InventoryUtils.ejectStackAt(world, task.getSealPos().pos.offset(task.getSealPos().face), task.getSealPos().face.getOpposite(), extracted);
-                }
-                golem.getGolemEntity().playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.125f, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                golem.swingArm();
-            }
-        }
-        this.emptyTasksCache.remove(task.getId());
-        task.setSuspended(true);
-        return true;
-    }
-
-    @Override
-    public void onTaskSuspension(World world, Task task) {}
-
-    @Override
-    public boolean canGolemPerformTask(IGolemAPI iGolemAPI, Task task) {
-        return false;
-    }
-
-    @Override
-    public void readCustomNBT(NBTTagCompound nbtTagCompound) {
-        this.stackHandler.deserializeNBT(nbtTagCompound.getCompoundTag("inventory"));
-    }
-
-    @Override
-    public void writeCustomNBT(NBTTagCompound nbtTagCompound) {
-        nbtTagCompound.setTag("inventory", this.stackHandler.serializeNBT());
     }
 
     @Override
@@ -143,62 +67,102 @@ public class SealResearchAssistant implements ISeal, ISealConfigArea, ISealConfi
     }
 
     @Override
-    public void onRemoval(World world, BlockPos pos, EnumFacing enumFacing) {
-        for (int i = 0; i < this.stackHandler.getSlots(); i++) {
-            ItemStack stack = this.stackHandler.extractItem(i, this.stackHandler.getSlotLimit(i), false);
-            if (!stack.isEmpty()) {
-                Block.spawnAsEntity(world, pos, stack);
+    public boolean canPlaceAt(World world, BlockPos pos, EnumFacing facing) {
+        return this.getResearchTable(world, pos) != null;
+    }
+
+    @Override
+    public void tickSeal(World world, ISealEntity seal) {
+        this.restockDelay++;
+        this.requestDelay++;
+        this.cleanProvisionRequests(world);
+
+        if(this.requestDelay % 300 == 0) {
+            this.cleanResearchRequests(world, seal);
+            this.updateResearchRequests(world, seal);
+        }
+        if (this.restockDelay % 300 == 0) {
+            TileResearchTable table = this.getResearchTable(world, seal.getSealPos().pos);
+            if(table != null) {
+                if(this.shouldRefillInk(table)) {
+                    GolemHelper.requestProvisioning(world, seal, INK_STACK);
+                    if(!GolemHelperTW.isTaskActive(world, this.refillInkTaskId)) {
+                        this.refillInkTaskId = GolemHelperTW.createMoveToSealTask(world, seal);
+                    }
+                }
+                if(this.shouldRestockPaper(table)) {
+                    this.restockPaper(seal, table);
+                }
+                this.restockDelay = 0;
             }
         }
     }
 
     @Override
-    public Object returnContainer(World world, EntityPlayer player, BlockPos pos, EnumFacing facing, ISealEntity seal) {
-        return new SealBaseContainer(player.inventory, world, seal);
-    }
-
-    @Override
-    public Object returnGui(World world, EntityPlayer player, BlockPos pos, EnumFacing facing, ISealEntity seal) {
-        return new SealBaseGUI(player.inventory, world, seal);
-    }
-
-    @Override
-    public EnumGolemTrait[] getRequiredTags() {
-        return new EnumGolemTrait[]{EnumGolemTrait.SMART, EnumGolemTrait.DEFT};
-    }
-
-    @Override
-    public EnumGolemTrait[] getForbiddenTags() {
-        return new EnumGolemTrait[]{EnumGolemTrait.CLUMSY};
-    }
-
-    private List<TileResearchTable> getNearbyResearchTables(World world, ISealEntity seal, AxisAlignedBB area) {
-        List<TileResearchTable> tables = new ArrayList<>();
-        BlockPos checkPos;
-        TileEntity checkTile;
-
-        //Accounting for seal placed directly on a Research Tables
-        checkTile = world.getTileEntity(seal.getSealPos().pos);
-        if (checkTile instanceof TileResearchTable) {
-            tables.add((TileResearchTable) checkTile);
+    public boolean canGolemPerformTask(IGolemAPI golem, Task task) {
+        if(GolemHelperTW.isGolemValidForTask(golem, task, this.refillInkTaskId, INK_STACK)) {
+            return true;
         }
+        for (ResearchRequest request : this.researchRequests) {
+            if (request.isGolemValidForTask(golem, task)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        for (int x = (int) area.minX; x < (int) area.maxX; x++) {
-            for (int y = (int) area.minY; y < (int) area.maxY; y++) {
-                for (int z = (int) area.minZ; z < (int) area.maxZ; z++) {
-                    checkPos = new BlockPos(x, y, z);
-                    checkTile = world.getTileEntity(checkPos);
-                    if (checkTile instanceof TileResearchTable) {
-                        tables.add((TileResearchTable) checkTile);
-                    }
+    @Override
+    public void onTaskStarted(World world, IGolemAPI golem, Task task) {}
+
+    @Override
+    public boolean onTaskCompletion(World world, IGolemAPI golem, Task task) {
+        ISealEntity seal = GolemHelper.getSealEntity(world.provider.getDimension(), task.getSealPos());
+        //Handle refill ink task
+        if(GolemHelperTW.isGolemValidForTask(golem, task, this.refillInkTaskId, INK_STACK)) {
+            ItemStack dyeStack = GolemHelperTW.getCarriedMatchingStack(golem, INK_STACK);
+            if(!dyeStack.isEmpty()) {
+                dyeStack.shrink(1);
+                golem.swingArm();
+                golem.addRankXp(1);
+                this.refillInk(world, seal);
+                this.refillInkTaskId = Integer.MIN_VALUE;
+                return true;
+            }
+        }
+        //Handle research material tasks
+        for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(seal.getSealPos().pos).grow(PLAYER_SEARCH_AREA))) {
+            for(ResearchRequest request : this.researchRequests) {
+                if(request.tryCompleteTask(player, seal, golem, task)) {
+                    this.cleanResearchRequests(world, seal);
+                    this.updateResearchRequests(world, seal);
+                    return true;
                 }
             }
         }
-        return tables;
+        return false;
+    }
+
+    @Override
+    public void onTaskSuspension(World world, Task task) {}
+
+    public void requestResearchMaterials(ISealEntity seal, EntityPlayer player, NonNullList<ItemStack> researchStacks) {
+        if (!this.props[PROP_MATERIALS].getValue())
+            return;
+
+        NonNullList<ItemStack> missingStacks = NonNullList.create();
+        missingStacks.addAll(researchStacks);
+        missingStacks.removeIf(stack -> stack == null || stack.isEmpty() || InventoryUtils.isPlayerCarryingAmount(player, stack, true));
+        if (!missingStacks.isEmpty()) {
+            for(ItemStack stack : missingStacks) {
+                ResearchRequest request = new ResearchRequest(player, stack);
+                this.researchRequests.add(request);
+            }
+            this.updateResearchRequests(player.world, seal);
+        }
     }
 
     private void cleanProvisionRequests(World world) {
-        if (this.delay % 60 == 0 && GolemHelper.provisionRequests.containsKey(world.provider.getDimension())) {
+        if (this.restockDelay % 60 == 0 && GolemHelper.provisionRequests.containsKey(world.provider.getDimension())) {
             GolemHelper.provisionRequests.get(world.provider.getDimension()).removeIf(provisionRequest -> provisionRequest.isInvalid()
                     || provisionRequest.getLinkedTask() == null
                     || provisionRequest.getLinkedTask().isSuspended()
@@ -207,143 +171,27 @@ public class SealResearchAssistant implements ISeal, ISealConfigArea, ISealConfi
         }
     }
 
-    private void handleSealInventory(World world, ISealEntity seal) {
-        if (this.emptyDelay > 0) {
-            this.emptyDelay--;
-        } else {
-            this.emptySeal(world, seal);
-        }
+    private void cleanResearchRequests(World world, ISealEntity seal) {
+        AxisAlignedBB area = new AxisAlignedBB(seal.getSealPos().pos).grow(PLAYER_SEARCH_AREA);
+        List<EntityPlayer> nearbyPlayers = world.getEntitiesWithinAABB(EntityPlayer.class, area);
+        this.researchRequests.removeIf(request -> request.shouldRemoveTask(world) || nearbyPlayers.stream().noneMatch(request::matches));
     }
 
-    public void requestResearchMaterials(ISealEntity seal, EntityPlayer player, NonNullList<ItemStack> researchStacks) {
-        if (!this.props[PROP_MATERIALS].getValue())
-            return;
-
-        NonNullList<ItemStack> requestStacks = NonNullList.create();
-        requestStacks.addAll(researchStacks);
-        requestStacks.removeIf(stack -> stack == null || stack.isEmpty() || InventoryUtils.isPlayerCarryingAmount(player, stack, true));
-        if (!researchStacks.isEmpty()) {
-            if (!this.researchRequests.containsKey(player.getUniqueID())) {
-                this.researchRequests.put(player.getUniqueID(), NonNullList.create());
-            }
-            for (ItemStack stack : requestStacks) {
-                this.researchRequests.get(player.getUniqueID()).add(stack);
-                this.requestProvisions(player.world, seal, stack);
-            }
-            this.emptyDelay = 1200;
-        }
-    }
-
-    private void provideResearchMaterials(World world, ISealEntity seal, EntityPlayer player) {
-        if (!this.researchRequests.containsKey(player.getUniqueID()) || this.researchRequests.get(player.getUniqueID()).isEmpty())
-            return;
-
-        NonNullList<ItemStack> researchMaterials = this.researchRequests.get(player.getUniqueID());
-        IItemHandler handler = ThaumcraftInvHelper.getItemHandlerAt(world, seal.getSealPos().pos, seal.getSealPos().face);
-        if (handler != null) {
-            for (int chestSlot = 0; chestSlot < handler.getSlots(); chestSlot++) {
-                ItemStack stack = handler.getStackInSlot(chestSlot);
-
-                for (int researchIndex = 0; researchIndex < researchMaterials.size(); researchIndex++) {
-                    ItemStack researchStack = researchMaterials.get(researchIndex);
-                    if (InventoryUtils.areItemStacksEqual(stack, researchStack, new InvFilter(false, !researchStack.hasTagCompound(), true, false).setRelaxedNBT())) {
-                        ItemStack extract = handler.extractItem(chestSlot, researchStack.getCount(), true);
-                        if (!extract.isEmpty()) {
-                            if (player.addItemStackToInventory(extract)) {
-                                handler.extractItem(chestSlot, researchStack.getCount(), false);
-                                researchMaterials.remove(researchStack);
-                                break;
-                            } else {
-                                //If player inventory is full, no additional items can be inserted
-                                return;
-                            }
-                        }
-                    }
-                }
-                if (researchMaterials.isEmpty()) {
-                    break;
-                }
-            }
-        }
-    }
-
-    private void emptySeal(World world, ISealEntity seal) {
-        if (this.delay % 100 == 0) {
-            this.emptyTasksCache.keySet().removeIf(taskNum -> TaskHandler.getTask(world.provider.getDimension(), taskNum) == null);
-        }
-
-        if (this.delay % 20 == 0) {
-            boolean isEmpty = true;
-            for (int slot = 0; slot < this.stackHandler.getSlots(); slot++) {
-                ItemStack stack = this.stackHandler.getStackInSlot(slot);
-                if (!stack.isEmpty()) {
-                    isEmpty = false;
-                    Task task = new Task(seal.getSealPos(), seal.getSealPos().pos);
-                    task.setPriority(seal.getPriority());
-                    task.setLifespan((short) 5);
-                    TaskHandler.addTask(world.provider.getDimension(), task);
-                    this.emptyTasksCache.put(task.getId(), slot);
-                }
-            }
-            if (isEmpty) {
-                this.researchRequests.clear();
-            }
-        }
-    }
-
-    private boolean shouldRefillInk(TileResearchTable tileTable) {
-        if (!this.props[PROP_INK].getValue())
-            return false;
-
-        //Scribing tools are stored in slot 0 in the research table.
-        int scribingSlot = 0;
-        IItemHandler handler = tileTable.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-        if (handler != null && handler.getSlots() > scribingSlot) {
-            ItemStack scribingTools = handler.getStackInSlot(0);
-            if (!scribingTools.isEmpty() && scribingTools.getItem() == ItemsTC.scribingTools) {
-                return scribingTools.getItemDamage() >= scribingTools.getMaxDamage() - 10;
-            }
-        }
-        return false;
-    }
-
-    private void requestInk(ISealEntity seal, TileResearchTable tileTable) {
-        ItemStack inkStack = new ItemStack(Items.DYE, 1, 0);
-        //Don't request an ink sac if there already is one in the seal
-        for (int i = 0; i < this.stackHandler.getSlots(); i++) {
-            if (ItemStack.areItemsEqual(inkStack, this.stackHandler.getStackInSlot(i))) {
-                return;
-            }
-        }
-        //Requesting an ink sac
-        this.requestProvisions(tileTable.getWorld(), seal, inkStack);
-    }
-
-    private void refillInk(ISealEntity seal, TileResearchTable tileTable) {
-        //Scribing tools are stored in slot 0 in the research table.
-        int scribingSlot = 0;
-        World world = tileTable.getWorld();
-        IItemHandler handler = ThaumcraftInvHelper.getItemHandlerAt(world, seal.getSealPos().pos, seal.getSealPos().face);
-        IItemHandler tableHandler = tileTable.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-        if (handler != null && tableHandler != null) {
-            for (int i = 0; i < handler.getSlots(); i++) {
-                ItemStack inkStack = handler.getStackInSlot(i);
-                //Using the ink sac to repair scribing tools
-                if (!inkStack.isEmpty() && inkStack.getItem() == Items.DYE && inkStack.getItemDamage() == 0) {
-                    //Extracting Ink Sac from seal inventory
-                    handler.extractItem(i, 1, false);
-                    //Extracting Scribing Tools from research table
-                    tableHandler.extractItem(scribingSlot, 1, false);
-                    //Inserting new Scribing Tools into research table.
-                    tableHandler.insertItem(scribingSlot, new ItemStack(ItemsTC.scribingTools), false);
+    private void updateResearchRequests(World world, ISealEntity seal) {
+        for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(seal.getSealPos().pos).grow(PLAYER_SEARCH_AREA))) {
+            for(ResearchRequest request : this.researchRequests) {
+                if(request.matches(player)) {
+                    request.updateTask(seal);
+                    this.requestDelay = 0;
                     return;
                 }
             }
         }
     }
 
-    private boolean shouldRestockPaper(TileResearchTable tileTable) {
-        return this.props[PROP_PAPER].getValue() && this.getRestockPaperAmount(tileTable) >= 16;
+    private @Nullable TileResearchTable getResearchTable(World world, BlockPos pos) {
+        TileEntity tile = world.getTileEntity(pos);
+        return tile instanceof TileResearchTable ? (TileResearchTable) tile : null;
     }
 
     private int getRestockPaperAmount(TileResearchTable tileTable) {
@@ -363,34 +211,80 @@ public class SealResearchAssistant implements ISeal, ISealConfigArea, ISealConfi
         return toStock;
     }
 
+    private boolean shouldRestockPaper(TileResearchTable tileTable) {
+        return this.props[PROP_PAPER].getValue() && this.getRestockPaperAmount(tileTable) >= 16;
+    }
+
     private void restockPaper(ISealEntity seal, TileResearchTable tileTable) {
         //Paper is stored in slot 1 in the research table.
         int paperSlot = 1;
         ItemStack restockStack = new ItemStack(Items.PAPER, this.getRestockPaperAmount(tileTable));
-
-        //TODO: The item handler stuff is not needed once the items are stored in the seal itself.
-        IItemHandler handler = ThaumcraftInvHelper.getItemHandlerAt(tileTable.getWorld(), seal.getSealPos().pos, seal.getSealPos().face);
-        IItemHandler tableHandler = tileTable.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-        if (handler != null && tableHandler != null) {
-            for (int i = 0; i < handler.getSlots(); i++) {
-                ItemStack checkStack = handler.getStackInSlot(i);
-                if (!checkStack.isEmpty() && checkStack.getItem() == Items.PAPER) {
-                    ItemStack extracted = handler.extractItem(i, restockStack.getCount(), true);
-                    if (!extracted.isEmpty()) {
-                        extracted = handler.extractItem(i, extracted.getCount(), false);
-                        tableHandler.insertItem(paperSlot, extracted, false);
-                        return;
-                    }
-                }
-            }
-        }
-
         GolemHelper.requestProvisioning(tileTable.getWorld(), tileTable.getPos(), EnumFacing.UP, restockStack);
     }
 
-    private void requestProvisions(World world, ISealEntity seal, ItemStack stack) {
-        //TODO: Change this to a request item task.
-        GolemHelper.requestProvisioning(world, seal.getSealPos().pos, seal.getSealPos().face, stack);
+    private boolean shouldRefillInk(TileResearchTable tileTable) {
+        if (!this.props[PROP_INK].getValue())
+            return false;
+
+        //Scribing tools are stored in slot 0 in the research table.
+        int scribingSlot = 0;
+        IItemHandler handler = tileTable.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+        if (handler != null && handler.getSlots() > scribingSlot) {
+            ItemStack scribingTools = handler.getStackInSlot(0);
+            if (!scribingTools.isEmpty() && scribingTools.getItem() == ItemsTC.scribingTools) {
+                return scribingTools.getItemDamage() >= scribingTools.getMaxDamage() - 10;
+            }
+        }
+        return false;
+    }
+
+    private void refillInk(World world, ISealEntity seal) {
+        //Scribing tools are stored in slot 0 in the research table.
+        int scribingSlot = 0;
+        TileResearchTable table = this.getResearchTable(world, seal.getSealPos().pos);
+        if(table != null) {
+            IItemHandler tableHandler = table.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+            if (tableHandler != null) {
+                //Extracting Scribing Tools from research table
+                tableHandler.extractItem(scribingSlot, 1, false);
+                //Inserting new Scribing Tools into research table.
+                tableHandler.insertItem(scribingSlot, new ItemStack(ItemsTC.scribingTools), false);
+            }
+        }
+    }
+
+    @Override
+    public EnumGolemTrait[] getRequiredTags() {
+        return new EnumGolemTrait[]{EnumGolemTrait.SMART, EnumGolemTrait.DEFT};
+    }
+
+    @Override
+    public EnumGolemTrait[] getForbiddenTags() {
+        return new EnumGolemTrait[]{EnumGolemTrait.CLUMSY};
+    }
+
+    @Override
+    public void readCustomNBT(NBTTagCompound nbtTagCompound) {}
+
+    @Override
+    public void writeCustomNBT(NBTTagCompound nbtTagCompound) {}
+
+    @Override
+    public void onRemoval(World world, BlockPos pos, EnumFacing enumFacing) {}
+
+    @Override
+    public Object returnContainer(World world, EntityPlayer player, BlockPos pos, EnumFacing facing, ISealEntity seal) {
+        return new SealBaseContainer(player.inventory, world, seal);
+    }
+
+    @Override
+    public Object returnGui(World world, EntityPlayer player, BlockPos pos, EnumFacing facing, ISealEntity seal) {
+        return new SealBaseGUI(player.inventory, world, seal);
+    }
+
+    @Override
+    public int[] getGuiCategories() {
+        return new int[]{CAT_TOGGLES, CAT_PRIORITY, CAT_TAGS};
     }
 
     @Override
@@ -401,10 +295,5 @@ public class SealResearchAssistant implements ISeal, ISealConfigArea, ISealConfi
     @Override
     public void setToggle(int index, boolean value) {
         this.props[index].setValue(value);
-    }
-
-    @Override
-    public int[] getGuiCategories() {
-        return new int[]{CAT_AREA, CAT_TOGGLES, CAT_PRIORITY, CAT_TAGS};
     }
 }

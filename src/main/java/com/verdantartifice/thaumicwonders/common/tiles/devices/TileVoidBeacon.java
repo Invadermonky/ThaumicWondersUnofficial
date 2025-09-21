@@ -34,9 +34,10 @@ import thaumcraft.common.lib.utils.EntityUtils;
 
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Map;
 
 public class TileVoidBeacon extends TileTW implements ITickable, IAspectContainer, IEssentiaTransport {
     private static final int ESSENTIA_CAPACITY = 100;

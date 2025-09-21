@@ -10,6 +10,7 @@
 - Improved Void Beacon Vis regeneration logic to prioritize low-vis chunks (made bacon more smarter)
 ### Fixed
 - Fixed Voidcaller Armor model desync when crouching
+- Fixed crash when wearing Void Walker Boots when Thaumic Augmentation is not installed
 - Fixed Infernal Hedge and End Hedge duplication recipes will now use the correct aspects
 
 ## v2.1.2

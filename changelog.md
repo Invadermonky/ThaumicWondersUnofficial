@@ -1,4 +1,9 @@
 # Changelog
+## v2.2.0
+-----
+### Fixed
+- Fixed Catalyzation Chamber destroying unbreakable catalyst items
+
 ## v2.1.3
 ------
 ### Added
@@ -7,12 +12,12 @@
 - Added Inspiration Engine ambient sound effect (courtesy of IcarussOne)
 - Added Madness Engine ambient sound effect (courtesy of IcarussOne)
 ### Changed
-- Improved Void Beacon Vis regeneration logic to prioritize low-vis chunks (made bacon more smarter)
+- Improved Void Beacon Vis regeneration logic to prioritize low vis chunks (made bacon more smarter)
 - Rewrote Control Seal: Research Assistant handling to be much more intuitive 
 ### Fixed
 - Fixed Voidcaller Armor model desync when crouching
 - Fixed crash when wearing Void Walker Boots when Thaumic Augmentation is not installed
-- Fixed Infernal Hedge and End Hedge duplication recipes will now use the correct aspects
+- Fixed Infernal Hedge and End Hedge duplication compatible recipes
 
 ## v2.1.2
 ------

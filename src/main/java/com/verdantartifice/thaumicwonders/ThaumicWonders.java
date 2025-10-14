@@ -73,7 +73,11 @@ public class ThaumicWonders {
     //  Rework Timewinder to be block machine with new model
     //  Make the Meteorb into a handheld device (maybe use the timewinder compass model)
     //  Flux distiller model
-    //  Shattered portal linker - random teleport portal
+    //  Portal Linker Expansion:
+    //      Stabilized Portal Linker - normal TW teleport system
+    //      Shattered Portal Linker - random teleport (maybe with tiers to increase TP range)
+    //      Unstable Portal Linker - generates a lesser crimson portal
+    //      Corrupted Portal Linker - generates a greater crimson portal
     //  Look into adding a replacement for the original Void Beacon that generates items from raw essentia
     //  Modified ore diviner that infuses essentia into stone and transforms it into ores
     //  Enchanter Multiblock (disablable)

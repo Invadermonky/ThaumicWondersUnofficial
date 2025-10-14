@@ -118,7 +118,7 @@ public class TileCatalyzationChamber extends TileTWInventory implements ITickabl
                                 this.decrStackSize(slot, 1);
                                 continue;
                             }
-                            if (catalyst.isItemStackDamageable()) {
+                            if (catalyst.getItem().isDamageable()) {
                                 if (catalyst.attemptDamageItem(1, this.world.rand, null)) {
                                     catalyst.shrink(1);
                                 }

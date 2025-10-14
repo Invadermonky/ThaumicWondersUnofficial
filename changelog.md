@@ -8,8 +8,9 @@
 - Improved Primal Arrow textures
 ### Fixed
 - Fixed Catalyzation Chamber destroying unbreakable catalyst items
+- Fixed rare issue where Void Portal would remain if Portal Anchor was destroyed
 - Fixed Void Beacon playing activate and deactivate sounds when beacon structure was not formed
-
+ 
 ## v2.1.3
 ------
 ### Added

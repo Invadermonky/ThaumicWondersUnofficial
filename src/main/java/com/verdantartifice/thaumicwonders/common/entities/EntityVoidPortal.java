@@ -54,11 +54,14 @@ public class EntityVoidPortal extends Entity {
     @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
-
         // Play ambient sound at most every 540 ticks
         if (!this.isDead && this.rand.nextInt(1000) < this.soundTime++) {
             this.soundTime = -540;
             this.playSound(SoundsTC.monolith, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+        }
+        // If portal anchor is missing, destroy portal
+        if(this.getPortalAnchor() == null) {
+            this.setDead();
         }
     }
 

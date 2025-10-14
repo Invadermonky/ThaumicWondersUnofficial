@@ -65,10 +65,12 @@ public class BlockVoidBeacon extends BlockDeviceTW<TileVoidBeacon> implements IB
         if (flag != state.getValue(IBlockEnabled.ENABLED)) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof TileVoidBeacon) {
-                if (flag) {
-                    ((TileVoidBeacon) tile).playActivateSound();
-                } else {
-                    ((TileVoidBeacon) tile).playDeactivateSound();
+                if(TileVoidBeacon.VoidBeaconTier.getVoidBeaconTier(worldIn, pos) != TileVoidBeacon.VoidBeaconTier.ZERO) {
+                    if (flag) {
+                        ((TileVoidBeacon) tile).playActivateSound();
+                    } else {
+                        ((TileVoidBeacon) tile).playDeactivateSound();
+                    }
                 }
             }
             worldIn.setBlockState(pos, state.withProperty(IBlockEnabled.ENABLED, flag), 0x3);

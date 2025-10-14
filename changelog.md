@@ -1,8 +1,14 @@
 # Changelog
 ## v2.2.0
 -----
+### Changed
+- Updated primal destroyer HUD to match new item texture
+- Improved Creative Essentia Jar textures
+- Improved Empowered Bow of Bone pull animation
+- Improved Primal Arrow textures
 ### Fixed
 - Fixed Catalyzation Chamber destroying unbreakable catalyst items
+- Fixed Void Beacon playing activate and deactivate sounds when beacon structure was not formed
 
 ## v2.1.3
 ------

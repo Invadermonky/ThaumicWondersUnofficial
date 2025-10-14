@@ -88,7 +88,7 @@ public class TileVoidBeacon extends TileTW implements ITickable, IAspectContaine
                 if (this.isBeaconEnabled()) {
                     if (checkTier == VoidBeaconTier.ZERO) {
                         this.playDeactivateSound();
-                    } else if (this.tier == VoidBeaconTier.ZERO) {
+                    } else {
                         this.playActivateSound();
                     }
                 }

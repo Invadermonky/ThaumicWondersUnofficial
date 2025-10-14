@@ -36,6 +36,7 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:24.1.0'
     
     implementation 'mezz:jei:4.27.3'
+    implementation 'com.cleanroommc:configanytime:3.0'
     implementation rfg.deobf("curse.maven:just-enough-resources-jer-240630:2728585")
     //implementation rfg.deobf('curse.maven:had-enough-items-557549:4543375')
 
@@ -52,7 +53,7 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:expanded-arcanum-301722:2609701")
 
     compileOnly rfg.deobf("curse.maven:thaumcraftfix-1069346:6405744")
-    compileOnly rfg.deobf("curse.maven:new-crimson-revelations-1025633:6617824")
+    compileOnly rfg.deobf("curse.maven:new-crimson-revelations-1025633:7012584")
 
     // Example - Dependency descriptor:
     // 'com.google.code.gson:gson:2.8.6' << group: com.google.code.gson, name:g1025633son, version:2.8.6

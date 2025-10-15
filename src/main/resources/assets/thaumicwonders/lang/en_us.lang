@@ -87,7 +87,10 @@ tile.thaumicwonders:shimmerleaf_crop.name=Shimmerleaf
 tile.thaumicwonders:vishroom_crop.name=Vishroom
 
 # Items
+item.seal.fishing.name=Control Seal: Fishing
 item.seal.research_assistant.name=Control Seal: Research Assistant
+item.seal.shearing.name=Control Seal: Shearing
+item.seal.shearing_advanced.name=Advanced Control Seal: shearing
 item.thaumicwonders:alchemist_stone.name=Alchemist's Stone
 item.thaumicwonders:alienist_stone.name=Alienist's Stone
 item.thaumicwonders:bone_bow.name=Empowered Bow of Bone

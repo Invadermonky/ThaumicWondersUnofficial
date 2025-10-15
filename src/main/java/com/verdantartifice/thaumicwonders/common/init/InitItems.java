@@ -3,6 +3,8 @@ package com.verdantartifice.thaumicwonders.common.init;
 import com.verdantartifice.thaumicwonders.common.compat.ModIds;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.golems.seals.SealResearchAssistant;
+import com.verdantartifice.thaumicwonders.common.golems.seals.SealShearing;
+import com.verdantartifice.thaumicwonders.common.golems.seals.SealShearingAdvanced;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemBootsVoidWalker;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemNightVisionGoggles;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
@@ -70,6 +72,10 @@ public class InitItems {
 
     public static void initSeals() {
         GolemHelper.registerSeal(new SealResearchAssistant());
+
+        //TODO: Remove comment when adding new seals
+        //GolemHelper.registerSeal(new SealShearing());
+        //GolemHelper.registerSeal(new SealShearingAdvanced());
     }
 
     private static void registerItem(IForgeRegistry<Item> forgeRegistry, Item item, boolean enabled) {

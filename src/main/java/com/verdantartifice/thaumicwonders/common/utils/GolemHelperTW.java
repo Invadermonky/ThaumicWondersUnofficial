@@ -39,7 +39,7 @@ public class GolemHelperTW {
     }
 
     public static int createMoveToEntityTask(Entity entity, ISealEntity seal) {
-        Task task = new Task(seal.getSealPos(), entity.getPosition());
+        Task task = new Task(seal.getSealPos(), entity);
         task.setPriority(seal.getPriority());
         task.setLifespan((short) 10);
         TaskHandler.addTask(entity.world.provider.getDimension(), task);

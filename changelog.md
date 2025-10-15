@@ -1,5 +1,5 @@
 # Changelog
-## v2.2.0
+## v2.1.4
 -----
 ### Changed
 - Updated primal destroyer HUD to match new item texture

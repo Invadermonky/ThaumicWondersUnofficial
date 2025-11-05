@@ -1,11 +1,13 @@
 package com.verdantartifice.thaumicwonders.common.utils;
 
+import com.cleanroommc.groovyscript.compat.vanilla.OreDict;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.golems.IGolemAPI;
 import thaumcraft.api.golems.seals.ISealEntity;
 import thaumcraft.api.golems.tasks.Task;
@@ -15,13 +17,18 @@ public class GolemHelperTW {
     public static ItemStack getCarriedMatchingStack(IGolemAPI golem, ItemStack stack) {
         if(stack.isEmpty()) return ItemStack.EMPTY;
         for(ItemStack carried : golem.getCarrying()) {
-            if(ItemStack.areItemsEqual(stack, carried) && ItemStack.areItemStackTagsEqual(stack, carried)) {
+
+            if(OreDictionary.itemMatches(stack, carried, false) && ItemStack.areItemStackTagsEqual(stack, carried)) {
                 if(stack.getCount() == 1 || carried.getCount() >= stack.getCount()) {
                     return carried;
                 }
             }
         }
         return ItemStack.EMPTY;
+    }
+
+    public static boolean isCarryingStack(IGolemAPI golem, ItemStack stack) {
+        return !getCarriedMatchingStack(golem, stack).isEmpty();
     }
 
     public static boolean isTaskActive(World world, int taskId) {

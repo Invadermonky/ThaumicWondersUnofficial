@@ -20,6 +20,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.casters.IInteractWithCaster;
@@ -109,34 +111,38 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
     }
 
     protected void performTesla(BlockPos start, BlockPos end, Aspect aspect) {
-        try {
-            Color color = new Color(aspect.getColor());
-            float r = color.getRed() / 255.0F;
-            float g = color.getGreen() / 255.0F;
-            float b = color.getBlue() / 255.0F;
-            FXDispatcher.INSTANCE.arcLightning(
-                    start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
-                    end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
-                    r, g, b, 0.6F);
-        } catch (NullPointerException | NoClassDefFoundError e) {
-            ThaumicWonders.LOGGER.error("Failed to load Thaumcraft FXDispatcher.");
-            e.printStackTrace(System.err);
+        if(this.world.isRemote) {
+            try {
+                Color color = new Color(aspect.getColor());
+                float r = color.getRed() / 255.0F;
+                float g = color.getGreen() / 255.0F;
+                float b = color.getBlue() / 255.0F;
+                FXDispatcher.INSTANCE.arcLightning(
+                        start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
+                        end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
+                        r, g, b, 0.6F);
+            } catch (NullPointerException | NoClassDefFoundError e) {
+                ThaumicWonders.LOGGER.error("Failed to load Thaumcraft FXDispatcher.");
+                e.printStackTrace(System.err);
+            }
         }
     }
 
     protected void performZap(BlockPos start, BlockPos end, Aspect aspect) {
-        try {
-            Color color = new Color(aspect.getColor());
-            float r = color.getRed() / 255.0F;
-            float g = color.getGreen() / 255.0F;
-            float b = color.getBlue() / 255.0F;
-            FXDispatcher.INSTANCE.arcBolt(
-                    start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
-                    end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
-                    r, g, b, 0.6F);
-        } catch (NullPointerException e) {
-            ThaumicWonders.LOGGER.error("Failed to load Thaumcraft FXDispatcher.");
-            e.printStackTrace(System.err);
+        if(this.world.isRemote) {
+            try {
+                Color color = new Color(aspect.getColor());
+                float r = color.getRed() / 255.0F;
+                float g = color.getGreen() / 255.0F;
+                float b = color.getBlue() / 255.0F;
+                FXDispatcher.INSTANCE.arcBolt(
+                        start.getX() + 0.5, start.getY(), start.getZ() + 0.5,
+                        end.getX() + 0.5, end.getY(), end.getZ() + 0.5,
+                        r, g, b, 0.6F);
+            } catch (NullPointerException | NoClassDefFoundError e) {
+                ThaumicWonders.LOGGER.error("Failed to load Thaumcraft FXDispatcher.");
+                e.printStackTrace(System.err);
+            }
         }
     }
 

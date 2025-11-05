@@ -1,6 +1,15 @@
 # Changelog
+## v2.2.0
+------
+### Added
+- Added Control Seal: Shearing, used to shear nearby animals
+- Added Advanced Control Seal: Shearing, used to shear nearby animals and harvest shearable blocks
+### Fixed
+- Fixed Sharing Tome research rewarding Lethe Water
+- Fixed crash on servers when summoning Avatar of Corruption
+
 ## v2.1.4
------
+------
 ### Changed
 - Updated primal destroyer HUD to match new item texture
 - Improved Creative Essentia Jar textures

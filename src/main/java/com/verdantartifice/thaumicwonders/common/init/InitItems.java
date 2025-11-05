@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.init;
 
 import com.verdantartifice.thaumicwonders.common.compat.ModIds;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
+import com.verdantartifice.thaumicwonders.common.golems.seals.SealFishing;
 import com.verdantartifice.thaumicwonders.common.golems.seals.SealResearchAssistant;
 import com.verdantartifice.thaumicwonders.common.golems.seals.SealShearing;
 import com.verdantartifice.thaumicwonders.common.golems.seals.SealShearingAdvanced;
@@ -72,10 +73,10 @@ public class InitItems {
 
     public static void initSeals() {
         GolemHelper.registerSeal(new SealResearchAssistant());
-
-        //TODO: Remove comment when adding new seals
-        //GolemHelper.registerSeal(new SealShearing());
-        //GolemHelper.registerSeal(new SealShearingAdvanced());
+        //TODO: Add research and crafting recipes
+        GolemHelper.registerSeal(new SealShearing());
+        GolemHelper.registerSeal(new SealShearingAdvanced());
+        //GolemHelper.registerSeal(new SealFishing());
     }
 
     private static void registerItem(IForgeRegistry<Item> forgeRegistry, Item item, boolean enabled) {

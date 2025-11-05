@@ -27,6 +27,35 @@
           "required_research": ["TWOND_SEAL_RESEARCH_ASSISTANT@2"]
         }
       ]
+    },
+    {
+      "key": "TWOND_SEAL_SHEARING",
+      "name": "thaumicwonders.research.seal_shearing.title",
+      "icons": ["thaumicwonders:textures/items/seal_shearing.png"],
+      "category": "THAUMIC_WONDERS",
+      "parents": ["TWOND_MYSTIC_GARDENING", "~SEALHARVEST"],
+      "location": [2, -4],
+      "stages": [
+        {
+          "text": "thaumicwonders.research.seal_shearing.text.stage.1",
+          "required_knowledge": ["THEORY;GOLEMANCY;1"]
+        },
+        {
+          "text": "thaumicwonders.research.seal_shearing.text.stage.2",
+          "required_knowledge": ["THEORY;GOLEMANCY;1"],
+          "recipes": ["thaumicwonders:seal_shearing"]
+        },
+        {
+          "text": "thaumicwonders.research.seal_shearing.text.stage.3",
+          "recipes": ["thaumicwonders:seal_shearing", "thaumicwonders:seal_shearing_advanced"]
+        }
+      ],
+      "addenda": [
+        {
+          "text": "thaumicwonders.research.seal_shearing.text.addenda.1",
+          "required_research": ["TWOND_SEAL_SHEARING@2"]
+        }
+      ]
     }
   ]
 }

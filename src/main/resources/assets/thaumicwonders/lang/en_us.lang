@@ -378,6 +378,13 @@ thaumicwonders.research.seal_research_assistant.text.stage.2=I have a devised a 
 thaumicwonders.research.seal_research_assistant.text.addenda.1=Testing has shown that only standard scribing tools can be refilled. Magical variants of the tools interfere with the functionality of the seal.
 thaumicwonders.research.seal_research_assistant.text.addenda.2=In order for the seal to provide me with any research materials I may need, I must stay nearby the seal.<BR>If I venture too far, the seal is unable to detect my presence and will forget any previously assigned tasks.
 
+thaumicwonders.research.seal_shearing.title=Control Seal: Shearing
+thaumicwonders.research.seal_shearing.text.stage.1=I have constructed golem seals for various purposes of automation, one of my next ones to do would be one that would help with shearing sheep.
+thaumicwonders.research.seal_shearing.text.stage.2=The shearing seal will search the designated area for any unsheared animals. Once found, the golem will clip the creature, dropping any items that would have spawned if the animal had been sheared.
+thaumicwonders.research.seal_shearing.text.stage.3=I can now create an advanced version of this seal. In addition to animal shearing, this advanced version will allow golems to harvest shearable blocks such as vines, leaves, or tall grass.
+thaumicwonders.research.seal_shearing.text.addenda.1=This seal can only be used with golems equipped with Claw Arms.
+
+
 thaumicwonders.research.sharing_tome.title=Sharing Knowledge
 thaumicwonders.research.sharing_tome.text.stage.1=Lethe Water's ability to strip knowledge from my very being makes me wonder about the intricacies of the liquid's mind altering properties.<BR>There is some sort of exchange occurring that grants me magical energy at the expense of previously gained insights.  As this gained magical energy can be imbued directly into books and items, I wonder if I can instead find a way to capture the lost knowledge directly.<BR>This requires further study.
 thaumicwonders.research.sharing_tome.text.stage.2=While not exactly what I hoped to achieve, the experiment was nonetheless a success.<BR>By combining Lethe Water's knowledge stripping capability with the Thaumonomicon's ability to retain knowledge, I have created a book that is able to record my own knowledge of the arcane in a form that is legible to others.<BR>Using this will allow me to impart my knowledge to others, but there is no way to limit the passed knowledge.  Any who read it will likely begin to suffer many of the negative effects I am experiencing.

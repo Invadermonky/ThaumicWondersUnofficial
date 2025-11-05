@@ -411,7 +411,18 @@ public class InitRecipes {
                 PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER),
                 new AspectList().add(Aspect.MAGIC, 20).add(Aspect.MIND, 20).add(Aspect.VOID, 20)
         ));
-
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "seal_shearing"), new CrucibleRecipe(
+                "TWOND_SEAL_SHEARING@2",
+                GolemHelper.getSealStack("thaumicwonders:shearing"),
+                new ItemStack(ItemsTC.seals),
+                new AspectList().add(Aspect.BEAST, 10).add(Aspect.DESIRE, 10)
+        ));
+        ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "seal_shearing_advanced"), new CrucibleRecipe(
+                "TWOND_SEAL_SHEARING",
+                GolemHelper.getSealStack("thaumicwonders:shearing_advanced"),
+                GolemHelper.getSealStack("thaumicwonders:shearing"),
+                new AspectList().add(Aspect.SENSES, 10).add(Aspect.MIND, 10)
+        ));
 
         //Entropic
         int perditioCost = ConfigHandlerTW.erythurgy.perditioCost;

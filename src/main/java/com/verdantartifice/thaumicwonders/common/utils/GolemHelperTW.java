@@ -1,6 +1,5 @@
 package com.verdantartifice.thaumicwonders.common.utils;
 
-import com.cleanroommc.groovyscript.compat.vanilla.OreDict;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,8 +1,8 @@
 package com.verdantartifice.thaumicwonders.common.init;
 
+import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.compat.ModIds;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
-import com.verdantartifice.thaumicwonders.common.golems.seals.SealFishing;
 import com.verdantartifice.thaumicwonders.common.golems.seals.SealResearchAssistant;
 import com.verdantartifice.thaumicwonders.common.golems.seals.SealShearing;
 import com.verdantartifice.thaumicwonders.common.golems.seals.SealShearingAdvanced;
@@ -21,6 +21,7 @@ import com.verdantartifice.thaumicwonders.common.items.consumables.ItemLetheWate
 import com.verdantartifice.thaumicwonders.common.items.consumables.ItemPanacea;
 import com.verdantartifice.thaumicwonders.common.items.consumables.ItemPrimalArrow;
 import com.verdantartifice.thaumicwonders.common.items.entities.ItemFlyingCarpet;
+import com.verdantartifice.thaumicwonders.common.items.foci.FocusEffectTeleportHome;
 import com.verdantartifice.thaumicwonders.common.items.misc.*;
 import com.verdantartifice.thaumicwonders.common.items.plants.ItemCinderpearlSeed;
 import com.verdantartifice.thaumicwonders.common.items.plants.ItemShimmerleafSeed;
@@ -29,7 +30,9 @@ import com.verdantartifice.thaumicwonders.common.items.tools.ItemBoneBow;
 import com.verdantartifice.thaumicwonders.common.items.tools.ItemPrimalDestroyer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
+import thaumcraft.api.casters.FocusEngine;
 import thaumcraft.api.golems.GolemHelper;
 
 import java.util.HashSet;
@@ -77,6 +80,10 @@ public class InitItems {
         GolemHelper.registerSeal(new SealShearing());
         GolemHelper.registerSeal(new SealShearingAdvanced());
         //GolemHelper.registerSeal(new SealFishing());
+    }
+
+    public static void initFocusEffects() {
+        FocusEngine.registerElement(FocusEffectTeleportHome.class, new ResourceLocation(ThaumicWonders.MODID, "textures/foci/teleport_home.png"), 0x509efe);
     }
 
     private static void registerItem(IForgeRegistry<Item> forgeRegistry, Item item, boolean enabled) {

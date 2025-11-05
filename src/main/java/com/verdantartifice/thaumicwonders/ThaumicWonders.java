@@ -57,12 +57,10 @@ public class ThaumicWonders {
 
     //TODO: Future Release
     //  Thauma Llama
-    //  Shearing golem seal
     //  Fishing golem seal
     //  Crafting golem seal
     //  Eldritch cluster harvest infusion enchantment (or just a single pickaxe that does it
     //  Register for eldritch cluster harvesting
-    //  Item retrieval golem seal (like corporea crystal)
     //  Heximite explosion converts blocks into tainted variants (add CrT/GS integration for additional conversions)
     //  Research Brews + Crucible addon - create brews that randomly grant research after being consumed.
     //  Teleport Home focus effect

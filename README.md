@@ -19,7 +19,8 @@ This support includes new configuration options, added Crafttweaker and GroovySc
 ## New Features
 - **Initiate's Band of Cleansing** - a new ring that can cleanse negative effects and negate some Warp events, for a price...
 - **Primordial Siphon** - a rift siphon similar to Thaumcraft's Void Siphon that uses rift power to create Primordial Grains
-- **Seal: Research Assistant** - a new golem seal that restocks Research Table paper, refills Scribing Tools, and retrieves missing research items from nearby chests
+- **Control Seal: Research Assistant** - a new golem seal that restocks Research Table paper, refills Scribing Tools, and retrieves missing research items from nearby chests
+- **Focus Effect: Teleport Home** - a focus effect that teleports the player to their bed location
 - **Tome of Sharing** - (Includes config disable) a Tome of Sharing with a lot of options. Check out the configuration to see what it can do!
 - **Vis Capacitor** - a new high-capacity Vis storage block similar to Thaumcraft's Vis Battery
 - **Void Walker Boots** - a new version of the Traveler's Boots that has more armor and provides immunity to magma block damage, tainted soil poison, and soul sand slowdown

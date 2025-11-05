@@ -24,6 +24,7 @@ public class CommonProxy implements IProxyTW, IGuiHandler {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         InitItems.initSeals();
+        InitItems.initFocusEffects();
         ModPlugins.preInit(event);
     }
 

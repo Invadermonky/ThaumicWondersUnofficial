@@ -115,6 +115,30 @@
             ]
         },
         {
+            "key": "TWOND_FOCUS_TELEPORT_HOME",
+            "name": "thaumicwonders.research.teleport_home.title",
+            "icons": ["focus.thaumicwonders.teleport_home"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_VOID_PORTAL", "~BASEAUROMANCY"],
+            "meta": ["HIDDEN"],
+            "location": [-7, -3],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.teleport_home.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;ELDRITCH;1", "THEORY;AUROMANCY;1"],
+                    "required_research":["!motus"]
+                },
+                {
+                    "text": "thaumicwonders.research.teleport_home.text.stage.2"
+                }
+            ],
+            "addenda": [
+                {
+                    "text": "thaumicwonders.research.teleport_home.text.addenda.1"
+                }
+            ]
+        },
+        {
             "key": "TWOND_PRIMAL_DESTROYER",
             "name": "thaumicwonders.research.primal_destroyer.title",
             "icons": ["thaumicwonders:primal_destroyer"],

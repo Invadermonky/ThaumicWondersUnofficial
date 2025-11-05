@@ -4,6 +4,7 @@
 ### Added
 - Added Control Seal: Shearing, used to shear nearby animals
 - Added Advanced Control Seal: Shearing, used to shear nearby animals and harvest shearable blocks
+- Added Focus Effect: Teleport Home, used to teleport to the player's bed position
 ### Fixed
 - Fixed Sharing Tome research rewarding Lethe Water
 - Fixed crash on servers when summoning Avatar of Corruption

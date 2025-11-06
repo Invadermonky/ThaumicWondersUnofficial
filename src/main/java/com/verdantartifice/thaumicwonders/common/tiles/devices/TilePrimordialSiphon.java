@@ -2,12 +2,18 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.items.ItemsTW;
-import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
+import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.utils.EntityUtils;
@@ -15,19 +21,21 @@ import thaumcraft.common.lib.utils.EntityUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TilePrimordialSiphon extends TileTWInventory implements ITickable {
-    private static final int[] slots = new int[]{};
+public class TilePrimordialSiphon extends TileTW implements ITickable {
+    public ItemStackHandler stackHandler = new ItemStackHandler() {
+        @Override
+        public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            return stack;
+        }
+    };
     public int progress = 0;
     int counter = 0;
 
-    public TilePrimordialSiphon() {
-        super(1);
-    }
-
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void update() {
         ++this.counter;
-        if (!this.getWorld().isRemote && !this.isPowered() && this.counter % 20 == 0 && this.progress < 2000 && (this.getStackInSlot(0).isEmpty() || this.getStackInSlot(0).getItem() == ItemsTW.PRIMORDIAL_GRAIN && this.getStackInSlot(0).getCount() < this.getStackInSlot(0).getMaxStackSize())) {
+        if (!this.getWorld().isRemote && !this.isPowered() && this.counter % 20 == 0 && this.progress < 2000 && this.canInsertGrain()) {
             List<EntityFluxRift> rifts = this.getValidRifts();
             boolean did = false;
 
@@ -38,7 +46,6 @@ public class TilePrimordialSiphon extends TileTWInventory implements ITickable {
                 if (this.world.rand.nextInt(33) == 0) {
                     rift.setRiftSize(rift.getRiftSize() - 1);
                 }
-
                 did = riftSize >= (double) 1.0F;
             }
 
@@ -46,13 +53,15 @@ public class TilePrimordialSiphon extends TileTWInventory implements ITickable {
                 this.world.addBlockEvent(this.pos, this.getBlockType(), 5, this.counter);
             }
 
-            for (did = false; this.progress >= ConfigHandlerTW.primordial_siphon.requiredRiftDrain && (this.getStackInSlot(0).isEmpty() || this.getStackInSlot(0).getItem() == ItemsTW.PRIMORDIAL_GRAIN && this.getStackInSlot(0).getCount() < this.getStackInSlot(0).getMaxStackSize()); did = true) {
+            if(this.progress >= ConfigHandlerTW.primordial_siphon.requiredRiftDrain) {
                 this.progress -= ConfigHandlerTW.primordial_siphon.requiredRiftDrain;
-                if (this.getStackInSlot(0).isEmpty()) {
-                    this.setInventorySlotContents(0, new ItemStack(ItemsTW.PRIMORDIAL_GRAIN));
-                } else {
-                    this.getStackInSlot(0).setCount(this.getStackInSlot(0).getCount() + 1);
+                ItemStack slotStack = this.stackHandler.getStackInSlot(0);
+                ItemStack grain = new ItemStack(ItemsTW.PRIMORDIAL_GRAIN);
+                if(!slotStack.isEmpty()) {
+                    grain.setCount(slotStack.getCount() + 1);
                 }
+                this.stackHandler.setStackInSlot(0, grain);
+                did = true;
             }
 
             if (did) {
@@ -64,6 +73,12 @@ public class TilePrimordialSiphon extends TileTWInventory implements ITickable {
 
     private boolean isPowered() {
         return this.world.getRedstonePowerFromNeighbors(this.pos) > 0;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private boolean canInsertGrain() {
+        ItemStack slotStack = this.stackHandler.getStackInSlot(0);
+        return slotStack.isEmpty() || (slotStack.getItem() == ItemsTW.PRIMORDIAL_GRAIN && slotStack.getCount() < slotStack.getMaxStackSize());
     }
 
     private List<EntityFluxRift> getValidRifts() {
@@ -86,31 +101,63 @@ public class TilePrimordialSiphon extends TileTWInventory implements ITickable {
         return ret;
     }
 
-    public boolean isItemValidForSlot(int par1, ItemStack stack) {
-        return stack.getItem() == ItemsTW.PRIMORDIAL_GRAIN;
-    }
-
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
+        this.stackHandler.deserializeNBT(nbt.getCompoundTag("inventory"));
         this.progress = nbt.getShort("progress");
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
+        nbt.setTag("inventory", this.stackHandler.serializeNBT());
         nbt.setShort("progress", (short) this.progress);
         return nbt;
     }
 
-    public int[] getSlotsForFace(EnumFacing side) {
-        return slots;
+    @Override
+    public void syncTile(boolean rerender) {
+        super.syncTile(rerender);
+        this.syncSlots(null);
     }
 
-    public boolean canInsertItem(int par1, ItemStack stack, EnumFacing par3) {
-        return false;
+    @Override
+    public void messageFromServer(NBTTagCompound nbt) {
+        this.stackHandler.deserializeNBT(nbt.getCompoundTag("inventory"));
     }
 
-    public boolean canExtractItem(int par1, ItemStack stack2, EnumFacing par3) {
-        return true;
+    @Override
+    public void messageFromClient(NBTTagCompound nbt, EntityPlayerMP player) {
+        if(nbt.hasKey("requestSync")) {
+            this.syncSlots(player);
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        if(!this.world.isRemote) {
+            this.syncSlots(null);
+        } else {
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setBoolean("requestSync", true);
+            this.sendMessageToServer(tag);
+        }
+    }
+
+    protected void syncSlots(@Nullable EntityPlayerMP player) {
+        this.sendMessageToClient(this.writeToNBT(new NBTTagCompound()), player);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != EnumFacing.UP;
+    }
+
+    @Override
+    public @Nullable <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != EnumFacing.UP) {
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.stackHandler);
+        }
+        return super.getCapability(capability, facing);
     }
 
     public boolean receiveClientEvent(int i, int j) {

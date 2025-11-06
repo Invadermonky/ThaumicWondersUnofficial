@@ -1,14 +1,16 @@
 package com.verdantartifice.thaumicwonders.common.containers.slots;
 
-import com.verdantartifice.thaumicwonders.common.items.misc.ItemPortalLinker;
+import com.verdantartifice.thaumicwonders.common.items.linkers.ItemPortalLinker;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePortalAnchor;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class SlotPortalLinker extends Slot {
+public class SlotPortalLinker extends SlotItemHandler {
+    private TilePortalAnchor tile;
 
     public SlotPortalLinker(TilePortalAnchor tilePortalAnchor, int index, int xPosition, int yPosition) {
-        super(tilePortalAnchor, index, xPosition, yPosition);
+        super(tilePortalAnchor.stackHandler, index, xPosition, yPosition);
+        this.tile = tilePortalAnchor;
     }
 
     @Override
@@ -28,7 +30,9 @@ public class SlotPortalLinker extends Slot {
 
     @Override
     public void onSlotChanged() {
-//        super.onSlotChanged();
+        this.tile.removePortals(false);
+        this.tile.setPrimaryAnchor(false);
+        super.onSlotChanged();
     }
 
     @Override

@@ -1,4 +1,10 @@
 # Changelog
+## v2.2.1
+------
+**IMPORTANT!** Before updating, be sure to remove all items from Thaumic Wonders inventories such as the Primordial Siphon, Portal Anchor, or Catalyzation Chamber. Failing to do so will void any items contained in these inventories.
+### Fixed
+- Fixed issue causing Primordial Siphon to not be accessible with item insertion/extraction methods
+
 ## v2.2.0
 ------
 ### Added

@@ -2,11 +2,12 @@ package com.verdantartifice.thaumicwonders.common.tiles.devices;
 
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.entities.EntityVoidPortal;
-import com.verdantartifice.thaumicwonders.common.items.misc.ItemPortalLinker;
-import com.verdantartifice.thaumicwonders.common.tiles.base.TileTWInventory;
+import com.verdantartifice.thaumicwonders.common.items.linkers.ItemPortalLinker;
+import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +19,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.casters.IInteractWithCaster;
@@ -29,37 +34,24 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TilePortalAnchor extends TileTWInventory implements IInteractWithCaster {
+public class TilePortalAnchor extends TileTW implements IInteractWithCaster {
+    public ItemStackHandler stackHandler = new ItemStackHandler() {
+        @Override
+        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if(!simulate && !super.extractItem(slot, amount, true).isEmpty()) {
+                removePortals(false);
+                setPrimaryAnchor(false);
+            }
+            return super.extractItem(slot, amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+    };
     private BlockPos generatorPos;
     private boolean isPrimaryAnchor;
-
-    public TilePortalAnchor() {
-        super(1);
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index) {
-        this.removePortals(false);
-        this.setPrimaryAnchor(false);
-        return super.removeStackFromSlot(index);
-    }
-
-    @Override
-    public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-        this.removePortals(false);
-        this.setPrimaryAnchor(false);
-        super.setInventorySlotContents(index, stack);
-    }
-
-    @Override
-    public int getInventoryStackLimit() {
-        return 1;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return stack.getItem() instanceof ItemPortalLinker && ((ItemPortalLinker) stack.getItem()).isLinked(stack);
-    }
 
     @Override
     protected void readFromTileNBT(NBTTagCompound compound) {
@@ -67,6 +59,7 @@ public class TilePortalAnchor extends TileTWInventory implements IInteractWithCa
             this.generatorPos = BlockPos.fromLong(compound.getLong("generator"));
         }
         this.isPrimaryAnchor = compound.getBoolean("primary");
+        this.stackHandler.deserializeNBT(compound.getCompoundTag("inventory"));
     }
 
     @Override
@@ -75,6 +68,7 @@ public class TilePortalAnchor extends TileTWInventory implements IInteractWithCa
             compound.setLong("generator", this.generatorPos.toLong());
         }
         compound.setBoolean("primary", this.isPrimaryAnchor);
+        compound.setTag("inventory", this.stackHandler.serializeNBT());
         return compound;
     }
 
@@ -121,14 +115,13 @@ public class TilePortalAnchor extends TileTWInventory implements IInteractWithCa
         }
     }
 
-
     public ItemStack getPortalLinker() {
-        return this.getStackInSlot(0);
+        return this.stackHandler.getStackInSlot(0);
     }
 
     public BlockPos getPortalLinkerPosition() {
         ItemStack stack = this.getPortalLinker();
-        if (stack.getItem() instanceof ItemPortalLinker) {
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemPortalLinker) {
             return ((ItemPortalLinker) stack.getItem()).getAnchorPosition(stack);
         }
         return new BlockPos(0, 0, 0);
@@ -364,5 +357,51 @@ public class TilePortalAnchor extends TileTWInventory implements IInteractWithCa
                 portals.forEach(EntityVoidPortal::setDead);
             }
         }
+    }
+
+    @Override
+    public void syncTile(boolean rerender) {
+        super.syncTile(rerender);
+        this.syncSlots(null);
+    }
+
+    @Override
+    public void messageFromServer(NBTTagCompound nbt) {
+        this.stackHandler.deserializeNBT(nbt.getCompoundTag("inventory"));
+    }
+
+    @Override
+    public void messageFromClient(NBTTagCompound nbt, EntityPlayerMP player) {
+        if(nbt.hasKey("requestSync")) {
+            this.syncSlots(player);
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        if(!this.world.isRemote) {
+            this.syncSlots(null);
+        } else {
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setBoolean("requestSync", true);
+            this.sendMessageToServer(tag);
+        }
+    }
+
+    protected void syncSlots(@Nullable EntityPlayerMP player) {
+        this.sendMessageToClient(this.writeToNBT(new NBTTagCompound()), player);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return facing == EnumFacing.DOWN && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+    }
+
+    @Override
+    public @Nullable <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if(facing == EnumFacing.DOWN && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.stackHandler);
+        }
+        return super.getCapability(capability, facing);
     }
 }

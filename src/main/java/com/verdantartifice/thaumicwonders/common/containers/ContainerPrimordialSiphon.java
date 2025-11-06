@@ -1,12 +1,12 @@
 package com.verdantartifice.thaumicwonders.common.containers;
 
+import com.verdantartifice.thaumicwonders.common.containers.slots.SlotPrimordialPearl;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TilePrimordialSiphon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import thaumcraft.common.container.slot.SlotOutput;
 
 public class ContainerPrimordialSiphon extends Container {
     private InventoryPlayer inventoryPlayer;
@@ -16,7 +16,7 @@ public class ContainerPrimordialSiphon extends Container {
         this.inventoryPlayer = inventoryPlayer;
         this.tileEntity = siphonTile;
 
-        this.addSlotToContainer(new SlotOutput(this.tileEntity, 0, 80, 32));
+        this.addSlotToContainer(new SlotPrimordialPearl(this.tileEntity.stackHandler, 0, 80, 32));
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 this.addSlotToContainer(new Slot(this.inventoryPlayer, j + (i * 9) + 9, 8 + (j * 18), 84 + (i * 18)));

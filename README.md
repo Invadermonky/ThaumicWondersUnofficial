@@ -30,9 +30,9 @@ This support includes new configuration options, added Crafttweaker and GroovySc
 - **Voidflame Infusion** - a new infusion enchantment that inflicts targets with a status effect that deals true damage over time and reduces healing received by 50%
 
 ## Compatibility
-- [**CraftTweaker**](https://www.curseforge.com/minecraft/mc-mods/crafttweaker) - The Catalyzation Chamber, Meaty Orb, and Void Beacon can have their recipes and outputs modified using CraftTweaker scripts.
+- [**CraftTweaker**](https://www.curseforge.com/minecraft/mc-mods/crafttweaker) - The Catalyzation Chamber and Meaty Orb can have their recipes and outputs modified using CraftTweaker scripts.
 - [**Expanded Arcanum**](https://www.curseforge.com/minecraft/mc-mods/expanded-arcanum) - Ore Clusters added by Expanded Arcanum will automatically have their recipes registered for the Catalyzation Chamber.
-- [**GroovyScript**](https://www.curseforge.com/minecraft/mc-mods/groovyscript) - The Catalyzation Chamber, Meaty Orb, and Void Beacon can have their recipes and outputs modified using GroovyScript scripts.
+- [**GroovyScript**](https://www.curseforge.com/minecraft/mc-mods/groovyscript) - The Catalyzation Chamber and Meaty Orb can have their recipes and outputs modified using GroovyScript scripts.
 - [**Just Enough Items**](https://www.curseforge.com/minecraft/mc-mods/jei) - The Catalyzation Chamber and Meaty Orb now include JEI recipe pages.
 - [**Just Enough Resources**](https://www.curseforge.com/minecraft/mc-mods/just-enough-resources-jer) - Mobs added by Thaumic Wonders now include JER support.
 - [**New Crimson Revelations**](https://www.curseforge.com/minecraft/mc-mods/new-crimson-revelations) - Thaumic Wonders Primal Arrow recipes will create NCR Primal Arrows if New Crimson Revelations is loaded. The Bone Bow has been renamed to 'Empowered Bow of Bone' to differentiate it from NCR's version.

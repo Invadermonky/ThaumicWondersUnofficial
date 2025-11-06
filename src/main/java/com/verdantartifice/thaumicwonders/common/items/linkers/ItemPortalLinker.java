@@ -1,4 +1,4 @@
-package com.verdantartifice.thaumicwonders.common.items.misc;
+package com.verdantartifice.thaumicwonders.common.items.linkers;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;

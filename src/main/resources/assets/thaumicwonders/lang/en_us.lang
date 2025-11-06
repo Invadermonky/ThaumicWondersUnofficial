@@ -67,6 +67,7 @@ tile.thaumicwonders:inspiration_engine.name=Inspiration Engine
 tile.thaumicwonders:madness_engine.name=Madness Engine
 tile.thaumicwonders:meaty_orb.name=Meaty Orb
 tile.thaumicwonders:meteorb.name=Meteorb
+tile.thaumicwonders:oblivion_essentia_jar.name=Oblivion Essentia Jar
 tile.thaumicwonders:ore_diviner.name=Ore Diviner
 tile.thaumicwonders:portal_anchor.name=Portal Anchor
 tile.thaumicwonders:portal_generator.name=Portal Generator
@@ -162,6 +163,7 @@ tooltip.thaumicwonders:creative_essentia_jar.desc=Returns infinite amount of con
 tooltip.thaumicwonders:creative_essentia_jar.info=Empty by shift-right-clicking with an empty hand.
 tooltip.thaumicwonders:flux_capacitor.flux=Flux: %1$d
 tooltip.thaumicwonders:flux_distiller.flux=Flux: %1$d
+tooltip.thaumicwonders:oblivion_essentia_jar.desc=Voids all essentia inserted into the jar.
 tooltip.thaumicwonders:portal_linker.info1=Link to a portal anchor by shift-right-clicking.
 tooltip.thaumicwonders:portal_linker.info2=Shift-right-click air to remove the link.
 tooltip.thaumicwonders:portal_linker.linked=Linked To:
@@ -383,7 +385,6 @@ thaumicwonders.research.seal_shearing.text.stage.1=I have constructed golem seal
 thaumicwonders.research.seal_shearing.text.stage.2=The shearing seal will search the designated area for any unsheared animals. Once found, the golem will clip the creature, dropping any items that would have spawned if the animal had been sheared.
 thaumicwonders.research.seal_shearing.text.stage.3=I can now create an advanced version of this seal. In addition to animal shearing, this advanced version will allow golems to harvest shearable blocks such as vines, leaves, or tall grass.
 thaumicwonders.research.seal_shearing.text.addenda.1=This seal can only be used with golems equipped with Claw Arms.
-
 
 thaumicwonders.research.sharing_tome.title=Sharing Knowledge
 thaumicwonders.research.sharing_tome.text.stage.1=Lethe Water's ability to strip knowledge from my very being makes me wonder about the intricacies of the liquid's mind altering properties.<BR>There is some sort of exchange occurring that grants me magical energy at the expense of previously gained insights.  As this gained magical energy can be imbued directly into books and items, I wonder if I can instead find a way to capture the lost knowledge directly.<BR>This requires further study.

@@ -21,6 +21,7 @@ This support includes new configuration options, added Crafttweaker and GroovySc
 - **Control Seal: Shearing** - a new golem seal that can shear nearby animals and harvest vines, leaves or tall grass
 - **Focus Effect: Teleport Home** - a focus effect that teleports the player to their bed location
 - **Initiate's Band of Cleansing** - a new ring that can cleanse negative effects and negate some Warp events, for a price...
+- **Oblivion Essentia Jar** - a new essentia jar that voids essentia instantly
 - **Primordial Siphon** - a rift siphon similar to Thaumcraft's Void Siphon that uses rift power to create Primordial Grains
 - **Tome of Sharing** - (Includes config disable) a Tome of Sharing with a lot of options. Check out the configuration to see what it can do!
 - **Vis Capacitor** - a new high-capacity Vis storage block similar to Thaumcraft's Vis Battery
@@ -44,3 +45,7 @@ This support includes new configuration options, added Crafttweaker and GroovySc
 - [keletu66666](https://www.curseforge.com/members/keletu66666/projects) - feedback
 - [xJon](https://www.curseforge.com/members/xjon__/projects) - feedback and testing
 - [ACGaming](https://www.curseforge.com/members/acgaming/projects) - code contributions
+
+## Additional Credits
+The following textures originate from [Thaumic Exploration](https://www.curseforge.com/minecraft/mc-mods/thaumic-exploration) and are licensed as CC BY-NC-SA 4.0:
+- Oblivion Essentia Jar

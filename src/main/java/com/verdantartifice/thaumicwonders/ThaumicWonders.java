@@ -58,13 +58,10 @@ public class ThaumicWonders {
     //TODO: Future Release
     //  Thauma Llama
     //  Fishing golem seal
-    //  Crafting golem seal
     //  Eldritch cluster harvest infusion enchantment (or just a single pickaxe that does it
     //  Register for eldritch cluster harvesting
     //  Heximite explosion converts blocks into tainted variants (add CrT/GS integration for additional conversions)
     //  Research Brews + Crucible addon - create brews that randomly grant research after being consumed.
-    //  Teleport Home focus effect
-    //  Portal Generator instability events and custom summons
     //  New Dimensional Ripper model
     //  Improved Madness Engine model
     //  Improved Inspiration Engine model
@@ -78,7 +75,7 @@ public class ThaumicWonders {
     //      Corrupted Portal Linker - generates a greater crimson portal
     //  Look into adding a replacement for the original Void Beacon that generates items from raw essentia
     //  Modified ore diviner that infuses essentia into stone and transforms it into ores
-    //  Enchanter Multiblock (disablable)
+    //  Enchanter Multiblock
     //      Mutltiblock enchanter, use crafttweaker for additional enchants
     //      Offshoot of Disjunction Cloth
     //  Bosses:

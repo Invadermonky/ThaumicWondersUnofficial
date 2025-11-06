@@ -22,6 +22,16 @@ public class TileCreativeEssentiaJar extends TileJarFillable {
     }
 
     @Override
+    public int getMinimumSuction() {
+        return -1;
+    }
+
+    @Override
+    public int getSuctionAmount(EnumFacing loc) {
+        return -1;
+    }
+
+    @Override
     public boolean takeFromContainer(Aspect tt, int am) {
         // Aspect must match, but don't deduct any essentia
         return (tt == this.aspect);

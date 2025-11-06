@@ -51,23 +51,38 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
     }
 
     @Override
+    public SoundType getSoundType() {
+        return SoundsTC.JAR;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @SuppressWarnings("deprecation")
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return new AxisAlignedBB(0.1875D, 0.0D, 0.1875D, 0.8125D, 0.75D, 0.8125D);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
@@ -78,12 +93,6 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
         } else {
             super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
@@ -196,6 +205,7 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
@@ -212,11 +222,6 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
         } else {
             return super.getComparatorInputOverride(blockState, worldIn, pos);
         }
-    }
-
-    @Override
-    public SoundType getSoundType() {
-        return SoundsTC.JAR;
     }
 
     @Override
@@ -258,7 +263,7 @@ public class BlockCreativeEssentiaJar extends BlockTileTW<TileCreativeEssentiaJa
                     if (tileEntity.amount == 0 && labelItem.getAspects(labelStack) != null) {
                         tileEntity.aspect = labelItem.getAspects(labelStack).getAspects()[0];
                     }
-                    this.onBlockPlacedBy(player.world, pos, player.world.getBlockState(pos), player, null);
+                    this.onBlockPlacedBy(player.world, pos, player.world.getBlockState(pos), player, ItemStack.EMPTY);
                     tileEntity.aspectFilter = tileEntity.aspect;
                     player.world.markAndNotifyBlock(pos, player.world.getChunk(pos), player.world.getBlockState(pos), player.world.getBlockState(pos), 0x3);
                     tileEntity.markDirty();

@@ -23,6 +23,7 @@ public class BlocksTW {
     public static final Block MADNESS_ENGINE = null;
     public static final Block MEATY_ORB = null;
     public static final Block METEORB = null;
+    public static final Block OBLIVION_ESSENTIA_JAR = null;
     public static final Block ORE_DIVINER = null;
     public static final Block PLACEHOLDER_ARCANE_STONE = null;
     public static final Block PLACEHOLDER_OBSIDIAN = null;

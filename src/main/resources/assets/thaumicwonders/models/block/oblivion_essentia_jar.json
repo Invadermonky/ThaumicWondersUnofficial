@@ -1,0 +1,9 @@
+{
+    "parent": "thaumcraft:block/jar_normal",
+    "textures": {
+        "side": "thaumicwonders:blocks/jar_side_oblivion",
+        "bottom": "thaumicwonders:blocks/jar_bottom_oblivion",
+        "top": "thaumicwonders:blocks/jar_top_oblivion",
+        "particle": "thaumicwonders:blocks/jar_side_oblivion"
+    }
+}

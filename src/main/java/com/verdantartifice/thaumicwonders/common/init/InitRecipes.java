@@ -40,6 +40,7 @@ import thaumcraft.api.crafting.*;
 import thaumcraft.api.golems.GolemHelper;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.blocks.basic.BlockPillar;
+import thaumcraft.common.config.ConfigRecipes;
 import thaumcraft.common.items.consumables.ItemPhial;
 import thaumcraft.common.lib.crafting.DustTriggerMultiblock;
 import thaumcraft.common.lib.crafting.InfusionEnchantmentRecipe;
@@ -329,6 +330,14 @@ public class InitRecipes {
                 'L', BlocksTC.condenserlattice,
                 'C', BlocksTC.condenser,
                 'A', BlocksTC.metalAlchemicalAdvanced));
+        ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "oblivion_essentia_jar"), new ShapelessArcaneRecipe(
+                defaultGroup,
+                "TWOND_OBLIVION_ESSENTIA_JAR",
+                20,
+                new AspectList().add(Aspect.ENTROPY, 1),
+                BlocksTW.OBLIVION_ESSENTIA_JAR,
+                BlocksTC.jarVoid
+        ));
     }
 
     private static void initCrucibleRecipes() {

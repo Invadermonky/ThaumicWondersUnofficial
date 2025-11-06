@@ -11,6 +11,7 @@
 ### Fixed
 - Fixed Sharing Tome research rewarding Lethe Water
 - Fixed crash on servers when summoning Avatar of Corruption
+- Fixed several incorrect translation keys
 
 ## v2.1.4
 ------

@@ -1,6 +1,29 @@
 {
     "entries": [
         {
+            "key": "TWOND_OBLIVION_ESSENTIA_JAR",
+            "name": "thaumicwonders.research.oblivion_essentia_jar.title",
+            "icons": ["thaumicwonders:oblivion_essentia_jar"],
+            "category": "THAUMIC_WONDERS",
+            "parents": ["TWOND_BASE", "~WARDEDJARS"],
+            "meta": ["HIDDEN"],
+            "location": [1, 1],
+            "reward_item": [],
+            "reward_knowledge": [],
+            "stages": [
+                {
+                    "text": "thaumicwonders.research.oblivion_essentia_jar.text.stage.1",
+                    "recipes": ["thaumicwonders:oblivion_essentia_jar"]
+                }
+            ],
+            "addenda": [
+                {
+                    "text": "thaumicwonders.research.oblivion_essentia_jar.text.addenda.1",
+                    "required_research":["TWOND_OBLIVION_ESSENTIA_JAR"]
+                }
+            ]
+        },
+        {
             "key": "TWOND_ERYTHURGY",
             "name": "thaumicwonders.research.erythurgy.title",
             "icons": ["thaumicwonders:textures/research/r_erythurgy.png"],
@@ -13,7 +36,7 @@
             "reward_knowledge": [],
             "stages": [
                 {
-                    "text": "thaumicwonders.research.erythurgy.stage.0",
+                    "text": "thaumicwonders.research.erythurgy.text.stage.1",
                     "required_knowledge": ["THEORY;ALCHEMY;1", "OBSERVATION;BASICS;2"],
                     "required_item": [
                         "thaumcraft:phial;1;1;{Aspects:[{amount:10,key:'aer'}]}",
@@ -25,7 +48,7 @@
                     ]
                 },
                 {
-                    "text": "thaumicwonders.research.erythurgy.stage.1"
+                    "text": "thaumicwonders.research.erythurgy.text.stage.2"
                 }
             ]
         },
@@ -42,7 +65,7 @@
             "reward_knowledge": [],
             "stages": [
                 {
-                    "text": "thaumicwonders.research.entropic_processing.stage.0",
+                    "text": "thaumicwonders.research.entropic_processing.text.stage.1",
                     "recipes": [
                         "thaumicwonders:entropyblazepowder",
                         "thaumicwonders:entropybonemeal",
@@ -68,7 +91,7 @@
             "reward_knowledge": [],
             "stages": [
                 {
-                    "text": "thaumicwonders.research.ordered_deconstruction.stage.0",
+                    "text": "thaumicwonders.research.ordered_deconstruction.text.stage.1",
                     "recipes": [
                         "thaumicwonders:orderwool",
                         "thaumicwonders:orderglowstone",
@@ -94,11 +117,11 @@
             "reward_knowledge": [],
             "stages": [
                 {
-                    "text": "thaumicwonders.research.avaric_deconstruction.stage.0",
+                    "text": "thaumicwonders.research.avaric_deconstruction.text.stage.1",
                     "required_knowledge": ["THEORY;ALCHEMY;1"]
                 },
                 {
-                    "text": "thaumicwonders.research.avaric_deconstruction.stage.1",
+                    "text": "thaumicwonders.research.avaric_deconstruction.text.stage.2",
                     "recipes": [
                         "thaumicwonders:avariccoal",
                         "thaumicwonders:avaricdiamond",

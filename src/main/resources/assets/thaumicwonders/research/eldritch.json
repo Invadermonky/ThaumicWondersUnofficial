@@ -134,7 +134,8 @@
             ],
             "addenda": [
                 {
-                    "text": "thaumicwonders.research.teleport_home.text.addenda.1"
+                    "text": "thaumicwonders.research.teleport_home.text.addenda.1",
+                    "required_research": ["TWOND_FOCUS_TELEPORT_HOME"]
                 }
             ]
         },

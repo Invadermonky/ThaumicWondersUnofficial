@@ -103,13 +103,13 @@ public class TilePrimordialSiphon extends TileTW implements ITickable {
 
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        this.stackHandler.deserializeNBT(nbt.getCompoundTag("inventory"));
+        this.stackHandler.deserializeNBT(nbt.getCompoundTag("Inventory"));
         this.progress = nbt.getShort("progress");
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        nbt.setTag("inventory", this.stackHandler.serializeNBT());
+        nbt.setTag("Inventory", this.stackHandler.serializeNBT());
         nbt.setShort("progress", (short) this.progress);
         return nbt;
     }
@@ -122,12 +122,13 @@ public class TilePrimordialSiphon extends TileTW implements ITickable {
 
     @Override
     public void messageFromServer(NBTTagCompound nbt) {
-        this.stackHandler.deserializeNBT(nbt.getCompoundTag("inventory"));
+        this.stackHandler.deserializeNBT(nbt.getCompoundTag("Inventory"));
     }
 
     @Override
     public void messageFromClient(NBTTagCompound nbt, EntityPlayerMP player) {
         if(nbt.hasKey("requestSync")) {
+            nbt.removeTag("requestSync");
             this.syncSlots(player);
         }
     }
@@ -160,6 +161,7 @@ public class TilePrimordialSiphon extends TileTW implements ITickable {
         return super.getCapability(capability, facing);
     }
 
+    @Override
     public boolean receiveClientEvent(int i, int j) {
         if (i != 5) {
             return super.receiveClientEvent(i, j);

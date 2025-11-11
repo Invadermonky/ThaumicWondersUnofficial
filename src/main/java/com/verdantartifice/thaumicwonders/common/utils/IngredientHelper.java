@@ -1,4 +1,4 @@
-package com.verdantartifice.thaumicwonders.common.crafting;
+package com.verdantartifice.thaumicwonders.common.utils;
 
 import net.minecraft.item.crafting.Ingredient;
 

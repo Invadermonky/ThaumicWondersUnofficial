@@ -27,12 +27,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationChamber> implements IBlockFacingHorizontal {
     public static boolean ignoreDestroy = false;
 
@@ -113,8 +116,9 @@ public class BlockCatalyzationChamber extends BlockDeviceTW<TileCatalyzationCham
                 entityIn.motionY = 0.025D;
                 if (entityIn.onGround && !entityIn.isDead) {
                     TileCatalyzationChamber tcc = (TileCatalyzationChamber) worldIn.getTileEntity(pos);
-                    ItemStack remainder = tcc.addItemsToInventory(((EntityItem) entityIn).getItem());
-                    if (remainder != null && !remainder.isEmpty()) {
+                    IItemHandler handler = tcc.getInputHandler();
+                    ItemStack remainder = ItemHandlerHelper.insertItem(handler, ((EntityItem) entityIn).getItem(), false);
+                    if (!remainder.isEmpty()) {
                         ((EntityItem) entityIn).setItem(remainder);
                     } else {
                         entityIn.setDead();

@@ -59,7 +59,7 @@ public class TilePortalAnchor extends TileTW implements IInteractWithCaster {
             this.generatorPos = BlockPos.fromLong(compound.getLong("generator"));
         }
         this.isPrimaryAnchor = compound.getBoolean("primary");
-        this.stackHandler.deserializeNBT(compound.getCompoundTag("inventory"));
+        this.stackHandler.deserializeNBT(compound.getCompoundTag("Inventory"));
     }
 
     @Override
@@ -68,7 +68,7 @@ public class TilePortalAnchor extends TileTW implements IInteractWithCaster {
             compound.setLong("generator", this.generatorPos.toLong());
         }
         compound.setBoolean("primary", this.isPrimaryAnchor);
-        compound.setTag("inventory", this.stackHandler.serializeNBT());
+        compound.setTag("Inventory", this.stackHandler.serializeNBT());
         return compound;
     }
 
@@ -367,12 +367,13 @@ public class TilePortalAnchor extends TileTW implements IInteractWithCaster {
 
     @Override
     public void messageFromServer(NBTTagCompound nbt) {
-        this.stackHandler.deserializeNBT(nbt.getCompoundTag("inventory"));
+        this.stackHandler.deserializeNBT(nbt.getCompoundTag("Inventory"));
     }
 
     @Override
     public void messageFromClient(NBTTagCompound nbt, EntityPlayerMP player) {
         if(nbt.hasKey("requestSync")) {
+            nbt.removeTag("requestSync");
             this.syncSlots(player);
         }
     }

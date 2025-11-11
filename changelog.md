@@ -2,6 +2,8 @@
 ## v2.2.1
 ------
 **IMPORTANT!** Before updating, be sure to remove all items from Thaumic Wonders inventories such as the Primordial Siphon, Portal Anchor, or Catalyzation Chamber. Failing to do so will void any items contained in these inventories.
+### Changed
+- The Catalyzation Chamber input processing can now be automated with item insertion/extraction methods through the top (Catalyst cannot be automated yet)
 ### Fixed
 - Fixed issue causing Primordial Siphon to not be accessible with item insertion/extraction methods
 - Fixed crash when viewing Teleport Home focus research page

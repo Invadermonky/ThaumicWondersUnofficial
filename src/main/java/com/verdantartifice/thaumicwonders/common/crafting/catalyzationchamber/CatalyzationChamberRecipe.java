@@ -1,7 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber;
 
 import com.google.common.base.Preconditions;
-import com.verdantartifice.thaumicwonders.common.crafting.IngredientHelper;
+import com.verdantartifice.thaumicwonders.common.utils.IngredientHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;

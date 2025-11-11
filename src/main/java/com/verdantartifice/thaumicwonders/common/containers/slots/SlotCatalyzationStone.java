@@ -2,48 +2,20 @@ package com.verdantartifice.thaumicwonders.common.containers.slots;
 
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileCatalyzationChamber;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class SlotCatalyzationStone extends Slot {
+public class SlotCatalyzationStone extends SlotItemHandler {
     private TileCatalyzationChamber tileEntity;
 
     public SlotCatalyzationStone(TileCatalyzationChamber tileEntity, int index, int xPosition, int yPosition) {
-        super(null, index, xPosition, yPosition);
+        super(tileEntity.getCatalystHandler(), 0, xPosition, yPosition);
         this.tileEntity = tileEntity;
     }
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        if (!stack.isEmpty()) {
-            return CatalyzationChamberRecipeRegistry.isValidCatalyst(stack);
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public ItemStack getStack() {
-        return this.tileEntity.getEquippedStone();
-    }
-
-    @Override
-    public void putStack(ItemStack stack) {
-        if (this.tileEntity.setEquippedStone(stack)) {
-            if (!stack.isEmpty() && stack.getCount() > this.getSlotStackLimit()) {
-                stack.setCount(getSlotStackLimit());
-            }
-            this.onSlotChanged();
-        }
-    }
-
-    @Override
-    public void onSlotChanged() {
-    }
-
-    @Override
-    public int getSlotStackLimit() {
-        return 64;
+        return stack.isEmpty() || CatalyzationChamberRecipeRegistry.isValidCatalyst(stack);
     }
 
     @Override

@@ -1,4 +1,9 @@
 # Changelog
+## v2.3.0
+------
+### Added
+- Added `zh_ch.lang` (courtesy of [ZHAY10086](https://github.com/ZHAY10086))
+
 ## v2.2.1
 ------
 **IMPORTANT!** Before updating, be sure to remove all items from Thaumic Wonders inventories such as the Primordial Siphon, Portal Anchor, or Catalyzation Chamber. Failing to do so will void any items contained in these inventories.

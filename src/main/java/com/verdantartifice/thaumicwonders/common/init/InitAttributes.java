@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 public class InitAttributes {
-    /** Redirected from {@link EntityEvents#onEntityJoinWorld(EntityJoinWorldEvent)} */
+    /** Redirected from {@link EntityEvents#onEntityConstructed(EntityEvent.EntityConstructing)} */
     public static void onEntityconstructEvent(EntityEvent.EntityConstructing event) {
         if (event.getEntity() instanceof EntityLivingBase) {
             EntityLivingBase entity = (EntityLivingBase) event.getEntity();

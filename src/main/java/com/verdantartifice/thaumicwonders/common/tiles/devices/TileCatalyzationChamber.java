@@ -86,9 +86,6 @@ public class TileCatalyzationChamber extends TileTW implements ITickable {
             if (this.refineTime > this.maxRefineTime || this.refineTime <= 0) {
                 this.refineTime = this.maxRefineTime;
             }
-            if (this.refineTime > 0) {
-                this.refineTime--;
-            }
 
             IItemHandler inputHandler = this.getInputHandler();
             for (int slot = 0; slot < inputHandler.getSlots(); slot++) {
@@ -104,55 +101,58 @@ public class TileCatalyzationChamber extends TileTW implements ITickable {
                     if(recipe == null || this.recipe.getOutput().isEmpty()) {
                         //Ejecting Input if not a valid recipe item
                         this.ejectItem(inputHandler.extractItem(slot, input.getCount(), false));
-                    } else if (this.refineTime <= 0) {
-                        //Only output if refining is complete and recipe is valid
-
-                        //Ejecting Output
-                        ItemStack output = this.recipe.getOutput();
-                        this.ejectItem(output);
-                        this.world.addBlockEvent(this.getPos(), BlocksTW.CATALYZATION_CHAMBER, PLAY_EFFECTS, 0);
-                        if (this.recipe.getFluxChance() > 0 && this.world.rand.nextInt(this.recipe.getFluxChance()) == 0) {
-                            AuraHelper.polluteAura(this.world, this.getPos().offset(this.getFacing().getOpposite()), 1.0f, true);
+                    } else {
+                        if (this.refineTime > 0) {
+                            this.refineTime--;
                         }
-
-                        //Consuming Catalyst
-                        catalyst = this.getEquippedStone(true);
-                        if (catalyst.getItem().isDamageable()) {
-                            //Damage and set catalyst
-                            if (catalyst.attemptDamageItem(1, this.world.rand, null)) {
-                                catalyst.shrink(1);
+                        if(this.refineTime <= 0) {
+                            //Ejecting Output
+                            ItemStack output = this.recipe.getOutput();
+                            this.ejectItem(output);
+                            this.world.addBlockEvent(this.getPos(), BlocksTW.CATALYZATION_CHAMBER, PLAY_EFFECTS, 0);
+                            if (this.recipe.getFluxChance() > 0 && this.world.rand.nextInt(this.recipe.getFluxChance()) == 0) {
+                                AuraHelper.polluteAura(this.world, this.getPos().offset(this.getFacing().getOpposite()), 1.0f, true);
                             }
-                            this.setEquippedStone(catalyst);
-                        } else if (catalyst.getItem().hasContainerItem(catalyst)) {
-                            //Consume contained item and eject container
-                            ItemStack container = catalyst.getItem().getContainerItem(catalyst);
-                            catalyst.shrink(1);
-                            if(catalyst.isEmpty() && CatalyzationChamberRecipeRegistry.isValidCatalyst(container)) {
-                                this.setEquippedStone(container);
-                            } else {
+
+                            //Consuming Catalyst
+                            catalyst = this.getEquippedStone(true);
+                            if (catalyst.getItem().isDamageable()) {
+                                //Damage and set catalyst
+                                if (catalyst.attemptDamageItem(1, this.world.rand, null)) {
+                                    catalyst.shrink(1);
+                                }
                                 this.setEquippedStone(catalyst);
+                            } else if (catalyst.getItem().hasContainerItem(catalyst)) {
+                                //Consume contained item and eject container
+                                ItemStack container = catalyst.getItem().getContainerItem(catalyst);
+                                catalyst.shrink(1);
+                                if(catalyst.isEmpty() && CatalyzationChamberRecipeRegistry.isValidCatalyst(container)) {
+                                    this.setEquippedStone(container);
+                                } else {
+                                    this.setEquippedStone(catalyst);
+                                    this.ejectItem(container);
+                                }
+                            } else {
+                                catalyst.shrink(1);
+                                this.setEquippedStone(catalyst);
+                            }
+
+                            //Consuming input item
+                            int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
+                                    .filter(ingredient -> !ingredient.isEmpty()).findFirst()
+                                    .map(ItemStack::getCount).orElse(1);
+                            if (input.getItem().hasContainerItem(input)) {
+                                ItemStack container = input.getItem().getContainerItem(input).copy();
+                                container.setCount(count);
                                 this.ejectItem(container);
                             }
-                        } else {
-                            catalyst.shrink(1);
-                            this.setEquippedStone(catalyst);
-                        }
+                            inputHandler.extractItem(slot, count, false);
 
-                        //Consuming input item
-                        int count = Arrays.stream(this.recipe.getInput().getMatchingStacks())
-                                .filter(ingredient -> !ingredient.isEmpty()).findFirst()
-                                .map(ItemStack::getCount).orElse(1);
-                        if (input.getItem().hasContainerItem(input)) {
-                            ItemStack container = input.getItem().getContainerItem(input).copy();
-                            container.setCount(count);
-                            this.ejectItem(container);
-                        }
-                        inputHandler.extractItem(slot, count, false);
-
-                        if (this.speedyTime <= 0) {
-                            this.speedyTime = (int) AuraHelper.drainVis(this.getWorld(), this.getPos(), 20.0F, false);
-                        } else {
-                            this.speedyTime--;
+                            if (this.speedyTime <= 0) {
+                                this.speedyTime = (int) AuraHelper.drainVis(this.getWorld(), this.getPos(), 20.0F, false);
+                            } else {
+                                this.speedyTime--;
+                            }
                         }
                         break;
                     }

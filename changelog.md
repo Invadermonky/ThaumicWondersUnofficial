@@ -1,8 +1,10 @@
 # Changelog
-## v2.3.0
+## v2.2.2
 ------
 ### Added
 - Added `zh_ch.lang` (courtesy of [ZHAY10086](https://github.com/ZHAY10086))
+### Fixed
+- Fixed Catalyzation Chamber not processing items when inventory contained multiple items of different types
 
 ## v2.2.1
 ------

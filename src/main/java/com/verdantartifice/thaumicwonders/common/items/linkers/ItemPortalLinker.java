@@ -3,8 +3,6 @@ package com.verdantartifice.thaumicwonders.common.items.linkers;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
-import com.verdantartifice.thaumicwonders.common.network.PacketHandler;
-import com.verdantartifice.thaumicwonders.common.network.packets.PacketUpdateHeldItem;
 import com.verdantartifice.thaumicwonders.common.utils.NBTHelper;
 import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
 import net.minecraft.client.gui.GuiScreen;
@@ -16,8 +14,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,11 +64,12 @@ public class ItemPortalLinker extends ItemTW {
     @Override
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (player.isSneaking() && stack.getItem() == this && world.getBlockState(pos).getBlock() == BlocksTW.PORTAL_ANCHOR) {
-            if (world.isRemote) {
+        if (player.isSneaking() && stack.getItem() instanceof ItemPortalLinker && world.getBlockState(pos).getBlock() == BlocksTW.PORTAL_ANCHOR) {
+            if (!world.isRemote) {
                 this.setLinkPosition(stack, world, pos);
-                PacketHandler.INSTANCE.sendToServer(new PacketUpdateHeldItem(stack, hand));
-                player.sendMessage(new TextComponentTranslation(StringHelper.getTranslationKey("portal_linker", "chat", "bound"), this.getAnchorDimensionName(stack), pos.getX(), pos.getY(), pos.getZ()));
+            } else {
+                String dimension = WordUtils.capitalizeFully(StringHelper.getDimensionName(world.provider.getDimension()).replace("_", " "));
+                player.sendMessage(new TextComponentTranslation(StringHelper.getTranslationKey("portal_linker", "chat", "bound"), dimension, pos.getX(), pos.getY(), pos.getZ()));
             }
             return EnumActionResult.SUCCESS;
         }
@@ -98,10 +95,8 @@ public class ItemPortalLinker extends ItemTW {
         return BlockPos.fromLong(stack.getTagCompound().getLong("position"));
     }
 
-    @SideOnly(Side.CLIENT)
     public void setLinkPosition(ItemStack stack, World world, BlockPos pos) {
         int dimId = world.provider.getDimension();
-        String dimName = world.getProviderName();
         long posLong = pos.toLong();
         NBTHelper.initNBT(stack);
         stack.getTagCompound().setInteger("dimension", dimId);

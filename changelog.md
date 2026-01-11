@@ -1,4 +1,9 @@
 # Changelog
+## v2.2.3
+------
+### Fixed
+- Fixed server desync issue with the Portal Linker
+
 ## v2.2.2
 ------
 ### Added

@@ -343,7 +343,7 @@ public class InitRecipes {
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_soul_sand"), new CrucibleRecipe(
                 "TWOND_NETHER_HEDGE",
                 new ItemStack(Blocks.SOUL_SAND),
-                new ItemStack(Blocks.SAND),
+                new OreIngredient("sand"),
                 new AspectList().add(Aspect.SOUL, 3).add(Aspect.EARTH, 3).add(Aspect.TRAP, 1)
         ));
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_wither_skull"), new CrucibleRecipe(
@@ -355,7 +355,7 @@ public class InitRecipes {
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_end_stone"), new CrucibleRecipe(
                 "TWOND_END_HEDGE",
                 new ItemStack(Blocks.END_STONE),
-                new ItemStack(Blocks.STONE),
+                new OreIngredient("stone"),
                 new AspectList().add(Aspect.EARTH, 5).add(Aspect.DARKNESS, 5)
         ));
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "hedge_chorus_fruit"), new CrucibleRecipe(
@@ -380,7 +380,7 @@ public class InitRecipes {
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "alchemist_stone"), new CrucibleRecipe(
                 "TWOND_CATALYZATION_CHAMBER",
                 new ItemStack(ItemsTW.ALCHEMIST_STONE),
-                new ItemStack(Items.DIAMOND),
+                new OreIngredient("gemDiamond"),
                 new AspectList().add(Aspect.METAL, 40).add(Aspect.ORDER, 40).add(Aspect.ALCHEMY, 10)
         ));
         ThaumcraftApi.addCrucibleRecipe(new ResourceLocation(ThaumicWonders.MODID, "transmuter_stone"), new CrucibleRecipe(
@@ -576,11 +576,11 @@ public class InitRecipes {
                 4,
                 new AspectList().add(Aspect.FIRE, 40).add(Aspect.EARTH, 20).add(Aspect.ENERGY, 10).add(Aspect.CRAFT, 10),
                 new ItemStack(BlocksTC.everfullUrn),
-                new ItemStack(Items.NETHERBRICK),
-                new ItemStack(Items.NETHERBRICK),
+                new OreIngredient("ingotBrickNether"),
+                new OreIngredient("ingotBrickNether"),
                 new ItemStack(Items.LAVA_BUCKET),
                 ThaumcraftApiHelper.makeCrystal(Aspect.FIRE),
-                new ItemStack(Blocks.OBSIDIAN)
+                new OreIngredient("obsidian")
         ));
 
         ItemStack destroyer = new ItemStack(ItemsTW.PRIMAL_DESTROYER);
@@ -605,7 +605,7 @@ public class InitRecipes {
                 new ItemStack(ItemsTW.FLYING_CARPET),
                 6,
                 new AspectList().add(Aspect.FLIGHT, 150).add(Aspect.MOTION, 100).add(Aspect.AIR, 100).add(Aspect.MAGIC, 50).add(Aspect.ENERGY, 50),
-                new ItemStack(Blocks.CARPET, 1, 32767),
+                new ItemStack(Blocks.CARPET, 1, OreDictionary.WILDCARD_VALUE),
                 new ItemStack(BlocksTC.levitator),
                 new ItemStack(Items.SADDLE),
                 new ItemStack(ItemsTC.visResonator),
@@ -619,7 +619,7 @@ public class InitRecipes {
                 7,
                 new AspectList().add(Aspect.ELDRITCH, 100).add(Aspect.DARKNESS, 100).add(Aspect.LIGHT, 100),
                 new ItemStack(Items.CLOCK),
-                new ItemStack(Items.DIAMOND),
+                new OreIngredient("gemDiamond"),
                 new ItemStack(Items.ENDER_PEARL),
                 new ItemStack(ItemsTC.quicksilver),
                 new ItemStack(ItemsTC.celestialNotes, 1, 5),
@@ -708,7 +708,7 @@ public class InitRecipes {
                 new ItemStack(BlocksTW.ORE_DIVINER),
                 6,
                 new AspectList().add(Aspect.SENSES, 75).add(Aspect.EARTH, 50).add(Aspect.METAL, 50).add(Aspect.MAGIC, 50),
-                new ItemStack(Blocks.QUARTZ_BLOCK),
+                new OreIngredient("blockQuartz"),
                 "oreIron",
                 "oreGold",
                 "blockCoal",
@@ -727,8 +727,8 @@ public class InitRecipes {
                 new ItemStack(ItemsTC.voidHelm),
                 Ingredient.fromItem(ItemsTC.primordialPearl),
                 "plateVoid",
-                new ItemStack(ItemsTC.crimsonPlateHelm, 1, Short.MAX_VALUE),
-                new ItemStack(ItemsTC.goggles, 1, 32767),
+                new ItemStack(ItemsTC.crimsonPlateHelm, 1, OreDictionary.WILDCARD_VALUE),
+                new ItemStack(ItemsTC.goggles, 1, OreDictionary.WILDCARD_VALUE),
                 new ItemStack(Items.GHAST_TEAR),
                 new ItemStack(ItemsTC.salisMundus),
                 "leather"
@@ -744,7 +744,7 @@ public class InitRecipes {
                 "plateVoid",
                 "plateVoid",
                 "plateVoid",
-                new ItemStack(ItemsTC.crimsonPlateChest, 1, Short.MAX_VALUE),
+                new ItemStack(ItemsTC.crimsonPlateChest, 1, OreDictionary.WILDCARD_VALUE),
                 new ItemStack(ItemsTC.salisMundus),
                 "leather"
         ));
@@ -758,7 +758,7 @@ public class InitRecipes {
                 Ingredient.fromItem(ItemsTC.primordialPearl),
                 "plateVoid",
                 "plateVoid",
-                new ItemStack(ItemsTC.crimsonPlateLegs, 1, Short.MAX_VALUE),
+                new ItemStack(ItemsTC.crimsonPlateLegs, 1, OreDictionary.WILDCARD_VALUE),
                 new ItemStack(ItemsTC.salisMundus),
                 "leather"
         ));
@@ -784,7 +784,7 @@ public class InitRecipes {
                 new AspectList().add(Aspect.SENSES, 100).add(Aspect.MECHANISM, 50).add(Aspect.MAGIC, 50).add(Aspect.EARTH, 50),
                 new ItemStack(Items.COMPASS),
                 new ItemStack(Items.ENDER_EYE),
-                new ItemStack(Items.EMERALD),
+                new OreIngredient("gemEmerald"),
                 new ItemStack(Items.ENDER_EYE),
                 new ItemStack(Blocks.NETHER_BRICK),
                 new ItemStack(Items.ENDER_EYE),
@@ -827,9 +827,9 @@ public class InitRecipes {
                 new AspectList().add(Aspect.MIND, 75).add(Aspect.ORDER, 75).add(Aspect.ELDRITCH, 50).add(Aspect.LIFE, 50),
                 new ItemStack(Items.ENDER_PEARL),
                 Ingredient.fromItem(ItemsTC.primordialPearl),
-                new ItemStack(Items.GOLD_INGOT),
-                new ItemStack(Items.GOLD_INGOT),
-                new ItemStack(Items.GOLD_INGOT)
+                new OreIngredient("ingotGold"),
+                new OreIngredient("ingotGold"),
+                new OreIngredient("ingotGold")
         ));
 
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "shimmerleaf_seed"), new InfusionRecipe(
@@ -867,7 +867,7 @@ public class InitRecipes {
                 new ItemStack(BlocksTW.COALESCENCE_MATRIX_PRECURSOR),
                 10,
                 new AspectList().add(Aspect.FLUX, 200).add(Aspect.MAN, 100).add(Aspect.MAGIC, 200).add(Aspect.ENERGY, 100),
-                new ItemStack(Blocks.GOLD_BLOCK),
+                new OreIngredient("blockGold"),
                 Ingredient.fromItem(ItemsTC.primordialPearl),
                 new ItemStack(BlocksTC.inlay),
                 new ItemStack(BlocksTC.inlay),
@@ -975,7 +975,8 @@ public class InitRecipes {
     private static void initInfusionEnchantmentRecipes() {
         InfusionEnchantmentRecipe voidflameInfusion = new InfusionEnchantmentRecipe(InfusionEnchantmentsTW.VOIDFLAME,
                 new AspectList().add(Aspect.FIRE, 60).add(Aspect.VOID, 40),
-                new IngredientNBTTC(new ItemStack(Items.ENCHANTED_BOOK)), new ItemStack(ItemsTW.PRIMORDIAL_GRAIN)
+                new IngredientNBTTC(new ItemStack(Items.ENCHANTED_BOOK)),
+                new ItemStack(ItemsTW.PRIMORDIAL_GRAIN)
         );
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "voidflame_infusion"), voidflameInfusion);
         ThaumcraftApi.addFakeCraftingRecipe(new ResourceLocation(ThaumicWonders.MODID, "voidflame_infusion_fake"), new InfusionEnchantmentRecipe(voidflameInfusion, new ItemStack(Items.WOODEN_SWORD)));
@@ -994,8 +995,8 @@ public class InitRecipes {
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 7), new ItemStack(ItemsTC.nuggets, 1, 9));
         ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 8), new ItemStack(ItemsTC.nuggets, 1, 7));
 
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 32767), new ItemStack(ItemsTC.nuggets, 1, 10), 0.025F);
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, 32767), ThaumcraftApiHelper.makeCrystal(Aspect.FLUX), 0.1F);
+        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(ItemsTC.nuggets, 1, 10), 0.025F);
+        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTW.ELDRITCH_CLUSTER, 1, OreDictionary.WILDCARD_VALUE), ThaumcraftApiHelper.makeCrystal(Aspect.FLUX), 0.1F);
 
         if (OreDictionary.doesOreNameExist("ingotCopper") && !OreDictionary.getOres("ingotCopper", false).isEmpty()) {
             ItemStack stack = OreDictionary.getOres("ingotCopper", false).get(0);

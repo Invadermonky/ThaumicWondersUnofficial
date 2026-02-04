@@ -1,4 +1,9 @@
 # Changelog
+## v2.2.4
+------
+### Changed
+- Changed several recipes to use oredict ingredients
+
 ## v2.2.3
 ------
 ### Fixed

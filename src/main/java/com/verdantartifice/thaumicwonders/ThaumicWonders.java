@@ -57,7 +57,6 @@ public class ThaumicWonders {
 
     //TODO: Future Release
     //  Thauma Llama
-    //  Add experience tooltip to Sharing Tome
     //  Check how much rift power the void beacon is draining
     //  Check why the Void Beacon is causing rifts to detonate while they are still large
     //  Fishing golem seal

@@ -121,13 +121,6 @@ public class ItemBootsVoidWalker extends ItemArmor implements IWarpingGear, IRec
     public boolean handleVoidWalk(World world, EntityLivingBase player, ItemStack stack) {
         int energy = this.getEnergy(stack);
         if (energy > 0) {
-            //Removing tainted effects
-            PotionEffect effect = player.getActivePotionEffect(PotionFluxTaint.instance);
-            if (effect != null && effect.getDuration() <= 200 && effect.getAmplifier() == 0) {
-                player.removeActivePotionEffect(PotionFluxTaint.instance);
-                return true;
-            }
-
             //Soul Sand speedup
             if (world.getBlockState(new BlockPos(player.posX, player.getEntityBoundingBox().minY, player.posZ)).getBlock() instanceof BlockSoulSand) {
                 player.motionX /= 0.4f;

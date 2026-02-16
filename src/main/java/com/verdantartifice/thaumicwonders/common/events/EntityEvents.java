@@ -12,14 +12,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import thaumcraft.api.damagesource.DamageSourceThaumcraft;
+import thaumcraft.api.potions.PotionFluxTaint;
 
 @Mod.EventBusSubscriber(modid = ThaumicWonders.MODID)
 public class EntityEvents {
@@ -37,6 +40,18 @@ public class EntityEvents {
                 if (damage == 0) {
                     event.setCanceled(true);
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPotionApplied(PotionEvent.PotionApplicableEvent event) {
+        ItemStack boots = event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET);
+        PotionEffect effect = event.getPotionEffect();
+        if(!boots.isEmpty() && boots.getItem() instanceof ItemBootsVoidWalker) {
+            int energy = ((ItemBootsVoidWalker) boots.getItem()).getEnergy(boots);
+            if(energy > 0 && effect.getPotion() == PotionFluxTaint.instance && effect.getDuration() <= 200 && effect.getAmplifier() == 0) {
+                event.setResult(Event.Result.DENY);
             }
         }
     }

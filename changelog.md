@@ -6,6 +6,7 @@
 - Moved Void Walker Boots taint immunity to event (should fix some jank)
 - Improved keybinding handling (should fix edge-case flying carpet conflicts)
 - Improved Wapr ring potion removal (should fix some edge-case damage events)
+- Added required experience tooltip to Tome of Shared Knowledge
 
 ## v2.2.3
 ------

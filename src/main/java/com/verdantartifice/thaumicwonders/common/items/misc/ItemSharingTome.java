@@ -4,6 +4,7 @@ import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.items.base.ItemTW;
 import com.verdantartifice.thaumicwonders.common.utils.NBTHelper;
 import com.verdantartifice.thaumicwonders.common.utils.StringHelper;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -134,6 +135,19 @@ public class ItemSharingTome extends ItemTW {
             tooltip.add(StringHelper.getLocalizedString("sharing_tome", "tooltip", "blank"));
         } else {
             tooltip.add(I18n.format(StringHelper.getTranslationKey("sharing_tome", "tooltip", "player"), name));
+            int levels = ConfigHandlerTW.sharing_tome.requiredExp;
+            if(levels > 0) {
+                tooltip.add(I18n.format(StringHelper.getTranslationKey("sharing_tome", "tooltip", "xp"), levels));
+            }
+        }
+        if(GuiScreen.isShiftKeyDown()) {
+            tooltip.add("");
+            if(this.getPlayerName(stack).equals(NON_ASSIGNED)) {
+                tooltip.add(I18n.format(StringHelper.getTranslationKey("sharing_tome", "tooltip", "blank", "info")));
+            } else {
+                tooltip.add(I18n.format(StringHelper.getTranslationKey("sharing_tome", "tooltip", "player", "info1")));
+                tooltip.add(I18n.format(StringHelper.getTranslationKey("sharing_tome", "tooltip", "player", "info2")));
+            }
         }
     }
 

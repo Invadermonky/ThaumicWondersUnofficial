@@ -1,10 +1,14 @@
 package com.verdantartifice.thaumicwonders.common.events;
 
+import baubles.api.BaublesApi;
+import baubles.api.cap.IBaublesItemHandler;
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import com.verdantartifice.thaumicwonders.common.config.ConfigTags;
 import com.verdantartifice.thaumicwonders.common.effects.infusion.PotionVoidflame;
 import com.verdantartifice.thaumicwonders.common.init.InitAttributes;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemBootsVoidWalker;
 import com.verdantartifice.thaumicwonders.common.items.armor.ItemVoidFortressArmor;
+import com.verdantartifice.thaumicwonders.common.items.baubles.ItemWarpRing;
 import com.verdantartifice.thaumicwonders.common.misc.PlayerMovementAbilityManager;
 import com.verdantartifice.thaumicwonders.common.registry.AttributesTW;
 import com.verdantartifice.thaumicwonders.common.registry.InfusionEnchantmentsTW;
@@ -46,12 +50,33 @@ public class EntityEvents {
 
     @SubscribeEvent
     public static void onPotionApplied(PotionEvent.PotionApplicableEvent event) {
+        if(event.hasResult() && event.getResult() == Event.Result.DENY)
+            return;
+
         ItemStack boots = event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET);
         PotionEffect effect = event.getPotionEffect();
+
+        if(event.getEntityLiving() instanceof EntityPlayer && ConfigTags.WARP_RING_REMOVALS.containsKey(effect.getPotion())) {
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+            IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
+            for(int i = 0; i < handler.getSlots(); i++) {
+                ItemStack baubleStack = handler.getStackInSlot(i);
+                if(baubleStack.getItem() instanceof ItemWarpRing) {
+                    int warp = ((ItemWarpRing) baubleStack.getItem()).getWarp(baubleStack);
+                    if(ConfigTags.WARP_RING_REMOVALS.get(effect.getPotion()) <= warp) {
+                        ((ItemWarpRing) baubleStack.getItem()).incrementBuffer(baubleStack);
+                        event.setResult(Event.Result.DENY);
+                        return;
+                    }
+                }
+            }
+        }
+
         if(!boots.isEmpty() && boots.getItem() instanceof ItemBootsVoidWalker) {
             int energy = ((ItemBootsVoidWalker) boots.getItem()).getEnergy(boots);
             if(energy > 0 && effect.getPotion() == PotionFluxTaint.instance && effect.getDuration() <= 200 && effect.getAmplifier() == 0) {
                 event.setResult(Event.Result.DENY);
+                return;
             }
         }
     }

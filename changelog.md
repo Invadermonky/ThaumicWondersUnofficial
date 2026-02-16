@@ -4,6 +4,7 @@
 ### Changed
 - Changed several recipes to use oredict ingredients
 - Moved Void Walker Boots taint immunity to event (should fix some jank)
+- Improved keybinding handling (should fix edge-case flying carpet conflicts)
 
 ## v2.2.3
 ------

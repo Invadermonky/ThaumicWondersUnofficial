@@ -31,8 +31,8 @@ public abstract class AbstractBlockMysticCrop extends BlockCrops {
     @Override
     public IBlockState withAge(int age) {
         // Transform the crop at its final growth stage
-        if (age == getMaxAge()) {
-            return getMatureBlockState();
+        if (age >= getMaxAge()) {
+            return this.getMatureBlockState();
         }
         return super.withAge(age);
     }

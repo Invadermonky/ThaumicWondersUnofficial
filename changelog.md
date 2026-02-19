@@ -7,6 +7,7 @@
 - Improved keybinding handling (should fix edge-case flying carpet conflicts)
 - Improved Wapr ring potion removal (should fix some edge-case damage events)
 - Added required experience tooltip to Tome of Shared Knowledge
+- Fixed crop growth crash, courtesy of [jchung01](https://github.com/jchung01)
 
 ## v2.2.3
 ------

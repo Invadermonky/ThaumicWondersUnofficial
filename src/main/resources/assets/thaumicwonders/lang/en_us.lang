@@ -49,8 +49,13 @@ entity.void_portal.name=Void Portal
 fluid.fluid_quicksilver=Quicksilver
 
 # Focus Effects
+focus.thaumicwonders.blink.name=Blink
+focus.thaumicwonders.blink.text=[WIP]
 focus.thaumicwonders.teleport_home.name=Teleport Home
 focus.thaumicwonders.teleport_home.text=Teleports players to their bed location.
+
+focus.common.swap=Swap
+focus.common.telefrag=Telefrag
 
 # Device Tiles
 tile.thaumicwonders:alkahest_vat.name=Alkahest Vat
@@ -402,6 +407,11 @@ thaumicwonders.research.structure_diviner.title=Structure Divination
 thaumicwonders.research.structure_diviner.text.stage.1=My architectural creations are not the only ones in this world, but seeking out others that are native to this world is a very hit-or-miss prospect. Simply picking a direction and walking will work eventually, but it's hardly efficient and it is not certain how much time and resources it will take to reach there. A thaumaturge of my caliber should be able to divine these things ahead of time.
 thaumicwonders.research.structure_diviner.text.stage.2=Surprisingly, it wasn't that hard, but more so costly.<BR>This Structure Diviner that I calibrated to track certain specific fluctuations in the aura, can find the nearest naturally generating vanilla structure in my current dimension with the press of a button. Upon use, it will point the way to my destination as well as give me a very rough indication of how far away it is. This device has a potential, despite its simple looks.<PAGE>It does have its limits: it cannot detect or recognize every structure, and it can only track one structure at a time, so the old method of picking directions or other available tracking means have to be used to track them instead.
 thaumicwonders.research.structure_diviner.text.addenda.1=It appears that what constitutes a 'Temple' can vary widely based on its location.<BR>While it can point to ancient ruins in deserts and jungles, it will also direct me towards igloos in cold regions and ominous huts in swamps.<BR>Being in close proximity to one of these biomes will increase the chance the diviner will direct me towards the specific Temple I am seeking.
+
+thaumicwonders.research.blink.title=Focus Effect: Blink
+thaumicwonders.research.blink.title.subtitle=Energized Ender
+thaumicwonders.research.blink.text.stage.1=[WIP]
+thaumicwonders.research.blink.text.stage.2=[WIP]
 
 thaumicwonders.research.teleport_home.title=Focus Effect: Teleport Home
 thaumicwonders.research.teleport_home.text.stage.1=While the portal system is a true miracle of invention, the inability of the anchors to generate portals without a nearby generator makes setting up networks a bit tedious.<BR>The Enderman I have seen in the world do not require such bulky mechanisms to achieve teleportation, so perhaps I can find a way to replicate their abilities.

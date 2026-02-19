@@ -29,19 +29,12 @@ public abstract class AbstractBlockMysticCrop extends BlockCrops {
     }
 
     @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        super.updateTick(worldIn, pos, state, rand);
-        if (this.isMaxAge(worldIn.getBlockState(pos))) {
-            worldIn.setBlockState(pos, this.getMatureBlockState(), 3);
+    public IBlockState withAge(int age) {
+        // Transform the crop at its final growth stage
+        if (age == getMaxAge()) {
+            return getMatureBlockState();
         }
-    }
-
-    @Override
-    public void grow(World worldIn, BlockPos pos, IBlockState state) {
-        super.grow(worldIn, pos, state);
-        if (this.isMaxAge(worldIn.getBlockState(pos))) {
-            worldIn.setBlockState(pos, this.getMatureBlockState(), 3);
-        }
+        return super.withAge(age);
     }
 
     @Override

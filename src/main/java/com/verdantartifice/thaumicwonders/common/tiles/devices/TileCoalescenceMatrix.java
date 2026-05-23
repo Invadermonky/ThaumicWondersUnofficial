@@ -24,7 +24,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.casters.IInteractWithCaster;
 import thaumcraft.client.fx.FXDispatcher;
-import thaumcraft.common.blocks.basic.BlockPillar;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.EntityUtils;
@@ -150,7 +149,8 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
             this.world.createExplosion(null, this.getPos().getX() + 0.5D, this.getPos().getY() + 2.5D, this.getPos().getZ() + 0.5D, 2.0F, false);
             this.world.destroyBlock(this.getPos(), false);
             for (BlockPos pillarPos : this.getPillarList()) {
-                this.world.setBlockToAir(pillarPos);
+                this.world.destroyBlock(pillarPos.up(), false);
+                this.world.destroyBlock(pillarPos, false);
             }
 
             // Summon the avatar
@@ -166,7 +166,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
     }
 
     public boolean isProgressFull() {
-        return (this.getCharge() >= MAX_CHARGE) && (this.progress >= PROGRESS_PER_CHARGE);
+        return this.getCharge() >= MAX_CHARGE;
     }
 
     protected boolean canMakeProgress() {
@@ -258,10 +258,10 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
         // Check main void metal blocks
         for (i = -1; i <= 1; i += 2) {
             for (k = -1; k <= 1; k += 2) {
-                if (!this.checkStructureBlock(1 * i, -1, 1 * k, BlocksTC.metalBlockVoid)) {
+                if (!this.checkStructureBlock(i, -1, k, BlocksTC.metalBlockVoid)) {
                     return false;
                 }
-                if (!this.checkStructureBlock(1 * i, -1, 3 * k, BlocksTC.metalBlockVoid)) {
+                if (!this.checkStructureBlock(i, -1, 3 * k, BlocksTC.metalBlockVoid)) {
                     return false;
                 }
                 if (!this.checkStructureBlock(2 * i, -1, 2 * k, BlocksTC.metalBlockVoid)) {
@@ -270,7 +270,7 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
                 if (!this.checkStructureBlock(2 * i, -1, 3 * k, BlocksTC.metalBlockVoid)) {
                     return false;
                 }
-                if (!this.checkStructureBlock(3 * i, -1, 1 * k, BlocksTC.metalBlockVoid)) {
+                if (!this.checkStructureBlock(3 * i, -1, k, BlocksTC.metalBlockVoid)) {
                     return false;
                 }
                 if (!this.checkStructureBlock(3 * i, -1, 2 * k, BlocksTC.metalBlockVoid)) {
@@ -291,10 +291,10 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
                 if (!this.checkStructureBlock(0, -1, 3 * k, BlocksTC.stoneArcane)) {
                     return false;
                 }
-                if (!this.checkStructureBlock(1 * i, -1, 2 * k, BlocksTC.stoneArcane)) {
+                if (!this.checkStructureBlock(i, -1, 2 * k, BlocksTC.stoneArcane)) {
                     return false;
                 }
-                if (!this.checkStructureBlock(2 * i, -1, 1 * k, BlocksTC.stoneArcane)) {
+                if (!this.checkStructureBlock(2 * i, -1, k, BlocksTC.stoneArcane)) {
                     return false;
                 }
             }
@@ -329,28 +329,28 @@ public class TileCoalescenceMatrix extends TileTW implements ITickable, IInterac
         }
 
         // Check pillars
-        if (!(this.world.getBlockState(this.pos.add(-4, 0, -2)).getBlock() instanceof BlockPillar)) {
+        if (!this.checkStructureBlock(-4, 0, -2, BlocksTW.ARCANE_PILLAR)) {
             return false;
         }
-        if (!(this.world.getBlockState(this.pos.add(-4, 0, 2)).getBlock() instanceof BlockPillar)) {
+        if (!this.checkStructureBlock(-4, 0, 2, BlocksTW.ARCANE_PILLAR)) {
             return false;
         }
-        if (!(this.world.getBlockState(this.pos.add(4, 0, -2)).getBlock() instanceof BlockPillar)) {
+        if (!this.checkStructureBlock(4, 0, -2, BlocksTW.ARCANE_PILLAR)) {
             return false;
         }
-        if (!(this.world.getBlockState(this.pos.add(4, 0, 2)).getBlock() instanceof BlockPillar)) {
+        if (!this.checkStructureBlock(4, 0, 2, BlocksTW.ARCANE_PILLAR)) {
             return false;
         }
-        if (!(this.world.getBlockState(this.pos.add(-2, 0, -4)).getBlock() instanceof BlockPillar)) {
+        if (!this.checkStructureBlock(-2, 0, -4, BlocksTW.ARCANE_PILLAR)) {
             return false;
         }
-        if (!(this.world.getBlockState(this.pos.add(-2, 0, 4)).getBlock() instanceof BlockPillar)) {
+        if (!this.checkStructureBlock(-2, 0, 4, BlocksTW.ARCANE_PILLAR)) {
             return false;
         }
-        if (!(this.world.getBlockState(this.pos.add(2, 0, -4)).getBlock() instanceof BlockPillar)) {
+        if (!this.checkStructureBlock(2, 0, -4, BlocksTW.ARCANE_PILLAR)) {
             return false;
         }
-        if (!(this.world.getBlockState(this.pos.add(2, 0, 4)).getBlock() instanceof BlockPillar)) {
+        if (!this.checkStructureBlock(2, 0, 4, BlocksTW.ARCANE_PILLAR)) {
             return false;
         }
 

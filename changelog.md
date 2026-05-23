@@ -1,8 +1,12 @@
 # Changelog
 ## v2.3.1
 ------
+### Added
+- Added new custom Osmotic Enchanter sounds, courtesy of PessiMysterio
 ### Fixed
 - Fixed incorrect material costs in Ostmotic Enchanter Thaumonomicon entry
+- Fixed Coalescence Matrix not siphoning rift energy
+- Fixed Coalescence Matrix requiring extra rift power to summon Avatar of Corruption
 
 ## v2.3.0
 ------

@@ -5,8 +5,12 @@ import com.verdantartifice.thaumicwonders.common.blocks.BlocksTW;
 import com.verdantartifice.thaumicwonders.common.blocks.misc.BlockArcanePillar;
 import com.verdantartifice.thaumicwonders.common.blocks.misc.BlockArcanePillar.EnumDirection;
 import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
+import com.verdantartifice.thaumicwonders.common.registry.SoundsTW;
+import com.verdantartifice.thaumicwonders.common.sounds.EnchanterSoundLoop;
+import com.verdantartifice.thaumicwonders.common.sounds.EssentiaSoundLoop;
 import com.verdantartifice.thaumicwonders.common.tiles.base.TileTW;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -65,7 +69,7 @@ public class TileEssentiaEnchanter extends TileTW implements ITickable, IAspectC
         }
     };
     private AspectList recipeEssentiaCache = new AspectList();
-    private AspectList recipeEssentia = new AspectList();
+    public AspectList recipeEssentia = new AspectList();
     private ItemStack recipeOutput = ItemStack.EMPTY;
     private boolean isActive;
     private boolean isCrafting;
@@ -122,6 +126,10 @@ public class TileEssentiaEnchanter extends TileTW implements ITickable, IAspectC
                         did |= this.drainEssentia();
                     } else {
                         did |= this.handleProgressTick();
+                        if(this.getProgress() == PROGRESS_MAX) {
+                            this.world.playSound(null, this.pos, SoundsTW.ENCHANT_START, SoundCategory.BLOCKS, 2.0f, 1.0f);
+                            Minecraft.getMinecraft().getSoundHandler().playSound(new EnchanterSoundLoop(SoundsTW.ENCHANT_LOOP, this, 0.5f));
+                        }
                         if(this.getProgress() <= 0) {
                             this.completeEnchantment();
                             if(this.cooldown <= 0) {
@@ -228,6 +236,8 @@ public class TileEssentiaEnchanter extends TileTW implements ITickable, IAspectC
         this.isCrafting = true;
         this.progress = 0;
         this.cooldown = 0;
+        this.world.playSound(null, this.pos, SoundsTC.craftstart, SoundCategory.BLOCKS, 0.5f, 1.0f);
+        Minecraft.getMinecraft().getSoundHandler().playSound(new EssentiaSoundLoop(SoundsTW.ESSENTIA_LOOP, this, 0.8f));
         this.syncTile(false);
         this.markDirty();
     }

@@ -7,6 +7,11 @@ import net.minecraft.util.SoundEvent;
 public class SoundsTW {
     public static final SoundEvent AVATAR_DEATH;
     public static final SoundEvent AVATAR_AMBIENT;
+    public static final SoundEvent ENCHANT_END;
+    public static final SoundEvent ENCHANT_LOOP;
+    public static final SoundEvent ENCHANT_START;
+    public static final SoundEvent ENCHANT_ZAP;
+    public static final SoundEvent ESSENTIA_LOOP;
     public static final SoundEvent INSPIRATION_ENGINE;
     public static final SoundEvent MADNESS_ENGINE;
     public static final SoundEvent PRIMAL_DESTROYER_ANGERED;
@@ -22,6 +27,11 @@ public class SoundsTW {
     static {
         AVATAR_AMBIENT = makeSoundEvent("avatar_ambient");
         AVATAR_DEATH = makeSoundEvent("avatar_death");
+        ENCHANT_END = makeSoundEvent("enchant_end");
+        ENCHANT_LOOP = makeSoundEvent("enchant_loop");
+        ENCHANT_START = makeSoundEvent("enchant_start");
+        ENCHANT_ZAP = makeSoundEvent("enchant_zap");
+        ESSENTIA_LOOP = makeSoundEvent("essentia_loop");
         INSPIRATION_ENGINE = makeSoundEvent("inspiration_engine");
         MADNESS_ENGINE = makeSoundEvent("madness_engine");
         PRIMAL_DESTROYER_ANGERED = makeSoundEvent("primal_destroyer_angered");

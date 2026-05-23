@@ -43,7 +43,8 @@ This support includes new configuration options, added Crafttweaker and GroovySc
 
 ## Credits and Thanks
 - [daedalus4096](https://www.curseforge.com/members/daedalus4096/projects) - the original mod
-- [IcarussOne](https://www.curseforge.com/members/icarussone/projects) - feedback, testing, and textures
+- [IcarussOne](https://www.curseforge.com/members/icarussone/projects) - feedback, testing, sounds, and textures
+- [PessiMysterio](https://www.curseforge.com/members/pessimysterio/projects) - osmotic enchanter sounds
 - [J. Carver](https://www.curseforge.com/members/john\_\_carver/projects) - models and textures
 - [keletu66666](https://www.curseforge.com/members/keletu66666/projects) - feedback
 - [xJon](https://www.curseforge.com/members/xjon__/projects) - feedback and testing

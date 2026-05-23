@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.client.renderers.tile;
 
 import com.verdantartifice.thaumicwonders.common.blocks.devices.BlockEssentiaEnchanter;
 import com.verdantartifice.thaumicwonders.common.blocks.misc.BlockArcanePillar.EnumDirection;
+import com.verdantartifice.thaumicwonders.common.registry.SoundsTW;
 import com.verdantartifice.thaumicwonders.common.tiles.devices.TileEssentiaEnchanter;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
@@ -17,7 +18,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.client.fx.FXDispatcher;
-import thaumcraft.common.lib.SoundsTC;
 
 import java.awt.*;
 
@@ -79,12 +79,27 @@ public class TesrEssentiaEnchanter extends TileEntitySpecialRenderer<TileEssenti
         }
     }
 
+    private int lastProgress = -1;
+    private boolean playedEndSound = false;
     private void renderLightning(TileEssentiaEnchanter tile, float partialTicks) {
-        if(tile.getProgress() > 0) {
-            if(tile.getProgress() % (tile.getMaxProgress() / 9) == 0) {
-                tile.getWorld().playSound(tile.getPos().getX() + 0.5, tile.getPos().getY() + 0.5, tile.getPos().getZ() + 0.5,
-                        SoundsTC.jacobs, SoundCategory.BLOCKS, 0.5f, 1.0f, false);
+        int currentProgress = tile.getProgress();
+
+        if(currentProgress > 0) {
+            if(currentProgress % (tile.getMaxProgress() / 9) == 0 && currentProgress > 30 && currentProgress != lastProgress) {
+                    tile.getWorld().playSound(tile.getPos().getX() + 0.5, tile.getPos().getY() + 0.5, tile.getPos().getZ() + 0.5,
+                            SoundsTW.ENCHANT_ZAP, SoundCategory.BLOCKS, 0.5f, 1.0f, false);
+                lastProgress = currentProgress;
             }
+            if(tile.getProgress() == 30) {
+                if (!playedEndSound) {
+                    tile.getWorld().playSound(tile.getPos().getX() + 0.5, tile.getPos().getY() + 0.5, tile.getPos().getZ() + 0.5,
+                            SoundsTW.ENCHANT_END, SoundCategory.BLOCKS, 0.5f, 1.0f, false);
+                    playedEndSound = true;
+                }
+            } else {
+                playedEndSound = false;
+            }
+
             int pillars = (int) ((1.0 - (double) tile.getProgress() / tile.getMaxProgress()) * 9.0);
             Vec3d center = new Vec3d(tile.getPos().getX() + 0.5, tile.getPos().getY() + 1.15, tile.getPos().getZ() + 0.5);
             for(EnumDirection direction : EnumDirection.VALUES) {
@@ -97,6 +112,9 @@ public class TesrEssentiaEnchanter extends TileEntitySpecialRenderer<TileEssenti
                     this.renderLightning(start, center);
                 }
             }
+        } else {
+            lastProgress = -1;
+            playedEndSound = false;
         }
     }
 

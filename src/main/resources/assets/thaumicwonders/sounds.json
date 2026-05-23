@@ -13,6 +13,47 @@
     ],
     "subtitle": "subtitle.thaumicwonders:avatar.death"
   },
+  "enchant_end": {
+    "sounds": [
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_end1",
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_end2",
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_end3"
+
+    ],
+    "subtitle": "subtitle.thaumicwonders:osmotic_enchanter.enchant_end"
+  },
+  "enchant_loop": {
+    "sounds": [
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_loop"
+
+    ],
+    "subtitle": "subtitle.thaumicwonders:osmotic_enchanter.enchant_loop"
+  },
+  "enchant_start": {
+    "sounds": [
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_start1",
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_start2",
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_start3"
+
+    ],
+    "subtitle": "subtitle.thaumicwonders:osmotic_enchanter.enchant_start"
+  },
+  "enchant_zap": {
+    "sounds": [
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_zap1",
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_zap2",
+      "thaumicwonders:blocks/osmotic_enchanter/enchant_zap3"
+
+    ],
+    "subtitle": "subtitle.thaumicwonders:osmotic_enchanter.enchant_zap"
+  },
+  "essentia_loop": {
+    "sounds": [
+      "thaumicwonders:blocks/essentia_loop"
+
+    ],
+    "subtitle": "subtitle.thaumicwonders:essentia_loop"
+  },
   "inspiration_engine": {
     "sounds": [
       "thaumicwonders:blocks/engines/inspiration_engine"

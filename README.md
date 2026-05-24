@@ -46,6 +46,7 @@ This support includes new configuration options, added Crafttweaker and GroovySc
 - [IcarussOne](https://www.curseforge.com/members/icarussone/projects) - feedback, testing, sounds, and textures
 - [PessiMysterio](https://www.curseforge.com/members/pessimysterio/projects) - osmotic enchanter sounds
 - [J. Carver](https://www.curseforge.com/members/john\_\_carver/projects) - models and textures
+- [kodesque](https://www.curseforge.com/members/kodesque/projects) - osmotic enchanter GUI
 - [keletu66666](https://www.curseforge.com/members/keletu66666/projects) - feedback
 - [xJon](https://www.curseforge.com/members/xjon__/projects) - feedback and testing
 - [ACGaming](https://www.curseforge.com/members/acgaming/projects) - code contributions

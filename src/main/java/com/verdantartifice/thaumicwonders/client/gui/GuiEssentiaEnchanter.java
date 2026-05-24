@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.client.gui;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
 import com.verdantartifice.thaumicwonders.client.gui.elements.enchanter.*;
+import com.verdantartifice.thaumicwonders.common.config.ConfigHandlerTW;
 import com.verdantartifice.thaumicwonders.common.containers.ContainerEssentiaEnchanter;
 import com.verdantartifice.thaumicwonders.common.crafting.enchanter.EssentiaEnchanterRecipe;
 import com.verdantartifice.thaumicwonders.common.crafting.enchanter.EssentiaEnchanterRecipeRegistry;
@@ -31,7 +32,9 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiEssentiaEnchanter extends GuiContainer {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_essentia_enchanter.png");
+    public static final ResourceLocation TEXTURE = ConfigHandlerTW.essentia_enchanter.alternateGui
+            ? new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_essentia_enchanter_alt.png")
+            : new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_essentia_enchanter.png");
     public static final int BUTTON_START_ENCH;
     private static final int BUTTON_PREV_ENCH_PAGE;
     private static final int BUTTON_NEXT_ENCH_PAGE;

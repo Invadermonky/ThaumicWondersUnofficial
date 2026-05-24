@@ -3,6 +3,7 @@
 ------
 ### Added
 - Added new custom Osmotic Enchanter sounds, courtesy of PessiMysterio
+- Added new Osmotic Enchanter gui, courtesy of kodesque
 ### Fixed
 - Fixed Catalazation Chamber catalyst dupe
 - Fixed Coalescence Matrix not siphoning rift energy

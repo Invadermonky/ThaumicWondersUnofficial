@@ -9,7 +9,7 @@ public class GuiButtonEnchantLevel extends AbstractButtonEnchanter {
     public final boolean isIncrease;
 
     public GuiButtonEnchantLevel(GuiEssentiaEnchanter guiEnchanter, int buttonId, int x, int y, boolean isIncrease) {
-        super(guiEnchanter, buttonId, x, y, 176, 32, 18, 18, isIncrease ? "+" : "-");
+        super(guiEnchanter, buttonId, x, y, isIncrease ? 176 : 194, 32, 18, 18, "");
         this.isIncrease = isIncrease;
     }
 

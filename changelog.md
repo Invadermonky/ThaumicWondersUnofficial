@@ -1,5 +1,6 @@
 # Changelog
 ## v2.3.1
+
 ------
 ### Added
 - Added new custom Osmotic Enchanter sounds, courtesy of PessiMysterio
@@ -12,6 +13,7 @@
 - Fixed Teleport Home effect sometimes placing players inside their bed
 
 ## v2.3.0
+
 ------
 ### Added
 - Added Arcane Pillar, used for Thaumic Wonders multiblocks
@@ -36,6 +38,7 @@
 - Fixed Oblivion Jar Thaumic Energistics insertion bug
 
 ## v2.2.4
+
 ------
 ### Changed
 - Changed several recipes to use oredict ingredients
@@ -46,11 +49,13 @@
 - Fixed crop growth crash, courtesy of [jchung01](https://github.com/jchung01)
 
 ## v2.2.3
+
 ------
 ### Fixed
 - Fixed server desync issue with the Portal Linker
 
 ## v2.2.2
+
 ------
 ### Added
 - Added `zh_ch.lang` (courtesy of [ZHAY10086](https://github.com/ZHAY10086))
@@ -58,6 +63,7 @@
 - Fixed Catalyzation Chamber not processing items when inventory contained multiple items of different types
 
 ## v2.2.1
+
 ------
 **IMPORTANT!** Before updating, be sure to remove all items from Thaumic Wonders inventories such as the Primordial Siphon, Portal Anchor, or Catalyzation Chamber. Failing to do so will void any items contained in these inventories.
 ### Changed
@@ -67,6 +73,7 @@
 - Fixed crash when viewing Teleport Home focus research page
 
 ## v2.2.0
+
 ------
 ### Added
 - Added Control Seal: Shearing, used to shear nearby animals
@@ -81,6 +88,7 @@
 - Fixed several incorrect translation keys
 
 ## v2.1.4
+
 ------
 ### Changed
 - Updated primal destroyer HUD to match new item texture
@@ -93,6 +101,7 @@
 - Fixed Void Beacon playing activate and deactivate sounds when beacon structure was not formed
  
 ## v2.1.3
+
 ------
 ### Added
 - Added new Avatar of Corruption ambient and death sound effects (courtesy of IcarussOne)
@@ -108,6 +117,7 @@
 - Fixed Infernal Hedge and End Hedge duplication compatible recipes
 
 ## v2.1.2
+
 ------
 ### Fixed
 - Fixed an issue that caused Eldritch Cluster aspects to not register correctly
@@ -119,6 +129,7 @@
 - Fixed Infernal and End Hedge Alchemy duplication recipe compatibility issues (courtesy of Keleut66666)
 
 ## v2.1.1
+
 ------
 ### Changed
 - Modified Research Assistant Seal behavior to be a little bit smarter
@@ -127,6 +138,7 @@
 - Fixed server disconnect issue when using the Night Vision Goggles
 
 ## v2.1.0
+
 ------
 ### Added
 - Added Void Beacon sound effects when it activates, deactivates and is running (courtesy of IcarussOne)
@@ -161,6 +173,7 @@
 - Fixed Primordial Pearl crucible reconstitution recipe requiring invalid research
 
 ## v2.0.0
+
 ------
 ### New Features
 - Added Initiate's Band of Cleansing, a debuff cleansing ring with a few unique properties
@@ -252,23 +265,28 @@
 - Improved Disjunction Cloth onCrafted logic
 
 ## v1.8.4
+
 ------
 * Reverted to Forge 14.23.5.2768
 
 ## v1.8.3
+
 ------
 * Fixed a memory leak with Void Fortress Armor, thanks Aqua!
 
 ## v1.8.2
+
 ------
 * Fixed a crash when using Panacea
 
 ## v1.8.1
+
 ------
 * Coalescence Matrix has a new texture, thanks TechnoMysterio!
 * Added Russian translations, thanks xRoBoTx!
 
 ## v1.8.0
+
 ------
 * Added Flux Distiller, to clean out your capacitors
 * Added Primordial Accelerator, to smash your Primordial Pearls to bits, for science!
@@ -286,6 +304,7 @@
 * Adjusted essentia costs for Void Beacon recipe
 
 ## v1.7.0
+
 ------
 * Added Night-Vision Goggles, for a different kind of revealing
 * Added Void Beacon, to conjure something from (almost) nothing
@@ -296,6 +315,7 @@
 * Fixed crafting recipe bug with Bone Bow and Hexamite
 
 ## v1.6.0
+
 ------
 * Added Meaty Orb, for when the weather forecast should be "cloudy with a chance of meatballs"
 * Added Structure Diviner, to track down interesting spots in the world
@@ -308,6 +328,7 @@
 * Added star field effect to the business end of Dimensional Rippers
 
 ## v1.5.0
+
 ------
 * Added Void Fortress Armor, the pinnacle of eldritch protection
 * Added Meteorb, for manipulating meteorological phenomena
@@ -320,6 +341,7 @@
 * Fixed a blockstate mod interaction bug with the Catalyzation Chamber
 
 ## v1.4.0
+
 ------
 * Added Flux Capacitor, to help you manage your flux problem
 * Added Transmuter's Stone, to allow your Catalyzation Chamber to turn one metal into another
@@ -339,6 +361,7 @@
 * Updated Thaumonomicon page's background image
 
 ## v1.3.0
+
 ------
 * Added Void Portals, a means to teleport across space and dimensions
 * Added Advanced Metal Purification, a more efficient way to double your ore
@@ -346,15 +369,18 @@
 * Fixed crash bug when Primal Destroyer hunger fills
 
 ## v1.2.0
+
 ------
 * Added Madness Engine, an essentia-powered source of eldritch inspiration
 * Fixed another crash bug on server load
 
 ## v1.1.1
+
 ------
 * Fixed crash bug on server load
 
 ## v1.1.0
+
 ------
 * Added Timewinder, a device that lets you skip forward in time
 * Added Inspiration Engine, an essentia-powered research aid
@@ -363,6 +389,7 @@
 * Reduced Flying Carpet speed and flight-time-per-vis.
 
 ## v1.0.0
+
 ------
 * Added Everburning Urn, an infinite lava source
 * Added Disjunction Cloth, which removes enchantments from items

@@ -163,6 +163,7 @@ public class ConfigHandlerTW {
     }
 
     public static class EssentiaEnchanterCategory {
+        @Config.Ignore
         @Config.Name("Alternate Gui")
         @Config.Comment("Uses an alternate Minecraft-themed Gui texture for the enchanter.")
         public boolean alternateGui = false;

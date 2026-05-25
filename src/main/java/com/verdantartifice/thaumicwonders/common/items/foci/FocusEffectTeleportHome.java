@@ -1,6 +1,7 @@
 package com.verdantartifice.thaumicwonders.common.items.foci;
 
 import com.verdantartifice.thaumicwonders.ThaumicWonders;
+import net.minecraft.block.BlockBed;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,7 +51,7 @@ public class FocusEffectTeleportHome extends FocusEffect {
 
     @Override
     public float getDamageForDisplay(float finalPower) {
-        return 0.0F;
+        return 10.0F;
     }
 
     @Override
@@ -70,7 +71,11 @@ public class FocusEffectTeleportHome extends FocusEffect {
                 if(target.dimension != this.bedDimension) {
                     target.changeDimension(this.bedDimension, (world, entity, yaw) -> {});
                 }
-                target.setPositionAndUpdate(this.bedPosition.getX() + 0.5, this.bedPosition.getY() + 0.6, this.bedPosition.getZ() + 0.5);
+                BlockPos spawnPos = BlockBed.getSafeExitLocation(targetWorld, this.bedPosition, 0);
+                if(spawnPos == null) {
+                    spawnPos = this.bedPosition;
+                }
+                target.setPositionAndUpdate(spawnPos.getX() + 0.5, spawnPos.getY() + 0.1, spawnPos.getZ() + 0.5);
                 target.world.playSound(null, target.getPosition(), SoundsTC.wandfail, SoundCategory.PLAYERS, 0.75F, 0.9F);
                 this.resetBedPosition();
                 return true;

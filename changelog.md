@@ -9,6 +9,7 @@
 - Fixed Coalescence Matrix not siphoning rift energy
 - Fixed Coalescence Matrix requiring extra rift power to summon Avatar of Corruption
 - Fixed incorrect material costs in Ostmotic Enchanter Thaumonomicon entry
+- Fixed Teleport Home effect sometimes placing players inside their bed
 
 ## v2.3.0
 ------

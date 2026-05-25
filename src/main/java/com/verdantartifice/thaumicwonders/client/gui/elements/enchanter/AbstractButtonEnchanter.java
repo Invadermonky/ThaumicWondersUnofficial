@@ -13,12 +13,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class AbstractButtonEnchanter extends GuiButton {
     private ResourceLocation textureLocation;
     protected GuiEssentiaEnchanter guiEnchanter;
-    private int textureX;
+    private final int textureX;
     private final int textureY;
 
     public AbstractButtonEnchanter(GuiEssentiaEnchanter guiEnchanter, int buttonId, int x, int y, int textureX, int textureY, int widthIn, int heightIn, String buttonText) {
         super(buttonId, guiEnchanter.getGuiLeft() + x, guiEnchanter.getGuiTop() + y, widthIn, heightIn, buttonText);
-        this.setTextureLocation(GuiEssentiaEnchanter.TEXTURE);
+        this.setTextureLocation(GuiEssentiaEnchanter.getTextureLocation());
         this.guiEnchanter = guiEnchanter;
         this.textureX = textureX;
         this.textureY = textureY;

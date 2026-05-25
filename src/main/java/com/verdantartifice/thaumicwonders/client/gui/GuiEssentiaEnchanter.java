@@ -32,9 +32,8 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiEssentiaEnchanter extends GuiContainer {
-    public static final ResourceLocation TEXTURE = ConfigHandlerTW.essentia_enchanter.alternateGui
-            ? new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_essentia_enchanter.png")
-            : new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_essentia_enchanter_alt.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_essentia_enchanter.png");
+    private static final ResourceLocation TEXTURE_ALT = new ResourceLocation(ThaumicWonders.MODID, "textures/gui/gui_essentia_enchanter_alt.png");
     public static final int BUTTON_START_ENCH;
     private static final int BUTTON_PREV_ENCH_PAGE;
     private static final int BUTTON_NEXT_ENCH_PAGE;
@@ -64,6 +63,10 @@ public class GuiEssentiaEnchanter extends GuiContainer {
         return (ContainerEssentiaEnchanter) this.inventorySlots;
     }
 
+    public static ResourceLocation getTextureLocation() {
+        return ConfigHandlerTW.essentia_enchanter.alternateGui ? TEXTURE_ALT : TEXTURE;
+    }
+
     @Override
     public void initGui() {
         super.initGui();
@@ -87,7 +90,7 @@ public class GuiEssentiaEnchanter extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        this.mc.renderEngine.bindTexture(TEXTURE);
+        this.mc.renderEngine.bindTexture(getTextureLocation());
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         int xStart = (this.width - this.xSize) / 2;
         int yStart = ((this.height - this.ySize) / 2);
@@ -109,7 +112,7 @@ public class GuiEssentiaEnchanter extends GuiContainer {
             int level = recipe != null ? this.selectedRecipes.getOrDefault(recipe, 0) : 0;
             recipeButton.setButtonRecipe(recipe, level);
         }
-        this.mc.renderEngine.bindTexture(TEXTURE);
+        this.mc.renderEngine.bindTexture(getTextureLocation());
     }
 
     private void drawAspectArea(int xStart, int yStart) {
@@ -132,7 +135,7 @@ public class GuiEssentiaEnchanter extends GuiContainer {
                 break;
             }
         }
-        this.mc.renderEngine.bindTexture(TEXTURE);
+        this.mc.renderEngine.bindTexture(getTextureLocation());
     }
 
     private void drawEssentiaBar(int xStart, int yStart) {

@@ -163,12 +163,10 @@ public class ConfigHandlerTW {
     }
 
     public static class EssentiaEnchanterCategory {
-        @Config.Ignore
         @Config.Name("Alternate Gui")
         @Config.Comment("Uses an alternate Minecraft-themed Gui texture for the enchanter.")
         public boolean alternateGui = false;
 
-        @Config.RequiresMcRestart
         @Config.Name("Slot Lock")
         @Config.Comment("Locks the enchanted item slot while the enchanter is crafting.")
         public boolean lockSlot = true;

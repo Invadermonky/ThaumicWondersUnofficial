@@ -1,4 +1,10 @@
 # Changelog
+## v2.3.2
+
+------
+### Fixed
+- Fixed inactive Osmotic Enchanter disassembling structure if broken near active enchanter
+
 ## v2.3.1
 
 ------

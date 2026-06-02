@@ -64,7 +64,7 @@ public class BlockEssentiaEnchanter extends BlockTileTW<TileEssentiaEnchanter> {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if(!worldIn.isRemote) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof TileEssentiaEnchanter) {
+            if (tile instanceof TileEssentiaEnchanter && ((TileEssentiaEnchanter) tile).isEnchanterActive()) {
                 ((TileEssentiaEnchanter) tile).deconstructStructure();
                 IItemHandler handler = ((TileEssentiaEnchanter) tile).stackHandler;
                 for (int i = 0; i < handler.getSlots(); i++) {

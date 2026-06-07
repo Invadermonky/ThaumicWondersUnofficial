@@ -4,6 +4,8 @@
 ------
 ### Fixed
 - Fixed inactive Osmotic Enchanter disassembling structure if broken near active enchanter
+- Fixed server crash on enchanter placement
+- Fixed missing Osmotic Enchanter language keys
 
 ## v2.3.1
 

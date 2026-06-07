@@ -20,6 +20,8 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +42,9 @@ public class TileEssentiaEnchanter extends TileTW implements ITickable, IAspectC
     public static final ImmutableMap<EnumDirection, BlockPos> OFFSET_PILLARS;
     public static final int PROGRESS_MAX = 270;
     public static final int COOLDOWN_MAX = 40;
+    public static final int EFFECT_SOUND = 0;
+    public static final int SOUND_LOOP_ESSENTIA = 0;
+    public static final int SOUND_LOOP_ENCHANTING = 1;
 
     public final ItemStackHandler stackHandler = new ItemStackHandler() {
         @Override
@@ -128,7 +133,7 @@ public class TileEssentiaEnchanter extends TileTW implements ITickable, IAspectC
                         did |= this.handleProgressTick();
                         if(this.getProgress() == PROGRESS_MAX) {
                             this.world.playSound(null, this.pos, SoundsTW.ENCHANT_START, SoundCategory.BLOCKS, 2.0f, 1.0f);
-                            Minecraft.getMinecraft().getSoundHandler().playSound(new EnchanterSoundLoop(SoundsTW.ENCHANT_LOOP, this, 0.5f));
+                            this.addBlockEvent(EFFECT_SOUND, SOUND_LOOP_ENCHANTING);
                         }
                         if(this.getProgress() <= 0) {
                             this.completeEnchantment();
@@ -237,7 +242,7 @@ public class TileEssentiaEnchanter extends TileTW implements ITickable, IAspectC
         this.progress = 0;
         this.cooldown = 0;
         this.world.playSound(null, this.pos, SoundsTC.craftstart, SoundCategory.BLOCKS, 0.5f, 1.0f);
-        Minecraft.getMinecraft().getSoundHandler().playSound(new EssentiaSoundLoop(SoundsTW.ESSENTIA_LOOP, this, 0.8f));
+        this.addBlockEvent(EFFECT_SOUND, SOUND_LOOP_ESSENTIA);
         this.syncTile(false);
         this.markDirty();
     }
@@ -308,6 +313,32 @@ public class TileEssentiaEnchanter extends TileTW implements ITickable, IAspectC
             }
         }
         return false;
+    }
+
+    public void addBlockEvent(int event, int param) {
+        this.world.addBlockEvent(this.pos, this.blockType, event, param);
+    }
+
+    @Override
+    public boolean receiveClientEvent(int id, int type) {
+        if(id == EFFECT_SOUND) {
+            if(type == SOUND_LOOP_ESSENTIA || type == SOUND_LOOP_ENCHANTING) {
+                if(this.world.isRemote) {
+                    this.playSoundLoop(type);
+                }
+                return true;
+            }
+        }
+        return super.receiveClientEvent(id, type);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void playSoundLoop(int soundLoop) {
+        if(soundLoop == SOUND_LOOP_ESSENTIA) {
+            Minecraft.getMinecraft().getSoundHandler().playSound(new EssentiaSoundLoop(SoundsTW.ESSENTIA_LOOP, this, 0.8f));
+        } else if(soundLoop == SOUND_LOOP_ENCHANTING) {
+            Minecraft.getMinecraft().getSoundHandler().playSound(new EnchanterSoundLoop(SoundsTW.ENCHANT_LOOP, this, 0.5f));
+        }
     }
 
     @Override

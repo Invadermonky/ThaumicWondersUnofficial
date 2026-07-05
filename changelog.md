@@ -3,6 +3,7 @@
 
 ------
 ### Added
+- Added CraftTweaker reload support for the Osmotic Enchanter
 - Added Russian translation, `ru_ru.lang` courtesy of kodesque
 - Updated `zh_cn.lang` courtesy of ZHAY10086
 ### Fixed

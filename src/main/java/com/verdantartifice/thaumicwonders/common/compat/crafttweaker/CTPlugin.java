@@ -17,13 +17,9 @@ public class CTPlugin implements IModPlugin {
     @SubscribeEvent
     public void onScriptReloading(ScriptRunEvent.Pre event) {
         CatalyzationChamberRecipeRegistry.removeAll();
-        MeatyOrbEntryRegistry.removeAll();
-    }
-
-    @SubscribeEvent
-    public void onScriptReloadingPost(ScriptRunEvent.Post event) {
         InitRecipes.initCatalyzationChamberRecipes();
+
+        MeatyOrbEntryRegistry.removeAll();
         InitRecipes.initMeatyOrb();
     }
-
 }

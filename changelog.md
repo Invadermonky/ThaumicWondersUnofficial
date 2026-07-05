@@ -1,4 +1,13 @@
 # Changelog
+## v2.3.3
+
+------
+### Added
+- Added Russian translation, `ru_ru.lang` courtesy of kodesque
+- Updated `zh_cn.lang` courtesy of ZHAY10086
+### Fixed
+- Fixed CraftTweaker removal methods not removing recipes
+
 ## v2.3.2
 
 ------

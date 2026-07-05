@@ -2,6 +2,7 @@ package com.verdantartifice.thaumicwonders.common.compat.crafttweaker;
 
 import com.verdantartifice.thaumicwonders.common.compat.IModPlugin;
 import com.verdantartifice.thaumicwonders.common.crafting.catalyzationchamber.CatalyzationChamberRecipeRegistry;
+import com.verdantartifice.thaumicwonders.common.crafting.enchanter.EssentiaEnchanterRecipeRegistry;
 import com.verdantartifice.thaumicwonders.common.crafting.meatyorb.MeatyOrbEntryRegistry;
 import com.verdantartifice.thaumicwonders.common.init.InitRecipes;
 import crafttweaker.mc1120.events.ScriptRunEvent;
@@ -18,6 +19,9 @@ public class CTPlugin implements IModPlugin {
     public void onScriptReloading(ScriptRunEvent.Pre event) {
         CatalyzationChamberRecipeRegistry.removeAll();
         InitRecipes.initCatalyzationChamberRecipes();
+
+        EssentiaEnchanterRecipeRegistry.removeAll();
+        InitRecipes.initEssentiaEnchanterRecipes();
 
         MeatyOrbEntryRegistry.removeAll();
         InitRecipes.initMeatyOrb();

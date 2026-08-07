@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemWarpRing extends ItemTW implements IWarpingGear, IVisDiscountGear, IBauble {
-    public static int[] rankThresholds = {0, 4, 8, 16, 24, 32};
+    public static int[] rankThresholds = {4, 8, 16, 24, 32};
 
     public ItemWarpRing() {
         super("warp_ring");
@@ -139,16 +139,7 @@ public class ItemWarpRing extends ItemTW implements IWarpingGear, IVisDiscountGe
     }
 
     protected void setBuffer(ItemStack stack, int bufferValue) {
-        int warp = 0;
-        for (int i = 1; i < rankThresholds.length; i++) {
-            if (bufferValue >= rankThresholds[i]) {
-                warp++;
-            } else {
-                break;
-            }
-        }
         this.getTag(stack).setInteger("buffer", bufferValue);
-        this.setWarp(stack, warp);
     }
 
     protected void incrementBuffer(ItemStack stack) {

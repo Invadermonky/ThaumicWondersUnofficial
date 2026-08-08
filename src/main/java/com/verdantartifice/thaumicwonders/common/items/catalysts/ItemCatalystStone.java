@@ -16,6 +16,7 @@ public class ItemCatalystStone extends ItemTW {
         if(!canRepair) {
             this.setNoRepair();
         }
+        this.isEnchantable = isEnchantable;
     }
 
     @Override
@@ -24,13 +25,13 @@ public class ItemCatalystStone extends ItemTW {
     }
 
     @Override
-    public int getItemEnchantability() {
-        return 10;
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return this.isEnchantable;
     }
 
     @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return false;
+    public int getItemEnchantability() {
+        return 10;
     }
 
     @Override

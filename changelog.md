@@ -8,6 +8,7 @@
 - Updated `zh_cn.lang` courtesy of ZHAY10086
 ### Fixed
 - Fixed CraftTweaker removal methods not removing recipes
+- Fixed Catalyst Stones not accepting enchants regardless of config settings
 
 ## v2.3.2
 

@@ -1,4 +1,10 @@
 # Changelog
+## v2.3.4
+
+------
+### Fixed
+- Fixed bug preventing the Initiate's Band of Cleansing from leveling up
+
 ## v2.3.3
 
 ------
